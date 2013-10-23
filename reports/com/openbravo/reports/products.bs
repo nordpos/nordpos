@@ -1,0 +1,49 @@
+//    Openbravo POS is a point of sales application designed for touch screens.
+//    Copyright (C) 2007-2009 Openbravo, S.L.
+//    http://www.openbravo.com/product/pos
+//
+//    This file is part of Openbravo POS.
+//
+//    Openbravo POS is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Openbravo POS is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+
+report = new com.openbravo.pos.reports.PanelReportBean();
+
+report.setTitleKey("Menu.Products");
+report.setReport("/com/openbravo/reports/products");
+report.setResourceBundle("com/openbravo/reports/products_messages");
+
+report.setSentence("SELECT PRODUCTS.ID, PRODUCTS.REFERENCE, PRODUCTS.CODE, PRODUCTS.NAME, PRODUCTS.PRICEBUY, PRODUCTS.PRICESELL, TC.ID AS TAXCAT, TC.NAME AS TAXCATNAME, CATEGORIES.ID AS CATEGORY, CATEGORIES.NAME AS CATEGORYNAME " +
+                 "FROM PRODUCTS LEFT OUTER JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID LEFT OUTER JOIN TAXCATEGORIES TC ON PRODUCTS.TAXCAT = TC.ID " +
+                 "WHERE ?(QBF_FILTER) " +
+                 "ORDER BY CATEGORIES.NAME, PRODUCTS.NAME");
+report.addParameter("PRODUCTS.NAME");
+report.addParameter("PRODUCTS.PRICEBUY");
+report.addParameter("PRODUCTS.PRICESELL");
+report.addParameter("PRODUCTS.CATEGORY");
+report.addParameter("PRODUCTS.CODE");
+report.addQBFFilter(new com.openbravo.pos.ticket.ProductFilter());
+
+report.addField("ID", com.openbravo.data.loader.Datas.STRING);
+report.addField("REFERENCE", com.openbravo.data.loader.Datas.STRING);
+report.addField("CODE", com.openbravo.data.loader.Datas.STRING);
+report.addField("NAME", com.openbravo.data.loader.Datas.STRING);
+report.addField("PRICEBUY", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("PRICESELL", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("TAXCAT", com.openbravo.data.loader.Datas.STRING);
+report.addField("TAXCATNAME", com.openbravo.data.loader.Datas.STRING);
+report.addField("CATEGORY", com.openbravo.data.loader.Datas.STRING);
+report.addField("CATEGORYNAME", com.openbravo.data.loader.Datas.STRING);
+
+report;
+

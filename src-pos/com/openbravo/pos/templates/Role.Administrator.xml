@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Openbravo POS is a point of sales application designed for touch screens.
+    Copyright (C) 2008-2009 Openbravo, S.L.
+    http://sourceforge.net/projects/openbravopos
+
+    This file is part of Openbravo POS.
+
+    Openbravo POS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Openbravo POS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<permissions>
+    <class name="com.openbravo.pos.sales.JPanelTicketSales"/>
+    <class name="com.openbravo.pos.sales.JPanelTicketEdits"/>
+    <class name="com.openbravo.pos.customers.CustomersPayment"/>
+    <class name="com.openbravo.pos.panels.JPanelPayments"/>
+    <class name="com.openbravo.pos.panels.JPanelCloseMoney"/>
+    <class name="/com/openbravo/reports/closedpos.bs"/>
+    <class name="sales.EditLines"/>
+    <class name="sales.EditTicket"/>
+    <class name="sales.RefundTicket"/>
+    <class name="sales.PrintTicket"/>
+    <class name="sales.Total"/>
+    <!-- <class name="sales.ChangeTaxOptions"/> -->
+    <class name="payment.cash"/>
+    <class name="payment.cheque"/>
+    <class name="payment.paper"/>
+    <class name="payment.magcard"/>
+    <class name="payment.free"/>
+    <class name="payment.debt"/>
+    <class name="refund.cash"/>
+    <class name="refund.cheque"/>
+    <class name="refund.paper"/>
+    <class name="refund.magcard"/>
+    <class name="com.openbravo.pos.forms.MenuCustomers"/>
+    <class name="com.openbravo.pos.customers.CustomersPanel"/>
+    <class name="/com/openbravo/reports/customers.bs"/>
+    <class name="/com/openbravo/reports/customersb.bs"/>
+    <class name="/com/openbravo/reports/customersdiary.bs"/>
+    <class name="com.openbravo.pos.inventory.TaxCustCategoriesPanel"/>
+    <class name="com.openbravo.pos.forms.MenuStockManagement"/>
+    <class name="com.openbravo.pos.inventory.ProductsPanel"/>
+    <class name="com.openbravo.pos.inventory.ProductsWarehousePanel"/>
+    <class name="com.openbravo.pos.inventory.CategoriesPanel"/>
+    <class name="com.openbravo.pos.inventory.AttributesPanel"/>
+    <class name="com.openbravo.pos.inventory.AttributeValuesPanel"/>
+    <class name="com.openbravo.pos.inventory.AttributeSetsPanel"/>
+    <class name="com.openbravo.pos.inventory.AttributeUsePanel"/>
+    <class name="com.openbravo.pos.inventory.TaxPanel"/>
+    <class name="com.openbravo.pos.inventory.TaxCategoriesPanel"/>
+    <class name="com.openbravo.pos.inventory.StockDiaryPanel"/>
+    <class name="com.openbravo.pos.inventory.StockManagement"/>
+    <class name="com.openbravo.pos.inventory.AuxiliarPanel"/>
+    <class name="/com/openbravo/reports/products.bs"/>     
+    <class name="/com/openbravo/reports/productlabels.bs"/>     
+    <class name="/com/openbravo/reports/productscatalog.bs"/>
+    <class name="/com/openbravo/reports/inventory.bs"/>
+    <class name="/com/openbravo/reports/inventoryb.bs"/>
+    <class name="/com/openbravo/reports/inventorybroken.bs"/>
+    <class name="/com/openbravo/reports/inventorylistdetail.bs"/>
+    <class name="/com/openbravo/reports/inventorydiff.bs"/>
+    <class name="/com/openbravo/reports/inventorydiffdetail.bs"/>
+    <class name="com.openbravo.pos.forms.MenuSalesManagement"/>
+    <class name="/com/openbravo/reports/usersales.bs"/>
+    <class name="/com/openbravo/reports/closedproducts.bs"/>
+    <class name="/com/openbravo/reports/taxes.bs"/>
+    <class name="/com/openbravo/reports/chartsales.bs"/>  
+    <class name="/com/openbravo/reports/productsales.bs"/> 
+    <class name="com.openbravo.pos.forms.MenuMaintenance"/>
+    <class name="com.openbravo.pos.admin.PeoplePanel"/>
+    <class name="com.openbravo.pos.admin.RolesPanel"/>
+    <class name="com.openbravo.pos.admin.ResourcesPanel"/>
+    <class name="com.openbravo.pos.inventory.LocationsPanel"/>
+    <class name="com.openbravo.pos.mant.JPanelFloors"/>
+    <class name="com.openbravo.pos.mant.JPanelPlaces"/>
+    <class name="/com/openbravo/reports/people.bs"/>
+    <class name="com.openbravo.possync.ProductsSyncCreate"/>
+    <class name="com.openbravo.possync.OrdersSyncCreate"/>
+    <class name="Menu.ChangePassword"/>
+    <class name="com.openbravo.pos.panels.JPanelPrinter"/>
+    <class name="com.openbravo.pos.config.JPanelConfiguration"/>
+    <class name="button.print"/>
+    <class name="button.opendrawer"/>
+</permissions>

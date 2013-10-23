@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Openbravo POS is a point of sales application designed for touch screens.
+    Copyright (C) 2008-2009 Openbravo, S.L.
+    http://sourceforge.net/projects/openbravopos
+
+    This file is part of Openbravo POS.
+
+    Openbravo POS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Openbravo POS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<output>
+    <display>
+        <line>
+            <text align="left" length="10">Total paid.</text>
+            <text align="right" length="10">${ticket.printTotalPaid()}</text>
+        </line>
+        <line>
+            <text align="center" length="20">Thank you.</text>
+        </line>
+    </display>
+    <ticket>
+        <image>Printer.Ticket.Logo</image>
+        <line></line>
+        <line>
+            <text align="center" length="42">Receipt sample.</text>
+        </line>
+        <line>
+            <text align="center" length="42">You can change this template</text>
+        </line>
+        <line>
+            <text align="center" length="42">in the resources panel</text>
+        </line>
+        <line></line>
+        <line>
+            <text align="left" length="15">Receipt:</text>
+            <text>${ticket.printId()}</text>
+        </line>    
+        <line>
+            <text align="left" length="15">Date:</text>
+            <text>${ticket.printDate()}</text>
+        </line>  
+         #if ($ticket.getCustomer())
+        <line>
+            <text align="left" length="15">Customer:</text>
+            <text>${ticket.getCustomer().printName()}</text>
+        </line>      
+        <line>
+            <text align="left" length="15"></text>
+            <text>${ticket.getCustomer().printTaxid()}</text>
+        </line>  
+        #end       
+        <line></line> 
+        <line size="1">
+            <text align ="left" length="16" bold="true">Total paid.</text>
+            <text align ="right" length="20" bold="true">${ticket.printTotalPaid()}</text>
+        </line>    
+        <line>
+            <text align ="left" length="16" bold="true">Pending.</text>
+            <text align ="right" length="20" bold="true">${customer.printCurDebt()}</text>
+        </line>          
+        #foreach ($paymentline in $ticket.payments)      
+        #if ($paymentline.name == "cash")
+        <line></line>     
+        <line>
+            <text bold="true">Cash</text>
+        </line>  
+        <line>
+            <text align="left" length="22">Tendered:</text>
+            <text align ="right" length="20">${paymentline.printPaid()}</text>
+        </line>  
+        <line>
+            <text align="left" length="22">Change:</text>
+            <text align ="right" length="20">${paymentline.printChange()}</text>
+        </line>   
+        #end
+        #if ($paymentline.name == "magcard")
+        <line></line>        
+        <line>
+            <text bold="true">Mag card</text>
+        </line>   
+        <line>
+            <text align ="right" length="42">${paymentline.printTotal()}</text>
+        </line>    
+        <line>
+            <text align ="left" length="22">Number:</text>
+            <text>${paymentline.printCardNumber()}</text>
+        </line>
+        <line>
+            <text align ="left" length="22">Expiration date:</text>
+            <text>${paymentline.printExpirationDate()}</text>
+        </line>
+        <line>
+            <text align ="left" length="22">Operation:</text>
+            <text>${paymentline.printTransactionID()}</text>
+        </line>
+        <line>
+            <text align ="left" length="22">Authorization:</text>
+            <text>${paymentline.printAuthorization()}</text>
+        </line>
+        #end  
+        #if ($paymentline.name == "cheque")
+        <line></line>     
+        <line>
+            <text bold="true">Cheque</text>
+        </line>    
+        <line>
+            <text align ="right" length="42">${paymentline.printTotal()}</text>
+        </line>    
+        #end
+         #if ($paymentline.name == "paperin")
+        <line></line>     
+        <line>
+            <text bold="true">Note</text>
+        </line>    
+        <line>
+            <text align ="right" length="42">${paymentline.printTotal()}</text>
+        </line>    
+         #end
+        #end 
+        <line></line>            
+        <line>
+            <text align="left" length="15">Cashier:</text>
+            <text>${ticket.printUser()}</text>
+        </line>
+        <line></line>            
+        <line>
+            <text align="center" length="42">Thank you for your visit.</text>
+        </line>    
+    </ticket>
+    #foreach ($paymentline in $ticket.payments)      
+    #if ($paymentline.name == "cash")
+    <opendrawer/>
+    #end
+    #if ($paymentline.name == "cashrefund")
+    <opendrawer/>
+    #end  
+    #end
+</output>

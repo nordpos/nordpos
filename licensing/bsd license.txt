@@ -1,0 +1,24 @@
+BSD license
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+    * Neither the name of the "Olimpiada Matemática Argentina" nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+Texto de la licencia en castellano
+
+El contenido subsiguiente de la página existe solo a fines informativos y no debe considerarse un texto legal
+
+Reproducido con permiso del traductor, Erick Lopez Carreon <erick at fsl dot org dot mx>
+
+Esta es una traducción no oficial al español de la licencia BSD modificada. No establece legalmente las condiciones de distribución para el software que usa la licencia BSD. Estas condiciones se establecen solamente por el texto original, en inglés. Sin embargo, esperamos que esta traducción ayude a los hispanohablantes a entender mejor la licencia BSD.
+
+La redistribución y el uso en forma de fuente o binario, con o sin modificación, estan permitidas a reserva de que se cumplan las siguientes condiciones:
+
+   1. La redistribución del código fuente debe incluir el anuncio de copyright arriba mencionado, esta lista de condiciones y la siguiente limitación de responsabilidad.
+   2. La redistribución en forma de binarios debe incluir el anuncio de copyright arriba mencionado, esta lista de condiciones y la siguiente limitación de responsabilidad en la documentación y/o en otros materiales proporcionados con la distribución.
+   3. El nombre del autor no se puede usar para respaldar o promover productos derivados de este programa sin un permiso previo por escrito.
+
+ESTE PROGRAMA ES PROPORCIONADO POR EL AUTOR "TAL CUAL"Y CUALESQUIERA GARANTIAS EXPRESAS O IMPLICADAS, INCLUYENDO PERO NO LIMITANDO, LAS GARANTIAS IMPLICITAS DE COMERCIALIZACIÓN Y CAPACIDAD PARA UN PROPÓSITO PARTICULAR ESTAN NEGADAS. EN NINGUN CASO PODRA EL AUTOR SER RESPONSABLE POR NINGUN DAÑO DIRECTO, INDIRECTO, INCIDENTAL, ESPECIAL, EJEMPLAR, O RESULTANTE (INCLUYENDO, PERO NO LIMITANDO A, PROCURACIÓN DE BIENES SUSTITUTOS O SERVICIOS; PERDIDA DE FUNCIONALIDAD, DATOS, O BENEFICIOS; O INTERRRUPCIÓN DE NEGOCIOS) NO OBSTANTE LA CAUSA, Y EN NINGUNA TEORIA DE RESPONSABILIDAD, YA SEA POR CONTRATO, RESPONSABILIDAD LIMITADA, O DAÑO DERIVADO DE UN ACTO O FALTA DE DICHO ACTO (INCLUYENDO NEGLIGENCIA O CUALQUIER OTRO) RESULTANTE DE CUALQUIER MODO DE USO DE ESTE PROGRAMA, INCLUSO SI SE ADVIRTIO DE LA POSIBILIDAD DE DICHO DAÑO.

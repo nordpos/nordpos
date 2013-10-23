@@ -1,0 +1,95 @@
+A) General Public License
+This license file applies to the Openbravo POS software (the "Openbravo POS Software"), except as described in B) and C) below.
+
+This product is Copyright 2007-2009 Openbravo S.L.
+Original Developer: Adrian Romero
+
+	This file is part of Openbravo POS.
+
+    Openbravo POS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+
+B) Some portions of the Openbravo POS Software are provided by third parties. In this distribution, they are:
+
+- Files in folder /images marked marked "(c) Everaldo". � http://www.everaldo.com. (LGPL)
+- Translation of the POS interface in Galician (files marked "(c) mancomun.org"). � 2007 mancomun.org  (GPL) 
+- Files in folders /i18n/ and /possync/ and /ws/types/. Copyright � 2007 openTrends Solucions i Sistemes, S.L (GPL)
+- Payment gateways in /tpv/payment/: PaymentGatewayAuthorizeNet.java and PaymentGatewaySECPay.java � 2003 Authorize.Net and � 2002 SECPay Ltd. respectively. 
+- Files in /src-pos/com/openbravo/pos/util/: JRPrinterAWT300.java and JRViewer300.form and JRViewer300.form - Copyright (C) 2001-2006 JasperSoft Corporation http://www.jaspersoft.com. Distributed under the Lesser General Public License (LGPL)
+
+ 
+C) This product uses certain third party software libraries, found in /lib/ and in /web/WEB-INF/lib and in /jetty/
+
+
+Portions of this code are developed by The Apache Software Foundation (www.apache.org). These files are:
+
+- axis.jar
+- jaxrpc.jar (a dependency of axis)
+- saaj.jar (a dependency of axis)
+- wsdl4j-1.5.1.jar (a dependency of axis)
+- commons-beanutils.jar
+- commons-codec-1.3.jar
+- commons-collections-3.1.jar
+- commons-digester-1.7.jar
+- commons-discovery-0.2.jar
+- commons-lang-2.1.jar
+- commons-logging-1.0.4.jar
+- oro-2.0.8.jar (a dependency of velocity)
+- poi-3.2-FINAL-20081019.jar (a dependency of jasperreports)
+- velocity-1.5.jar
+- derby.jar
+- antlr.jar (a dependency of struts)
+- commons-digester.jar (a dependency of struts)
+- commons-fileupload-1.0.jar (a dependency of struts)
+- commons-logging.jar (a dependency of struts)
+- commons-validator.jar (a dependency of struts)
+- jakarta-oro (a dependency of struts)
+- struts.jar
+- standard.jar
+Copyright � 1999-2007, The Apache Software Foundation. Distributed under the Apache License Version 2.0, January 2004
+
+Other third party libraries in /lib/
+
+- barcode4j-light.jar - available at http://barcode4j.sourceforge.net/. Copyright 2002-2007 Jeremias M�rki and Copyright 2005-2006 Dietmar B�rkle. Distributed under the Apache License Version 2.0, January 2004
+
+- bsh-core-2.0b4.jar - available at http://www.beanshell.org/ - Copyright Pat Niemeyer. Distributed under the Sun Public License or the GNU Lesser Public License
+
+- hsqldb.jar - available at http://www.hsqldb.org/. Copyright (c) 1995-2000 by the Hypersonic SQL Group and Copyright (c) 2001-2005, The HSQL Development Group. Distributed under the http://www.hsqldb.org/web/hsqlLicense.html (similar to the BSD license).
+
+- iText-2.1.0.jar (a dependency of jasperreports) - available from http://www.lowagie.com/iText/.  Copyright � 1999-2007 by Bruno Lowagie. Distributed under the MPL and LGPL.
+
+- jasperreports-3.1.14.jar - available from http://www.jasperforge.org/jaspersoft/opensource/business_intelligence/jasperreports/. Copyright � 2007 JasperSoft Corporation. Distributed under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
+
+- jcommon-1.0.15.jar (a dependency of jfreechart) and jfreechart-1.0.12.jar - available from http://www.jfree.org/jfreechart/. � 2005-2008 Object Refinery Limited. Distributed under the GNU LESSER GENERAL PUBLIC LICENSE
+
+- RXTXcomm.jar
+- librxtxParallel.so
+- librxtxSerial.so
+- librxtxParallel.dll
+- librxtxSerial.dll
+- librxtxSerial.jnilib
+All available from http://www.rxtx.org/. Copyright 1998-2006 Keane Jarvi. Distributed under the RXTX License v 2.1 (LGPL v 2.1 + Linking Over Controlled Interface)
+
+- swingx-0.9.5.jar - available from https://swingx.dev.java.net/. Copyright (c) 2005-2006 Sun Microsystems, Inc. Distributed under the Lesser General Public License (LGPL).
+
+- substance.jar - available from https://substance.dev.java.net/. Copyright (c) 2005-2008 Kirill Grouchnikov. Distributed under the Berkeley Software Distribution (BSD) License
+
+- substance-swingx.jar - available from https://substance-swingx.dev.java.net/. Copyright (c) 2005-2008 Kirill Grouchnikov. Distributed under the Lesser General Public License (LGPL).
+
+- jdt-compiler-3.1.1.jar (a dependency of jasperreports) - Copyright � 2008 The Eclipse Foundation. Distributed under the Common Public License - v 1.0
+
+- jpos1121.jar - available from http://www.javapos.com/. Distributed under the Common Public License
+
+The jetty web server version 6.1.12 is found in the folder /jetty/ and is available from http://www.mortbay.org/jetty/. Copyright (C) 1995-2008 Mort Bay Consulting
+
+If you have questions about the licensing terms for the Openbravo POS Software, please contact us at: legal@openbravo.com

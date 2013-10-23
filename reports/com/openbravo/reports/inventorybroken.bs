@@ -1,0 +1,65 @@
+//    Openbravo POS is a point of sales application designed for touch screens.
+//    Copyright (C) 2007-2009 Openbravo, S.L.
+//    http://www.openbravo.com/product/pos
+//
+//    This file is part of Openbravo POS.
+//
+//    Openbravo POS is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Openbravo POS is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+
+report = new com.openbravo.pos.reports.PanelReportBean();
+
+report.setTitleKey("Menu.InventoryBroken");
+report.setReport("/com/openbravo/reports/inventoryb");
+report.setResourceBundle("com/openbravo/reports/inventoryb_messages");
+
+report.setSentence("SELECT " +
+                "STOCKCURRENT.LOCATION AS LOCATIONID, " +
+                "LOCATIONS.NAME AS LOCATIONNAME, " +
+                "PRODUCTS.REFERENCE, " +
+                "PRODUCTS.NAME AS NAME, " +
+                "PRODUCTS.CATEGORY, " +
+                "CATEGORIES.NAME AS CATEGORYNAME, " +
+                "SUM(STOCKCURRENT.UNITS) AS UNITS, " +
+                "COALESCE(STOCKLEVEL.STOCKSECURITY, 0) AS STOCKSECURITY, " +
+                "COALESCE(STOCKLEVEL.STOCKMAXIMUM, 0) AS STOCKMAXIMUM " +
+                "FROM STOCKCURRENT " +
+                "JOIN LOCATIONS ON STOCKCURRENT.LOCATION = LOCATIONS.ID " +
+                "JOIN PRODUCTS ON STOCKCURRENT.PRODUCT = PRODUCTS.ID " +
+                "JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID  " +
+                "LEFT OUTER JOIN STOCKLEVEL ON STOCKCURRENT.LOCATION = STOCKLEVEL.LOCATION AND STOCKCURRENT.PRODUCT = STOCKLEVEL.PRODUCT " +
+                "WHERE ?(QBF_FILTER) " +
+                "GROUP BY STOCKCURRENT.LOCATION, LOCATIONS.NAME, PRODUCTS.REFERENCE, PRODUCTS.NAME, PRODUCTS.CATEGORY, CATEGORIES.NAME, STOCKLEVEL.STOCKSECURITY, STOCKLEVEL.STOCKMAXIMUM " +
+                "HAVING STOCKLEVEL.STOCKSECURITY IS NOT NULL AND STOCKLEVEL.STOCKSECURITY >= SUM(STOCKCURRENT.UNITS) " +
+                "ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION");
+report.addParameter("PRODUCTS.NAME");
+report.addParameter("PRODUCTS.PRICEBUY");
+report.addParameter("PRODUCTS.PRICESELL");
+report.addParameter("PRODUCTS.CATEGORY");
+report.addParameter("PRODUCTS.CODE");
+report.addQBFFilter(new com.openbravo.pos.ticket.ProductFilter());
+report.addParameter("STOCKCURRENT.LOCATION");
+report.addQBFFilter(new com.openbravo.pos.reports.JParamsLocationWithFirst());
+
+report.addField("LOCATIONID", com.openbravo.data.loader.Datas.STRING);
+report.addField("LOCATIONNAME", com.openbravo.data.loader.Datas.STRING);
+report.addField("REFERENCE", com.openbravo.data.loader.Datas.STRING);
+report.addField("NAME", com.openbravo.data.loader.Datas.STRING);
+report.addField("CATEGORY", com.openbravo.data.loader.Datas.STRING);
+report.addField("CATEGORYNAME", com.openbravo.data.loader.Datas.STRING);
+report.addField("UNITS", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("STOCKSECURITY", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("STOCKMAXIMUM", com.openbravo.data.loader.Datas.DOUBLE);
+
+report;
+

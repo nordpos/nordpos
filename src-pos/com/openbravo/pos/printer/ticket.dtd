@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Openbravo POS is a point of sales application designed for touch screens.
+    Copyright (C) 2008 Openbravo, S.L.
+    http://sourceforge.net/projects/openbravopos
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-->
+
+<!ELEMENT output (ticket | display | opendrawer | play | )*>
+
+<!ELEMENT ticket (line | image | barcode | cut)*>
+<!ATTLIST ticket printer CDATA "0">
+
+<!ELEMENT line (text)*>
+<!ATTLIST line size (0 | 1 | 2 | 3) "0">
+
+<!ELEMENT text (#PCDATA)>
+<!ATTLIST text align (left | right | center) "left">
+<!ATTLIST text length CDATA #IMPLIED>
+<!ATTLIST text bold (true | false) "false">
+<!ATTLIST text underline (true | false) "false">
+
+<!ELEMENT image (#PCDATA)>
+
+<!ELEMENT barcode (#PCDATA)>
+<!ATTLIST barcode type (EAN13 | CODE128) "EAN13">
+
+<!ELEMENT display (line)*>
+<!ATTLIST display animation (scroll | flyer | blink | curtain | none) "none">
+
+<!ELEMENT play (#PCDATA)>
+
+<!ELEMENT opendrawer EMPTY>
+<!ATTLIST opendrawer printer CDATA "0">

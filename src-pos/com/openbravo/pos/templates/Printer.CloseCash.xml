@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Openbravo POS is a point of sales application designed for touch screens.
+    Copyright (C) 2007-2009 Openbravo, S.L.
+    http://sourceforge.net/projects/openbravopos
+
+    This file is part of Openbravo POS.
+
+    Openbravo POS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Openbravo POS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<output>
+    <ticket>
+        <image>Printer.Ticket.Logo</image>
+        <line></line>
+        <line size="1">
+            <text align ="center" length="42" bold="true">Close cash report</text>            
+        </line>
+        <line></line>
+        <line>
+            <text bold="true">Payments report</text>
+        </line>
+        <line>
+            <text align ="right" length="42">Total</text>
+        </line>
+        <line>
+            <text>------------------------------------------</text>
+        </line> 
+        #foreach ($line in $payments.getPaymentLines())
+        <line>
+            <text align ="left" length="32">${line.printType()}</text>
+            <text align ="right" length="10">${line.printValue()}</text>
+        </line> 
+        #end
+        <line>
+            <text>------------------------------------------</text>
+        </line> 
+        <line>
+            <text align ="left" length="32">Payments:</text>
+            <text align ="right" length="10">${payments.printPayments()}</text>
+        </line>
+        <line></line>
+        <line size="1">
+            <text align ="left" length="32" bold="true">Total</text>
+            <text align ="right" length="10" bold="true">${payments.printPaymentsTotal()}</text>
+        </line>
+        <line></line>
+        <line>
+            <text bold="true">Taxes report</text>
+        </line>
+        <line>
+            <text align ="right" length="42">Total</text>
+        </line>
+        <line>
+            <text>------------------------------------------</text>
+        </line>
+        #foreach ($line in $payments.getSaleLines())
+        <line>
+            <text align ="left" length="32">${line.printTaxName()}</text>
+            <text align ="right" length="10">${line.printTaxes()}</text>
+        </line> 
+        #end        
+        <line>
+            <text>------------------------------------------</text>
+        </line>
+        <line>
+            <text align ="left" length="32">Receipts:</text>
+            <text align ="right" length="10">${payments.printSales()}</text>
+        </line>
+        <line></line>
+        <line size="1">
+            <text align ="left" length="32" bold="true">Subtotal</text>
+            <text align ="right" length="10" bold="true">${payments.printSalesBase()}</text>
+        </line>
+        <line size="1">
+            <text align ="left" length="22" bold="true">Total</text>
+            <text align ="right" length="10" bold="true">${payments.printSalesTaxes()}</text>
+            <text align ="right" length="10" bold="true">${payments.printSalesTotal()}</text>
+        </line>
+        <line></line>
+        <line>
+            <text length="18">Machine:</text>
+            <text>${payments.printHost()}</text>
+        </line>    
+        <line>
+            <text length="18">Sequence:</text>
+            <text length="24" align="right">${payments.printSequence()}</text>
+        </line> 
+        <line>
+            <text length="18">Start date:</text>
+            <text length="24" align="right">${payments.printDateStart()}</text>
+        </line>  
+        <line>
+            <text length="18">End date:</text>
+            <text length="24" align="right">${payments.printDateEnd()}</text>
+        </line>  
+    </ticket>
+</output>

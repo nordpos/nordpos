@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Openbravo POS is a point of sales application designed for touch screens.
+    Copyright (C) 2008-2009 Openbravo, S.L.
+    http://sourceforge.net/projects/openbravopos
+
+    This file is part of Openbravo POS.
+
+    Openbravo POS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Openbravo POS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<permissions>
+    <class name="com.openbravo.pos.sales.JPanelTicketSales"/>
+    <class name="com.openbravo.pos.sales.JPanelTicketEdits"/>
+    <class name="com.openbravo.pos.panels.JPanelPayments"/>
+    <class name="sales.EditLines"/>
+    <class name="sales.RefundTicket"/>
+    <class name="sales.PrintTicket"/>
+    <class name="sales.Total"/>
+    <class name="payment.cash"/>
+    <class name="payment.cheque"/>
+    <class name="payment.paper"/>
+    <class name="payment.magcard"/>
+    <class name="payment.free"/>
+    <class name="refund.cash"/>
+    <class name="refund.cheque"/>
+    <class name="refund.paper"/>
+    <class name="refund.magcard"/>
+    <class name="Menu.ChangePassword"/>
+    <class name="button.print"/>
+</permissions>

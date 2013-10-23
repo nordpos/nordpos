@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Openbravo POS is a point of sales application designed for touch screens.
+    Copyright (C) 2008-2009 Openbravo, S.L.
+    http://sourceforge.net/projects/openbravopos
+
+    This file is part of Openbravo POS.
+
+    Openbravo POS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Openbravo POS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<output>
+    <ticket>
+        <image>Printer.Ticket.Logo</image>
+        <line></line>
+        <line>
+            <text align="center" length="42">Receipt sample.</text>
+        </line>
+        <line>
+            <text align="center" length="42">You can change this template</text>
+        </line>
+        <line>
+            <text align="center" length="42">in the resources panel</text>
+        </line>
+        <line></line>
+        <line>
+            <text>Date:     ${inventoryrecord.printDate()}</text>
+        </line>
+        <line>
+            <text>Reason:   ${inventoryrecord.printReason()}</text>
+        </line>
+        <line>
+            <text>Location: ${inventoryrecord.printLocation()}</text>
+        </line>
+        <line size="1">
+            #if ($inventoryrecord.isInput())
+            <text align ="center" length="42">In</text>
+            #else
+            <text align ="center" length="42">Out</text>
+            #end
+        </line>
+        <line></line>    
+        <line>
+            <text align ="left" length="17">Item</text>
+            <text align ="right" length="10">Price</text>
+            <text align ="right" length="5"></text>
+            <text align ="right" length="10">Value</text>
+        </line>      
+        <line>
+            <text>------------------------------------------</text>
+        </line>   
+        #foreach ($inventoryline in $inventoryrecord.getLines())
+        <line>
+            <text align ="left" length="17">${inventoryline.printName()}</text>
+            <text align ="right" length="10">${inventoryline.printPrice()}</text>
+            <text align ="right" length="5">x${inventoryline.printMultiply()}</text>
+            <text align ="right" length="10">${inventoryline.printSubValue()}</text>
+        </line> 
+        #if ($inventoryline.productAttSetInstId)
+        <line>
+	        <text align ="left" length="42">    ${inventoryline.productAttSetInstDesc}</text>
+        </line>
+        #end
+        #end
+        <line>
+            <text>------------------------------------------</text>
+        </line>   
+        <line></line>            
+        <line>
+            <text align="center" length="42">Thank you for your visit.</text>
+        </line>   
+    </ticket>
+</output>

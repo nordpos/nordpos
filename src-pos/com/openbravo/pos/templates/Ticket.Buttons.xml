@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Openbravo POS is a point of sales application designed for touch screens.
+    Copyright (C) 2008-2009 Openbravo, S.L.
+    http://sourceforge.net/projects/openbravopos
+
+    This file is part of Openbravo POS.
+
+    Openbravo POS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Openbravo POS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<configuration>
+    <button key="button.print" titlekey="button.print" template="Printer.TicketPreview"/>
+    <button key="button.opendrawer" titlekey="button.opendrawer" template="Printer.OpenDrawer"/>
+    <!-- <event key="ticket.change" code="event.change"/> -->
+    <!-- <event key="ticket.addline" code="event.addline"/> -->
+    <!-- <event key="ticket.removeline" code="event.removeline"/> -->
+    <!-- <event key="ticket.setline" code="event.setline"/> -->
+    <!-- <event key="ticket.show" code="event.show"/> -->
+    <!-- <event key="ticket.total" code="event.total"/> -->
+    <!-- <event key="ticket.close" code="event.close"/> -->   
+    <img-width value="64"/>
+    <img-height value="54"/>
+    <cat-height value="300" />
+    <taxesincluded value="false"/>   
+    <!-- <printselected value="true"/> -->    
+    <!-- <taxcategoryid value="001"/> -->
+    <!-- <pricevisible value="true" /> -->
+</configuration>

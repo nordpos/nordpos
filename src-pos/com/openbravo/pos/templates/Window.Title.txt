@@ -1,0 +1,1 @@
+Openbravo POS is a point of sale designed for touch screens.
