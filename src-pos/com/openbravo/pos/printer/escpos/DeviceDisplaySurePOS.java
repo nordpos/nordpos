@@ -20,6 +20,7 @@
 package com.openbravo.pos.printer.escpos;
 
 import com.openbravo.pos.printer.DeviceTicket;
+import com.openbravo.pos.util.StringUtils;
 
 /**
  *
@@ -47,9 +48,9 @@ public class DeviceDisplaySurePOS extends DeviceDisplaySerial {
 
     public void repaintLines() {
         display.write(new byte[]{0x10, 0x00}); // VISOR HOME
-        display.write(trans.transString(DeviceTicket.alignLeft(m_displaylines.getLine1(), 20)));
+        display.write(trans.transString(StringUtils.alignLeft(m_displaylines.getLine1(), 20)));
         display.write(new byte[]{0x10, 0x14});
-        display.write(trans.transString(DeviceTicket.alignLeft(m_displaylines.getLine2(), 20)));        
+        display.write(trans.transString(StringUtils.alignLeft(m_displaylines.getLine2(), 20)));        
         display.flush();
     }
 }

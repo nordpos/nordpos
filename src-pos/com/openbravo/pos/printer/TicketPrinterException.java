@@ -27,6 +27,11 @@ public class TicketPrinterException extends java.lang.Exception {
     public TicketPrinterException(String msg) {
         super(msg);
     }
+
+    public TicketPrinterException(Throwable cause) {
+        super(cause);
+    }
+
     public TicketPrinterException(String msg, Throwable cause) {
         super(msg, cause);
     }

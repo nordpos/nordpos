@@ -19,14 +19,15 @@
     You should have received a copy of the GNU General Public License
     along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<output>
-    <display>
+<output  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
+    <display>        
         <line>
-            <text align="left" length="10">Total paid.</text>
+            <text align="left" length="10">Итого к оплате.</text>
             <text align="right" length="10">${ticket.printTotalPaid()}</text>
         </line>
         <line>
-            <text align="center" length="20">Thank you.</text>
+            <text align="center" length="20">Спасибо.</text>
         </line>
     </display>
 </output>

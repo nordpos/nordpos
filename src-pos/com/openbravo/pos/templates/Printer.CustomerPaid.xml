@@ -19,40 +19,42 @@
     You should have received a copy of the GNU General Public License
     along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<output>
+<output  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
+       
     <display>
         <line>
-            <text align="left" length="10">Total paid.</text>
+            <text align="left" length="10">Итого к оплате.</text>
             <text align="right" length="10">${ticket.printTotalPaid()}</text>
         </line>
         <line>
-            <text align="center" length="20">Thank you.</text>
+            <text align="center" length="20">Спасибо.</text>
         </line>
     </display>
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line></line>
         <line>
-            <text align="center" length="42">Receipt sample.</text>
+            <text align="center" length="42">Пример текста чека.</text>
         </line>
         <line>
-            <text align="center" length="42">You can change this template</text>
+            <text align="center" length="42">Вы можете его изменить</text>
         </line>
         <line>
-            <text align="center" length="42">in the resources panel</text>
+            <text align="center" length="42">через раздел Ресурсы.</text>
         </line>
         <line></line>
         <line>
-            <text align="left" length="15">Receipt:</text>
+            <text align="left" length="15">Чек:</text>
             <text>${ticket.printId()}</text>
         </line>    
         <line>
-            <text align="left" length="15">Date:</text>
+            <text align="left" length="15">Дата:</text>
             <text>${ticket.printDate()}</text>
         </line>  
          #if ($ticket.getCustomer())
         <line>
-            <text align="left" length="15">Customer:</text>
+            <text align="left" length="15">Клиент:</text>
             <text>${ticket.getCustomer().printName()}</text>
         </line>      
         <line>
@@ -62,57 +64,57 @@
         #end       
         <line></line> 
         <line size="1">
-            <text align ="left" length="16" bold="true">Total paid.</text>
+            <text align ="left" length="16" bold="true">Всего оплачено.</text>
             <text align ="right" length="20" bold="true">${ticket.printTotalPaid()}</text>
         </line>    
         <line>
-            <text align ="left" length="16" bold="true">Pending.</text>
+            <text align ="left" length="16" bold="true">К оплате.</text>
             <text align ="right" length="20" bold="true">${customer.printCurDebt()}</text>
         </line>          
         #foreach ($paymentline in $ticket.payments)      
         #if ($paymentline.name == "cash")
         <line></line>     
         <line>
-            <text bold="true">Cash</text>
+            <text bold="true">Наличные</text>
         </line>  
         <line>
-            <text align="left" length="22">Tendered:</text>
+            <text align="left" length="22">Оплачено:</text>
             <text align ="right" length="20">${paymentline.printPaid()}</text>
         </line>  
         <line>
-            <text align="left" length="22">Change:</text>
+            <text align="left" length="22">Сдача:</text>
             <text align ="right" length="20">${paymentline.printChange()}</text>
         </line>   
         #end
         #if ($paymentline.name == "magcard")
-        <line></line>        
+        <line></line>  
         <line>
-            <text bold="true">Mag card</text>
+            <text bold="true">Карта</text>
         </line>   
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
         </line>    
         <line>
-            <text align ="left" length="22">Number:</text>
+            <text align ="left" length="22">Номер:</text>
             <text>${paymentline.printCardNumber()}</text>
         </line>
         <line>
-            <text align ="left" length="22">Expiration date:</text>
+            <text align ="left" length="22">Дата закрытия:</text>
             <text>${paymentline.printExpirationDate()}</text>
         </line>
         <line>
-            <text align ="left" length="22">Operation:</text>
+            <text align ="left" length="22">Операция:</text>
             <text>${paymentline.printTransactionID()}</text>
         </line>
         <line>
-            <text align ="left" length="22">Authorization:</text>
+            <text align ="left" length="22">Идентификация:</text>
             <text>${paymentline.printAuthorization()}</text>
         </line>
         #end  
         #if ($paymentline.name == "cheque")
         <line></line>     
         <line>
-            <text bold="true">Cheque</text>
+            <text bold="true">Чек</text>
         </line>    
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -121,7 +123,7 @@
          #if ($paymentline.name == "paperin")
         <line></line>     
         <line>
-            <text bold="true">Note</text>
+            <text bold="true">Выписка</text>
         </line>    
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -130,12 +132,12 @@
         #end 
         <line></line>            
         <line>
-            <text align="left" length="15">Cashier:</text>
+            <text align="left" length="15">Платильщик:</text>
             <text>${ticket.printUser()}</text>
         </line>
         <line></line>            
         <line>
-            <text align="center" length="42">Thank you for your visit.</text>
+            <text align="center" length="42">Спасибо за визит.</text>
         </line>    
     </ticket>
     #foreach ($paymentline in $ticket.payments)      

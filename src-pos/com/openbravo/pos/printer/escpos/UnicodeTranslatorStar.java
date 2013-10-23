@@ -29,7 +29,15 @@ public class UnicodeTranslatorStar extends UnicodeTranslator {
         return new byte[] {0x1B, 0x1D, 0x74, 0x01}; // Select code page 437
     }
 
-    public byte transChar(char sChar) {
+    public final byte[] convertString(String sConvert) {
+        byte bAux[] = new byte[sConvert.length()];
+        for (int i = 0; i < sConvert.length(); i++) {
+            bAux[i] = transChar(sConvert.charAt(i));
+        }
+        return bAux;
+    }
+
+    private byte transChar(char sChar) {
         if ((sChar >= 0x0000) && (sChar < 0x0080)) {
             return (byte) sChar;
         } else {

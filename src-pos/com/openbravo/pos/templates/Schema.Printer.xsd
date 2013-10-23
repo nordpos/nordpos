@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Shema.Printer.xsd
+    Created on : 05.10.2011
+    Author     : Andrey Svininykh <svininykh@gmail.com>
+    Description:
+        XML shema for Openbravo POS ticket templates.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="output">
+        <xs:complexType mixed="true">
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="display" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType mixed="true">
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="line" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute name="align" type="TextAlign" default="center"/>
+                                                        <xs:attribute name="length" type="xs:unsignedInt" default="0"/>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="line1" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute name="align" type="TextAlign" default="center"/>
+                                                        <xs:attribute name="length" type="xs:unsignedInt" default="0"/>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="line2" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute name="align" type="TextAlign" default="center"/>
+                                                        <xs:attribute name="length" type="xs:unsignedInt" default="0"/>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="animation" type="AnimationType" default="none"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ticket" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType mixed="true">
+                        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                            <xs:element name="barcode" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                        <xs:simpleContent>
+                                                <xs:extension base="xs:string">
+                                                        <xs:attribute name="type" type="BarcodeType" default="EAN13" use="optional"/>
+                                                            <xs:attribute name="position" type="BarcodePosition" default="bottom" use="optional"/>
+                                                    </xs:extension>
+                                            </xs:simpleContent>
+                                    </xs:complexType>
+                            </xs:element>
+                            <xs:element name="image" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+
+                            <xs:element name="line" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute name="bold" type="xs:boolean" default="false"/>
+                                                        <xs:attribute name="underline" type="xs:boolean" default="false"/>
+                                                        <xs:attribute name="align" type="TextAlign" default="left"/>
+                                                        <xs:attribute name="length" type="xs:unsignedInt" default="0"/>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="size" type="LineSize" default="0" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="cutpaper" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="complete" type="xs:boolean" default="true"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="printer" type="PrinterNumber" default="1" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="fiscalreceipt" minOccurs="0">
+                    <xs:complexType mixed="true">
+                        <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:element name="line" maxOccurs="unbounded" minOccurs="1">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="price" type="xs:double" default="0.0"/>
+                                            <xs:attribute name="units" type="xs:double" default="1.0"/>
+                                            <xs:attribute name="tax" type="xs:unsignedInt" default="0"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="message" minOccurs="0" maxOccurs="unbounded">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="total" minOccurs="1">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="paid" type="xs:double" default="0.0"/>
+                                            <xs:attribute name="type" type="xs:string" default="cash"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="cutpaper" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="complete" type="xs:boolean" default="true"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="type" type="FiscalReceiptType" default="sale"/>
+                        <xs:attribute name="cashier" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="play" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="opendrawer" maxOccurs="1" minOccurs="0">
+                    <xs:complexType>
+                        <xs:attribute name="printer" type="PrinterNumber"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="fiscalreport" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="fiscalxreport" minOccurs="0"/>
+                            <xs:element name="fiscalzreport" minOccurs="0"/>
+                            <xs:element name="cutpaper" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="complete" type="xs:boolean" default="true"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="fiscalcash" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="fiscalcashin" minOccurs="0">
+                               <xs:complexType>
+                                    <xs:attribute name="value" type="xs:double" default="0.0"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="fiscalcashout" minOccurs="0">
+                               <xs:complexType>
+                                    <xs:attribute name="value" type="xs:double" default="0.0"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="cutpaper" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="complete" type="xs:boolean" default="true"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType mixed="true">
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="frame" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="y-end" type="xs:unsignedInt"/>
+                                    <xs:attribute name="x-end" type="xs:unsignedInt"/>
+                                    <xs:attribute name="y-begin" type="xs:unsignedInt"/>
+                                    <xs:attribute name="x-begin" type="xs:unsignedInt"/>
+                                    <xs:attribute name="thickness" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="barcode" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="position" type="BarcodePosition" default="bottom" use="optional"/>
+                                            <xs:attribute name="type" type="BarcodeType" default="EAN13" use="optional"/>
+                                            <xs:attribute name="orientation" type="xs:unsignedInt"/>
+                                            <xs:attribute name="y" type="xs:unsignedInt"/>
+                                            <xs:attribute name="x" type="xs:unsignedInt"/>
+                                            <xs:attribute name="height" type="xs:positiveInteger"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="rectangle" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:attribute name="x-begin" type="xs:unsignedInt"/>
+                                    <xs:attribute name="y-begin" type="xs:unsignedInt"/>
+                                    <xs:attribute name="x-end" type="xs:unsignedInt"/>
+                                    <xs:attribute name="y-end" type="xs:unsignedInt"/>
+                                    <xs:attribute name="fill" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="line" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="y-end" type="xs:unsignedInt"/>
+                                    <xs:attribute name="x-end" type="xs:unsignedInt"/>
+                                    <xs:attribute name="y-begin" type="xs:unsignedInt"/>
+                                    <xs:attribute name="x-begin" type="xs:unsignedInt"/>
+                                    <xs:attribute name="thickness" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="text" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="font" type="xs:string"/>
+                                            <xs:attribute name="x" type="xs:unsignedInt"/>
+                                            <xs:attribute name="y" type="xs:unsignedInt"/>
+                                            <xs:attribute name="orientation" type="xs:unsignedInt"/>
+                                            <xs:attribute name="font-width" type="xs:positiveInteger"/>
+                                            <xs:attribute name="font-height" type="xs:positiveInteger"/>
+                                            <xs:attribute name="font-weight" type="xs:string"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="charset" type="xs:string"/>
+                        <xs:attribute name="length" type="xs:string"/>
+                        <xs:attribute name="width" type="xs:unsignedInt"/>
+                        <xs:attribute name="gap" type="xs:unsignedInt"/>
+                        <xs:attribute name="x" type="xs:unsignedInt"/>
+                        <xs:attribute name="y" type="xs:unsignedInt"/>
+                        <xs:attribute name="rotation" type="xs:unsignedInt"/>
+                        <xs:attribute name="resolution" type="xs:unsignedInt"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="BarcodeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="EAN8">
+                <xs:annotation>
+                    <xs:documentation>EAN-8</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EAN13">
+                <xs:annotation>
+                    <xs:documentation>EAN-13</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CODE39">
+                <xs:annotation>
+                    <xs:documentation>Code 39</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CODE128">
+                <xs:annotation>
+                    <xs:documentation>Code 128</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="QRCODE"/>
+            <xs:enumeration value="DATAMATRIX"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PrinterNumber">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Out printer number</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+            <xs:pattern value="[1-3]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BarcodePosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="bottom"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AnimationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="scroll"/>
+            <xs:enumeration value="flyer"/>
+            <xs:enumeration value="blink"/>
+            <xs:enumeration value="curtain"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TextAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FiscalReceiptType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="sale"/>
+            <xs:enumeration value="refund"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LineSize">
+        <xs:restriction base="xs:unsignedInt">
+            <xs:pattern value="[0-3]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="lengthType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[\+]?\d*(dot|mm)"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

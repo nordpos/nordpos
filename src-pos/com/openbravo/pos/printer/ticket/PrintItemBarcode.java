@@ -19,19 +19,28 @@
 
 package com.openbravo.pos.printer.ticket;
 
+import com.openbravo.pos.printer.DevicePrinter;
+import com.openbravo.pos.util.BarcodeString;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import com.openbravo.pos.printer.DevicePrinter;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.krysalis.barcode4j.BarcodeDimension;
 import org.krysalis.barcode4j.HumanReadablePlacement;
 import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.impl.datamatrix.DataMatrixBean;
+import org.krysalis.barcode4j.impl.qr.QRCodeBean;
 import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
+import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
 import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider;
 
 public class PrintItemBarcode implements PrintItem {
 
     protected AbstractBarcodeBean m_barcode;
+    protected QRCodeBean m_qrcode;
     protected String m_sCode;
     protected int m_iWidth;
     protected int m_iHeight;
@@ -42,27 +51,52 @@ public class PrintItemBarcode implements PrintItem {
 
         m_sCode = code;
         this.scale = scale;
-
+        
         if (DevicePrinter.BARCODE_CODE128.equals(type)) {
             m_barcode = new Code128Bean();
+            m_sCode = BarcodeString.getBarcodeStringCode128(m_sCode);               
+        } else if (DevicePrinter.BARCODE_CODE39.equals(type)) {
+            m_barcode = new Code39Bean();
+            m_sCode = BarcodeString.getBarcodeStringCode39(m_sCode);           
+        } else if (DevicePrinter.BARCODE_EAN8.equals(type)) {
+            m_barcode = new EAN8Bean();
+            m_sCode = BarcodeString.getBarcodeStringEAN8(m_sCode);
+        } else if (DevicePrinter.BARCODE_DATAMATRIX.equals(type)) {
+            m_barcode = new DataMatrixBean();
+            m_sCode = BarcodeString.getBarcodeStringDataMatrix(m_sCode);
+        } else if (DevicePrinter.BARCODE_QRCODE.equals(type)) {
+            m_qrcode = new QRCodeBean();
+            m_sCode = BarcodeString.getBarcodeStringQRCode(m_sCode);
+            m_qrcode.setEncoding("Cp1251");
+            m_barcode = m_qrcode;
         } else {
             m_barcode = new EAN13Bean();
+            m_sCode = BarcodeString.getBarcodeStringEAN13(m_sCode);
         }
 
         if (m_barcode != null) {
-            m_barcode.setModuleWidth(1.0);
-            m_barcode.setBarHeight(40.0);
-            m_barcode.setFontSize(10.0);
-            m_barcode.setQuietZone(10.0);
-            m_barcode.doQuietZone(true);
-            if (DevicePrinter.POSITION_NONE.equals(position)) {
-                m_barcode.setMsgPosition(HumanReadablePlacement.HRP_NONE);
+            if (DevicePrinter.BARCODE_DATAMATRIX.equals(type) || DevicePrinter.BARCODE_QRCODE.equals(type)) {
+               m_barcode.setModuleWidth(5.0);
+               BarcodeDimension dim = m_barcode.calcDimensions(m_sCode);
+               m_iWidth = (int) dim.getWidth(0);
+               m_iHeight = (int) dim.getHeight(0);                
             } else {
-                m_barcode.setMsgPosition(HumanReadablePlacement.HRP_BOTTOM);
+                m_barcode.setModuleWidth(1.0);
+                m_barcode.setBarHeight(40.0);
+                m_barcode.setFontSize(10.0);
+                m_barcode.setQuietZone(10.0);
+                m_barcode.doQuietZone(true);
+                if (DevicePrinter.POSITION_NONE.equals(position)) {
+                    m_barcode.setMsgPosition(HumanReadablePlacement.HRP_NONE);
+                } else if (DevicePrinter.POSITION_TOP.equals(position)) {
+                    m_barcode.setMsgPosition(HumanReadablePlacement.HRP_TOP);
+                } else {
+                    m_barcode.setMsgPosition(HumanReadablePlacement.HRP_BOTTOM);
+                }
+                BarcodeDimension dim = m_barcode.calcDimensions(m_sCode);
+                m_iWidth = (int) dim.getWidth(0);
+                m_iHeight = (int) dim.getHeight(0);
             }
-            BarcodeDimension dim = m_barcode.calcDimensions(m_sCode);
-            m_iWidth = (int) dim.getWidth(0);
-            m_iHeight = (int) dim.getHeight(0);
         }
     }
 
@@ -91,4 +125,9 @@ public class PrintItemBarcode implements PrintItem {
     public int getHeight() {
         return (int) (m_iHeight * scale) + 20;
     }
+    
+//    public final String transSymbolCode39(String sCad) {
+//
+//
+//    }
 }

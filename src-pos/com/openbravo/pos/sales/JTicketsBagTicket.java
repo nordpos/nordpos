@@ -25,8 +25,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import com.openbravo.data.gui.MessageInf;
-import com.openbravo.pos.forms.AppView; 
-import com.openbravo.pos.forms.AppLocal; 
+import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.printer.*;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.JMessageDialog;
@@ -39,120 +39,120 @@ import com.openbravo.pos.panels.JTicketsFinder;
 import com.openbravo.pos.ticket.FindTicketsInfo;
 
 public class JTicketsBagTicket extends JTicketsBag {
-    
+
     private DataLogicSystem m_dlSystem = null;
     protected DataLogicCustomers dlCustomers = null;
 
-    private DeviceTicket m_TP;    
-    private TicketParser m_TTP;    
-    private TicketParser m_TTP2; 
-    
+    private DeviceTicket m_TP;
+    private TicketParser m_TTP;
+    private TicketParser m_TTP2;
+
     private TicketInfo m_ticket;
     private TicketInfo m_ticketCopy;
-    
+
     private JTicketsBagTicketBag m_TicketsBagTicketBag;
-    
+
     private JPanelTicketEdits m_panelticketedit;
 
     /** Creates new form JTicketsBagTicket */
     public JTicketsBagTicket(AppView app, JPanelTicketEdits panelticket) {
-        
+
         super(app, panelticket);
-        m_panelticketedit = panelticket; 
+        m_panelticketedit = panelticket;
         m_dlSystem = (DataLogicSystem) m_App.getBean("com.openbravo.pos.forms.DataLogicSystem");
         dlCustomers = (DataLogicCustomers) m_App.getBean("com.openbravo.pos.customers.DataLogicCustomers");
-        
+
         // Inicializo la impresora...
         m_TP = new DeviceTicket();
-   
+
         // Inicializo el parser de documentos de ticket
         m_TTP = new TicketParser(m_TP, m_dlSystem); // para visualizar el ticket
         m_TTP2 = new TicketParser(m_App.getDeviceTicket(), m_dlSystem); // para imprimir el ticket
-        
+
         initComponents();
-        
+
         m_TicketsBagTicketBag = new JTicketsBagTicketBag(this);
-        
+
         m_jTicketEditor.addEditorKeys(m_jKeys);
-        
+
         // Este deviceticket solo tiene una impresora, la de pantalla
         m_jPanelTicket.add(m_TP.getDevicePrinter("1").getPrinterComponent(), BorderLayout.CENTER);
     }
-    
+
     public void activate() {
-        
+
         // precondicion es que no tenemos ticket activado ni ticket en el panel
-        
+
         m_ticket = null;
         m_ticketCopy = null;
-        
-        printTicket();        
-        
+
+        printTicket();
+
         m_jTicketEditor.reset();
         m_jTicketEditor.activate();
-        
+
         m_panelticketedit.setActiveTicket(null, null);
 
         jrbSales.setSelected(true);
-        
+
         m_jEdit.setVisible(m_App.getAppUserView().getUser().hasPermission("sales.EditTicket"));
         m_jRefund.setVisible(m_App.getAppUserView().getUser().hasPermission("sales.RefundTicket"));
         m_jPrint.setVisible(m_App.getAppUserView().getUser().hasPermission("sales.PrintTicket"));
-             
+
         // postcondicion es que tenemos ticket activado aqui y ticket en el panel
     }
-    
+
     public boolean deactivate() {
-        
-        // precondicion es que tenemos ticket activado aqui y ticket en el panel        
-        m_ticket = null;   
+
+        // precondicion es que tenemos ticket activado aqui y ticket en el panel
+        m_ticket = null;
         m_ticketCopy = null;
-        return true;       
+        return true;
         // postcondicion es que no tenemos ticket activado ni ticket en el panel
     }
-    
+
     public void deleteTicket() {
-        
-        if (m_ticketCopy != null) {           
+
+        if (m_ticketCopy != null) {
             // Para editar borramos el ticket anterior
-            try {               
+            try {
                 m_dlSales.deleteTicket(m_ticketCopy, m_App.getInventoryLocation());
             } catch (BasicException eData) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.nosaveticket"), eData);
-                msg.show(this);                
-            }            
+                msg.show(this);
+            }
         }
-        
+
         m_ticket = null;
         m_ticketCopy = null;
-        resetToTicket(); 
-    }    
-        
+        resetToTicket();
+    }
+
     public void canceleditionTicket() {
-        
+
         m_ticketCopy = null;
         resetToTicket();
-    }    
-    
-    private void resetToTicket() {       
+    }
+
+    private void resetToTicket() {
         printTicket();
         m_jTicketEditor.reset();
         m_jTicketEditor.activate();
-        m_panelticketedit.setActiveTicket(null, null); 
+        m_panelticketedit.setActiveTicket(null, null);
     }
-    
+
     protected JComponent getBagComponent() {
         return m_TicketsBagTicketBag;
     }
-    
+
     protected JComponent getNullComponent() {
         return this;
     }
-      
+
     private void readTicket(int iTicketid, int iTickettype) {
-        
+
         try {
-            TicketInfo ticket = (iTicketid==-1) 
+            TicketInfo ticket = (iTicketid==-1)
                 ? m_dlSales.loadTicket(iTickettype,  m_jTicketEditor.getValueInteger())
                 : m_dlSales.loadTicket(iTickettype, iTicketid) ;
 
@@ -164,20 +164,20 @@ public class JTicketsBagTicket extends JTicketsBag {
                 m_ticketCopy = null; // se asigna al pulsar el boton de editar o devolver
                 printTicket();
             }
-            
+
         } catch (BasicException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadticket"), e);
             msg.show(this);
         }
-        
+
         m_jTicketEditor.reset();
         m_jTicketEditor.activate();
     }
-    
+
     private void printTicket() {
-        
+
         // imprimo m_ticket
-        
+
         try {
             m_jEdit.setEnabled(
                     m_ticket != null
@@ -188,23 +188,26 @@ public class JTicketsBagTicket extends JTicketsBag {
         }
         m_jRefund.setEnabled(m_ticket != null && m_ticket.getTicketType() == TicketInfo.RECEIPT_NORMAL);
         m_jPrint.setEnabled(m_ticket != null);
-        
+
         // Este deviceticket solo tiene una impresora, la de pantalla
         m_TP.getDevicePrinter("1").reset();
-        
+
         if (m_ticket == null) {
-            m_jTicketId.setText(null);            
+            m_jTicketId.setText(null);
         } else {
             m_jTicketId.setText(m_ticket.getName());
-            
+
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", m_ticket);
-                m_TTP.printTicket(script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
+                m_TTP.printTicket(m_App, script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
             } catch (ScriptException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             } catch (TicketPrinterException eTP) {
+                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), eTP);
+                msg.show(this);
+            } catch (TicketFiscalPrinterException eTP) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), eTP);
                 msg.show(this);
             }
@@ -378,61 +381,63 @@ public class JTicketsBagTicket extends JTicketsBag {
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jEditActionPerformed
-                 
-        m_ticketCopy = m_ticket;        
+
+        m_ticketCopy = m_ticket;
         m_TicketsBagTicketBag.showEdit();
         m_panelticketedit.showCatalog();
-        m_panelticketedit.setActiveTicket(m_ticket.copyTicket(), null);  
-        
+        m_panelticketedit.setActiveTicket(m_ticket.copyTicket(), null);
+
     }//GEN-LAST:event_m_jEditActionPerformed
 
     private void m_jPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jPrintActionPerformed
-       
+
         if (m_ticket != null) {
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", m_ticket);
-                m_TTP2.printTicket(script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
+                m_TTP2.printTicket(m_App, script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
             } catch (ScriptException e) {
                 JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
             } catch (TicketPrinterException e) {
                 JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
+            } catch (TicketFiscalPrinterException e) {
+                JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
             }
-        }  
-        
+        }
+
     }//GEN-LAST:event_m_jPrintActionPerformed
 
     private void m_jRefundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jRefundActionPerformed
-        
+
         java.util.List aRefundLines = new ArrayList();
-        
+
         for(int i = 0; i < m_ticket.getLinesCount(); i++) {
             TicketLineInfo newline = new TicketLineInfo(m_ticket.getLine(i));
             aRefundLines.add(newline);
-        } 
-        
+        }
+
         m_ticketCopy = null;
         m_TicketsBagTicketBag.showRefund();
         m_panelticketedit.showRefundLines(aRefundLines);
-        
+
         TicketInfo refundticket = new TicketInfo();
         refundticket.setTicketType(TicketInfo.RECEIPT_REFUND);
         refundticket.setCustomer(m_ticket.getCustomer());
         refundticket.setPayments(m_ticket.getPayments());
-        m_panelticketedit.setActiveTicket(refundticket, null);      
-        
+        m_panelticketedit.setActiveTicket(refundticket, null);
+
     }//GEN-LAST:event_m_jRefundActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         readTicket(-1, jrbSales.isSelected() ? 0 : 1);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void m_jKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jKeysActionPerformed
 
         readTicket(-1, jrbSales.isSelected() ? 0 : 1);
-        
+
     }//GEN-LAST:event_m_jKeysActionPerformed
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -446,7 +451,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             readTicket(selectedTicket.getTicketId(), selectedTicket.getTicketType());
         }
 }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
@@ -468,5 +473,5 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private com.openbravo.editor.JEditorIntegerPositive m_jTicketEditor;
     private javax.swing.JLabel m_jTicketId;
     // End of variables declaration//GEN-END:variables
-    
+
 }

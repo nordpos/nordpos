@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
     Openbravo POS is a point of sales application designed for touch screens.
     Copyright (C) 2008-2009 Openbravo, S.L.
     http://sourceforge.net/projects/openbravopos
@@ -20,13 +20,14 @@
     along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
  -->
 
-<output>
+<output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <display animation="scroll">
         <line>
-            <text>Openbravo POS</text>
+            <text>NORD POS</text>
         </line>
         <line>
-            <text>   Welcome   </text>
+            <text>Добро пожаловать!</text>
         </line>
     </display>
 </output>

@@ -27,6 +27,7 @@
     <class name="sales.RefundTicket"/>
     <class name="sales.PrintTicket"/>
     <class name="sales.Total"/>
+    <class name="sales.Discount"/>
     <class name="payment.cash"/>
     <class name="payment.cheque"/>
     <class name="payment.paper"/>

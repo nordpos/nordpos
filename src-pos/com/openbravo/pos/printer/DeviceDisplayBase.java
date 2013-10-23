@@ -43,12 +43,16 @@ public class DeviceDisplayBase {
     public DeviceDisplayBase(DeviceDisplayImpl impl) {
         this.impl = impl; 
         anim = new NullAnimator("", "");
-        m_tTimeTimer = new javax.swing.Timer(50, new PrintTimeAction());
+        m_tTimeTimer = new javax.swing.Timer(250, new PrintTimeAction());
     }
     
     public void writeVisor(int animation, String sLine1, String sLine2) {
         
         m_tTimeTimer.stop();
+        
+        if (sLine1 == null) sLine1 ="";
+        if (sLine2 == null) sLine2 ="";        
+        
         switch (animation) {
             case ANIMATION_FLYER:
                 anim = new FlyerAnimator(sLine1, sLine2);

@@ -19,16 +19,27 @@
     You should have received a copy of the GNU General Public License
     along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<output>
+<output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <display>
-        <line>
-            <text align="left" length="10">Total.</text>
-            <text align="right" length="10">${ticket.printTotal()}</text>
-        </line>
-        <line>
-            <text align="center" length="20">Thank you.</text>
-        </line>
+        <line1>
+            <text align="left" length="10">Итого</text>
+            <text align ="right" length="10">${ticket.printTotal()}</text>
+        </line1>  
+    #foreach ($paymentline in $ticket.payments) 
+     #if ($paymentline.name == "cash")  
+        <line2>
+            <text align="left" length="10">Сдача</text>
+            <text align ="right" length="10">${paymentline.printChange()}</text>
+        </line2>
+     #else
+        <line2>
+            <text align ="center" length="20">Спасибо за покупку.</text>
+        </line2>
+     #end
+    #end 
     </display>
+    
     #foreach ($paymentline in $ticket.payments)      
      #if ($paymentline.name == "cash")
     <opendrawer/>
@@ -37,4 +48,5 @@
     <opendrawer/>
      #end  
     #end
+    
 </output>

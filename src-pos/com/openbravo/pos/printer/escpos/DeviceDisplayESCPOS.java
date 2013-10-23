@@ -20,7 +20,8 @@
 package com.openbravo.pos.printer.escpos;
     
 import com.openbravo.pos.printer.*;
-
+import com.openbravo.pos.util.StringUtils;
+        
 public class DeviceDisplayESCPOS extends DeviceDisplaySerial {
        
     private UnicodeTranslator trans;
@@ -55,8 +56,8 @@ public class DeviceDisplayESCPOS extends DeviceDisplaySerial {
         display.write(ESCPOS.SELECT_DISPLAY);
         display.write(ESCPOS.VISOR_CLEAR);
         display.write(ESCPOS.VISOR_HOME);
-        display.write(trans.transString(DeviceTicket.alignLeft(m_displaylines.getLine1(), 20)));
-        display.write(trans.transString(DeviceTicket.alignLeft(m_displaylines.getLine2(), 20)));        
+        display.write(trans.transString(StringUtils.alignLeft(m_displaylines.getLine1(), 20)));
+        display.write(trans.transString(StringUtils.alignLeft(m_displaylines.getLine2(), 20)));        
         display.flush();
     }
 }

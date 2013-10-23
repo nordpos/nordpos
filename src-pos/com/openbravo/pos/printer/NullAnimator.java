@@ -23,14 +23,17 @@ package com.openbravo.pos.printer;
  *
  * @author adrianromero
  */
+
+import com.openbravo.pos.util.StringUtils;
+
 public class NullAnimator implements DisplayAnimator {
     
     protected String currentLine1;
     protected String currentLine2; 
     
     public NullAnimator(String line1, String line2) {
-        currentLine1 = DeviceTicket.alignLeft(line1, 20);
-        currentLine2 = DeviceTicket.alignLeft(line2, 20);
+        currentLine1 = StringUtils.alignLeft(line1, 20);
+        currentLine2 = StringUtils.alignLeft(line2, 20);
     }
 
     public void setTiming(int i) {

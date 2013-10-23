@@ -159,6 +159,8 @@ public class Session {
             return new SessionDBOracle();
         } else if ("Apache Derby".equals(sdbmanager)) {
             return new SessionDBDerby();
+        } else if (sdbmanager.contains("Firebird")) {
+            return new SessionDBFirebirdSQL();
         } else {
             return new SessionDBGeneric(sdbmanager);
         }

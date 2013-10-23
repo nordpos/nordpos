@@ -50,11 +50,11 @@ import javax.print.attribute.standard.OrientationRequested;
 /**
  *Class DevicePrinterPrinter is responsible for printing tickets using system <br>
  * printers. It takes into consideration if a user set a printer as a receipt <br>
- * printer or not. 
+ * printer or not.
  * <p>For receipt printers lenght of a receipt must be calculated in this class.</p>
  * <p>For normal printers number of pages must be calculated dynamically in the <br>
  * class PrintableTicket @see com.openbravo.pos.printer.printer.PrintableTicket
- *  
+ *
  * @author jaroslawwozniak
  */
 public class DevicePrinterPrinter implements DevicePrinter {
@@ -91,9 +91,9 @@ public class DevicePrinterPrinter implements DevicePrinter {
 
     private static final HashMap<String, MediaSizeName> mediasizenamemap = new HashMap<String, MediaSizeName>();
 
-    /** 
+    /**
      * Creates a new instance of DevicePrinterPrinter
-     * 
+     *
      * @param printername - name of printer that will be called in the system
      * @param isReceiptPrinter - string with boolean values if the printer is a receipt
      */
@@ -267,6 +267,9 @@ public class DevicePrinterPrinter implements DevicePrinter {
     public void openDrawer() {
         // Una simulacion
         Toolkit.getDefaultToolkit().beep();
+    }
+
+    public void cutPaper(boolean complete) {
     }
 
     private static MediaSizeName getMedia(String mediasizename) {

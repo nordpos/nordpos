@@ -28,30 +28,30 @@ import com.openbravo.pos.printer.ticket.BasicTicket;
 import com.openbravo.pos.printer.ticket.BasicTicketForScreen;
 
 public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrinter {
-    
+
     private String m_sName;
-   
-    private JTicketContainer m_jTicketContainer;    
+
+    private JTicketContainer m_jTicketContainer;
     private BasicTicket m_ticketcurrent;
-    
+
     /** Creates new form JPrinterScreen2 */
     public DevicePrinterPanel() {
         initComponents();
-        
+
         m_sName = AppLocal.getIntString("Printer.Screen");
-        
+
          m_ticketcurrent = null;
-       
+
         m_jTicketContainer = new JTicketContainer();
         m_jScrollView.setViewportView(m_jTicketContainer);
     }
-    
+
     public String getPrinterName() {
         return m_sName;
     }
     public String getPrinterDescription() {
         return null;
-    }       
+    }
     public JComponent getPrinterComponent() {
         return this;
     }
@@ -60,7 +60,7 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
         m_jTicketContainer.removeAllTickets();
         m_jTicketContainer.repaint();
     }
-    
+
     // INTERFAZ PRINTER 2
     public void beginReceipt() {
         m_ticketcurrent = new BasicTicketForScreen();
@@ -79,17 +79,20 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
     }
     public void endLine() {
         m_ticketcurrent.endLine();
-    } 
+    }
     public void endReceipt() {
         m_jTicketContainer.addTicket(new JTicket(m_ticketcurrent));
         m_ticketcurrent = null;
     }
-    
+
     public void openDrawer() {
         // Una simulacion
         Toolkit.getDefaultToolkit().beep();
-    }   
-       
+    }
+
+    public void cutPaper(boolean complete) {
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -103,11 +106,11 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
         add(m_jScrollView, java.awt.BorderLayout.CENTER);
 
     }//GEN-END:initComponents
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane m_jScrollView;
     // End of variables declaration//GEN-END:variables
-    
+
 }
 

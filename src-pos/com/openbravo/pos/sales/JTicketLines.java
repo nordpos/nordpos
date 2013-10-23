@@ -20,12 +20,19 @@
 package com.openbravo.pos.sales;
 
 import com.openbravo.data.loader.LocalRes;
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.scripting.ScriptEngine;
+import com.openbravo.pos.scripting.ScriptException;
+import com.openbravo.pos.scripting.ScriptFactory;
+import com.openbravo.pos.ticket.TicketLineInfo;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -36,13 +43,6 @@ import javax.swing.table.TableColumnModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import com.openbravo.pos.scripting.ScriptEngine;
-import com.openbravo.pos.scripting.ScriptException;
-import com.openbravo.pos.scripting.ScriptFactory;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.ticket.TicketLineInfo;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -50,7 +50,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class JTicketLines extends javax.swing.JPanel {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.pos.sales.JTicketLines");
+    private static final Logger logger = Logger.getLogger(JTicketLines.class.getName());
 
     private static SAXParser m_sp = null;
     

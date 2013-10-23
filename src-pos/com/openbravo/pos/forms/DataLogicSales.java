@@ -19,36 +19,27 @@
 
 package com.openbravo.pos.forms;
 
-import com.openbravo.pos.ticket.CategoryInfo;
-import com.openbravo.pos.ticket.ProductInfoExt;
-import com.openbravo.pos.ticket.TaxInfo;
-import com.openbravo.pos.ticket.TicketInfo;
-import com.openbravo.pos.ticket.TicketLineInfo;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import com.openbravo.data.loader.*;
-import com.openbravo.format.Formats;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.*;
 import com.openbravo.data.model.Field;
 import com.openbravo.data.model.Row;
+import com.openbravo.format.Formats;
 import com.openbravo.pos.customers.CustomerInfoExt;
-import com.openbravo.pos.inventory.AttributeSetInfo;
-import com.openbravo.pos.inventory.TaxCustCategoryInfo;
-import com.openbravo.pos.inventory.LocationInfo;
-import com.openbravo.pos.inventory.MovementReason;
-import com.openbravo.pos.inventory.TaxCategoryInfo;
+import com.openbravo.pos.inventory.*;
 import com.openbravo.pos.mant.FloorsInfo;
 import com.openbravo.pos.payment.PaymentInfo;
 import com.openbravo.pos.payment.PaymentInfoTicket;
-import com.openbravo.pos.ticket.FindTicketsInfo;
-import com.openbravo.pos.ticket.TicketTaxInfo;
+import com.openbravo.pos.ticket.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class DataLogicSales extends BeanFactoryDataSingle {
 
@@ -133,6 +124,13 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , SerializerWriteString.INSTANCE
             , CategoryInfo.getSerializerRead()).list(category);
     }
+    public CategoryInfo findCategory(String catid) throws BasicException {
+        return (CategoryInfo) new PreparedSentence(s
+                , "SELECT ID, NAME, IMAGE " +
+                  "FROM CATEGORIES WHERE ID = ?"
+                , SerializerWriteString.INSTANCE
+                , new CategoryRead()).find(catid);
+    }
     public List<ProductInfoExt> getProductCatalog(String category) throws BasicException  {
         return new PreparedSentence(s
             , "SELECT P.ID, P.REFERENCE, P.CODE, P.NAME, P.ISCOM, P.ISSCALE, P.PRICEBUY, P.PRICESELL, P.TAXCAT, P.CATEGORY, P.ATTRIBUTESET_ID, P.IMAGE, P.ATTRIBUTES " +
@@ -150,7 +148,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , SerializerWriteString.INSTANCE
             , ProductInfoExt.getSerializerRead()).list(id);
     }
-  
+
     // Products list
     public final SentenceList getProductList() {
         return new StaticSentence(s
@@ -160,7 +158,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , ProductInfoExt.getSerializerRead());
     }
-    
+
     // Products list
     public SentenceList getProductListNormal() {
         return new StaticSentence(s
@@ -170,7 +168,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , ProductInfoExt.getSerializerRead());
     }
-    
+
     //Auxiliar list for a filter
     public SentenceList getProductListAuxiliar() {
          return new StaticSentence(s
@@ -180,18 +178,18 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , ProductInfoExt.getSerializerRead());
     }
-    
+
     //Tickets and Receipt list
     public SentenceList getTicketsList() {
          return new StaticSentence(s
             , new QBFBuilder(
-            "SELECT T.TICKETID, T.TICKETTYPE, R.DATENEW, P.NAME, C.NAME, SUM(PM.TOTAL) "+ 
+            "SELECT T.TICKETID, T.TICKETTYPE, R.DATENEW, P.NAME, C.NAME, SUM(PM.TOTAL) "+
             "FROM RECEIPTS R JOIN TICKETS T ON R.ID = T.ID LEFT OUTER JOIN PAYMENTS PM ON R.ID = PM.RECEIPT LEFT OUTER JOIN CUSTOMERS C ON C.ID = T.CUSTOMER LEFT OUTER JOIN PEOPLE P ON T.PERSON = P.ID " +
             "WHERE ?(QBF_FILTER) GROUP BY T.ID, T.TICKETID, T.TICKETTYPE, R.DATENEW, P.NAME, C.NAME ORDER BY R.DATENEW DESC, T.TICKETID", new String[] {"T.TICKETID", "T.TICKETTYPE", "PM.TOTAL", "R.DATENEW", "R.DATENEW", "P.NAME", "C.NAME"})
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.INT, Datas.OBJECT, Datas.INT, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.TIMESTAMP, Datas.OBJECT, Datas.TIMESTAMP, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , new SerializerReadClass(FindTicketsInfo.class));
     }
-    
+
     //User list
     public final SentenceList getUserList() {
         return new StaticSentence(s
@@ -199,11 +197,11 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , null
             , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
                 return new TaxCategoryInfo(
-                        dr.getString(1), 
+                        dr.getString(1),
                         dr.getString(2));
             }});
     }
-   
+
     // Listados para combo
     public final SentenceList getTaxList() {
         return new StaticSentence(s
@@ -211,7 +209,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , null
             , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
                 return new TaxInfo(
-                        dr.getString(1), 
+                        dr.getString(1),
                         dr.getString(2),
                         dr.getString(3),
                         dr.getTimestamp(4),
@@ -227,6 +225,13 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , "SELECT ID, NAME, IMAGE FROM CATEGORIES ORDER BY NAME"
             , null
             , CategoryInfo.getSerializerRead());
+    }
+    public final CategoryInfo getCategoryInfoById(String sID) throws BasicException {
+        return (CategoryInfo) new PreparedSentence(s
+                , "SELECT ID, NAME, IMAGE FROM CATEGORIES "
+                + "WHERE ID = ?"
+                , SerializerWriteString.INSTANCE
+                , CategoryInfo.getSerializerRead()).find(sID);
     }
     public final SentenceList getTaxCustCategoriesList() {
         return new StaticSentence(s
@@ -712,6 +717,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new String[] {"ID", AppLocal.getIntString("Label.Name"), "", AppLocal.getIntString("label.image")}
             , new Datas[] {Datas.STRING, Datas.STRING, Datas.STRING, Datas.IMAGE}
             , new Formats[] {Formats.STRING, Formats.STRING, Formats.STRING, Formats.NULL}
+            , "NAME"
             , new int[] {0}
         );
     }
@@ -722,6 +728,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new String[] {"ID", AppLocal.getIntString("Label.Name"), AppLocal.getIntString("label.taxcategory"), AppLocal.getIntString("Label.ValidFrom"), AppLocal.getIntString("label.custtaxcategory"), AppLocal.getIntString("label.taxparent"), AppLocal.getIntString("label.dutyrate"), AppLocal.getIntString("label.cascade"), AppLocal.getIntString("label.order")}
             , new Datas[] {Datas.STRING, Datas.STRING, Datas.STRING, Datas.TIMESTAMP, Datas.STRING, Datas.STRING, Datas.DOUBLE, Datas.BOOLEAN, Datas.INT}
             , new Formats[] {Formats.STRING, Formats.STRING, Formats.STRING, Formats.TIMESTAMP, Formats.STRING, Formats.STRING, Formats.PERCENT, Formats.BOOLEAN, Formats.INT}
+            , "NAME"
             , new int[] {0}
         );
     }
@@ -733,6 +740,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new String[] {"ID", AppLocal.getIntString("Label.Name")}
             , new Datas[] {Datas.STRING, Datas.STRING}
             , new Formats[] {Formats.STRING, Formats.STRING}
+            , "NAME"
             , new int[] {0}
         );
     }
@@ -743,6 +751,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new String[] {"ID", AppLocal.getIntString("Label.Name")}
             , new Datas[] {Datas.STRING, Datas.STRING}
             , new Formats[] {Formats.STRING, Formats.STRING}
+            , "NAME"
             , new int[] {0}
         );
     }
@@ -754,6 +763,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new String[] {"ID", AppLocal.getIntString("label.locationname"), AppLocal.getIntString("label.locationaddress")}
             , new Datas[] {Datas.STRING, Datas.STRING, Datas.STRING}
             , new Formats[] {Formats.STRING, Formats.STRING, Formats.STRING}
+            , "NAME"
             , new int[] {0}
         );
     }
@@ -785,6 +795,14 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             c.setCountry(dr.getString(23));
 
             return c;
+        }
+    }
+
+    protected static class CategoryRead implements SerializerRead {
+
+        @Override
+        public Object readValues(DataRead dr) throws BasicException {
+            return new CategoryInfo(dr.getString(1), dr.getString(2), ImageUtils.readImage(dr.getBytes(3)));
         }
     }
 }

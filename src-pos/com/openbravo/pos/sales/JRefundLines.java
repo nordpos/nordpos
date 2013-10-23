@@ -20,26 +20,37 @@
 package com.openbravo.pos.sales;
 
 import java.awt.BorderLayout;
-import java.util.List;
+import java.util.*;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSystem;
 import com.openbravo.pos.ticket.TicketLineInfo;
+import com.openbravo.data.loader.ImageUtils;
 
 public class JRefundLines extends javax.swing.JPanel {
     
     private JTicketLines ticketlines;
     private List m_aLines;
-
+    private List m_aLinesAll; 
+    
     private JPanelTicketEdits m_jTicketEdit;
+    private boolean isMultiplyControl;
+    
+ 
     
     /** Creates new form JRefundLines */
 public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
+        
+        PropertiesConfig panelconfig;
         
         m_jTicketEdit = jTicketEdit;
         
         initComponents();
         
         ticketlines = new JTicketLines(dlSystem.getResourceAsXML("Ticket.Line"));
+        panelconfig = new PropertiesConfig(dlSystem.getResourceAsXML("Ticket.Buttons"));
+        isMultiplyControl = "true".equals(panelconfig.getProperty("refmultcontrol", "false"));
+        
+        m_aLinesAll = new ArrayList(0);
         
         jPanel3.add(ticketlines, BorderLayout.CENTER);
     }
@@ -47,6 +58,14 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
     public void setLines(List aRefundLines) {
         
         m_aLines = aRefundLines;
+                
+        m_aLinesAll.clear();
+        for (int i = 0; i < m_aLines.size(); i++ ){
+            byte[] aSerLine; 
+            aSerLine = ImageUtils.writeSerializable(m_aLines.get(i));
+            m_aLinesAll.add(ImageUtils.readSerializable(aSerLine)); 
+        }
+
         ticketlines.clearTicketLines();
         
         if (m_aLines != null) {
@@ -70,6 +89,7 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         m_jbtnAddOne = new javax.swing.JButton();
         m_jbtnAddLine = new javax.swing.JButton();
         m_jbtnAddAll = new javax.swing.JButton();
+        m_jbtnCancelAll = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(15, 200));
         setLayout(new java.awt.BorderLayout());
@@ -117,6 +137,18 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         });
         jPanel2.add(m_jbtnAddAll);
 
+        m_jbtnCancelAll.setText(AppLocal.getIntString("button.cancelrefund")); // NOI18N
+        m_jbtnCancelAll.setFocusPainted(false);
+        m_jbtnCancelAll.setFocusable(false);
+        m_jbtnCancelAll.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jbtnCancelAll.setRequestFocusEnabled(false);
+        m_jbtnCancelAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jbtnCancelAllActionPerformed(evt);
+            }
+        });
+        jPanel2.add(m_jbtnCancelAll);
+
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jPanel3.add(jPanel1, java.awt.BorderLayout.EAST);
@@ -125,14 +157,14 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jbtnAddAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnAddAllActionPerformed
-
         for (int i = 0; i < m_aLines.size(); i++) {
             TicketLineInfo oLine = (TicketLineInfo) m_aLines.get(i);
             TicketLineInfo oNewLine = new TicketLineInfo(oLine);            
             oNewLine.setMultiply(-oLine.getMultiply());
             m_jTicketEdit.addTicketLine(oNewLine);
+            if (isMultiplyControl) ticketlines.removeTicketLine(ticketlines.getSelectedIndex());
         }
-        
+        if (isMultiplyControl) m_aLines.clear();
     }//GEN-LAST:event_m_jbtnAddAllActionPerformed
 
     private void m_jbtnAddOneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnAddOneActionPerformed
@@ -142,6 +174,15 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
             TicketLineInfo oLine = (TicketLineInfo) m_aLines.get(index);
             TicketLineInfo oNewLine = new TicketLineInfo(oLine);
             oNewLine.setMultiply(-1.0);
+            if (isMultiplyControl) {
+                oLine.setMultiply(oLine.getMultiply()-1.0);
+                ticketlines.setTicketLine(index, oLine);
+                ticketlines.setSelectedIndex(index);
+                if (oLine.getMultiply() == 0) { 
+                   ticketlines.removeTicketLine(index);
+                   m_aLines.remove(index);
+                }
+            }    
             m_jTicketEdit.addTicketLine(oNewLine);
         }   
         
@@ -155,8 +196,28 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
             TicketLineInfo oNewLine = new TicketLineInfo(oLine);            
             oNewLine.setMultiply(-oLine.getMultiply());
             m_jTicketEdit.addTicketLine(oNewLine);
+            if (isMultiplyControl) {
+              ticketlines.removeTicketLine(index);
+              m_aLines.remove(index);
+            }
         }        
     }//GEN-LAST:event_m_jbtnAddLineActionPerformed
+
+    private void m_jbtnCancelAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnCancelAllActionPerformed
+        m_aLines.clear();
+        for (int i = 0; i < m_aLinesAll.size(); i++ ){
+            byte[] aSerLine; 
+            aSerLine = ImageUtils.writeSerializable(m_aLinesAll.get(i));
+            m_aLines.add(ImageUtils.readSerializable(aSerLine)); 
+        }
+        ticketlines.clearTicketLines();
+        if (m_aLines != null) {
+            for (int i = 0; i < m_aLines.size(); i++) {
+                ticketlines.addTicketLine((TicketLineInfo) m_aLines.get(i));
+            }
+        }
+        while(m_jTicketEdit.getActiveTicket().getLinesCount()>0) m_jTicketEdit.removeTicketLine(0);
+    }//GEN-LAST:event_m_jbtnCancelAllActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -166,6 +227,7 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
     private javax.swing.JButton m_jbtnAddAll;
     private javax.swing.JButton m_jbtnAddLine;
     private javax.swing.JButton m_jbtnAddOne;
+    private javax.swing.JButton m_jbtnCancelAll;
     // End of variables declaration//GEN-END:variables
     
 }

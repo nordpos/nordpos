@@ -31,11 +31,20 @@ public class PrinterWritterRXTX extends PrinterWritter /* implements SerialPortE
     private CommPort m_CommPortPrinter;  
     
     private String m_sPortPrinter;
+    private Integer m_iPortSpeed;
+    private Integer m_iPortBits;
+    private Integer m_iPortStopBits;
+    private Integer m_iPortParity;    
     private OutputStream m_out;
     
     /** Creates a new instance of PrinterWritterComm */
-    public PrinterWritterRXTX(String sPortPrinter) throws TicketPrinterException {
+    public PrinterWritterRXTX(String sPortPrinter, Integer iPortSpeed, Integer iPortBits, Integer iPortStopBits, Integer iPortParity) throws TicketPrinterException {
         m_sPortPrinter = sPortPrinter;
+        m_iPortSpeed = iPortSpeed;
+        m_iPortBits = iPortBits;
+        m_iPortStopBits = iPortStopBits;
+        m_iPortParity = iPortParity;
+        
         m_out = null; 
     }
     
@@ -48,7 +57,7 @@ public class PrinterWritterRXTX extends PrinterWritter /* implements SerialPortE
                 m_out = m_CommPortPrinter.getOutputStream(); // Tomamos el chorro de escritura   
 
                 if (m_PortIdPrinter.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-                    ((SerialPort)m_CommPortPrinter).setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE); // Configuramos el puerto
+                    ((SerialPort)m_CommPortPrinter).setSerialPortParams(m_iPortSpeed, m_iPortBits, m_iPortStopBits, m_iPortParity); // Configuramos el puerto
                     // this line prevents the printer tmu220 to stop printing after +-18 lines printed. Bug 8324
                     // But if added a regression error appears. Bug 9417, Better to keep it commented.
                     // ((SerialPort)m_CommPortPrinter).setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN);

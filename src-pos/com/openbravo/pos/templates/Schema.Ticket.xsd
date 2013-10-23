@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Schema.Ticket.xsd
+    Created on : 12.10.2011
+    Author     : Andrey Svininykh <svininykh@gmail.com>
+    Description:
+        XML shema for Openbravo POS configuration of ticket panel file.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="configuration">
+        <xs:complexType mixed="true">
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="discount-money-1" type="CurrencyValue" minOccurs="0"></xs:element>
+                <xs:element name="discount-money-visible" type="BooleanValue" minOccurs="0"></xs:element>
+                <xs:element name="discount-visible" type="BooleanValue" minOccurs="0"></xs:element>
+                <xs:element name="button" maxOccurs="unbounded" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="ru">Шаблон кнопки рамещаемой в верхней правой части панели продаж.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence></xs:sequence>
+                        <xs:attribute name="key" type="xs:string"/>
+                        <xs:attribute name="titlekey" type="xs:string"/>
+                        <xs:attribute name="template" type="xs:string"/>
+                        <xs:attribute name="image" type="xs:string"/>
+                        <xs:attribute name="name" type="xs:string"/>
+                        <xs:attribute name="code" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="event" maxOccurs="7" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence/>
+                        <xs:attribute name="key" type="xs:string"/>
+                        <xs:attribute name="code" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="img-width" type="PixelValue"></xs:element>
+                <xs:element name="img-height" type="PixelValue"></xs:element>
+                <xs:element name="font-size" type="PointValue"></xs:element>
+                <xs:element name="catvisible" minOccurs="0" type="BooleanValue"></xs:element>
+                <xs:element name="refmultcontrol" minOccurs="0" type="BooleanValue"></xs:element>
+                <xs:element name="cat-height" type="PixelValue"></xs:element>
+                <xs:element name="pricevisible" minOccurs="0" type="BooleanValue"></xs:element>
+                <xs:element name="taxesincluded" type="BooleanValue" minOccurs="0"></xs:element>
+                <xs:element name="attributesautoset" minOccurs="0" type="BooleanValue"></xs:element>
+                <xs:element name="printselected" minOccurs="0" type="BooleanValue"></xs:element>
+                <xs:element name="discount-rate-visible" type="BooleanValue" minOccurs="0"></xs:element>
+                <xs:element name="discount-rate-1" type="PercentValue" minOccurs="0"></xs:element>
+                <xs:element name="discount-rate-2" type="PercentValue" minOccurs="0"></xs:element>
+                <xs:element name="discount-rate-3" type="PercentValue" minOccurs="0"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="PercentValue">
+        <xs:attribute name="value" type="xs:decimal"/>
+    </xs:complexType>
+    <xs:complexType name="BooleanValue">
+        <xs:attribute name="value" type="xs:boolean"/>
+    </xs:complexType>
+    <xs:complexType name="PixelValue">
+        <xs:attribute name="value" type="xs:unsignedInt"/>
+    </xs:complexType>
+    <xs:complexType name="PointValue">
+        <xs:attribute name="value" type="xs:positiveInteger"/>
+    </xs:complexType>
+    <xs:complexType name="CurrencyValue">
+        <xs:simpleContent>
+            <xs:extension base="xs:decimal"/>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

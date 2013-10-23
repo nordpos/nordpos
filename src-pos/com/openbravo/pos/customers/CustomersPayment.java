@@ -17,6 +17,8 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
+// TODO: Transaction keeping while payment from customer
+
 package com.openbravo.pos.customers;
 
 import com.openbravo.basic.BasicException;
@@ -36,6 +38,7 @@ import com.openbravo.pos.payment.PaymentInfo;
 import com.openbravo.pos.payment.PaymentInfoTicket;
 import com.openbravo.pos.printer.TicketParser;
 import com.openbravo.pos.printer.TicketPrinterException;
+import com.openbravo.pos.printer.TicketFiscalPrinterException;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
@@ -55,9 +58,9 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
     private DataLogicCustomers dlcustomers;
     private DataLogicSales dlsales;
     private DataLogicSystem dlsystem;
-    private TicketParser ttp;    
+    private TicketParser ttp;
     private JPaymentSelect paymentdialog;
-    
+
     private CustomerInfoExt customerext;
     private DirtyManager dirty;
 
@@ -65,7 +68,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
     public CustomersPayment() {
 
         initComponents();
-        
+
         editorcard.addEditorKeys(m_jKeys);
         txtNotes.addEditorKeys(m_jKeys);
 
@@ -92,7 +95,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
 
     public void activate() throws BasicException {
 
-        paymentdialog = JPaymentSelectCustomer.getDialog(this);        
+        paymentdialog = JPaymentSelectCustomer.getDialog(this);
         paymentdialog.init(app);
 
         resetCustomer();
@@ -136,7 +139,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
 
         dirty.setDirty(false);
 
-        btnSave.setEnabled(true);    
+        btnSave.setEnabled(true);
         btnPay.setEnabled(customer.getCurdebt() != null && customer.getCurdebt().doubleValue() > 0.0);
     }
 
@@ -206,11 +209,14 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", ticket);
                 script.put("customer", customer);
-                ttp.printTicket(script.eval(resource).toString());
+                ttp.printTicket(app, script.eval(resource).toString());
             } catch (ScriptException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             } catch (TicketPrinterException e) {
+                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
+                msg.show(this);
+            } catch (TicketFiscalPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             }
@@ -457,13 +463,13 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         readCustomer();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void m_jKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jKeysActionPerformed
 
         readCustomer();
-        
+
     }//GEN-LAST:event_m_jKeysActionPerformed
 
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
@@ -485,16 +491,16 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"), ex);
                 msg.show(this);
             }
-        }  
+        }
         editorcard.reset();
         editorcard.activate();
-                
+
 }//GEN-LAST:event_btnCustomerActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
 
         paymentdialog.setPrintSelected(true);
-        
+
         if (paymentdialog.showDialog(customerext.getCurdebt(), null)) {
 
             // Save the ticket
@@ -546,10 +552,10 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
                     : "Printer.CustomerPaid2",
                     ticket, c);
         }
-        
+
         editorcard.reset();
         editorcard.activate();
-        
+
 }//GEN-LAST:event_btnPayActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -560,7 +566,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
             editorcard.reset();
             editorcard.activate();
         }
-        
+
 }//GEN-LAST:event_btnSaveActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomer;

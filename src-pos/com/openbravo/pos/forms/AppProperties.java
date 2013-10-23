@@ -27,7 +27,13 @@ import java.io.File;
  */
 public interface AppProperties {
 
-    public File getConfigFile(); 
-    public String getHost();    
+    public File getConfigFile();
+    public String getHost();
+    public String getDBDriver();
+    public String getDBDriverLib();
+    public String getDBUser();
+    public String getDBPassword();
+    public String getDBURL();
+
     public String getProperty(String sKey); // Config property.
 }

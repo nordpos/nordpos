@@ -19,13 +19,13 @@
 
 package com.openbravo.pos.forms;
 
-import java.util.Locale;
-import javax.swing.UIManager;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.instance.InstanceQuery;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.api.SubstanceSkin;
 
@@ -35,7 +35,7 @@ import org.jvnet.substance.api.SubstanceSkin;
  */
 public class StartPOS {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.pos.forms.StartPOS");
+    private static final Logger logger = Logger.getLogger(StartPOS.class.getName());
     
     /** Creates a new instance of StartPOS */
     private StartPOS() {

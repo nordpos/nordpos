@@ -22,6 +22,9 @@ package com.openbravo.pos.printer.escpos;
 import com.openbravo.pos.printer.DevicePrinter;
 import com.openbravo.pos.printer.DeviceTicket;
 import java.awt.image.BufferedImage;
+import com.openbravo.pos.util.StringUtils;
+import com.openbravo.pos.util.BarcodeString;
+import java.io.UnsupportedEncodingException;
 
 public abstract class Codes {
 
@@ -47,7 +50,7 @@ public abstract class Codes {
     public abstract byte[] getImageHeader();
     public abstract int getImageWidth();
 
-    public void printBarcode(PrinterWritter out, String type, String position, String code) {
+    public void printBarcode(PrinterWritter out, String type, String position, String code) throws UnsupportedEncodingException {
 
         if (DevicePrinter.BARCODE_EAN13.equals(type)) {
 
@@ -56,14 +59,62 @@ public abstract class Codes {
             out.write(ESCPOS.BAR_HEIGHT);
             if (DevicePrinter.POSITION_NONE.equals(position)) {
                 out.write(ESCPOS.BAR_POSITIONNONE);
+            } else if (DevicePrinter.POSITION_TOP.equals(position)) {
+                out.write(ESCPOS.BAR_POSITIONUP);
             } else {
                 out.write(ESCPOS.BAR_POSITIONDOWN);
             }
             out.write(ESCPOS.BAR_HRIFONT1);
-            out.write(ESCPOS.BAR_CODE02);
-            out.write(DeviceTicket.transNumber(DeviceTicket.alignBarCode(code,13).substring(0,12)));
-            out.write(new byte[] { 0x00 });
-
+            out.write(ESCPOS.BAR_EAN13);
+            out.write(BarcodeString.getBarcodeStringEAN13(code).getBytes("ASCII"));
+            out.write(new byte[]{0x00});
+            out.write(getNewLine());
+        } else if (DevicePrinter.BARCODE_EAN8.equals(type)) {
+            out.write(getNewLine());
+            out.write(ESCPOS.BAR_HEIGHT);
+            if (DevicePrinter.POSITION_NONE.equals(position)) {
+                out.write(ESCPOS.BAR_POSITIONNONE);
+            } else if (DevicePrinter.POSITION_TOP.equals(position)) {
+                out.write(ESCPOS.BAR_POSITIONUP);
+            } else {
+                out.write(ESCPOS.BAR_POSITIONDOWN);
+            }
+            out.write(ESCPOS.BAR_HRIFONT1);
+            out.write(ESCPOS.BAR_EAN8);
+            out.write(BarcodeString.getBarcodeStringEAN8(code).getBytes("ASCII"));
+            out.write(new byte[]{0x00});
+            out.write(getNewLine());
+        } else if (DevicePrinter.BARCODE_CODE39.equals(type)) {
+            out.write(getNewLine());
+            out.write(ESCPOS.BAR_HEIGHT);
+            if (DevicePrinter.POSITION_NONE.equals(position)) {
+                out.write(ESCPOS.BAR_POSITIONNONE);
+            } else if (DevicePrinter.POSITION_TOP.equals(position)) {
+                out.write(ESCPOS.BAR_POSITIONUP);
+            } else {
+                out.write(ESCPOS.BAR_POSITIONDOWN);
+            }
+            out.write(ESCPOS.BAR_HRIFONT1);
+            out.write(ESCPOS.BAR_CODE39);
+            out.write(BarcodeString.getBarcodeStringCode39(code).getBytes("ASCII"));            
+            out.write(new byte[]{0x00});
+            out.write(getNewLine());
+        } else if (DevicePrinter.BARCODE_CODE128.equals(type)) {
+            out.write(getNewLine());
+            out.write(ESCPOS.BAR_HEIGHT);
+            if (DevicePrinter.POSITION_NONE.equals(position)) {
+                out.write(ESCPOS.BAR_POSITIONNONE);
+            } else if (DevicePrinter.POSITION_TOP.equals(position)) {
+                out.write(ESCPOS.BAR_POSITIONUP);
+            } else {
+                out.write(ESCPOS.BAR_POSITIONDOWN);
+            }
+            out.write(ESCPOS.BAR_HRIFONT1);
+            out.write(ESCPOS.BAR_CODE128);
+            String CompleteBarcode = BarcodeString.getBarcodeStringCode128(code);
+            out.write(new byte[]{(byte) (CompleteBarcode.length() + 2)}); // 2 bytes extra for code set selection
+            out.write(ESCPOS.BAR_CODE_CODE128_A);            
+            out.write(CompleteBarcode.getBytes("ASCII"));
             out.write(getNewLine());
         }
     }

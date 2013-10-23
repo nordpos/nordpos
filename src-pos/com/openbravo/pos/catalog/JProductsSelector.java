@@ -28,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import com.openbravo.beans.JFlowPanel;
+import java.awt.Font;
 
 /**
  *
@@ -51,6 +52,7 @@ public class JProductsSelector extends javax.swing.JPanel {
         JButton btn = new JButton();
         btn.applyComponentOrientation(getComponentOrientation());
         btn.setText(name);
+        btn.setFont(btn.getFont().deriveFont((float)24));
         btn.setIcon(new ImageIcon(img));
         btn.setFocusPainted(false);
         btn.setFocusable(false);

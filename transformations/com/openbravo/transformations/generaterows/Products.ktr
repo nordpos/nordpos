@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>Products</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>1</trans_status>
+    <directory>&#47;</directory>
+    <parameters>
+    </parameters>
+    <log>
+<trans-log-table><connection/>
+<schema/>
+<table/>
+<size_limit_lines/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>N</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>N</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<perf-log-table><connection/>
+<schema/>
+<table/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>SEQ_NR</id><enabled>Y</enabled><name>SEQ_NR</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>INPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>INPUT_BUFFER_ROWS</name></field><field><id>OUTPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>OUTPUT_BUFFER_ROWS</name></field></perf-log-table>
+<channel-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>LOGGING_OBJECT_TYPE</id><enabled>Y</enabled><name>LOGGING_OBJECT_TYPE</name></field><field><id>OBJECT_NAME</id><enabled>Y</enabled><name>OBJECT_NAME</name></field><field><id>OBJECT_COPY</id><enabled>Y</enabled><name>OBJECT_COPY</name></field><field><id>REPOSITORY_DIRECTORY</id><enabled>Y</enabled><name>REPOSITORY_DIRECTORY</name></field><field><id>FILENAME</id><enabled>Y</enabled><name>FILENAME</name></field><field><id>OBJECT_ID</id><enabled>Y</enabled><name>OBJECT_ID</name></field><field><id>OBJECT_REVISION</id><enabled>Y</enabled><name>OBJECT_REVISION</name></field><field><id>PARENT_CHANNEL_ID</id><enabled>Y</enabled><name>PARENT_CHANNEL_ID</name></field><field><id>ROOT_CHANNEL_ID</id><enabled>Y</enabled><name>ROOT_CHANNEL_ID</name></field></channel-log-table>
+<step-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></step-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>Y</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit/>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+  <created_user/>
+  <created_date>2012&#47;07&#47;31 12:25:42.533</created_date>
+  <modified_user>admin</modified_user>
+  <modified_date>2009&#47;05&#47;03 21:53:48.004</modified_date>
+  </info>
+  <notepads>
+    <notepad>
+      <note>Товары на складах
+---------------------
+ PRODUCT_WAREHOUSE_ID &lt;--&gt; LOCATION
+ PRODUCT_REF &lt;--&gt; PRODUCT
+ defaultUnits = STOCKSECURITY 
+ defaultUnits = STOCKMAXIMUM
+ PRODUCT_UNITS &lt;--&gt; UNITS</note>
+      <xloc>494</xloc>
+      <yloc>348</yloc>
+      <width>297</width>
+      <heigth>122</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>165</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>N</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Список товаров отображённых в каталоге
+---------------------
+ PRODUCT_REF &lt;--&gt; PRODUCT</note>
+      <xloc>489</xloc>
+      <yloc>264</yloc>
+      <width>267</width>
+      <heigth>58</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>165</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>N</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Товары
+---------------------
+ PRODUCT_REF &lt;--&gt; ID
+ PRODUCT_CODE &lt;--&gt; CODE
+ PRODUCT_NAME &lt;--&gt; NAME
+ PRODUCT_CAT_ID &lt;--&gt; CATEGORY
+ PRODUCT_TAX_CAT_ID &lt;--&gt; TAXCAT
+ PRODUCT_REF &lt;--&gt; REFERENCE
+ PRODUCT_PRICEBUY &lt;--&gt; PRICEBUY
+ PRODUCT_PRICESELL &lt;--&gt; PRICESELL
+ defaultFalse = ISCOM
+ defaultFalse = ISSCALE</note>
+      <xloc>488</xloc>
+      <yloc>80</yloc>
+      <width>268</width>
+      <heigth>202</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>165</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>N</drawshadow>
+    </notepad>
+    <notepad>
+      <note>СИНХРОНИЗАЦИЯ ТОВАРОВ</note>
+      <xloc>195</xloc>
+      <yloc>15</yloc>
+      <width>202</width>
+      <heigth>26</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>165</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>N</drawshadow>
+    </notepad>
+  </notepads>
+  <connection>
+    <name>openbravoposDB</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>${db.user}</username>
+    <password>${db.password}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>${db.driver}</attribute></attribute>
+      <attribute><code>CUSTOM_URL</code><attribute>${db.URL}</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <order>
+  <hop> <from>I&#47;U PRODUCTS_CAT</from><to>I&#47;U STOCKLEVEL</to><enabled>Y</enabled> </hop>  <hop> <from>I&#47;U PRODUCTS</from><to>I&#47;U PRODUCTS_CAT</to><enabled>Y</enabled> </hop>  <hop> <from>Проверка ШК</from><to>I&#47;U PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>Очистить PRODUCTS_CAT</from><to>Data Grid</to><enabled>Y</enabled> </hop>  <hop> <from>Data Grid</from><to>Проверка ШК</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>I&#47;U PRODUCTS</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>1000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>PRODUCTS</table>
+      <key>
+        <name>PRODUCT_REF</name>
+        <field>ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>ID</name>
+        <rename>PRODUCT_REF</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CODE</name>
+        <rename>PRODUCT_CODE</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NAME</name>
+        <rename>PRODUCT_NAME</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CATEGORY</name>
+        <rename>PRODUCT_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>TAXCAT</name>
+        <rename>PRODUCT_TAX_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>REFERENCE</name>
+        <rename>PRODUCT_REF</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>PRICEBUY</name>
+        <rename>PRODUCT_PRICEBUY</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRICESELL</name>
+        <rename>PRODUCT_PRICESELL</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ISCOM</name>
+        <rename>defaultFalse</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ISSCALE</name>
+        <rename>defaultFalse</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>414</xloc>
+      <yloc>82</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>I&#47;U PRODUCTS_CAT</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>1000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>PRODUCTS_CAT</table>
+      <key>
+        <name>PRODUCT_REF</name>
+        <field>PRODUCT</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>PRODUCT</name>
+        <rename>PRODUCT_REF</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>418</xloc>
+      <yloc>268</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>I&#47;U STOCKLEVEL</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>STOCKCURRENT</table>
+      <key>
+        <name>PRODUCT_REF</name>
+        <field>PRODUCT</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>PRODUCT_WAREHOUSE_ID</name>
+        <field>LOCATION</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>LOCATION</name>
+        <rename>PRODUCT_WAREHOUSE_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRODUCT</name>
+        <rename>PRODUCT_REF</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>UNITS</name>
+        <rename> PRODUCT_UNITS</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>418</xloc>
+      <yloc>353</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Очистить PRODUCTS_CAT</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <schema/>
+    <table>PRODUCTS_CAT</table>
+    <commit>100000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>57</xloc>
+      <yloc>82</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Проверка ШК</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <optimizationLevel/>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;
+if (PRODUCT_CODE.getString() == null) {
+   PRODUCT_CODE.setValue(PRODUCT_REF.getString());
+}
+
+var defaultFalse = 0;
+var defaultTrue = 1;
+var defaultUnits = 0;
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>defaultFalse</name>
+        <rename>defaultFalse</rename>
+        <type>Number</type>
+        <length>1</length>
+        <precision>0</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>defaultTrue</name>
+        <rename>defaultTrue</rename>
+        <type>Number</type>
+        <length>1</length>
+        <precision>0</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>defaultUnits</name>
+        <rename>defaultUnits</rename>
+        <type>Number</type>
+        <length>1</length>
+        <precision>0</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>295</xloc>
+      <yloc>82</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Data Grid</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>PRODUCT_REF</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRODUCT_CODE</name>
+        <type>String</type>
+        <format>#############</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRODUCT_NAME</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRODUCT_CAT_ID</name>
+        <type>String</type>
+        <format>###</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRODUCT_TAX_CAT_ID</name>
+        <type>String</type>
+        <format>###</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRODUCT_PRICEBUY</name>
+        <type>BigNumber</type>
+        <format>#.00</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRODUCT_PRICESELL</name>
+        <type>BigNumber</type>
+        <format>#.00</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRODUCT_WAREHOUSE_ID</name>
+        <type>String</type>
+        <format>#</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name> PRODUCT_UNITS</name>
+        <type>BigNumber</type>
+        <format>#.000</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <data>
+      <line> <item>0001</item><item>4893055300098</item><item>Лимон</item><item>001</item><item>001</item><item>100,2</item><item>200</item><item>1</item><item>10</item> </line>
+      <line> <item>0002</item><item/><item>Апельсин</item><item>001</item><item>001</item><item>300</item><item>450</item><item>2</item><item>0</item> </line>
+      <line> <item>0003</item><item/><item>Грейпфрут</item><item>001</item><item>001</item><item>300</item><item>500</item><item>1</item><item>20</item> </line>
+      <line> <item>0004</item><item/><item>Лайм</item><item>001</item><item>001</item><item>310,5</item><item>600</item><item>1</item><item>1</item> </line>
+      <line> <item>0005</item><item>4712759210659</item><item>Редис</item><item>002</item><item>000</item><item>20</item><item>50</item><item>2</item><item>100</item> </line>
+      <line> <item>0006</item><item/><item>Морковь</item><item>002</item><item>000</item><item>10</item><item>30</item><item>2</item><item>200</item> </line>
+      <line> <item>0007</item><item/><item>Свёкла</item><item>002</item><item>000</item><item>40</item><item>45</item><item>1</item><item>50</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>176</xloc>
+      <yloc>82</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step_error_handling>
+  </step_error_handling>
+   <slave-step-copy-partition-distribution>
+</slave-step-copy-partition-distribution>
+   <slave_transformation>N</slave_transformation>
+</transformation>

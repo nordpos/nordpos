@@ -31,7 +31,7 @@ public class JEditorString extends JEditorText {
     }
         
     protected int getStartMode() {
-        return MODE_Abc1;
+        return MODE_Cyr1;
     }
     
 }

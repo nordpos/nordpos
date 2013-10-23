@@ -57,7 +57,7 @@ public class Floor implements SerializableRead {
         m_sID = dr.getString(1);
         m_sName = dr.getString(2);
         BufferedImage img = ImageUtils.readImage(dr.getBytes(3));
-        ThumbNailBuilder tnbcat = new ThumbNailBuilder(32, 32, defimg);
+        ThumbNailBuilder tnbcat = new ThumbNailBuilder(32, 32, 12, defimg);
         m_container = new JPanelDrawing(img);
         m_icon = new ImageIcon(tnbcat.getThumbNail(img));        
     }    

@@ -19,42 +19,43 @@
     You should have received a copy of the GNU General Public License
     along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<output>
+<output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line></line>
         <line>
-            <text align="center" length="42">Receipt sample.</text>
+            <text align="center" length="42">Пример текста складской накладной.</text>
         </line>
         <line>
-            <text align="center" length="42">You can change this template</text>
+            <text align="center" length="42">Вы можете его изменить</text>
         </line>
         <line>
-            <text align="center" length="42">in the resources panel</text>
+            <text align="center" length="42">через раздел Ресурсы.</text>
         </line>
         <line></line>
         <line>
-            <text>Date:     ${inventoryrecord.printDate()}</text>
+            <text>Дата:     ${inventoryrecord.printDate()}</text>
         </line>
         <line>
-            <text>Reason:   ${inventoryrecord.printReason()}</text>
+            <text>Действие:   ${inventoryrecord.printReason()}</text>
         </line>
         <line>
-            <text>Location: ${inventoryrecord.printLocation()}</text>
+            <text>Склад: ${inventoryrecord.printLocation()}</text>
         </line>
         <line size="1">
             #if ($inventoryrecord.isInput())
-            <text align ="center" length="42">In</text>
+            <text align ="center" length="42">Поступило</text>
             #else
-            <text align ="center" length="42">Out</text>
+            <text align ="center" length="42">Выбыло</text>
             #end
         </line>
         <line></line>    
         <line>
-            <text align ="left" length="17">Item</text>
-            <text align ="right" length="10">Price</text>
+            <text align ="left" length="17">Наименование</text>
+            <text align ="right" length="10">Цена</text>
             <text align ="right" length="5"></text>
-            <text align ="right" length="10">Value</text>
+            <text align ="right" length="10">Сумма</text>
         </line>      
         <line>
             <text>------------------------------------------</text>
@@ -77,7 +78,20 @@
         </line>   
         <line></line>            
         <line>
-            <text align="center" length="42">Thank you for your visit.</text>
+            <text align="center" length="42">Спасибо за ваш визит.</text>
         </line>   
     </ticket>
+    
+    #foreach ($inventoryline in $inventoryrecord.getLines())
+    <ticket printer="2">
+       <line/>
+       <line/>
+       <line size="1">
+            <text align ="right" length="5">${inventoryline.printReference()}</text>
+            <text align ="center" length="25">${inventoryline.printName()}</text>
+            <text align ="left" length="12">${inventoryline.printPrice()}</text>
+       </line>
+       <barcode position="bottom" type="EAN13">${inventoryline.printCode()}</barcode>
+    </ticket>
+    #end
 </output>

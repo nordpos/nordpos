@@ -26,6 +26,7 @@ import com.openbravo.pos.util.StringUtils;
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class InventoryLine {
     
@@ -34,6 +35,8 @@ public class InventoryLine {
     
     private String m_sProdID;
     private String m_sProdName;
+    private String m_sProdCode;
+    private String m_sProdRef;
 
     private String attsetid;
     private String attsetinstid;
@@ -43,6 +46,8 @@ public class InventoryLine {
     public InventoryLine(ProductInfoExt oProduct) {
         m_sProdID = oProduct.getID();
         m_sProdName = oProduct.getName();
+        m_sProdCode = oProduct.getCode();
+        m_sProdRef = oProduct.getReference();
         m_dMultiply = 1.0;
         m_dPrice = oProduct.getPriceBuy();
         attsetid = oProduct.getAttributeSetID();
@@ -53,6 +58,8 @@ public class InventoryLine {
     public InventoryLine(ProductInfoExt oProduct, double dpor, double dprice) {
         m_sProdID = oProduct.getID();
         m_sProdName = oProduct.getName();
+        m_sProdCode = oProduct.getCode();
+        m_sProdRef = oProduct.getReference();        
         m_dMultiply = dpor;
         m_dPrice = dprice;
         attsetid = oProduct.getAttributeSetID();
@@ -66,6 +73,14 @@ public class InventoryLine {
     
     public String getProductName() {
         return m_sProdName;
+    } 
+
+    public String getProductCode() {
+        return m_sProdCode;
+    }     
+    
+    public String getProductReference() {
+        return m_sProdRef;
     } 
     public void setProductName(String sValue) {
         if (m_sProdID == null) {
@@ -116,12 +131,20 @@ public class InventoryLine {
         return StringUtils.encodeXML(m_sProdName);
     }
     
+    public String printCode() {
+        return StringUtils.encodeXML(m_sProdCode);
+    }    
+    
+    public String printReference() {
+        return StringUtils.encodeXML(m_sProdRef);
+    }
+    
     public String printPrice() {
-        if (m_dMultiply == 1.0) {
-            return "";
-        } else {
+//        if (m_dMultiply == 1.0) {
+//            return "";
+//        } else {
             return Formats.CURRENCY.formatValue(new Double(getPrice()));
-        }
+//        }
     }
     
     public String printMultiply() {

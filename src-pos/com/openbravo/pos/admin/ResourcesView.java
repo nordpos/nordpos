@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.admin;
 
 import javax.swing.*;
@@ -31,32 +30,35 @@ import com.openbravo.data.user.DirtyManager;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.util.Base64Encoder;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 /**
  *
  * @author adrianromero
  */
 public class ResourcesView extends JPanel implements EditorRecord {
-    
+
     private Object m_oId;
     private ComboBoxValModel m_ResourceModel;
-            
+
     /** Creates new form ResourcesEditor */
     public ResourcesView(DirtyManager dirty) {
         initComponents();
-        
+
         m_ResourceModel = new ComboBoxValModel();
         m_ResourceModel.add(ResourceType.TEXT);
         m_ResourceModel.add(ResourceType.IMAGE);
         m_ResourceModel.add(ResourceType.BINARY);
-        m_jType.setModel(m_ResourceModel);
-        
+        m_jType.setModel(m_ResourceModel);        
+
         m_jName.getDocument().addDocumentListener(dirty);
         m_jType.addActionListener(dirty);
         m_jText.getDocument().addDocumentListener(dirty);
         m_jImage.addPropertyChangeListener("image", dirty);
         
-        writeValueEOF();        
+        m_jText.setAntiAliasingEnabled(true);
+                
+        writeValueEOF();
     }
 
     public void writeValueEOF() {
@@ -64,31 +66,33 @@ public class ResourcesView extends JPanel implements EditorRecord {
         m_jName.setText(null);
         m_ResourceModel.setSelectedItem(null);
         m_jText.setText(null);
-        m_jImage.setImage(null);     
+        m_jText.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);    
+        m_jImage.setImage(null);
         m_jName.setEnabled(false);
         m_jType.setEnabled(false);
         m_jText.setEnabled(false);
         m_jImage.setEnabled(false);
-    }    
-    
+    }
+
     public void writeValueInsert() {
         m_oId = null;
         m_jName.setText(null);
         m_ResourceModel.setSelectedItem(ResourceType.TEXT);
         m_jText.setText(null);
-        m_jImage.setImage(null);     
+        m_jText.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);         
+        m_jImage.setImage(null);
         m_jName.setEnabled(true);
         m_jType.setEnabled(true);
         m_jText.setEnabled(true);
         m_jImage.setEnabled(true);
     }
-    
+
     public void writeValueDelete(Object value) {
         Object[] resource = (Object[]) value;
         m_oId = resource[0];
         m_jName.setText((String) resource[1]);
         m_ResourceModel.setSelectedKey(resource[2]);
-        
+
         ResourceType restype = (ResourceType) m_ResourceModel.getSelectedItem();
         if (restype == ResourceType.TEXT) {
             m_jText.setText(Formats.BYTEA.formatValue(resource[3]));
@@ -110,18 +114,34 @@ public class ResourcesView extends JPanel implements EditorRecord {
         m_jName.setEnabled(false);
         m_jType.setEnabled(false);
         m_jText.setEnabled(false);
-        m_jImage.setEnabled(false);       
-    }  
-    
+        m_jImage.setEnabled(false);
+    }
+
     public void writeValueEdit(Object value) {
         Object[] resource = (Object[]) value;
         m_oId = resource[0];
-        m_jName.setText((String) resource[1]);
+        String sResourceName = (String) resource[1];
+        m_jName.setText(sResourceName);
         m_ResourceModel.setSelectedKey(resource[2]);
-        
+
         ResourceType restype = (ResourceType) m_ResourceModel.getSelectedItem();
         if (restype == ResourceType.TEXT) {
             m_jText.setText(Formats.BYTEA.formatValue(resource[3]));
+            if (sResourceName.toLowerCase().startsWith("printer.")
+                    || sResourceName.toLowerCase().startsWith("role.")
+                    || sResourceName.toLowerCase().startsWith("ticket.")
+                    || sResourceName.endsWith("/properties")) {
+                m_jText.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
+            } else if (sResourceName.toLowerCase().startsWith("menu.")
+                    || sResourceName.toLowerCase().startsWith("payment.")
+                    || sResourceName.toLowerCase().startsWith("script.")
+                    || sResourceName.toLowerCase().startsWith("event.")
+                    || sResourceName.toLowerCase().startsWith("code.")) {
+                m_jText.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+            } else {
+                m_jText.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+            }
+
             m_jText.setCaretPosition(0);
             m_jImage.setImage(null);
         } else if (restype == ResourceType.IMAGE) {
@@ -142,13 +162,13 @@ public class ResourcesView extends JPanel implements EditorRecord {
         m_jText.setEnabled(true);
         m_jImage.setEnabled(true);
     }
-    
+
     public Object createValue() throws BasicException {
         Object[] resource = new Object[4];
 
         resource[0] = m_oId == null ? UUID.randomUUID().toString() : m_oId;
         resource[1] = m_jName.getText();
-        
+
         ResourceType restype = (ResourceType) m_ResourceModel.getSelectedItem();
         resource[2] = restype.getKey();
         if (restype == ResourceType.TEXT) {
@@ -163,19 +183,19 @@ public class ResourcesView extends JPanel implements EditorRecord {
 
         return resource;
     }
-    
+
     public Component getComponent() {
         return this;
     }
-    
+
     public void refresh() {
     }
-    
+
     private void showView(String view) {
-        CardLayout cl = (CardLayout)(m_jContainer.getLayout());
-        cl.show(m_jContainer, view);  
+        CardLayout cl = (CardLayout) (m_jContainer.getLayout());
+        cl.show(m_jContainer, view);
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -187,8 +207,8 @@ public class ResourcesView extends JPanel implements EditorRecord {
         m_jGroupType = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         m_jContainer = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        m_jText = new javax.swing.JTextArea();
+        jScrollPane1 = new org.fife.ui.rtextarea.RTextScrollPane();
+        m_jText = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
         jPanel1 = new javax.swing.JPanel();
         m_jImage = new com.openbravo.data.gui.JImageEditor();
         jLabel2 = new javax.swing.JLabel();
@@ -199,7 +219,8 @@ public class ResourcesView extends JPanel implements EditorRecord {
 
         m_jContainer.setLayout(new java.awt.CardLayout());
 
-        m_jText.setFont(new java.awt.Font("DialogInput", 0, 12));
+        m_jText.setWrapStyleWord(false);
+        m_jText.setFont(new java.awt.Font("DialogInput", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(m_jText);
 
         m_jContainer.add(jScrollPane1, "text");
@@ -258,21 +279,18 @@ public class ResourcesView extends JPanel implements EditorRecord {
         } else {
             showView("null");
         }
-      
+
     }//GEN-LAST:event_m_jTypeActionPerformed
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private org.fife.ui.rtextarea.RTextScrollPane jScrollPane1;
     private javax.swing.JPanel m_jContainer;
     private javax.swing.ButtonGroup m_jGroupType;
     private com.openbravo.data.gui.JImageEditor m_jImage;
     private javax.swing.JTextField m_jName;
-    private javax.swing.JTextArea m_jText;
+    private org.fife.ui.rsyntaxtextarea.RSyntaxTextArea m_jText;
     private javax.swing.JComboBox m_jType;
     // End of variables declaration//GEN-END:variables
-    
 }

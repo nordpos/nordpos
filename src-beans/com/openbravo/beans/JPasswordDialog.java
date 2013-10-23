@@ -129,6 +129,7 @@ public class JPasswordDialog extends javax.swing.JDialog {
 
         jcmdOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/button_ok.png"))); // NOI18N
         jcmdOK.setText(m_resources.getString("button.ok")); // NOI18N
+        jcmdOK.setHideActionText(true);
         jcmdOK.setMargin(new java.awt.Insets(8, 16, 8, 16));
         jcmdOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,12 +176,8 @@ public class JPasswordDialog extends javax.swing.JDialog {
         getContentPane().add(m_jPanelTitle, java.awt.BorderLayout.NORTH);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-258)/2, (screenSize.height-428)/2, 258, 428);
+        setBounds((screenSize.width-277)/2, (screenSize.height-428)/2, 277, 428);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jNumberKeys21KeyPerformed(com.openbravo.beans.JNumberEvent evt) {//GEN-FIRST:event_jNumberKeys21KeyPerformed
- 
-    }//GEN-LAST:event_jNumberKeys21KeyPerformed
 
     private void jcmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmdOKActionPerformed
           

@@ -29,7 +29,15 @@ public class UnicodeTranslatorSurePOS extends UnicodeTranslator {
         return new byte[] {0x02}; // Multilingual International 858            
     }
     
-    public byte transChar(char sChar) {
+    public final byte[] convertString(String sConvert) {
+        byte bAux[] = new byte[sConvert.length()];
+        for (int i = 0; i < sConvert.length(); i++) {
+            bAux[i] = transChar(sConvert.charAt(i));
+        }
+        return bAux;
+    }
+
+    private byte transChar(char sChar) {
         if ((sChar >= 0x0000) && (sChar < 0x0080)) {
             return (byte) sChar;
         } else {

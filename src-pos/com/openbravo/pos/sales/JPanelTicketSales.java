@@ -18,22 +18,28 @@
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.openbravo.pos.sales;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 import com.openbravo.basic.BasicException;
 import com.openbravo.pos.catalog.CatalogSelector;
 import com.openbravo.pos.catalog.JCatalog;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.ticket.ProductInfoExt;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+/**
+ *
+ * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ */
 public class JPanelTicketSales extends JPanelTicket {
 
     private CatalogSelector m_cat;
-   
+    
     /** Creates a new instance of JPanelTicketSales */
     public JPanelTicketSales() {        
     }
@@ -53,12 +59,14 @@ public class JPanelTicketSales extends JPanelTicket {
         m_cat.addActionListener(new CatalogListener());
         m_cat.getComponent().setPreferredSize(new Dimension(
                 0,
-                Integer.parseInt(panelconfig.getProperty("cat-height", "245"))));
+                Integer.parseInt(panelconfig.getProperty("cat-height", "200"))));
         return m_cat.getComponent();
     }
 
     protected void resetSouthComponent() {
+        if ("false".equals(panelconfig.getProperty("catvisible")) == false) {
         m_cat.showCatalogPanel(null);
+    }
     }
     
     protected JTicketsBag getJTicketsBag() {
@@ -68,16 +76,20 @@ public class JPanelTicketSales extends JPanelTicket {
     @Override
     public void activate() throws BasicException {      
         super.activate();
-        m_cat.loadCatalog();
-    }      
+        if ("false".equals(panelconfig.getProperty("catvisible")) == false) {
+            m_cat.loadCatalog(m_App);
+        }
+    }
     
     private class CatalogListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
             buttonTransition((ProductInfoExt) e.getSource());
         }  
     }
     
     private class CatalogSelectionListener implements ListSelectionListener {
+
         public void valueChanged(ListSelectionEvent e) {      
             
             if (!e.getValueIsAdjusting()) {
@@ -90,6 +102,8 @@ public class JPanelTicketSales extends JPanelTicket {
                     }
 
                     // Show the accurate catalog panel...
+                    if ("false".equals(panelconfig.getProperty("catvisible")) == false) {
+
                     if (i >= 0) {
                         m_cat.showCatalogPanel(m_oTicket.getLine(i).getProductID());
                     } else {
@@ -99,4 +113,5 @@ public class JPanelTicketSales extends JPanelTicket {
             }
         }  
     }
+}
 }

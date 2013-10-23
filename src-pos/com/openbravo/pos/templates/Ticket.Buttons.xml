@@ -19,21 +19,54 @@
     You should have received a copy of the GNU General Public License
     along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<configuration>
+<configuration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Ticket.xsd">
+       
     <button key="button.print" titlekey="button.print" template="Printer.TicketPreview"/>
     <button key="button.opendrawer" titlekey="button.opendrawer" template="Printer.OpenDrawer"/>
-    <!-- <event key="ticket.change" code="event.change"/> -->
-    <!-- <event key="ticket.addline" code="event.addline"/> -->
-    <!-- <event key="ticket.removeline" code="event.removeline"/> -->
-    <!-- <event key="ticket.setline" code="event.setline"/> -->
-    <!-- <event key="ticket.show" code="event.show"/> -->
-    <!-- <event key="ticket.total" code="event.total"/> -->
-    <!-- <event key="ticket.close" code="event.close"/> -->   
-    <img-width value="64"/>
-    <img-height value="54"/>
-    <cat-height value="300" />
-    <taxesincluded value="false"/>   
-    <!-- <printselected value="true"/> -->    
-    <!-- <taxcategoryid value="001"/> -->
-    <!-- <pricevisible value="true" /> -->
+
+    <button key="button.infostock" image="icon.stock" name="button.infostock" code="Script.StockCheck"/>
+
+<!-- 
+    <event key="ticket.change" code="event.change"/>
+    <event key="ticket.addline" code="event.addline"/>
+    <event key="ticket.removeline" code="event.removeline"/>
+    <event key="ticket.setline" code="event.setline"/>
+    <event key="ticket.show" code="event.show"/>
+    <event key="ticket.total" code="event.total"/>
+    <event key="ticket.close" code="event.close"/>
+-->
+
+<!--  
+    <event key="ticket.addline" code="Script.StockCurrentAdd"/>
+    <event key="ticket.setline" code="Script.StockCurrentSet"/>
+-->
+
+    <img-width value="80"/>
+    <img-height value="80"/>
+    <font-size value="12"/>
+    <catvisible value="true" />  
+    <cat-height value="120" />
+    <pricevisible value="true" />
+    
+    <taxesincluded value="true"/>   
+    
+    <attributesautoset value="true"/>
+    
+    <printselected value="true"/>
+    <refmultcontrol value="true" />
+    
+    <discount-rate-visible value="true"/>
+    <discount-rate-1 value="5"/>
+    <discount-rate-2 value="10"/>
+    <discount-rate-3 value="15"/>
+
+<!--
+    <discount-money-visible value="true"/>
+    <discount-money-1 value="1"/>
+    <discount-money-2 value="5"/>
+    <discount-money-3 value="10"/>   
+-->
+    
+<!--    <price-is-zero value="true"/> -->
 </configuration>

@@ -174,13 +174,15 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
 
         jLabel2.setText(AppLocal.getIntString("Label.Name")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(20, 20, 80, 14);
+        jLabel2.setBounds(20, 20, 80, 18);
         add(m_jName);
-        m_jName.setBounds(100, 20, 180, 18);
+        m_jName.setBounds(100, 20, 180, 28);
 
         jLabel3.setText(AppLocal.getIntString("label.image")); // NOI18N
         add(jLabel3);
-        jLabel3.setBounds(20, 80, 80, 14);
+        jLabel3.setBounds(20, 80, 80, 18);
+
+        m_jImage.setMaxDimensions(new java.awt.Dimension(256, 256));
         add(m_jImage);
         m_jImage.setBounds(100, 80, 240, 180);
 
@@ -191,7 +193,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
             }
         });
         add(m_jCatalogAdd);
-        m_jCatalogAdd.setBounds(370, 20, 170, 24);
+        m_jCatalogAdd.setBounds(370, 20, 170, 30);
 
         m_jCatalogDelete.setText(AppLocal.getIntString("button.catalogdel")); // NOI18N
         m_jCatalogDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -200,11 +202,11 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
             }
         });
         add(m_jCatalogDelete);
-        m_jCatalogDelete.setBounds(370, 50, 170, 24);
+        m_jCatalogDelete.setBounds(370, 50, 170, 30);
 
         jLabel5.setText(AppLocal.getIntString("label.prodcategory")); // NOI18N
         add(jLabel5);
-        jLabel5.setBounds(20, 50, 90, 14);
+        jLabel5.setBounds(20, 50, 90, 18);
         add(m_jCategory);
         m_jCategory.setBounds(100, 50, 180, 20);
     }// </editor-fold>//GEN-END:initComponents

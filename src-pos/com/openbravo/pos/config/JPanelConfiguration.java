@@ -52,14 +52,15 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
         
         // Inicio lista de paneles
         m_panelconfig = new ArrayList<PanelConfig>();
-        m_panelconfig.add(new JPanelConfigDatabase());
         m_panelconfig.add(new JPanelConfigGeneral());
+        m_panelconfig.add(new JPanelConfigDatabase());
+        m_panelconfig.add(new JPanelConfigHardware());        
         m_panelconfig.add(new JPanelConfigLocale());
         m_panelconfig.add(new JPanelConfigPayment());
         
         // paneles auxiliares
         for (PanelConfig c: m_panelconfig) {
-            m_jConfigOptions.add(c.getConfigComponent());
+            m_jConfigOptions.addTab(c.getPanelConfigName(), c.getConfigComponent());
         }
     }
         
@@ -142,12 +143,12 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        m_jConfigOptions = new javax.swing.JPanel();
+        m_jConfigOptions = new javax.swing.JTabbedPane();
         jbtnCancel = new javax.swing.JButton();
         jbtnRestore = new javax.swing.JButton();
         jbtnSave = new javax.swing.JButton();
 
-        m_jConfigOptions.setLayout(new javax.swing.BoxLayout(m_jConfigOptions, javax.swing.BoxLayout.Y_AXIS));
+        m_jConfigOptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setViewportView(m_jConfigOptions);
 
         jbtnCancel.setText(AppLocal.getIntString("Button.Restore")); // NOI18N
@@ -175,11 +176,12 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 362, Short.MAX_VALUE)
                         .addComponent(jbtnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnRestore)
@@ -191,8 +193,8 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCancel)
                     .addComponent(jbtnRestore)
@@ -229,7 +231,7 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
     private javax.swing.JButton jbtnCancel;
     private javax.swing.JButton jbtnRestore;
     private javax.swing.JButton jbtnSave;
-    private javax.swing.JPanel m_jConfigOptions;
+    private javax.swing.JTabbedPane m_jConfigOptions;
     // End of variables declaration//GEN-END:variables
     
 }

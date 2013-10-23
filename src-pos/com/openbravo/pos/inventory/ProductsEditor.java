@@ -19,67 +19,102 @@
 
 package com.openbravo.pos.inventory;
 
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.gui.ComboBoxValModel;
+import com.openbravo.data.gui.MessageInf;
+import com.openbravo.data.loader.SentenceFind;
+import com.openbravo.data.loader.SentenceList;
+import com.openbravo.data.user.DirtyManager;
+import com.openbravo.data.user.EditorRecord;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.forms.DataLogicSystem;
+import com.openbravo.pos.printer.TicketFiscalPrinterException;
+import com.openbravo.pos.printer.TicketParser;
+import com.openbravo.pos.printer.TicketPrinterException;
+import com.openbravo.pos.sales.TaxesLogic;
+import com.openbravo.pos.scripting.ScriptEngine;
+import com.openbravo.pos.scripting.ScriptException;
+import com.openbravo.pos.scripting.ScriptFactory;
+import com.openbravo.pos.ticket.ProductInfoEdit;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import java.awt.image.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.format.Formats;
-import com.openbravo.basic.BasicException;
-import com.openbravo.data.gui.ComboBoxValModel;
-import com.openbravo.data.loader.SentenceFind;
-import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.user.EditorRecord;
-import com.openbravo.data.user.DirtyManager;
-import com.openbravo.pos.forms.DataLogicSales;
-import com.openbravo.pos.sales.TaxesLogic;
+import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JPanel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class ProductsEditor extends JPanel implements EditorRecord {
-       
+
+    private String s_GenRef;
+    private String s_GenBarcode;
+    private String s_DefBarcode;
+    private String s_DefTaxCat;
+    private String s_DefProdCat;
+
+    private SentenceList product;
+
     private SentenceList m_sentcat;
     private ComboBoxValModel m_CategoryModel;
 
     private SentenceList taxcatsent;
-    private ComboBoxValModel taxcatmodel;  
+    private ComboBoxValModel taxcatmodel;
 
     private SentenceList attsent;
     private ComboBoxValModel attmodel;
-    
+
     private SentenceList taxsent;
     private TaxesLogic taxeslogic;
 
     private SentenceFind loadimage;
-    
+
     private ComboBoxValModel m_CodetypeModel;
-    
+
     private Object m_id;
     private Object pricesell;
     private boolean priceselllock = false;
-    
+
     private boolean reportlock = false;
-    
-    /** Creates new form JEditProduct */
-    public ProductsEditor(DataLogicSales dlSales, DirtyManager dirty) {
+
+    private DataLogicSales m_dSales;
+    private DataLogicSystem m_dSystem;
+    private TicketParser m_TTP;
+
+    private ProductInfoEdit m_oCurrentProductEdit;
+
+    private AppView m_App;
+
+    public ProductsEditor(AppView app, DataLogicSystem dlSystem, DataLogicSales dlSales, DirtyManager dirty) {
         initComponents();
+        m_App = app;
+        m_dSales = dlSales;
+        m_dSystem = dlSystem;
+        m_TTP = new TicketParser(m_App.getDeviceTicket(), dlSystem);
 
         loadimage = dlSales.getProductImage();
-        
+
+        product = dlSales.getProductList();
+
         // The taxes sentence
         taxsent = dlSales.getTaxList();
-             
+
         // The categories model
         m_sentcat = dlSales.getCategoriesList();
         m_CategoryModel = new ComboBoxValModel();
-        
+
         // The taxes model
         taxcatsent = dlSales.getTaxCategoriesList();
         taxcatmodel = new ComboBoxValModel();
@@ -87,14 +122,14 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         // The attributes model
         attsent = dlSales.getAttributeSetList();
         attmodel = new ComboBoxValModel();
-        
+
         m_CodetypeModel = new ComboBoxValModel();
         m_CodetypeModel.add(null);
         m_CodetypeModel.add(CodeType.EAN13);
         m_CodetypeModel.add(CodeType.CODE128);
         m_jCodetype.setModel(m_CodetypeModel);
         m_jCodetype.setVisible(false);
-               
+
         m_jRef.getDocument().addDocumentListener(dirty);
         m_jCode.getDocument().addDocumentListener(dirty);
         m_jName.getDocument().addDocumentListener(dirty);
@@ -116,18 +151,27 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jPriceBuy.getDocument().addDocumentListener(fm);
         m_jPriceSell.getDocument().addDocumentListener(new PriceSellManager());
         m_jTax.addActionListener(fm);
-        
+
         m_jPriceSellTax.getDocument().addDocumentListener(new PriceTaxManager());
         m_jmargin.getDocument().addDocumentListener(new MarginManager());
-        
+
+        txtAttributes.setAntiAliasingEnabled(true);
+        txtAttributes.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
+
         writeValueEOF();
     }
-    
+
     public void activate() throws BasicException {
-        
+
+        s_GenRef = m_App.getGenerateProductReference();
+        s_GenBarcode = m_App.getGenerateProductBarcode();
+        s_DefBarcode = m_App.getUserBarcode();
+        s_DefTaxCat = m_App.getDefaultTaxCategory();
+        s_DefProdCat = m_App.getDefaultProductCategory();
+
         // Load the taxes logic
-        taxeslogic = new TaxesLogic(taxsent.list());        
-        
+        taxeslogic = new TaxesLogic(taxsent.list());
+
         m_CategoryModel = new ComboBoxValModel(m_sentcat.list());
         m_jCategory.setModel(m_CategoryModel);
 
@@ -137,13 +181,16 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         attmodel = new ComboBoxValModel(attsent.list());
         attmodel.add(0, null);
         m_jAtt.setModel(attmodel);
+
+        m_oCurrentProductEdit = new ProductInfoEdit();
     }
-    
+
     public void refresh() {
-    }    
-    
+
+    }
+
     public void writeValueEOF() {
-        
+
         reportlock = true;
         // Los valores
         m_jTitle.setText(AppLocal.getIntString("label.recordeof"));
@@ -157,7 +204,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         taxcatmodel.setSelectedKey(null);
         attmodel.setSelectedKey(null);
         m_jPriceBuy.setText(null);
-        setPriceSell(null);         
+        setPriceSell(null);
         m_jImage.setImage(null);
         m_jstockcost.setText(null);
         m_jstockvolume.setText(null);
@@ -165,7 +212,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jCatalogOrder.setText(null);
         txtAttributes.setText(null);
         reportlock = false;
-        
+
         // Los habilitados
         m_jRef.setEnabled(false);
         m_jCode.setEnabled(false);
@@ -185,26 +232,79 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jInCatalog.setEnabled(false);
         m_jCatalogOrder.setEnabled(false);
         txtAttributes.setEnabled(false);
-        
+
         calculateMargin();
         calculatePriceSellTax();
     }
     public void writeValueInsert() {
-       
+
         reportlock = true;
         // Los valores
         m_jTitle.setText(AppLocal.getIntString("label.recordnew"));
         m_id = UUID.randomUUID().toString();
-        m_jRef.setText(null);
-        m_jCode.setText(null);
+
+        String GenCode = "";
+
+        try {
+            if (product.list() != null) {
+                GenCode = Integer.toString(product.list().size() + 1);
+            } else {
+                GenCode = "1";
+            }
+        } catch (BasicException ex) {
+        }
+
+        if (s_GenRef.equals("true")) {
+            for (int i = GenCode.length(); i < 4; i++) {
+                GenCode = "0".concat(GenCode);
+            }
+            m_jRef.setText(GenCode);
+        } else {
+            m_jRef.setText(null);
+        }
+
+        if (s_GenBarcode.equals("true")) {
+
+            for (int i = GenCode.length(); i < 9; i++) {
+                GenCode = "0".concat(GenCode);
+            }
+
+            GenCode = s_DefBarcode.concat(GenCode);
+
+            int iBCC = 0;
+
+            for (int i = 0; i < 12; i++) {
+                if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11) {
+                    iBCC = iBCC + Integer.parseInt(GenCode.substring(i, i + 1)) * 3;
+                } else {
+                    iBCC = iBCC + Integer.parseInt(GenCode.substring(i, i + 1));
+                }
+            }
+
+            if (iBCC > 9) {
+                iBCC = 10 - Integer.parseInt(Integer.toString(iBCC).substring(1, 2));
+                if (iBCC == 10) {
+                    iBCC = 0;
+                }
+            } else {
+                iBCC = 10 - Integer.parseInt(Integer.toString(iBCC).substring(0, 1));
+            }
+
+            GenCode = GenCode.concat(Integer.toString(iBCC));
+
+            m_jCode.setText(GenCode);
+        } else {
+            m_jCode.setText(null);
+        }
+
         m_jName.setText(null);
         m_jComment.setSelected(false);
         m_jScale.setSelected(false);
-        m_CategoryModel.setSelectedKey(null);
-        taxcatmodel.setSelectedKey(null);
+        m_CategoryModel.setSelectedKey(s_DefProdCat);
+        taxcatmodel.setSelectedKey(s_DefTaxCat);
         attmodel.setSelectedKey(null);
         m_jPriceBuy.setText(null);
-        setPriceSell(null);                     
+        setPriceSell(null);
         m_jImage.setImage(null);
         m_jstockcost.setText(null);
         m_jstockvolume.setText(null);
@@ -212,7 +312,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jCatalogOrder.setText(null);
         txtAttributes.setText(null);
         reportlock = false;
-        
+
         // Los habilitados
         m_jRef.setEnabled(true);
         m_jCode.setEnabled(true);
@@ -223,22 +323,23 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jTax.setEnabled(true);
         m_jAtt.setEnabled(true);
         m_jPriceBuy.setEnabled(true);
-        m_jPriceSell.setEnabled(true); 
+        m_jPriceSell.setEnabled(true);
         m_jPriceSellTax.setEnabled(true);
         m_jmargin.setEnabled(true);
         m_jImage.setEnabled(true);
         m_jstockcost.setEnabled(true);
         m_jstockvolume.setEnabled(true);
-        m_jInCatalog.setEnabled(true); 
+        m_jInCatalog.setEnabled(true);
         m_jCatalogOrder.setEnabled(false);
         txtAttributes.setEnabled(true);
-        
+
         calculateMargin();
         calculatePriceSellTax();
    }
+
     public void writeValueDelete(Object value) {
-        
-        reportlock = true;       
+
+        reportlock = true;
         Object[] myprod = (Object[]) value;
         m_jTitle.setText(Formats.STRING.formatValue(myprod[1]) + " - " + Formats.STRING.formatValue(myprod[3]) + " " + AppLocal.getIntString("label.recorddeleted"));
         m_id = myprod[0];
@@ -248,7 +349,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jComment.setSelected(((Boolean)myprod[4]).booleanValue());
         m_jScale.setSelected(((Boolean)myprod[5]).booleanValue());
         m_jPriceBuy.setText(Formats.CURRENCY.formatValue(myprod[6]));
-        setPriceSell(myprod[7]);                    
+        setPriceSell(myprod[7]);
         m_CategoryModel.setSelectedKey(myprod[8]);
         taxcatmodel.setSelectedKey(myprod[9]);
         attmodel.setSelectedKey(myprod[10]);
@@ -260,7 +361,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         txtAttributes.setText(Formats.BYTEA.formatValue(myprod[16]));
         txtAttributes.setCaretPosition(0);
         reportlock = false;
-        
+
         // Los habilitados
         m_jRef.setEnabled(false);
         m_jCode.setEnabled(false);
@@ -280,13 +381,13 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jInCatalog.setEnabled(false);
         m_jCatalogOrder.setEnabled(false);
         txtAttributes.setEnabled(false);
-        
+
         calculateMargin();
         calculatePriceSellTax();
-    }    
-    
+    }
+
     public void writeValueEdit(Object value) {
-        
+
         reportlock = true;
         Object[] myprod = (Object[]) value;
         m_jTitle.setText(Formats.STRING.formatValue(myprod[1]) + " - " + Formats.STRING.formatValue(myprod[3]));
@@ -297,7 +398,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jComment.setSelected(((Boolean)myprod[4]).booleanValue());
         m_jScale.setSelected(((Boolean)myprod[5]).booleanValue());
         m_jPriceBuy.setText(Formats.CURRENCY.formatValue(myprod[6]));
-        setPriceSell(myprod[7]);                               
+        setPriceSell(myprod[7]);
         m_CategoryModel.setSelectedKey(myprod[8]);
         taxcatmodel.setSelectedKey(myprod[9]);
         attmodel.setSelectedKey(myprod[10]);
@@ -309,7 +410,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         txtAttributes.setText(Formats.BYTEA.formatValue(myprod[16]));
         txtAttributes.setCaretPosition(0);
         reportlock = false;
-        
+
         // Los habilitados
         m_jRef.setEnabled(true);
         m_jCode.setEnabled(true);
@@ -320,22 +421,22 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jTax.setEnabled(true);
         m_jAtt.setEnabled(true);
         m_jPriceBuy.setEnabled(true);
-        m_jPriceSell.setEnabled(true); 
+        m_jPriceSell.setEnabled(true);
         m_jPriceSellTax.setEnabled(true);
         m_jmargin.setEnabled(true);
         m_jImage.setEnabled(true);
         m_jstockcost.setEnabled(true);
         m_jstockvolume.setEnabled(true);
         m_jInCatalog.setEnabled(true);
-        m_jCatalogOrder.setEnabled(m_jInCatalog.isSelected());  
+        m_jCatalogOrder.setEnabled(m_jInCatalog.isSelected());
         txtAttributes.setEnabled(true);
-        
+
         calculateMargin();
         calculatePriceSellTax();
     }
 
     public Object createValue() throws BasicException {
-        
+
         Object[] myprod = new Object[17];
         myprod[0] = m_id;
         myprod[1] = m_jRef.getText();
@@ -354,10 +455,10 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         myprod[14] = Boolean.valueOf(m_jInCatalog.isSelected());
         myprod[15] = Formats.INT.parseValue(m_jCatalogOrder.getText());
         myprod[16] = Formats.BYTEA.parseValue(txtAttributes.getText());
-        
+
         return myprod;
-    }    
-    
+    }
+
     public Component getComponent() {
         return this;
     }
@@ -371,10 +472,10 @@ public class ProductsEditor extends JPanel implements EditorRecord {
     }
 
     private void calculateMargin() {
-        
+
         if (!reportlock) {
             reportlock = true;
-            
+
             Double dPriceBuy = readCurrency(m_jPriceBuy.getText());
             Double dPriceSell = (Double) pricesell;
 
@@ -382,75 +483,75 @@ public class ProductsEditor extends JPanel implements EditorRecord {
                 m_jmargin.setText(null);
             } else {
                 m_jmargin.setText(Formats.PERCENT.formatValue(new Double(dPriceSell.doubleValue() / dPriceBuy.doubleValue() - 1.0)));
-            }    
+            }
             reportlock = false;
         }
     }
-    
+
     private void calculatePriceSellTax() {
-        
+
         if (!reportlock) {
             reportlock = true;
-            
+
             Double dPriceSell = (Double) pricesell;
-            
+
             if (dPriceSell == null) {
                 m_jPriceSellTax.setText(null);
-            } else {               
+            } else {
                 double dTaxRate = taxeslogic.getTaxRate((TaxCategoryInfo) taxcatmodel.getSelectedItem(), new Date());
                 m_jPriceSellTax.setText(Formats.CURRENCY.formatValue(new Double(dPriceSell.doubleValue() * (1.0 + dTaxRate))));
-            }            
+            }
             reportlock = false;
         }
     }
-    
+
     private void calculatePriceSellfromMargin() {
-        
+
         if (!reportlock) {
             reportlock = true;
-            
+
             Double dPriceBuy = readCurrency(m_jPriceBuy.getText());
-            Double dMargin = readPercent(m_jmargin.getText());  
-            
+            Double dMargin = readPercent(m_jmargin.getText());
+
             if (dMargin == null || dPriceBuy == null) {
                 setPriceSell(null);
             } else {
                 setPriceSell(new Double(dPriceBuy.doubleValue() * (1.0 + dMargin.doubleValue())));
-            }                        
-            
+            }
+
             reportlock = false;
         }
-      
+
     }
-    
+
     private void calculatePriceSellfromPST() {
-        
+
         if (!reportlock) {
             reportlock = true;
-                    
-            Double dPriceSellTax = readCurrency(m_jPriceSellTax.getText());  
+
+            Double dPriceSellTax = readCurrency(m_jPriceSellTax.getText());
 
             if (dPriceSellTax == null) {
                 setPriceSell(null);
             } else {
                 double dTaxRate = taxeslogic.getTaxRate((TaxCategoryInfo) taxcatmodel.getSelectedItem(), new Date());
                 setPriceSell(new Double(dPriceSellTax.doubleValue() / (1.0 + dTaxRate)));
-            }   
-                        
+            }
+
             reportlock = false;
-        }    
+        }
     }
-    
+
     private void setPriceSell(Object value) {
-        
+
         if (!priceselllock) {
             priceselllock = true;
             pricesell = value;
-            m_jPriceSell.setText(Formats.CURRENCY.formatValue(pricesell));  
+            m_jPriceSell.setText(Formats.CURRENCY.formatValue(pricesell));
             priceselllock = false;
         }
     }
-    
+
     private class PriceSellManager implements DocumentListener {
         public void changedUpdate(DocumentEvent e) {
             if (!priceselllock) {
@@ -469,7 +570,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             }
             calculateMargin();
             calculatePriceSellTax();
-        }    
+        }
         public void removeUpdate(DocumentEvent e) {
             if (!priceselllock) {
                 priceselllock = true;
@@ -478,9 +579,9 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             }
             calculateMargin();
             calculatePriceSellTax();
-        }  
+        }
     }
-    
+
     private class FieldsManager implements DocumentListener, ActionListener {
         public void changedUpdate(DocumentEvent e) {
             calculateMargin();
@@ -489,11 +590,11 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         public void insertUpdate(DocumentEvent e) {
             calculateMargin();
             calculatePriceSellTax();
-        }    
+        }
         public void removeUpdate(DocumentEvent e) {
             calculateMargin();
             calculatePriceSellTax();
-        }         
+        }
         public void actionPerformed(ActionEvent e) {
             calculateMargin();
             calculatePriceSellTax();
@@ -508,13 +609,13 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         public void insertUpdate(DocumentEvent e) {
             calculatePriceSellfromPST();
             calculateMargin();
-        }    
+        }
         public void removeUpdate(DocumentEvent e) {
             calculatePriceSellfromPST();
             calculateMargin();
-        }         
+        }
     }
-    
+
     private class MarginManager implements DocumentListener  {
         public void changedUpdate(DocumentEvent e) {
             calculatePriceSellfromMargin();
@@ -523,13 +624,13 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         public void insertUpdate(DocumentEvent e) {
             calculatePriceSellfromMargin();
             calculatePriceSellTax();
-        }    
+        }
         public void removeUpdate(DocumentEvent e) {
             calculatePriceSellfromMargin();
             calculatePriceSellTax();
-        }         
+        }
     }
-    
+
     private final static Double readCurrency(String sValue) {
         try {
             return (Double) Formats.CURRENCY.parseValue(sValue);
@@ -537,7 +638,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             return null;
         }
     }
-        
+
     private final static Double readPercent(String sValue) {
         try {
             return (Double) Formats.PERCENT.parseValue(sValue);
@@ -545,7 +646,28 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             return null;
         }
     }
-    
+
+    private void printProductLabel(ProductInfoEdit productinfo) throws TicketPrinterException, ScriptException, TicketFiscalPrinterException {
+        String sresource = m_dSystem.getResourceAsXML("Printer.ProductLabel");
+        if (sresource == null) {
+            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
+            msg.show(this);
+        } else {
+            try {
+                ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
+                script.put("product", productinfo);
+                m_TTP.printTicket(m_App, script.eval(sresource).toString());
+            } catch (ScriptException e) {
+                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
+                msg.show(this);
+            } catch (TicketPrinterException e) {
+                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
+                msg.show(this);
+                throw e;
+            }
+        }
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -592,82 +714,86 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtAttributes = new javax.swing.JTextArea();
+        jScrollPane1 = new org.fife.ui.rtextarea.RTextScrollPane();
+        txtAttributes = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
+        m_jPrintLabel = new javax.swing.JButton();
+        m_jVirtualKeyboard = new javax.swing.JButton();
 
         setLayout(null);
 
         jLabel1.setText(AppLocal.getIntString("label.prodref")); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(10, 50, 80, 15);
+        jLabel1.setBounds(10, 50, 80, 30);
 
         jLabel2.setText(AppLocal.getIntString("label.prodname")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(180, 50, 70, 15);
+        jLabel2.setBounds(180, 50, 70, 30);
         add(m_jRef);
-        m_jRef.setBounds(90, 50, 70, 19);
+        m_jRef.setBounds(90, 50, 70, 30);
         add(m_jName);
-        m_jName.setBounds(250, 50, 220, 19);
+        m_jName.setBounds(250, 50, 260, 30);
 
-        m_jTitle.setFont(new java.awt.Font("SansSerif", 3, 18));
+        m_jTitle.setFont(new java.awt.Font("SansSerif", 3, 18)); // NOI18N
         add(m_jTitle);
-        m_jTitle.setBounds(10, 10, 320, 30);
+        m_jTitle.setBounds(10, 10, 500, 30);
 
         jPanel1.setLayout(null);
 
         jLabel6.setText(AppLocal.getIntString("label.prodbarcode")); // NOI18N
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(10, 20, 150, 15);
+        jLabel6.setBounds(10, 20, 150, 18);
         jPanel1.add(m_jCode);
-        m_jCode.setBounds(160, 20, 170, 19);
+        m_jCode.setBounds(160, 20, 170, 28);
+
+        m_jImage.setMaxDimensions(new java.awt.Dimension(256, 256));
         jPanel1.add(m_jImage);
-        m_jImage.setBounds(340, 20, 200, 180);
+        m_jImage.setBounds(340, 20, 220, 230);
 
         jLabel3.setText(AppLocal.getIntString("label.prodpricebuy")); // NOI18N
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 50, 150, 15);
+        jLabel3.setBounds(10, 50, 150, 18);
 
         m_jPriceBuy.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jPriceBuy);
-        m_jPriceBuy.setBounds(160, 50, 80, 19);
+        m_jPriceBuy.setBounds(160, 50, 80, 28);
 
         jLabel4.setText(AppLocal.getIntString("label.prodpricesell")); // NOI18N
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(10, 80, 150, 15);
+        jLabel4.setBounds(10, 80, 150, 18);
 
         m_jPriceSell.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jPriceSell);
-        m_jPriceSell.setBounds(160, 80, 80, 19);
+        m_jPriceSell.setBounds(160, 80, 80, 28);
 
         jLabel5.setText(AppLocal.getIntString("label.prodcategory")); // NOI18N
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(10, 170, 150, 15);
+        jLabel5.setBounds(10, 170, 150, 18);
         jPanel1.add(m_jCategory);
         m_jCategory.setBounds(160, 170, 170, 20);
 
         jLabel7.setText(AppLocal.getIntString("label.taxcategory")); // NOI18N
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(10, 140, 150, 15);
+        jLabel7.setBounds(10, 140, 150, 18);
         jPanel1.add(m_jTax);
         m_jTax.setBounds(160, 140, 170, 20);
 
         m_jmargin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jmargin);
-        m_jmargin.setBounds(250, 80, 80, 19);
+        m_jmargin.setBounds(250, 80, 80, 28);
 
         m_jPriceSellTax.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jPriceSellTax);
-        m_jPriceSellTax.setBounds(160, 110, 80, 19);
+        m_jPriceSellTax.setBounds(160, 110, 80, 28);
 
         jLabel16.setText(AppLocal.getIntString("label.prodpriceselltax")); // NOI18N
         jPanel1.add(jLabel16);
-        jLabel16.setBounds(10, 110, 150, 15);
+        jLabel16.setBounds(10, 110, 150, 18);
         jPanel1.add(m_jCodetype);
         m_jCodetype.setBounds(250, 40, 80, 20);
 
         jLabel13.setText(AppLocal.getIntString("label.attributes")); // NOI18N
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(10, 200, 150, 15);
+        jLabel13.setBounds(10, 200, 150, 18);
         jPanel1.add(m_jAtt);
         m_jAtt.setBounds(160, 200, 170, 20);
 
@@ -677,31 +803,31 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel9.setText(AppLocal.getIntString("label.prodstockcost")); // NOI18N
         jPanel2.add(jLabel9);
-        jLabel9.setBounds(10, 20, 150, 15);
+        jLabel9.setBounds(10, 20, 150, 18);
 
         m_jstockcost.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jstockcost);
-        m_jstockcost.setBounds(160, 20, 80, 19);
+        m_jstockcost.setBounds(160, 20, 80, 28);
 
         jLabel10.setText(AppLocal.getIntString("label.prodstockvol")); // NOI18N
         jPanel2.add(jLabel10);
-        jLabel10.setBounds(10, 50, 150, 15);
+        jLabel10.setBounds(10, 50, 150, 18);
 
         m_jstockvolume.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jstockvolume);
-        m_jstockvolume.setBounds(160, 50, 80, 19);
+        m_jstockvolume.setBounds(160, 50, 80, 28);
         jPanel2.add(m_jScale);
-        m_jScale.setBounds(160, 140, 80, 21);
+        m_jScale.setBounds(160, 140, 80, 24);
         jPanel2.add(m_jComment);
-        m_jComment.setBounds(160, 110, 80, 21);
+        m_jComment.setBounds(160, 110, 80, 24);
 
         jLabel18.setText(AppLocal.getIntString("label.prodorder")); // NOI18N
         jPanel2.add(jLabel18);
-        jLabel18.setBounds(250, 80, 60, 15);
+        jLabel18.setBounds(250, 80, 60, 18);
 
         m_jCatalogOrder.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jCatalogOrder);
-        m_jCatalogOrder.setBounds(310, 80, 80, 19);
+        m_jCatalogOrder.setBounds(310, 80, 80, 28);
 
         m_jInCatalog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -709,26 +835,26 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             }
         });
         jPanel2.add(m_jInCatalog);
-        m_jInCatalog.setBounds(160, 80, 50, 21);
+        m_jInCatalog.setBounds(160, 80, 50, 24);
 
         jLabel8.setText(AppLocal.getIntString("label.prodincatalog")); // NOI18N
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(10, 80, 150, 15);
+        jLabel8.setBounds(10, 80, 150, 18);
 
         jLabel11.setText(AppLocal.getIntString("label.prodaux")); // NOI18N
         jPanel2.add(jLabel11);
-        jLabel11.setBounds(10, 110, 150, 15);
+        jLabel11.setBounds(10, 110, 150, 18);
 
         jLabel12.setText(AppLocal.getIntString("label.prodscale")); // NOI18N
         jPanel2.add(jLabel12);
-        jLabel12.setBounds(10, 140, 150, 15);
+        jLabel12.setBounds(10, 140, 150, 18);
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.prodstock"), jPanel2); // NOI18N
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        txtAttributes.setFont(new java.awt.Font("DialogInput", 0, 12));
+        txtAttributes.setFont(new java.awt.Font("DialogInput", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(txtAttributes);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -736,21 +862,114 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         jTabbedPane1.addTab(AppLocal.getIntString("label.properties"), jPanel3); // NOI18N
 
         add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 90, 560, 280);
+        jTabbedPane1.setBounds(10, 90, 570, 300);
+
+        m_jPrintLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/yast_printer.png"))); // NOI18N
+        m_jPrintLabel.setFocusPainted(false);
+        m_jPrintLabel.setFocusable(false);
+        m_jPrintLabel.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jPrintLabel.setRequestFocusEnabled(false);
+        m_jPrintLabel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jPrintLabelActionPerformed(evt);
+            }
+        });
+        add(m_jPrintLabel);
+        m_jPrintLabel.setBounds(520, 10, 60, 30);
+
+        m_jVirtualKeyboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/input-keyboard.png"))); // NOI18N
+        m_jVirtualKeyboard.setFocusPainted(false);
+        m_jVirtualKeyboard.setFocusable(false);
+        m_jVirtualKeyboard.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jVirtualKeyboard.setRequestFocusEnabled(false);
+        m_jVirtualKeyboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jVirtualKeyboardActionPerformed(evt);
+            }
+        });
+        add(m_jVirtualKeyboard);
+        m_jVirtualKeyboard.setBounds(520, 50, 60, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jInCatalogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jInCatalogActionPerformed
- 
+
         if (m_jInCatalog.isSelected()) {
-            m_jCatalogOrder.setEnabled(true);   
+            m_jCatalogOrder.setEnabled(true);
         } else {
-            m_jCatalogOrder.setEnabled(false);   
-            m_jCatalogOrder.setText(null);   
+            m_jCatalogOrder.setEnabled(false);
+            m_jCatalogOrder.setText(null);
         }
 
     }//GEN-LAST:event_m_jInCatalogActionPerformed
 
-    
+    private void m_jVirtualKeyboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jVirtualKeyboardActionPerformed
+        ProductInfoEdit m_oCurrentProductEdit = new ProductInfoEdit();
+        m_oCurrentProductEdit.setID(m_id.toString());
+        m_oCurrentProductEdit.setReference(m_jRef.getText());
+        m_oCurrentProductEdit.setName(m_jName.getText());
+        m_oCurrentProductEdit.setCode(m_jCode.getText());
+
+        Double dPriceBuy = readCurrency(m_jPriceBuy.getText());
+        if (dPriceBuy != null) m_oCurrentProductEdit.setPriceBuy(dPriceBuy);
+        Double dPriceSell = readCurrency(m_jPriceSell.getText());
+        if (dPriceSell != null) m_oCurrentProductEdit.setPriceSell(dPriceSell);
+
+        m_oCurrentProductEdit.setCategoryID(m_CategoryModel.getSelectedKey().toString());
+        m_oCurrentProductEdit.setTaxID(taxcatmodel.getSelectedKey().toString());
+        m_oCurrentProductEdit.setAttributeUseID((attmodel.getSelectedKey() != null) ? attmodel.getSelectedKey().toString() : null);
+
+        try {
+            JProductEditDialog editor = JProductEditDialog.getProductEditor(this, m_dSales);
+            editor.editProductFields(m_oCurrentProductEdit);
+            editor.setVisible(true);
+
+            m_oCurrentProductEdit = editor.getEditProduct();
+            m_jRef.setText(m_oCurrentProductEdit.getReference());
+            m_jName.setText(m_oCurrentProductEdit.getName());
+            m_jCode.setText(m_oCurrentProductEdit.getCode());
+            m_jPriceBuy.setText(Formats.CURRENCY.formatValue(m_oCurrentProductEdit.getPriceBuy()));
+            m_jPriceSell.setText(Formats.CURRENCY.formatValue(m_oCurrentProductEdit.getPriceSell()));
+            m_CategoryModel.setSelectedKey(m_oCurrentProductEdit.getCategoryID());
+            taxcatmodel.setSelectedKey(m_oCurrentProductEdit.getTaxID());
+            attmodel.setSelectedKey(m_oCurrentProductEdit.getAttributeUseID());
+        } catch (BasicException ex) {
+            Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        calculateMargin();
+
+    }//GEN-LAST:event_m_jVirtualKeyboardActionPerformed
+
+    private void m_jPrintLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jPrintLabelActionPerformed
+        m_oCurrentProductEdit.setID(m_id.toString());
+        m_oCurrentProductEdit.setReference(m_jRef.getText());
+        m_oCurrentProductEdit.setName(m_jName.getText());
+        m_oCurrentProductEdit.setCode(m_jCode.getText());
+
+        Double dPriceBuy = readCurrency(m_jPriceBuy.getText());
+        if (dPriceBuy != null) {
+            m_oCurrentProductEdit.setPriceBuy(dPriceBuy);
+        }
+        Double dPriceSell = readCurrency(m_jPriceSell.getText());
+        if (dPriceSell != null) {
+            m_oCurrentProductEdit.setPriceSell(dPriceSell);
+        }
+
+        m_oCurrentProductEdit.setCategoryID(m_CategoryModel.getSelectedKey().toString());
+        m_oCurrentProductEdit.setTaxID(taxcatmodel.getSelectedKey().toString());
+        m_oCurrentProductEdit.setAttributeUseID((attmodel.getSelectedKey() != null) ? attmodel.getSelectedKey().toString() : null);
+
+        try {
+            printProductLabel(m_oCurrentProductEdit);
+        } catch (TicketPrinterException ex) {
+            Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ScriptException ex) {
+            Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TicketFiscalPrinterException ex) {
+            Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_m_jPrintLabelActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -770,7 +989,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private org.fife.ui.rtextarea.RTextScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox m_jAtt;
     private javax.swing.JTextField m_jCatalogOrder;
@@ -784,14 +1003,16 @@ public class ProductsEditor extends JPanel implements EditorRecord {
     private javax.swing.JTextField m_jPriceBuy;
     private javax.swing.JTextField m_jPriceSell;
     private javax.swing.JTextField m_jPriceSellTax;
+    private javax.swing.JButton m_jPrintLabel;
     private javax.swing.JTextField m_jRef;
     private javax.swing.JCheckBox m_jScale;
     private javax.swing.JComboBox m_jTax;
     private javax.swing.JLabel m_jTitle;
+    private javax.swing.JButton m_jVirtualKeyboard;
     private javax.swing.JTextField m_jmargin;
     private javax.swing.JTextField m_jstockcost;
     private javax.swing.JTextField m_jstockvolume;
-    private javax.swing.JTextArea txtAttributes;
+    private org.fife.ui.rsyntaxtextarea.RSyntaxTextArea txtAttributes;
     // End of variables declaration//GEN-END:variables
-    
+
 }

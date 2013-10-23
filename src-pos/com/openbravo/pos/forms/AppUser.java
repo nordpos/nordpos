@@ -20,17 +20,19 @@
 package com.openbravo.pos.forms;
 
 import com.openbravo.data.loader.LocalRes;
+import com.openbravo.pos.ticket.UserInfo;
+import com.openbravo.pos.util.Hashcypher;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import com.openbravo.pos.ticket.UserInfo;
-import com.openbravo.pos.util.Hashcypher;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -42,7 +44,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class AppUser {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.pos.forms.AppUser");
+    private static final Logger logger = Logger.getLogger(AppUser.class.getName());
 
     private static SAXParser m_sp = null;
     private static HashMap<String, String> m_oldclasses; // This is for backwards compatibility purposes

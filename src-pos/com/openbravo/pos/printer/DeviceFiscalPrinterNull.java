@@ -16,39 +16,58 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.printer;
 
 import javax.swing.JComponent;
 
 public class DeviceFiscalPrinterNull implements DeviceFiscalPrinter {
-    
-    /** Creates a new instance of DeviceFiscalPrinterNull */
+
+    /**
+     * Creates a new instance of DeviceFiscalPrinterNull
+     */
     public DeviceFiscalPrinterNull() {
     }
+
     public DeviceFiscalPrinterNull(String desc) {
     }
- 
+
     public String getFiscalName() {
         return null;
     }
+
     public JComponent getFiscalComponent() {
         return null;
     }
-    
-    public void beginReceipt() {
+
+    public void beginReceipt(String sType, int iNumber, String sDate, String sTime, String sCashier) {
     }
+
     public void endReceipt() {
     }
+
     public void printLine(String sproduct, double dprice, double dunits, int taxinfo) {
     }
+
     public void printMessage(String smessage) {
     }
-    public void printTotal(String sPayment, double dpaid) {
+
+    public void printTotal(String sPayment, double dpaid, String sPaymentType) {
     }
-    
+
+    public void cutPaper(boolean complete) {
+    }
+
     public void printZReport() {
     }
+
     public void printXReport() {
+    }
+
+    @Override
+    public void printCashIn(double dsumm) {
+    }
+
+    @Override
+    public void printCashOut(double dsumm) {
     }
 }

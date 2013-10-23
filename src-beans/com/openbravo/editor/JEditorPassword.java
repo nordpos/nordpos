@@ -35,7 +35,7 @@ public class JEditorPassword extends JEditorText {
     }
         
     protected int getStartMode() {
-        return MODE_Abc1;
+        return MODE_123;
     }
     
     protected String getTextEdit() {

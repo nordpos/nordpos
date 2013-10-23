@@ -40,47 +40,47 @@ import com.openbravo.pos.forms.BeanFactoryApp;
 import com.openbravo.pos.forms.BeanFactoryException;
 import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.sales.TaxesLogic;
-import com.openbravo.pos.util.JRViewer300;
+import com.openbravo.pos.util.JRViewer411;
 
 public abstract class JPanelReport extends JPanel implements JPanelView, BeanFactoryApp   {
-    
-    private JRViewer300 reportviewer = null;   
+
+    private JRViewer411 reportviewer = null;
     private JasperReport jr = null;
     private EditorCreator editor = null;
-            
+
     protected AppView m_App;
-    
+
     protected SentenceList taxsent;
     protected TaxesLogic taxeslogic;
 
     /** Creates new form JPanelReport */
     public JPanelReport() {
-        
-        initComponents();      
+
+        initComponents();
     }
-    
-    public void init(AppView app) throws BeanFactoryException {   
-        
+
+    public void init(AppView app) throws BeanFactoryException {
+
         m_App = app;
         DataLogicSales dlSales = (DataLogicSales) app.getBean("com.openbravo.pos.forms.DataLogicSales");
         taxsent = dlSales.getTaxList();
-        
+
         editor = getEditorCreator();
         if (editor instanceof ReportEditorCreator) {
             jPanelFilter.add(((ReportEditorCreator) editor).getComponent(), BorderLayout.CENTER);
         }
-                  
-        reportviewer = new JRViewer300(null);                        
-        
+
+        reportviewer = new JRViewer411(null);
+
         add(reportviewer, BorderLayout.CENTER);
-        
-        try {     
-            
+
+        try {
+
             InputStream in = getClass().getResourceAsStream(getReport() + ".ser");
-            if (in == null) {      
+            if (in == null) {
                 // read and compile the report
-                JasperDesign jd = JRXmlLoader.load(getClass().getResourceAsStream(getReport() + ".jrxml"));            
-                jr = JasperCompileManager.compileReport(jd);    
+                JasperDesign jd = JRXmlLoader.load(getClass().getResourceAsStream(getReport() + ".jrxml"));
+                jr = JasperCompileManager.compileReport(jd);
             } else {
                 // read the compiled report
                 ObjectInputStream oin = new ObjectInputStream(in);
@@ -91,13 +91,13 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadreport"), e);
             msg.show(this);
             jr = null;
-        }  
+        }
     }
-    
+
     public Object getBean() {
         return this;
     }
-    
+
     protected abstract String getReport();
     protected abstract String getResourceBundle();
     protected abstract BaseSentence getSentence();
@@ -105,61 +105,61 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
     protected EditorCreator getEditorCreator() {
         return null;
     }
-    
+
     public JComponent getComponent() {
         return this;
     }
-    
+
     public void activate() throws BasicException {
 
         setVisibleFilter(true);
-        taxeslogic = new TaxesLogic(taxsent.list()); 
-    }    
-    
-    public boolean deactivate() {    
-        
+        taxeslogic = new TaxesLogic(taxsent.list());
+    }
+
+    public boolean deactivate() {
+
         reportviewer.loadJasperPrint(null);
         return true;
     }
-    
+
     protected void setVisibleButtonFilter(boolean value) {
         jToggleFilter.setVisible(value);
     }
-    
+
     protected void setVisibleFilter(boolean value) {
         jToggleFilter.setSelected(value);
         jToggleFilterActionPerformed(null);
     }
-    
-    private void launchreport() {     
-        
+
+    private void launchreport() {
+
         m_App.waitCursorBegin();
-        
+
         if (jr != null) {
-            try {     
-                
+            try {
+
                 // Archivo de recursos
-                String res = getResourceBundle();  
-                
+                String res = getResourceBundle();
+
                 // Parametros y los datos
-                Object params = (editor == null) ? null : editor.createValue();                
+                Object params = (editor == null) ? null : editor.createValue();
                 JRDataSource data = new JRDataSourceBasic(getSentence(), getReportFields(), params);
-                
+
                 // Construyo el mapa de los parametros.
                 Map reportparams = new HashMap();
                 reportparams.put("ARG", params);
                 if (res != null) {
                       reportparams.put("REPORT_RESOURCE_BUNDLE", ResourceBundle.getBundle(res));
-                }                
-                reportparams.put("TAXESLOGIC", taxeslogic); 
-                
-                JasperPrint jp = JasperFillManager.fillReport(jr, reportparams, data);    
-            
-                reportviewer.loadJasperPrint(jp);     
-                
+                }
+                reportparams.put("TAXESLOGIC", taxeslogic);
+
+                JasperPrint jp = JasperFillManager.fillReport(jr, reportparams, data);
+
+                reportviewer.loadJasperPrint(jp);
+
                 setVisibleFilter(false);
-                
-            } catch (MissingResourceException e) {    
+
+            } catch (MissingResourceException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadresourcedata"), e);
                 msg.show(this);
             } catch (JRException e) {
@@ -170,10 +170,10 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
                 msg.show(this);
             }
         }
-        
+
         m_App.waitCursorEnd();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -225,17 +225,17 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         launchreport();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jToggleFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleFilterActionPerformed
 
         jPanelFilter.setVisible(jToggleFilter.isSelected());
-    
+
     }//GEN-LAST:event_jToggleFilterActionPerformed
 
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
@@ -243,5 +243,5 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JToggleButton jToggleFilter;
     // End of variables declaration//GEN-END:variables
-    
+
 }

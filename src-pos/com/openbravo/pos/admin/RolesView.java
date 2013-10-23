@@ -26,6 +26,7 @@ import com.openbravo.data.user.DirtyManager;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 /**
  *
@@ -41,6 +42,9 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         
         m_jName.getDocument().addDocumentListener(dirty);
         m_jText.getDocument().addDocumentListener(dirty);
+        
+        m_jText.setAntiAliasingEnabled(true);
+        m_jText.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);            
         
         writeValueEOF();
     }
@@ -107,8 +111,8 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        m_jText = new javax.swing.JTextArea();
+        jScrollPane1 = new org.fife.ui.rtextarea.RTextScrollPane();
+        m_jText = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
         jLabel2 = new javax.swing.JLabel();
         m_jName = new javax.swing.JTextField();
 
@@ -147,9 +151,9 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private org.fife.ui.rtextarea.RTextScrollPane jScrollPane1;
     private javax.swing.JTextField m_jName;
-    private javax.swing.JTextArea m_jText;
+    private org.fife.ui.rsyntaxtextarea.RSyntaxTextArea m_jText;
     // End of variables declaration//GEN-END:variables
     
 }

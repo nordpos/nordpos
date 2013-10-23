@@ -19,8 +19,9 @@
 
 package com.openbravo.data.loader;
 
-import java.sql.*;
 import com.openbravo.basic.BasicException;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Logger;
 
 /**
@@ -29,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class StaticSentence extends JDBCSentence {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.data.loader.StaticSentence");
+    private static final Logger logger = Logger.getLogger(StaticSentence.class.getName());
     
     private ISQLBuilderStatic m_sentence;
     protected SerializerWrite m_SerWrite = null;

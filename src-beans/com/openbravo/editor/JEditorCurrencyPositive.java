@@ -30,7 +30,8 @@ public class JEditorCurrencyPositive extends JEditorNumber {
     protected Formats getFormat() {
         return Formats.CURRENCY;
     }
+
     protected int getMode() {
         return EditorKeys.MODE_DOUBLE_POSITIVE;
-    }      
+    }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
+    <label charset="Cp866"
+           length="200"
+           width="384"
+           gap="24"
+           x="0"
+           y="0"
+           rotation="0"
+           resolution="8">
+
+        <rectangle x-begin="0" y-begin="0" x-end="26" y-end="80" />
+
+        <line x-begin="30" y-begin="0" x-end="220" y-end="0" thickness="8" />
+
+        <line x-begin="30" y-begin="72" x-end="220" y-end="72" thickness="8" />
+
+        <frame x-begin="0" y-begin="0" x-end="384" y-end="200" thickness="4" />
+
+        <text font="3"
+              orientation="0"
+              x="52"
+              y="32"
+              font-height="1"
+              font-width="1"
+              font-weight="B">${product.getName()}</text>
+
+        <text font="5"
+              orientation="0"
+              x="228"
+              y="16"
+              font-height="1"
+              font-width="1"
+              font-weight="B">${product.getPriceSell()}</text>
+
+        #set ($barcode = $product.getCode())
+        #if ($barcode.matches("[0-9]{12,13}"))
+        <barcode type="EAN13"
+                 x="160"
+                 y="80"
+                 orientation="0"
+                 position="bottom"
+                 height="70">${barcode}</barcode>
+        #elseif ($barcode.matches("[0-9]{7,8}"))
+        <barcode type="EAN8"
+                 x="160"
+                 y="80"
+                 orientation="0"
+                 position="bottom"
+                 height="70">${barcode}</barcode>
+       #else
+       <barcode type="CODE128"
+                 x="160"
+                 y="80"
+                 orientation="0"
+                 position="bottom"
+                 height="70">${barcode}</barcode>
+        #end
+
+
+    </label>
+</output>

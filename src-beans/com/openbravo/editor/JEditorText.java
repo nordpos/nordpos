@@ -31,7 +31,10 @@ public abstract class JEditorText extends JEditorAbstract {
     public static final int MODE_Abc1 = 0;
     public static final int MODE_abc1 = 1;
     public static final int MODE_ABC1 = 2;
-    public static final int MODE_123 = 3;    
+    public static final int MODE_123 = 3;
+    public static final int MODE_Cyr1 = 4;
+    public static final int MODE_cyr1 = 5;
+    public static final int MODE_CYR1 = 6;
     public int m_iMode;
     
     protected int m_iTicks;
@@ -60,8 +63,30 @@ public abstract class JEditorText extends JEditorAbstract {
     private static final char[] CHAR_ABC1_7 = {'P', 'Q', 'R', 'S', '7'};
     private static final char[] CHAR_ABC1_8 = {'T', 'U', 'V', '8', '\u00da', '\u00dc'};
     private static final char[] CHAR_ABC1_9 = {'W', 'X', 'Y', 'Z', '9'};
-    private static final char[] CHAR_ABC1_0 = {' ', '0'};   
-    
+    private static final char[] CHAR_ABC1_0 = {' ', '0'};
+
+    private static final char[] CHAR_cyr1_1 = {'.', '?', '!', ',', '1', ';', ':'};
+    private static final char[] CHAR_cyr1_2 = {'\u0430', '\u0431', '\u0432', '\u0433', '2'};
+    private static final char[] CHAR_cyr1_3 = {'\u0434', '\u0435', '\u0436', '\u0437', '3', '\u0451'};
+    private static final char[] CHAR_cyr1_4 = {'\u0438', '\u0439', '\u043A', '\u043B', '4'};
+    private static final char[] CHAR_cyr1_5 = {'\u043C', '\u043D', '\u043E', '\u043F', '5'};
+    private static final char[] CHAR_cyr1_6 = {'\u0440', '\u0441', '\u0442', '\u0443', '6'};
+    private static final char[] CHAR_cyr1_7 = {'\u0444', '\u0445', '\u0446', '\u0447', '7'};
+    private static final char[] CHAR_cyr1_8 = {'\u0448', '\u0449', '\u044A', '\u044B', '8'};
+    private static final char[] CHAR_cyr1_9 = {'\u044C', '\u044D', '\u044E', '\u044F', '9'};
+    private static final char[] CHAR_cyr1_0 = {' ', '0'};
+
+    private static final char[] CHAR_CYR1_1 = {'.', '?', '!', ',', '1', ';', ':'};
+    private static final char[] CHAR_CYR1_2 = {'\u0410', '\u0411', '\u0412', '\u0413', '2', '\u20B4'};
+    private static final char[] CHAR_CYR1_3 = {'\u0414', '\u0415', '\u0416', '\u0417', '3', '\u0401'};
+    private static final char[] CHAR_CYR1_4 = {'\u0418', '\u0419', '\u041A', '\u041B', '4', };
+    private static final char[] CHAR_CYR1_5 = {'\u041C', '\u041D', '\u041E', '\u041F', '5'};
+    private static final char[] CHAR_CYR1_6 = {'\u0420', '\u0421', '\u0422', '\u0423', '6', '\u20B8'};
+    private static final char[] CHAR_CYR1_7 = {'\u0424', '\u0425', '\u0426', '\u0427', '7'};
+    private static final char[] CHAR_CYR1_8 = {'\u0428', '\u0429', '\u042A', '\u042B', '8'};
+    private static final char[] CHAR_CYR1_9 = {'\u042C', '\u042D', '\u042E', '\u042F', '9'};
+    private static final char[] CHAR_CYR1_0 = {' ', '0'};
+
     /** Creates a new instance of JEditorString */
     public JEditorText() {
         m_svalue = null;
@@ -132,6 +157,9 @@ public abstract class JEditorText extends JEditorAbstract {
         case MODE_abc1: return "abc1";
         case MODE_ABC1: return "ABC1";
         case MODE_123:  return "123";
+        case MODE_Cyr1: return "Эюя1";
+        case MODE_cyr1: return "эюя1";
+        case MODE_CYR1: return "ЭЮЯ1";
         default: return null;
         }
     }
@@ -223,7 +251,7 @@ public abstract class JEditorText extends JEditorAbstract {
             }
             m_iTicks = 0;
             m_cLastChar = '\u0000';           
-            m_iMode = (m_iMode + 1) % 4;
+            m_iMode = (m_iMode + 1) % 7;
         } else if (c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '0') {
             if (m_iMode == MODE_123) {
                 m_svalue = appendChar2Value(c);
@@ -251,8 +279,14 @@ public abstract class JEditorText extends JEditorAbstract {
         } else if (m_iMode == MODE_abc1 && c == '.') {
             m_iMode = MODE_Abc1;
         }
+
+        if (m_iMode == MODE_Cyr1 && c != ' ') {
+            m_iMode = MODE_cyr1;
+        } else if (m_iMode == MODE_cyr1 && c == '.') {
+            m_iMode = MODE_Cyr1;
+        }
     }
-    
+
     protected char getKeyChar() {
         
         char[] clist = null;
@@ -272,18 +306,47 @@ public abstract class JEditorText extends JEditorAbstract {
             }
             break;
         case MODE_Abc1:
-        case MODE_ABC1:                
+        case MODE_ABC1:
             switch (m_cLastChar) {
-                case '1': clist = CHAR_ABC1_1; break; 
-                case '2': clist = CHAR_ABC1_2; break; 
-                case '3': clist = CHAR_ABC1_3; break; 
-                case '4': clist = CHAR_ABC1_4; break; 
-                case '5': clist = CHAR_ABC1_5; break; 
-                case '6': clist = CHAR_ABC1_6; break; 
-                case '7': clist = CHAR_ABC1_7; break; 
-                case '8': clist = CHAR_ABC1_8; break; 
-                case '9': clist = CHAR_ABC1_9; break; 
-                case '0': clist = CHAR_ABC1_0; break; 
+                case '1': clist = CHAR_ABC1_1; break;
+                case '2': clist = CHAR_ABC1_2; break;
+                case '3': clist = CHAR_ABC1_3; break;
+                case '4': clist = CHAR_ABC1_4; break;
+                case '5': clist = CHAR_ABC1_5; break;
+                case '6': clist = CHAR_ABC1_6; break;
+                case '7': clist = CHAR_ABC1_7; break;
+                case '8': clist = CHAR_ABC1_8; break;
+                case '9': clist = CHAR_ABC1_9; break;
+                case '0': clist = CHAR_ABC1_0; break;
+            }
+            break;
+        case MODE_cyr1:
+            switch (m_cLastChar) {
+                case '1': clist = CHAR_cyr1_1; break;
+                case '2': clist = CHAR_cyr1_2; break;
+                case '3': clist = CHAR_cyr1_3; break;
+                case '4': clist = CHAR_cyr1_4; break;
+                case '5': clist = CHAR_cyr1_5; break;
+                case '6': clist = CHAR_cyr1_6; break;
+                case '7': clist = CHAR_cyr1_7; break;
+                case '8': clist = CHAR_cyr1_8; break;
+                case '9': clist = CHAR_cyr1_9; break;
+                case '0': clist = CHAR_cyr1_0; break;
+            }
+            break;
+        case MODE_Cyr1:
+        case MODE_CYR1:
+            switch (m_cLastChar) {
+                case '1': clist = CHAR_CYR1_1; break;
+                case '2': clist = CHAR_CYR1_2; break;
+                case '3': clist = CHAR_CYR1_3; break;
+                case '4': clist = CHAR_CYR1_4; break;
+                case '5': clist = CHAR_CYR1_5; break;
+                case '6': clist = CHAR_CYR1_6; break;
+                case '7': clist = CHAR_CYR1_7; break;
+                case '8': clist = CHAR_CYR1_8; break;
+                case '9': clist = CHAR_CYR1_9; break;
+                case '0': clist = CHAR_CYR1_0; break;
             }
             break;
         }

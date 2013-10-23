@@ -19,90 +19,223 @@
     You should have received a copy of the GNU General Public License
     along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<output>
+<output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <ticket>
         <image>Printer.Ticket.Logo</image>
-        <line></line>
+        <line/>
         <line size="1">
-            <text align ="center" length="42" bold="true">Partial cash report</text>            
+            <text align ="center" length="42" bold="true">Сменный отчёт по кассе</text>
         </line>
-        <line></line>
+        <line/>
         <line>
-            <text bold="true">Payments report</text>
+            <text bold="true">Отчёт по категориям</text>
         </line>
         <line>
-            <text align ="right" length="42">Total</text>
+            <text align="left" length="25">Наименование</text>
+            <text align="center" length="7">Кол-во</text>
+            <text align="right" length="10">Сумма</text>
+        </line>
+        <line>
+            <text>------------------------------------------</text>
+        </line>
+        #foreach ($line in $payments.getCategorySalesLines())
+        <line>
+            <text align="left" length="25">${line.printCategoryName()}</text>
+            <text align="center" length="7">${line.printCategoryUnits()}</text>
+            <text align="right" length="10">${line.printCategorySum()}</text>
+        </line>
+        #end
+        <line>
+            <text>------------------------------------------</text>
+        </line>
+        <line/>
+        <line size="1">
+            <text align="left" length="22" bold="true">Итого</text>
+            <text align="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
+            <text align="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
+        </line>
+        <line/>
+        <line>
+            <text bold="true">Отчёт по категориям и товарам</text>
+        </line>
+        <line>
+            <text align ="left" length="12">Наименование</text>
+            <text align ="right" length="14">Цена+Налог</text>
+            <text align ="right" length="1"></text>
+            <text align ="center" length="5">К-во</text>
+            <text align ="right" length="10">Сумма</text>
+        </line>
+        <line>
+            <text>------------------------------------------</text>
+        </line> 
+        #foreach ($line in $payments.getProductSalesLines())
+        <line>
+            <text align="left">${line.printProductCategory()}</text>
+            <text align="left" length="32">/${line.printProductName()}</text>
+        </line>
+        <line>
+            <text align="left" length="12"/>
+            <text align="right" length="10">${line.printProductPriceTax()}</text>
+            <text align="right" length="4">${line.printTaxRate()}</text>
+            <text align="center" length="6">x${line.printProductUnits()}</text>
+            <text align="right" length="10">${line.printProductSubValue()}</text>
+        </line>
+        #end
+        <line>
+            <text>------------------------------------------</text>
+        </line>
+        <line>
+            <text align ="left" length="32">Позиций чеков:</text>
+            <text align ="right" length="10">${payments.printProductSalesRows()}</text>
+        </line>
+        <line/>
+        <line size="1">
+            <text align ="left" length="22" bold="true">Итого</text>
+            <text align ="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
+            <text align ="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
+        </line>
+        <line/>
+        <line>
+            <text bold="true">Отчёт по кассирам</text>
+        </line>
+        <line>
+            <text align="left" length="25">Имя</text>
+            <text align="center" length="7">Кол-во</text>
+            <text align="right" length="10">Сумма</text>        
+        </line>
+        <line>
+            <text>------------------------------------------</text>
+        </line>
+        #foreach ($line in $payments.getCashiersLines())
+        <line>
+            <text align="left" length="25">${line.printCashierName()}</text>
+            <text align="center" length="7">${line.printCashierUnits()}</text>
+            <text align="right" length="10">${line.printCashierValue()}</text>
+        </line> 
+        #end
+        <line>
+            <text>------------------------------------------</text>
+        </line>  
+        <line/>
+        <line size="1">
+            <text align="left" length="22" bold="true">Итого</text>
+            <text align="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
+            <text align="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
+        </line>
+        <line/>         
+        <line>
+            <text bold="true">Отчёт по часам смены</text>
+        </line>       
+        <line>
+            <text align ="left" length="10">Час</text>
+            <text align ="center" length="15">Дата</text>
+            <text align ="center" length="7">Кол-во</text>
+            <text align ="right" length="10">Сумма</text>
+        </line>         
+        <line>
+        <text>------------------------------------------</text>
+        </line>
+        #foreach ($line in $payments.getHoursLines())
+        <line>
+            <text align="left" length="10">${line.printSalesHour()}</text>
+            <text align="center" length="15">${line.printSalesDate()}</text>            
+            <text align="center" length="7">${line.printSalesHourUnits()}</text>
+            <text align="right" length="10">${line.printSalesHourValue()}</text>
+        </line> 
+        #end
+        <line>
+            <text>------------------------------------------</text>
+        </line>
+        <line/>
+        <line size="1">
+            <text align="left" length="22" bold="true">Итого</text>
+            <text align="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
+            <text align="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
+        </line>
+        <line/>        
+        <line>
+            <text bold="true">Отчёт по платежам</text>
+        </line>
+        <line>
+            <text align="right" length="42">Итого</text>
         </line>
         <line>
             <text>------------------------------------------</text>
         </line> 
         #foreach ($line in $payments.getPaymentLines())
         <line>
-            <text align ="left" length="32">${line.printType()}</text>
-            <text align ="right" length="10">${line.printValue()}</text>
+            <text align="left" length="32">${line.printType()}</text>
+            <text align="right" length="10">${line.printValue()}</text>
         </line> 
         #end
         <line>
             <text>------------------------------------------</text>
         </line> 
         <line>
-            <text align ="left" length="32">Payments:</text>
-            <text align ="right" length="10">${payments.printPayments()}</text>
+            <text align="left" length="32">Платежей:</text>
+            <text align="right" length="10">${payments.printPayments()}</text>
         </line>
-        <line></line>
+        <line/>
         <line size="1">
-            <text align ="left" length="32" bold="true">Total</text>
-            <text align ="right" length="10" bold="true">${payments.printPaymentsTotal()}</text>
+            <text align="left" length="32" bold="true">Итого</text>
+            <text align="right" length="10" bold="true">${payments.printPaymentsTotal()}</text>
         </line>
-        <line></line>
+        <line/>
         <line>
-            <text bold="true">Taxes report</text>
+            <text bold="true">Отчёт по налогам</text>
         </line>
         <line>
-            <text align ="right" length="42">Total</text>
+            <text align="right" length="42">Сумма</text>
         </line>
         <line>
             <text>------------------------------------------</text>
         </line>
         #foreach ($line in $payments.getSaleLines())
         <line>
-            <text align ="left" length="32">${line.printTaxName()}</text>
-            <text align ="right" length="10">${line.printTaxes()}</text>
+            <text align="left" length="32">${line.printTaxName()}</text>
+            <text align="right" length="10">${line.printTaxes()}</text>
         </line> 
         #end        
         <line>
             <text>------------------------------------------</text>
         </line>
         <line>
-            <text align ="left" length="32">Receipts:</text>
-            <text align ="right" length="10">${payments.printSales()}</text>
+            <text align="left" length="32">Чеков:</text>
+            <text align="right" length="10">${payments.printSales()}</text>
         </line>
-        <line></line>
+        <line/>
         <line size="1">
-            <text align ="left" length="32" bold="true">Subtotal</text>
-            <text align ="right" length="10" bold="true">${payments.printSalesBase()}</text>
+            <text align="left" length="32" bold="true">Всего</text>
+            <text align="right" length="10" bold="true">${payments.printSalesBase()}</text>
         </line>
         <line size="1">
-            <text align ="left" length="22" bold="true">Total</text>
-            <text align ="right" length="10" bold="true">${payments.printSalesTaxes()}</text>
-            <text align ="right" length="10" bold="true">${payments.printSalesTotal()}</text>
+            <text align="left" length="22" bold="true">Итого</text>
+            <text align="right" length="10" bold="true">${payments.printSalesTaxes()}</text>
+            <text align="right" length="10" bold="true">${payments.printSalesTotal()}</text>
         </line>
-        <line></line>
+        <line/>
         <line>
-            <text length="18">Machine:</text>
+            <text length="18">Касса:</text>
             <text>${payments.printHost()}</text>
         </line>    
         <line>
-            <text length="18">Sequence:</text>
+            <text length="18">Номер смены:</text>
             <text length="24" align="right">${payments.printSequence()}</text>
         </line> 
         <line>
-            <text length="18">Start date:</text>
+            <text length="18">Дата открытия:</text>
             <text length="24" align="right">${payments.printDateStart()}</text>
         </line>  
         <line>
-            <text length="18">End date:</text>
+            <text length="18">Дата закрытия:</text>
             <text length="24" align="right">${payments.printDateEnd()}</text>
         </line>  
     </ticket>
+
+    <fiscalreport>
+        <fiscalxreport/>
+        <cutpaper complete="false"/>
+    </fiscalreport>
+
 </output>

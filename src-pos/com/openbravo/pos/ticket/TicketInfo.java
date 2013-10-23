@@ -18,23 +18,24 @@
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 package com.openbravo.pos.ticket;
 
-import java.util.*;
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.DataRead;
+import com.openbravo.data.loader.LocalRes;
+import com.openbravo.data.loader.SerializableRead;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.customers.CustomerInfoExt;
+import com.openbravo.pos.payment.PaymentInfo;
+import com.openbravo.pos.payment.PaymentInfoMagcard;
+import com.openbravo.pos.util.StringUtils;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import com.openbravo.pos.payment.PaymentInfo;
-import com.openbravo.data.loader.DataRead;
-import com.openbravo.data.loader.SerializableRead;
-import com.openbravo.format.Formats;
-import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.LocalRes;
-import com.openbravo.pos.customers.CustomerInfoExt;
-import com.openbravo.pos.payment.PaymentInfoMagcard;
-import com.openbravo.pos.util.StringUtils;
+import java.util.*;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Sininykh <svininykh@gmail.com>
  */
 public class TicketInfo implements SerializableRead, Externalizable {
 
@@ -320,6 +321,22 @@ public class TicketInfo implements SerializableRead, Externalizable {
         }
         return sum;
     }
+    
+    public double getDiscountTotal() {
+        double discountsum = 0.0;
+        for (TicketLineInfo line : m_aLines) {
+            discountsum += line.getDiscountTotalLine();
+        }
+        return discountsum;
+    }
+
+    public double getTotalNoDiscount() {
+        return getTotal() + getDiscountTotal();
+    }
+
+    public double getDiscountAvgRate() {
+        return getDiscountTotal() / getTotalNoDiscount();
+    }
 
     public double getTax() {
 
@@ -429,10 +446,22 @@ public class TicketInfo implements SerializableRead, Externalizable {
         }
     }
 
+     public String printTicketName() {
+            return getName();
+    }
+
     public String printDate() {
         return Formats.TIMESTAMP.formatValue(m_dDate);
     }
+    
+    public String printTime() {
+        return Formats.DATE.formatValue(m_dDate);
+    }    
 
+    public String printDay() {
+        return Formats.TIME.formatValue(m_dDate);
+    }    
+    
     public String printUser() {
         return m_User == null ? "" : m_User.getName();
     }
@@ -459,5 +488,17 @@ public class TicketInfo implements SerializableRead, Externalizable {
 
     public String printTotalPaid() {
         return Formats.CURRENCY.formatValue(new Double(getTotalPaid()));
+    }
+    
+    public String printDiscountTotal() {
+        return Formats.CURRENCY.formatValue(new Double(getDiscountTotal()));
+    }      
+    
+    public String printTotalNoDiscount() {
+        return Formats.CURRENCY.formatValue(new Double(getTotalNoDiscount()));
+    }      
+    
+    public String printDiscountAvgRate() {
+        return Formats.PERCENT.formatValue(new Double(getDiscountAvgRate()));
     }
 }

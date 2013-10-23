@@ -163,7 +163,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jcard">
       <Properties>
-        <Property name="editable" type="boolean" value="false"/>
+        <Property name="editable" type="boolean" value="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">

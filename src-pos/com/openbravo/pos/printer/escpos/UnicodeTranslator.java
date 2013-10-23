@@ -27,16 +27,12 @@ public abstract class UnicodeTranslator {
 
         if (sCad == null) {
             return null;
-        } else {
-            byte bAux[] = new byte[sCad.length()];
-            for( int i = 0; i < sCad.length(); i++) {
-                bAux[i] = transChar(sCad.charAt(i));
-            }
-            return bAux;
+        } else {            
+            return convertString(sCad);
         }
     }
     
-    public abstract byte transChar(char sChar);  
+    public abstract byte [] convertString(String sConvert);
  
 //                case '\u0000': return -0x80; // 0x80 :
 //                case '\u0000': return -0x7F; // 0x81 :

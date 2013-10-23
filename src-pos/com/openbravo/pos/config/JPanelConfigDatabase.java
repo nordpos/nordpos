@@ -25,6 +25,8 @@ import com.openbravo.pos.forms.AppConfig;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.util.AltEncrypter;
 import com.openbravo.pos.util.DirectoryEvent;
+import java.io.File;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,6 +35,16 @@ import com.openbravo.pos.util.DirectoryEvent;
 public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelConfig {
     
     private DirtyManager dirty = new DirtyManager();
+    
+    String[] modelDBType = {
+        "Derby",
+        "Derby Client",
+        "HSQLDB",
+        "MySQL",
+        "PostgreSQL",
+        "FirebirdSQL"};
+    
+    private boolean bSelectDBType = false;
     
     /** Creates new form JPanelConfigDatabase */
     public JPanelConfigDatabase() {
@@ -46,6 +58,8 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
         jtxtDbUser.getDocument().addDocumentListener(dirty);
          
         jbtnDbDriverLib.addActionListener(new DirectoryEvent(jtxtDbDriverLib));
+        
+        jcboDBType.addActionListener(dirty);
     }
     
     public boolean hasChanged() {
@@ -54,6 +68,10 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
     
     public Component getConfigComponent() {
         return this;
+    }
+    
+    public String getPanelConfigName() {
+        return AppLocal.getIntString("Label.Database");
     }
    
     public void loadProperties(AppConfig config) {
@@ -70,8 +88,17 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
             sDBPassword = cypher.decrypt(sDBPassword.substring(6));
         }        
         jtxtDbUser.setText(sDBUser);
-        jtxtDbPassword.setText(sDBPassword);   
-        
+        jtxtDbPassword.setText(sDBPassword);
+
+        if (!bSelectDBType) {
+            if (config.getProperty("db.type") == null) {
+                readDBType(config.getProperty("db.type"));
+            } else {
+                jcboDBType.setSelectedItem(config.getProperty("db.type"));
+            }
+            bSelectDBType = true;
+        }
+
         dirty.setDirty(false);
     }
    
@@ -84,7 +111,25 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
         AltEncrypter cypher = new AltEncrypter("cypherkey" + jtxtDbUser.getText());       
         config.setProperty("db.password", "crypt:" + cypher.encrypt(new String(jtxtDbPassword.getPassword())));
 
+        config.setProperty("db.type", jcboDBType.getSelectedItem() == null ? "" : jcboDBType.getSelectedItem().toString());
+        
         dirty.setDirty(false);
+    }
+    
+    private void readDBType(String sDB) {
+        if (sDB.equals("org.hsqldb.jdbcDriver")) {
+            jcboDBType.setSelectedItem("HSQLDB");
+        } else if (sDB.equals("com.mysql.jdbc.Driver")) {
+            jcboDBType.setSelectedItem("MySQL");
+        } else if (sDB.equals("org.postgresql.Driver")) {
+            jcboDBType.setSelectedItem("PostgreSQL");
+        } else if (sDB.equals("org.firebirdsql.jdbc.FBDriver")) {
+            jcboDBType.setSelectedItem("FirebirdSQL");
+        } else if (sDB.equals("org.apache.derby.jdbc.ClientDriver")) {
+            jcboDBType.setSelectedItem("Derby Client");
+        } else {
+            jcboDBType.setSelectedItem("Derby");
+        }
     }
     
     /** This method is called from within the constructor to
@@ -94,6 +139,7 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -107,102 +153,193 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
         jtxtDbUser = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jtxtDbPassword = new javax.swing.JPasswordField();
+        jLabel19 = new javax.swing.JLabel();
+        jcboDBType = new javax.swing.JComboBox();
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(AppLocal.getIntString("Label.Database"))); // NOI18N
+        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 5, 10, 5));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel18.setText(AppLocal.getIntString("label.dbdriverlib")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        jPanel1.add(jLabel18, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel1.add(jtxtDbDriverLib, gridBagConstraints);
 
         jbtnDbDriverLib.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/fileopen.png"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel1.add(jbtnDbDriverLib, gridBagConstraints);
 
         jLabel1.setText(AppLocal.getIntString("Label.DbDriver")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        jPanel1.add(jLabel1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel1.add(jtxtDbDriver, gridBagConstraints);
 
         jLabel2.setText(AppLocal.getIntString("Label.DbURL")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        jPanel1.add(jLabel2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel1.add(jtxtDbURL, gridBagConstraints);
 
         jLabel3.setText(AppLocal.getIntString("Label.DbUser")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        jPanel1.add(jLabel3, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel1.add(jtxtDbUser, gridBagConstraints);
 
         jLabel4.setText(AppLocal.getIntString("Label.DbPassword")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        jPanel1.add(jLabel4, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel1.add(jtxtDbPassword, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtDbURL, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxtDbDriverLib, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxtDbDriver, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnDbDriverLib))
-                    .addComponent(jtxtDbPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtDbUser, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(131, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(jtxtDbDriverLib, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jtxtDbDriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jbtnDbDriverLib))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jtxtDbURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jtxtDbUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jtxtDbPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
+        jLabel19.setText(AppLocal.getIntString("label.dbtype")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        jPanel1.add(jLabel19, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
+        jcboDBType.setModel(new javax.swing.DefaultComboBoxModel(modelDBType));
+        jcboDBType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcboDBTypeActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel1.add(jcboDBType, gridBagConstraints);
+
+        add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
-    
+
+    private void jcboDBTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDBTypeActionPerformed
+        if (bSelectDBType) {
+            if (JOptionPane.showConfirmDialog(
+                    this,
+                    AppLocal.getIntString("message.configdatabase"),
+                    AppLocal.getIntString("message.title"),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
+                String dirname = System.getProperty("dirname.path");
+                dirname = dirname == null ? "./" : dirname;
+
+                String sTypeJDBC = jcboDBType.getSelectedItem().toString();
+
+                if (sTypeJDBC.equals("HSQLDB")) {
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/hsqldb.jar").getAbsolutePath());
+                    jtxtDbDriver.setText("org.hsqldb.jdbcDriver");
+                    jtxtDbURL.setText("jdbc:hsqldb:file:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-db").getAbsolutePath() + ";shutdown=true");
+                    jtxtDbUser.setText("sa");
+                    jtxtDbPassword.setText("");
+                } else if (sTypeJDBC.equals("MySQL")) {
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/mysql.jar").getAbsolutePath());
+                    jtxtDbDriver.setText("com.mysql.jdbc.Driver");
+                    jtxtDbURL.setText("jdbc:mysql://localhost:3306/" + AppLocal.APP_ID + "-db?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8");
+                    jtxtDbUser.setText("");
+                    jtxtDbPassword.setText("");
+                } else if (sTypeJDBC.equals("PostgreSQL")) {
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/postgresql.jar").getAbsolutePath());
+                    jtxtDbDriver.setText("org.postgresql.Driver");
+                    jtxtDbURL.setText("jdbc:postgresql://localhost:5432/" + AppLocal.APP_ID + "-db");
+                    jtxtDbUser.setText("");
+                    jtxtDbPassword.setText("");
+                } else if (sTypeJDBC.equals("FirebirdSQL")) {
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/jaybird-full.jar").getAbsolutePath());
+                    jtxtDbDriver.setText("org.firebirdsql.jdbc.FBDriver");
+                    jtxtDbURL.setText("jdbc:firebirdsql:localhost/3051:c:/" + AppLocal.APP_ID + "-db.fdb?charSet=Cp1251");
+                    jtxtDbUser.setText("");
+                    jtxtDbPassword.setText("");
+                } else if (sTypeJDBC.equals("Derby Client")) {
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/derbyclient.jar").getAbsolutePath());
+                    jtxtDbDriver.setText("org.apache.derby.jdbc.ClientDriver");
+                    jtxtDbURL.setText("jdbc:derby://localhost:1527/" + AppLocal.APP_ID + "-database;create=true");
+                    jtxtDbUser.setText("APP");
+                    jtxtDbPassword.setText("1234");
+                } else {
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/derby.jar").getAbsolutePath());
+                    jtxtDbDriver.setText("org.apache.derby.jdbc.EmbeddedDriver");
+                    jtxtDbURL.setText("jdbc:derby:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-database").getAbsolutePath() + ";create=true");
+                    jtxtDbUser.setText("");
+                    jtxtDbPassword.setText("");
+                }
+                bSelectDBType = false;
+            } else {
+                readDBType(jtxtDbDriver.getText());
+            }
+        }
+    }//GEN-LAST:event_jcboDBTypeActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbtnDbDriverLib;
+    private javax.swing.JComboBox jcboDBType;
     private javax.swing.JTextField jtxtDbDriver;
     private javax.swing.JTextField jtxtDbDriverLib;
     private javax.swing.JPasswordField jtxtDbPassword;

@@ -19,25 +19,32 @@
 
 package com.openbravo.pos.sales;
 
-import java.awt.CardLayout;
-import java.awt.event.ActionListener;
-import java.util.List;
 import com.openbravo.basic.BasicException;
 import com.openbravo.pos.catalog.CatalogSelector;
-import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.catalog.JCatalog;
+import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.forms.DataLogicSystem;
+import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.util.List;
 
+/**
+ *
+ * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ */
 public class JTicketCatalogLines extends javax.swing.JPanel {
     
+    private AppView m_App;
     private JRefundLines m_reflines;
     private CatalogSelector m_catalog;
     
     /** Creates new form JTicketCatalogLines */
     public JTicketCatalogLines(AppView app, JPanelTicketEdits jTicketEdit, PropertiesConfig panelconfig) {
         
+        m_App = app;
         DataLogicSystem dlSystem = null;
         DataLogicSales dlSales = null;
         dlSystem = (DataLogicSystem) app.getBean("com.openbravo.pos.forms.DataLogicSystem");
@@ -59,7 +66,7 @@ public class JTicketCatalogLines extends javax.swing.JPanel {
     }
     
     public void loadCatalog() throws BasicException {
-        m_catalog.loadCatalog();
+        m_catalog.loadCatalog(m_App);
     }
     
     public void addActionListener(ActionListener l) {

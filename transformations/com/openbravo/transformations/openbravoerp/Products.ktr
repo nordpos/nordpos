@@ -1,0 +1,1179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>Products</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_status>0</trans_status>
+    <directory>&#47;</directory>
+    <parameters>
+    </parameters>
+    <log>
+      <read/>
+      <write/>
+      <input/>
+      <output/>
+      <update/>
+      <rejected/>
+      <connection/>
+      <table/>
+      <step_performance_table/>
+      <use_batchid>Y</use_batchid>
+      <use_logfield>N</use_logfield>
+      <size_limit_lines/>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>Y</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+  <modified_user>-</modified_user>
+  <modified_date>2009&#47;01&#47;19 11:18:26.732</modified_date>
+  </info>
+  <notepads>
+    <notepad>
+      <note>PRODUCTS SYNCHRONIZATION</note>
+      <xloc>350</xloc>
+      <yloc>24</yloc>
+      <width>184</width>
+      <heigth>23</heigth>
+    </notepad>
+  </notepads>
+  <connection>
+    <name>openbravoposDB</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>${db.user}</username>
+    <password>${db.password}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>${db.driver}</attribute></attribute>
+      <attribute><code>CUSTOM_URL</code><attribute>${db.URL}</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <order>
+  <hop> <from>Auxiliar variables</from><to>URL</to><enabled>Y</enabled> </hop>  <hop> <from>[2] Blocking</from><to>Store image PostgreSQL</to><enabled>Y</enabled> </hop>  <hop> <from>Cliente HTTP</from><to>[2] Script</to><enabled>Y</enabled> </hop>  <hop> <from>Delete PRODUCTS_CAT</from><to>Auxiliar variables</to><enabled>Y</enabled> </hop>  <hop> <from>Get db.URL variable</from><to>Is PostgreSQL?</to><enabled>Y</enabled> </hop>  <hop> <from>I&#47;U PRODUCTS_CAT</from><to>UUID</to><enabled>Y</enabled> </hop>  <hop> <from>Is PostgreSQL?</from><to>[2] Switch</to><enabled>Y</enabled> </hop>  <hop> <from>Product uPC</from><to>[1] I&#47;U PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>[1] Switch</from><to>Product uPC</to><enabled>Y</enabled> </hop>  <hop> <from>[1] Switch</from><to>[1] Script</to><enabled>Y</enabled> </hop>  <hop> <from>[2] Switch</from><to>[2] I&#47;U PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>[2] Switch</from><to>[3] I&#47;U PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>URL</from><to>Parse XML Products</to><enabled>Y</enabled> </hop>  <hop> <from>UUID</from><to>I&#47;U STOCKLEVEL</to><enabled>Y</enabled> </hop>  <hop> <from>[1] Script</from><to>Cliente HTTP</to><enabled>Y</enabled> </hop>  <hop> <from>[2] Script</from><to>Get db.URL variable</to><enabled>Y</enabled> </hop>  <hop> <from>[3] I&#47;U PRODUCTS</from><to>[2] Blocking</to><enabled>Y</enabled> </hop>  <hop> <from>[3] Script</from><to>[1] Switch</to><enabled>Y</enabled> </hop>  <hop> <from>[1] I&#47;U PRODUCTS</from><to>[1] Blocking</to><enabled>Y</enabled> </hop>  <hop> <from>Store image PostgreSQL</from><to>[1] Blocking</to><enabled>Y</enabled> </hop>  <hop> <from>[2] I&#47;U PRODUCTS</from><to>[1] Blocking</to><enabled>Y</enabled> </hop>  <hop> <from>[1] Blocking</from><to>I&#47;U PRODUCTS_CAT</to><enabled>Y</enabled> </hop>  <hop> <from>Parse XML Products</from><to>Price format</to><enabled>Y</enabled> </hop>  <hop> <from>Price format</from><to>[3] Script</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Auxiliar variables</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>defaultUnits</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>0</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <limit>1</limit>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>191</xloc>
+      <yloc>84</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Cliente HTTP</name>
+    <type>HTTP</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>URL_ROOT</urlField>
+    <lookup>
+    </lookup>
+    <result>
+      <name>imageContent</name>
+    </result>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>409</xloc>
+      <yloc>203</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Delete PRODUCTS_CAT</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <schema/>
+    <table>PRODUCTS_CAT</table>
+    <commit>100000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>84</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get db.URL variable</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>url</name>
+        <variable>${db.URL}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>223</xloc>
+      <yloc>203</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>I&#47;U PRODUCTS_CAT</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>1000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>PRODUCTS_CAT</table>
+      <key>
+        <name>PRODUCT_ID</name>
+        <field>PRODUCT</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>PRODUCT</name>
+        <rename>PRODUCT_ID</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>876</xloc>
+      <yloc>346</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>I&#47;U STOCKLEVEL</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>1000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>STOCKLEVEL</table>
+      <key>
+        <name>PRODUCT_ID</name>
+        <field>PRODUCT</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>PRODUCT_WAREHOUSE_ID</name>
+        <field>LOCATION</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>ID</name>
+        <rename>UUID</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>LOCATION</name>
+        <rename>PRODUCT_WAREHOUSE_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRODUCT</name>
+        <rename>PRODUCT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>STOCKSECURITY</name>
+        <rename>defaultUnits</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>STOCKMAXIMUM</name>
+        <rename>defaultUnits</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1076</xloc>
+      <yloc>346</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Is PostgreSQL?</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Check if it is PostgreSQL
+
+var parts = url.getString().split(&quot;:&quot;);
+
+var bbdd = parts[1];
+
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>bbdd</name>
+        <rename>bbdd</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>105</xloc>
+      <yloc>203</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Parse XML Products</name>
+    <type>getXMLData</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <namespaceaware>N</namespaceaware>
+    <ignorecomments>Y</ignorecomments>
+    <readurl>Y</readurl>
+    <validating>N</validating>
+    <usetoken>N</usetoken>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>N</doNotFailIfNoFile>
+    <rownum_field/>
+    <encoding>UTF-8</encoding>
+    <file>
+      <name/>
+      <filemask/>
+      <file_required>N</file_required>
+    </file>
+    <fields>
+      <field>
+        <name>PRODUCT_ID</name>
+        <xpath>id</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_CODE</name>
+        <xpath>uPCEAN</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_NAME</name>
+        <xpath>name</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_CAT_ID</name>
+        <xpath>productCategory</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_TAX_CAT_ID</name>
+        <xpath>taxCategory</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_ATT_SET_ID</name>
+        <xpath>attributeSet</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_PRICESELL</name>
+        <xpath>priceSell</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format>##.##</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_PRICEBUY</name>
+        <xpath>priceBuy</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format>##.##</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_WAREHOUSE_ID</name>
+        <xpath>warehouse</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>PRODUCT_IMAGE</name>
+        <xpath>image</xpath>
+        <element_type>node</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <loopxpath>&#47;Openbravo&#47;Product</loopxpath>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <XmlField>PRODUCT_URL</XmlField>
+    <prunePath/>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>373</xloc>
+      <yloc>84</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Product uPC</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;
+if (PRODUCT_CODE.getString() == null) {
+   PRODUCT_CODE.setValue(PRODUCT_ID.getString());
+}
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>743</xloc>
+      <yloc>199</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Store image PostgreSQL</name>
+    <type>DBProc</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <procedure>products_update_image</procedure>
+    <lookup>
+      <arg>
+        <name>PRODUCT_ID</name>
+        <direction>IN</direction>
+        <type>String</type>
+      </arg>
+      <arg>
+        <name>aux</name>
+        <direction>IN</direction>
+        <type>Binary</type>
+      </arg>
+    </lookup>
+    <result>
+      <name/>
+      <type>Number</type>
+    </result>
+    <auto_commit>Y</auto_commit>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>483</xloc>
+      <yloc>434</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>URL</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>PRODUCT_URL</name>
+        <variable>${erp.URL}&#47;Product?erp.id=${erp.id}&amp;erp.org=${erp.org}&amp;erp.pos=${erp.pos}&amp;l=${erp.user}&amp;p=${erp.password}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>273</xloc>
+      <yloc>84</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>UUID</name>
+    <type>RandomValue</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>UUID</name>
+        <type>random string</type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>977</xloc>
+      <yloc>346</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[1] Blocking</name>
+    <type>BlockingStep</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <pass_all_rows>Y</pass_all_rows>
+      <directory>%%java.io.tmpdir%%</directory>
+      <prefix>block</prefix>
+      <cache_size>100000</cache_size>
+      <compress>Y</compress>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>753</xloc>
+      <yloc>344</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[1] I&#47;U PRODUCTS</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>1000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>PRODUCTS</table>
+      <key>
+        <name>PRODUCT_ID</name>
+        <field>ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>ID</name>
+        <rename>PRODUCT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CODE</name>
+        <rename>PRODUCT_CODE</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NAME</name>
+        <rename>PRODUCT_NAME</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CATEGORY</name>
+        <rename>PRODUCT_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>TAXCAT</name>
+        <rename>PRODUCT_TAX_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ATTRIBUTESET_ID</name>
+        <rename>PRODUCT_ATT_SET_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>REFERENCE</name>
+        <rename>PRODUCT_ID</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>PRICEBUY</name>
+        <rename>PRODUCT_PRICEBUY2</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRICESELL</name>
+        <rename>PRODUCT_PRICESELL2</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>841</xloc>
+      <yloc>199</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[1] Script</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+var url = PRODUCT_URL.getString();
+
+if (PRODUCT_IMAGE.getString() != null) {
+	var URL_ROOT = url.substring(0, url.indexOf(&apos;ws&apos;)) + &apos;web&#47;images&#47;&apos; + PRODUCT_IMAGE.getString();
+}
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>URL_ROOT</name>
+        <rename>URL_ROOT</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>491</xloc>
+      <yloc>203</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[1] Switch</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>flag</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>String</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>Product uPC</default_target_step>
+<cases><case><value>1</value>
+<target_step>[1] Script</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>696</xloc>
+      <yloc>81</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[2] Blocking</name>
+    <type>BlockingStep</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <pass_all_rows>Y</pass_all_rows>
+      <directory>%%java.io.tmpdir%%</directory>
+      <prefix>block</prefix>
+      <cache_size>100000</cache_size>
+      <compress>Y</compress>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>344</xloc>
+      <yloc>434</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[2] I&#47;U PRODUCTS</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>1000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>PRODUCTS</table>
+      <key>
+        <name>PRODUCT_ID</name>
+        <field>ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>ID</name>
+        <rename>PRODUCT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CODE</name>
+        <rename>PRODUCT_CODE</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NAME</name>
+        <rename>PRODUCT_NAME</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CATEGORY</name>
+        <rename>PRODUCT_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>TAXCAT</name>
+        <rename>PRODUCT_TAX_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ATTRIBUTESET_ID</name>
+        <rename>PRODUCT_ATT_SET_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>REFERENCE</name>
+        <rename>PRODUCT_ID</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>PRICEBUY</name>
+        <rename>PRODUCT_PRICEBUY2</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRICESELL</name>
+        <rename>PRODUCT_PRICESELL2</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>IMAGE</name>
+        <rename>aux</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>346</xloc>
+      <yloc>296</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[2] Script</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var aux = imageContent.getBytes();
+
+if (PRODUCT_CODE.getString() == null) {
+   PRODUCT_CODE.setValue(PRODUCT_ID.getString());
+}</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>aux</name>
+        <rename>aux</rename>
+        <type>Binary</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>323</xloc>
+      <yloc>203</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[2] Switch</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>bbdd</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>String</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>[2] I&#47;U PRODUCTS</default_target_step>
+<cases><case><value>postgresql</value>
+<target_step>[3] I&#47;U PRODUCTS</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>107</xloc>
+      <yloc>347</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[3] I&#47;U PRODUCTS</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>openbravoposDB</connection>
+    <commit>1000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>PRODUCTS</table>
+      <key>
+        <name>PRODUCT_ID</name>
+        <field>ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>ID</name>
+        <rename>PRODUCT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CODE</name>
+        <rename>PRODUCT_CODE</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NAME</name>
+        <rename>PRODUCT_NAME</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CATEGORY</name>
+        <rename>PRODUCT_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>TAXCAT</name>
+        <rename>PRODUCT_TAX_CAT_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ATTRIBUTESET_ID</name>
+        <rename>PRODUCT_ATT_SET_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>REFERENCE</name>
+        <rename>PRODUCT_ID</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>PRICEBUY</name>
+        <rename>PRODUCT_PRICEBUY2</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRICESELL</name>
+        <rename>PRODUCT_PRICESELL2</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>215</xloc>
+      <yloc>434</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>[3] Script</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+var flag;
+if (PRODUCT_IMAGE.getString() == null) {
+  flag = 0;
+} else {
+  flag = 1;
+}</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>flag</name>
+        <rename>flag</rename>
+        <type>Number</type>
+        <length>16</length>
+        <precision>2</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>598</xloc>
+      <yloc>81</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Price format</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;PRICE SELL
+if (PRODUCT_PRICESELL.getString() != null) {
+   var PRODUCT_PRICESELL2 = str2num(PRODUCT_PRICESELL.getString().replace(&quot;.&quot;, &quot;,&quot;), &quot;#,##0.00&quot;);
+}
+
+&#47;&#47;PRICE BUY
+if (PRODUCT_PRICEBUY.getString() != null) {
+   var PRODUCT_PRICEBUY2 = str2num(PRODUCT_PRICEBUY.getString().replace(&quot;.&quot;, &quot;,&quot;), &quot;#,##0.00&quot;);
+}
+
+
+</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>str2num_Sample</jsScript_name>
+        <jsScript_script>&#47;&#47; Converts the given String to a numeric Value.
+&#47;&#47;
+&#47;&#47; Usage:
+&#47;&#47; str2num(var);
+&#47;&#47; 1: String - The Variable with the String to convert.
+&#47;&#47;
+&#47;&#47; str2num(var, var);
+&#47;&#47; 1: String - The Variable with the String to convert.
+&#47;&#47; 2: String - The Format:
+&#47;&#47; 
+&#47;&#47; 2006-11-15
+&#47;&#47;
+var str1 = &quot;1234,56&quot;;
+var str2 = &quot;12&quot;;
+Alert((str2num(str1,&quot;#,##0.00&quot;)));
+Alert((str2num(str2)));</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>replace_Sample</jsScript_name>
+        <jsScript_script>&#47;&#47; Replaces Strings inside the given Variable.
+&#47;&#47; It is possible to make more replacements inside
+&#47;&#47; one call. The given variables must be an odd number
+&#47;&#47;
+&#47;&#47; Usage:
+&#47;&#47; replace(var, var, var);
+&#47;&#47; 1: String - The Variable with the content to replace.
+&#47;&#47; 2: String - The Value to search for.
+&#47;&#47; 3: String - The Value to replace with.
+&#47;&#47;
+&#47;&#47; replace(var, var, var, var,var,...)
+&#47;&#47; 1: String - The Variable with the content to replace.
+&#47;&#47; 2: String - The First Value to search for.
+&#47;&#47; 3: String - The First Value to replace with.
+&#47;&#47; 4: String - The Second Value to search for.
+&#47;&#47; 5: String - The Second Value to replace with.
+&#47;&#47; ...
+&#47;&#47;
+&#47;&#47; 2006-11-15
+&#47;&#47;
+var str1 = &quot;Hello World, this is a nice function&quot;;      
+var str2 = replace(str1,&quot;World&quot;, &quot;Folk&quot;);
+Alert(str2);
+var str2 = replace(str1,&quot;World&quot;, &quot;Folk&quot;, &quot;nice&quot;,&quot;beautifull&quot;);
+Alert(str2);</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>PRODUCT_PRICESELL2</name>
+        <rename>PRODUCT_PRICESELL2</rename>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>PRODUCT_PRICEBUY2</name>
+        <rename>PRODUCT_PRICEBUY2</rename>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>489</xloc>
+      <yloc>83</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step_error_handling>
+  </step_error_handling>
+   <slave-step-copy-partition-distribution>
+</slave-step-copy-partition-distribution>
+   <slave_transformation>N</slave_transformation>
+</transformation>

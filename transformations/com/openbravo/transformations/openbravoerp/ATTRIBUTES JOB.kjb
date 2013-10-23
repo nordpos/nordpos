@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job>
+  <name>ATTRIBUTES JOB</name>
+    <description/>
+    <extended_description/>
+    <job_version/>
+  <directory>&#47;</directory>
+  <created_user>-</created_user>
+  <created_date>2009&#47;01&#47;18 10:56:36.742</created_date>
+  <modified_user>-</modified_user>
+  <modified_date>2009&#47;01&#47;18 10:56:36.742</modified_date>
+    <slaveservers>
+    </slaveservers>
+  <logconnection/>
+  <logtable/>
+   <use_batchid>Y</use_batchid>
+   <pass_batchid>N</pass_batchid>
+   <use_logfield>Y</use_logfield>
+   <shared_objects_file/>
+  <entries>
+    <entry>
+      <name>START</name>
+      <description>Special entries</description>
+      <type>SPECIAL</type>
+      <launch_in_parallel>Special entries</launch_in_parallel>
+      <start>Y</start>
+      <dummy>N</dummy>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
+      <intervalSeconds>0</intervalSeconds>
+      <intervalMinutes>60</intervalMinutes>
+      <hour>12</hour>
+      <minutes>0</minutes>
+      <weekDay>1</weekDay>
+      <DayOfMonth>1</DayOfMonth>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>37</xloc>
+      <yloc>39</yloc>
+      </entry>
+    <entry>
+      <name>Attributes</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <launch_in_parallel>Transformation</launch_in_parallel>
+      <filename>${Internal.Job.Filename.Directory}&#47;Attributes.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>149</xloc>
+      <yloc>39</yloc>
+      </entry>
+    <entry>
+      <name>Attribute Values</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <launch_in_parallel>Transformation</launch_in_parallel>
+      <filename>${Internal.Job.Filename.Directory}&#47;Attribute Values.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>266</xloc>
+      <yloc>40</yloc>
+      </entry>
+    <entry>
+      <name>Attribute Set</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <launch_in_parallel>Transformation</launch_in_parallel>
+      <filename>${Internal.Job.Filename.Directory}&#47;Attribute Set.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>148</xloc>
+      <yloc>121</yloc>
+      </entry>
+    <entry>
+      <name>Attribute Use</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <launch_in_parallel>Transformation</launch_in_parallel>
+      <filename>${Internal.Job.Filename.Directory}&#47;Attribute Use.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>275</xloc>
+      <yloc>119</yloc>
+      </entry>
+    <entry>
+      <name>Attribute Set Instance</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <launch_in_parallel>Transformation</launch_in_parallel>
+      <filename>${Internal.Job.Filename.Directory}&#47;Attribute Set Instance.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>145</xloc>
+      <yloc>211</yloc>
+      </entry>
+    <entry>
+      <name>Attribute Instance</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <launch_in_parallel>Transformation</launch_in_parallel>
+      <filename>${Internal.Job.Filename.Directory}&#47;Attribute Instance.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>278</xloc>
+      <yloc>212</yloc>
+      </entry>
+    <entry>
+      <name>Success 1</name>
+      <description>Success</description>
+      <type>SUCCESS</type>
+      <launch_in_parallel>Success</launch_in_parallel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>421</xloc>
+      <yloc>211</yloc>
+      </entry>
+  </entries>
+  <hops>
+    <hop>
+      <from>START</from>
+      <to>Attributes</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Attributes</from>
+      <to>Attribute Values</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Attribute Values</from>
+      <to>Attribute Set</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Attribute Set</from>
+      <to>Attribute Use</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Attribute Use</from>
+      <to>Attribute Set Instance</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Attribute Instance</from>
+      <to>Success 1</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Attribute Set Instance</from>
+      <to>Attribute Instance</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+  </hops>
+  <notepads>
+  </notepads>
+</job>

@@ -19,8 +19,11 @@
 
 package com.openbravo.data.loader;
 
-import java.sql.*;
 import com.openbravo.basic.BasicException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.logging.Logger;
 
 /**
@@ -29,7 +32,7 @@ import java.util.logging.Logger;
  */
 public class PreparedSentence extends JDBCSentence {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.data.loader.PreparedSentence");
+    private static final Logger logger = Logger.getLogger(PreparedSentence.class.getName());
 
     private String m_sentence;
     protected SerializerWrite m_SerWrite = null;

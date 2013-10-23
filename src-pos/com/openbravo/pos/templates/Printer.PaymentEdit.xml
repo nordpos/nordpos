@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Printer.PaymentEdit.xml
+    Created on : 8 Ноябрь 2011 г., 15:25
+    Author     : Andrey Svininykh
+               : Artur Akchurin
+    Description:
+        Purpose of the document follows.
+-->
+
+<output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
+    <ticket>
+        <image>Printer.Ticket.Logo</image>
+        <line></line>
+        <line>
+            <text align="center" length="42">NORD POS</text>
+        </line>
+        <line>
+            <text align="center" length="42">система автоматизации на основе</text>
+        </line>
+        <line>
+            <text align="center" length="42">Openbravo POS для Казахстана.</text>
+        </line>
+        <line></line>
+        <line size="1">
+        #if ($payment.getReason().equals("cashin"))
+            <text align="center">Внесение в кассу</text>
+        #elseif ($payment.getReason().equals("cashout"))
+            <text align="center">Выдача из кассы</text>
+        #end
+        </line>
+        <line> 
+            <text align="left" length="10">Дата:</text>
+            <text align="center" length="32">${payment.printDate()}</text>
+        </line>
+        <line> 
+            <text align="left" length="10" bold="true">Итого:</text>
+            <text align="right" length="32" bold="true" underline="true">${payment.printTotal()}</text>        
+        </line>        
+        <line>
+            <text align="center" length="42">СПАСИБО!!!</text>
+        </line> 
+    </ticket>
+    <fiscalcash>
+      #if ($payment.getReason().equals("cashin"))
+       <fiscalcashin value="${payment.getTotal()}"/>
+      #elseif ($payment.getReason().equals("cashout"))
+       <fiscalcashout value="${payment.getTotal()}"/>
+      #end 
+    </fiscash>      
+</output>

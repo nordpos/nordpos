@@ -35,32 +35,27 @@ import com.openbravo.pos.util.AltEncrypter;
  * @author adrianromero
  */
 public class AppViewConnection {
-    
+
     /** Creates a new instance of AppViewConnection */
     private AppViewConnection() {
     }
-    
+
     public static Session createSession(AppProperties props) throws BasicException {
-               
+
         try{
 
             // register the database driver
             if (isJavaWebStart()) {
-                Class.forName(props.getProperty("db.driver"), true, Thread.currentThread().getContextClassLoader());
+                Class.forName(props.getDBDriver(), true, Thread.currentThread().getContextClassLoader());
             } else {
-                ClassLoader cloader = new URLClassLoader(new URL[] {new File(props.getProperty("db.driverlib")).toURI().toURL()});
-                DriverManager.registerDriver(new DriverWrapper((Driver) Class.forName(props.getProperty("db.driver"), true, cloader).newInstance()));
+                ClassLoader cloader = new URLClassLoader(new URL[]{new File(props.getDBDriverLib()).toURI().toURL()});
+                DriverManager.registerDriver(new DriverWrapper((Driver) Class.forName(props.getDBDriver(), true, cloader).newInstance()));
             }
 
-            String sDBUser = props.getProperty("db.user");
-            String sDBPassword = props.getProperty("db.password");        
-            if (sDBUser != null && sDBPassword != null && sDBPassword.startsWith("crypt:")) {
-                // the password is encrypted
-                AltEncrypter cypher = new AltEncrypter("cypherkey" + sDBUser);
-                sDBPassword = cypher.decrypt(sDBPassword.substring(6));
-            }   
+            String sDBUser = props.getDBUser();
+            String sDBPassword = props.getDBPassword();
 
-             return new Session(props.getProperty("db.URL"), sDBUser,sDBPassword);     
+            return new Session(props.getDBURL(), sDBUser, sDBPassword);
 
         } catch (InstantiationException e) {
             throw new BasicException(AppLocal.getIntString("message.databasedrivererror"), e);
@@ -72,7 +67,7 @@ public class AppViewConnection {
             throw new BasicException(AppLocal.getIntString("message.databasedrivererror"), eCNF);
         } catch (SQLException eSQL) {
             throw new BasicException(AppLocal.getIntString("message.databaseconnectionerror"), eSQL);
-        }   
+        }
     }
 
     private static boolean isJavaWebStart() {

@@ -45,13 +45,13 @@ import com.openbravo.pos.forms.BeanFactoryDataSingle;
  * @author adrianromero
  */
 public class DataLogicCustomers extends BeanFactoryDataSingle {
-    
+
     protected Session s;
     private TableDefinition tcustomers;
     private static Datas[] customerdatas = new Datas[] {Datas.STRING, Datas.TIMESTAMP, Datas.TIMESTAMP, Datas.STRING, Datas.STRING, Datas.STRING, Datas.STRING, Datas.INT, Datas.BOOLEAN, Datas.STRING};
-    
+
     public void init(Session s){
-        
+
         this.s = s;
         tcustomers = new TableDefinition(s
             , "CUSTOMERS"
@@ -71,11 +71,12 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
                             , Formats.STRING, Formats.STRING, Formats.STRING, Formats.STRING, Formats.STRING, Formats.STRING
                             , Formats.STRING, Formats.STRING, Formats.STRING, Formats.STRING, Formats.STRING, Formats.STRING
                             , Formats.STRING}
+            , "NAME"
             , new int[] {0}
-        );   
-        
+        );
+
     }
-    
+
     // CustomerList list
     public SentenceList getCustomerList() {
         return new StaticSentence(s
@@ -88,41 +89,41 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
                         c.setSearchkey(dr.getString(3));
                         c.setName(dr.getString(4));
                         return c;
-                    }                
+                    }
                 });
     }
-       
+
     public int updateCustomerExt(final CustomerInfoExt customer) throws BasicException {
-     
+
         return new PreparedSentence(s
                 , "UPDATE CUSTOMERS SET NOTES = ? WHERE ID = ?"
-                , SerializerWriteParams.INSTANCE      
+                , SerializerWriteParams.INSTANCE
                 ).exec(new DataParams() { public void writeValues() throws BasicException {
                         setString(1, customer.getNotes());
                         setString(2, customer.getId());
-                }});        
+                }});
     }
-    
+
     public final SentenceList getReservationsList() {
         return new PreparedSentence(s
             , "SELECT R.ID, R.CREATED, R.DATENEW, C.CUSTOMER, CUSTOMERS.TAXID, CUSTOMERS.SEARCHKEY, COALESCE(CUSTOMERS.NAME, R.TITLE),  R.CHAIRS, R.ISDONE, R.DESCRIPTION " +
               "FROM RESERVATIONS R LEFT OUTER JOIN RESERVATION_CUSTOMERS C ON R.ID = C.ID LEFT OUTER JOIN CUSTOMERS ON C.CUSTOMER = CUSTOMERS.ID " +
               "WHERE R.DATENEW >= ? AND R.DATENEW < ?"
             , new SerializerWriteBasic(new Datas[] {Datas.TIMESTAMP, Datas.TIMESTAMP})
-            , new SerializerReadBasic(customerdatas));             
+            , new SerializerReadBasic(customerdatas));
     }
-    
+
     public final SentenceExec getReservationsUpdate() {
         return new SentenceExecTransaction(s) {
-            public int execInTransaction(Object params) throws BasicException {  
-    
+            public int execInTransaction(Object params) throws BasicException {
+
                 new PreparedSentence(s
                     , "DELETE FROM RESERVATION_CUSTOMERS WHERE ID = ?"
                     , new SerializerWriteBasicExt(customerdatas, new int[]{0})).exec(params);
                 if (((Object[]) params)[3] != null) {
                     new PreparedSentence(s
                         , "INSERT INTO RESERVATION_CUSTOMERS (ID, CUSTOMER) VALUES (?, ?)"
-                        , new SerializerWriteBasicExt(customerdatas, new int[]{0, 3})).exec(params);                
+                        , new SerializerWriteBasicExt(customerdatas, new int[]{0, 3})).exec(params);
                 }
                 return new PreparedSentence(s
                     , "UPDATE RESERVATIONS SET ID = ?, CREATED = ?, DATENEW = ?, TITLE = ?, CHAIRS = ?, ISDONE = ?, DESCRIPTION = ? WHERE ID = ?"
@@ -130,11 +131,11 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
             }
         };
     }
-    
+
     public final SentenceExec getReservationsDelete() {
         return new SentenceExecTransaction(s) {
-            public int execInTransaction(Object params) throws BasicException {  
-    
+            public int execInTransaction(Object params) throws BasicException {
+
                 new PreparedSentence(s
                     , "DELETE FROM RESERVATION_CUSTOMERS WHERE ID = ?"
                     , new SerializerWriteBasicExt(customerdatas, new int[]{0})).exec(params);
@@ -144,11 +145,11 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
             }
         };
     }
-    
+
     public final SentenceExec getReservationsInsert() {
         return new SentenceExecTransaction(s) {
-            public int execInTransaction(Object params) throws BasicException {  
-    
+            public int execInTransaction(Object params) throws BasicException {
+
                 int i = new PreparedSentence(s
                     , "INSERT INTO RESERVATIONS (ID, CREATED, DATENEW, TITLE, CHAIRS, ISDONE, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?, ?)"
                     , new SerializerWriteBasicExt(customerdatas, new int[]{0, 1, 2, 6, 7, 8, 9})).exec(params);
@@ -156,14 +157,14 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
                 if (((Object[]) params)[3] != null) {
                     new PreparedSentence(s
                         , "INSERT INTO RESERVATION_CUSTOMERS (ID, CUSTOMER) VALUES (?, ?)"
-                        , new SerializerWriteBasicExt(customerdatas, new int[]{0, 3})).exec(params);                
+                        , new SerializerWriteBasicExt(customerdatas, new int[]{0, 3})).exec(params);
                 }
                 return i;
             }
         };
     }
-    
+
     public final TableDefinition getTableCustomers() {
         return tcustomers;
-    }  
+    }
 }
