@@ -1,6 +1,6 @@
 <html><center>NORD POS is a fork of Openbravo POS application designed for touch screens.<br>
-Copyright \u00A9 2009-2013 Nord Trading Ltd. <a href="http://www.nordpos.com">http://www.nordpos.com</a><br>
-Copyright \u00A9 2007-2009 Openbravo, S.L. <a href="http://www.openbravo.com/product/pos">http://www.openbravo.com/product/pos</a><br>
+Copyright © 2009-2013 Nord Trading Ltd. <a href="http://www.nordpos.com">http://www.nordpos.com</a><br>
+Copyright © 2007-2009 Openbravo, S.L. <a href="http://www.openbravo.com/product/pos">http://www.openbravo.com/product/pos</a><br>
 <br>
 NORD POS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br>
 <br>

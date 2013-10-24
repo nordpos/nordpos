@@ -126,26 +126,22 @@ public class JRootApp extends JPanel implements AppView {
 
         // Create or upgrade the database if database version is not the expected
         String sDBVersion = readDataBaseVersion();
+        String sDBApplication = readDataBaseApplication();
         if (!AppLocal.APP_VERSION.equals(sDBVersion)) {
 
             // Create or upgrade database
-
-            String sScript = sDBVersion == null
-                    ? m_dlSystem.getInitScript() + "-create.sql"
-                    : m_dlSystem.getInitScript() + "-upgrade-" + sDBVersion + ".sql";
-
+            String sScript = (sDBVersion == null && sDBApplication == null)
+                    ? m_dlSystem.getInitScript() + "-create-" + AppLocal.APP_ID + ".sql"
+                    : m_dlSystem.getInitScript() + "-upgrade-" + sDBApplication + "-" + (sDBVersion == null ? AppLocal.APP_VERSION : sDBVersion) + ".sql";
             if (JRootApp.class.getResource(sScript) == null) {
-                JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_DANGER, sDBVersion == null
-                            ? AppLocal.getIntString("message.databasenotsupported", session.DB.getName()) // Create script does not exists. Database not supported
-                            : AppLocal.getIntString("message.noupdatescript"))); // Upgrade script does not exist.
+                JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_DANGER, (sDBVersion == null && sDBApplication == null)
+                        ? AppLocal.getIntString("message.databasenotsupported", session.DB.getName()) // Create script does not exists. Database not supported
+                        : AppLocal.getIntString("message.noupdatescript"))); // Upgrade script does not exist.
                 session.close();
                 return false;
             } else {
                 // Create or upgrade script exists.
-                if (JOptionPane.showConfirmDialog(this
-                        , AppLocal.getIntString(sDBVersion == null ? "message.createdatabase" : "message.updatedatabase")
-                        , AppLocal.getIntString("message.title")
-                        , JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                if (JOptionPane.showConfirmDialog(this, AppLocal.getIntString((sDBVersion == null && sDBApplication == null) ? "message.createdatabase" : "message.updatedatabase"), AppLocal.getIntString("message.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 
                     try {
                         BatchSentence bsentence = new BatchSentenceResource(session, sScript);
@@ -157,7 +153,7 @@ public class JRootApp extends JPanel implements AppView {
                         if (l.size() > 0) {
                             JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("Database.ScriptWarning"), l.toArray(new Throwable[l.size()])));
                         }
-                   } catch (BasicException e) {
+                    } catch (BasicException e) {
                         JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_DANGER, AppLocal.getIntString("Database.ScriptError"), e));
                         session.close();
                         return false;
@@ -330,6 +326,14 @@ public class JRootApp extends JPanel implements AppView {
     private String readDataBaseVersion() {
         try {
             return m_dlSystem.findVersion();
+        } catch (BasicException ed) {
+            return null;
+        }
+    }
+
+    private String readDataBaseApplication() {
+        try {
+            return m_dlSystem.findApplication();
         } catch (BasicException ed) {
             return null;
         }
