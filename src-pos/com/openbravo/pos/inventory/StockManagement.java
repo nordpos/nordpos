@@ -31,12 +31,11 @@ import com.openbravo.format.Formats;
 import com.openbravo.pos.catalog.CatalogSelector;
 import com.openbravo.pos.catalog.JCatalog;
 import com.openbravo.pos.forms.*;
-import com.openbravo.pos.pludevice.DevicePLUs;
-import com.openbravo.pos.pludevice.DevicePLUsException;
-import com.openbravo.pos.pludevice.ProductDownloaded;
-import com.openbravo.pos.printer.TicketFiscalPrinterException;
-import com.openbravo.pos.printer.TicketParser;
-import com.openbravo.pos.printer.TicketPrinterException;
+import com.nordpos.device.plu.DevicePLU;
+import com.nordpos.device.plu.DevicePLUException;
+import com.nordpos.device.plu.ProductDownloaded;
+import com.nordpos.device.ticket.TicketParser;
+import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.sales.JProductAttEdit;
 import com.openbravo.pos.sales.PropertiesConfig;
 import com.openbravo.pos.scripting.ScriptEngine;
@@ -425,9 +424,6 @@ public class StockManagement extends JPanel implements JPanelView {
             } catch (TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
-            } catch (TicketFiscalPrinterException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
             }
         }
     }
@@ -664,7 +660,7 @@ public class StockManagement extends JPanel implements JPanelView {
     private void btnDownloadProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadProductsActionPerformed
 
         // Ejecutamos la descarga...
-        DevicePLUs s = m_App.getDevicePLUs();
+        DevicePLU s = m_App.getDevicePLUs();
         try {
             s.connectDevice();
             s.startDownloadProduct();
@@ -676,7 +672,7 @@ public class StockManagement extends JPanel implements JPanelView {
             }
             // MessageInf msg = new MessageInf(MessageInf.SGN_SUCCESS, "Se ha subido con exito la lista de productos al ScanPal.");
             // msg.show(this);
-        } catch (DevicePLUsException e) {
+        } catch (DevicePLUException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.scannerfail2"), e);
             msg.show(this);
         } finally {

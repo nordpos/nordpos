@@ -19,6 +19,9 @@
 
 package com.openbravo.pos.sales;
 
+import com.nordpos.device.ticket.TicketParser;
+import com.nordpos.device.ticket.TicketPrinterException;
+import com.nordpos.device.ticket.DeviceTicketFactory;
 import com.openbravo.pos.ticket.TicketInfo;
 import com.openbravo.pos.ticket.TicketLineInfo;
 import java.awt.*;
@@ -27,7 +30,6 @@ import javax.swing.*;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.printer.*;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.JMessageDialog;
 import com.openbravo.pos.customers.DataLogicCustomers;
@@ -43,7 +45,7 @@ public class JTicketsBagTicket extends JTicketsBag {
     private DataLogicSystem m_dlSystem = null;
     protected DataLogicCustomers dlCustomers = null;
 
-    private DeviceTicket m_TP;
+    private DeviceTicketFactory m_TP;
     private TicketParser m_TTP;
     private TicketParser m_TTP2;
 
@@ -63,7 +65,7 @@ public class JTicketsBagTicket extends JTicketsBag {
         dlCustomers = (DataLogicCustomers) m_App.getBean("com.openbravo.pos.customers.DataLogicCustomers");
 
         // Inicializo la impresora...
-        m_TP = new DeviceTicket();
+        m_TP = new DeviceTicketFactory();
 
         // Inicializo el parser de documentos de ticket
         m_TTP = new TicketParser(m_TP, m_dlSystem); // para visualizar el ticket
@@ -205,9 +207,6 @@ public class JTicketsBagTicket extends JTicketsBag {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             } catch (TicketPrinterException eTP) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), eTP);
-                msg.show(this);
-            } catch (TicketFiscalPrinterException eTP) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), eTP);
                 msg.show(this);
             }
@@ -399,8 +398,6 @@ public class JTicketsBagTicket extends JTicketsBag {
             } catch (ScriptException e) {
                 JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
             } catch (TicketPrinterException e) {
-                JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
-            } catch (TicketFiscalPrinterException e) {
                 JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
             }
         }

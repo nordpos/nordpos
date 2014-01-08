@@ -20,9 +20,9 @@
 package com.openbravo.pos.forms;
 
 import com.openbravo.data.loader.Session;
-import com.openbravo.pos.pludevice.DevicePLUs;
-import com.openbravo.pos.printer.DeviceTicket;
-import com.openbravo.pos.scale.DeviceScale;
+import com.nordpos.device.plu.DevicePLU;
+import com.nordpos.device.ticket.DeviceTicketFactory;
+import com.nordpos.device.scale.DeviceScaleFactory;
 import java.util.Date;
 
 /**
@@ -32,9 +32,9 @@ import java.util.Date;
  */
 public interface AppView {
 
-    public DeviceScale getDeviceScale();
-    public DeviceTicket getDeviceTicket();
-    public DevicePLUs getDevicePLUs();
+    public DeviceScaleFactory getDeviceScale();
+    public DeviceTicketFactory getDeviceTicket();
+    public DevicePLU getDevicePLUs();
 
     public Session getSession();
     public AppProperties getProperties();

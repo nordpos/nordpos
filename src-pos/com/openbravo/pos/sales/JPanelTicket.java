@@ -37,12 +37,11 @@ import com.openbravo.pos.panels.JProductFinder;
 import com.openbravo.pos.payment.JPaymentSelect;
 import com.openbravo.pos.payment.JPaymentSelectReceipt;
 import com.openbravo.pos.payment.JPaymentSelectRefund;
-import com.openbravo.pos.printer.TicketFiscalPrinterException;
-import com.openbravo.pos.printer.TicketParser;
-import com.openbravo.pos.printer.TicketPrinterException;
+import com.nordpos.device.ticket.TicketParser;
+import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.promotion.DiscountMoney;
 import com.openbravo.pos.promotion.DiscountPercent;
-import com.openbravo.pos.scale.ScaleException;
+import com.nordpos.device.scale.ScaleException;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
@@ -1012,7 +1011,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                     try {
                         printTicket("Printer.TicketTotal", ticket, ticketext);
                     } catch (TicketPrinterException e) {
-                    } catch (TicketFiscalPrinterException e) {
                     }
 
                     // Select the Payments information
@@ -1062,15 +1060,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                                     msg.show(this);
 
                                 } catch (TicketPrinterException e) {
-                                    logger.finer("TicketPrinterException occured, commiting changes");
-                                    s.commit();
-                                    resultok = true;
-
-                                } catch (TicketFiscalPrinterException e) {
                                     logger.finer("TicketFiscalPrinterException occured, rollback changes");
                                     s.rollback();
                                     resultok = false;
-
                                 } catch (Exception e) {
                                     // XXX: Additional checks. Did executeEvent() goes throw some exceptions? Or is process it correctly?
                                     logger.log(Level.SEVERE, "Error occured while executing ticket.close event, rollback transaction", e);
@@ -1108,7 +1100,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     }
 
     private void printTicket(String sresourcename, TicketInfo ticket, Object ticketext)
-                                                    throws TicketPrinterException, TicketFiscalPrinterException {
+                                                    throws TicketPrinterException {
 
         String sresource = dlSystem.getResourceAsXML(sresourcename);
         if (sresource == null) {
@@ -1127,10 +1119,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 msg.show(JPanelTicket.this);
             } catch (TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(JPanelTicket.this);
-                throw e;
-            } catch (TicketFiscalPrinterException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e.getMessage());
                 msg.show(JPanelTicket.this);
                 throw e;
             }
@@ -1194,9 +1182,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             } catch (TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintline"), e);
                 msg.show(JPanelTicket.this);
-            } catch (TicketFiscalPrinterException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintline"), e);
-                msg.show(JPanelTicket.this);
             }
         }
     }
@@ -1237,7 +1222,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         }
     }
 
-    public void printTicket(String resource) throws TicketPrinterException, TicketFiscalPrinterException {
+    public void printTicket(String resource) throws TicketPrinterException {
         // this method is intended to be called only from JPanelButtons.
 
         if (resource == null) {
@@ -1344,7 +1329,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             JPanelTicket.this.printReport(resourcefile, ticket, ticketext);
         }
 
-        public void printTicket(String sresourcename) throws TicketPrinterException, TicketFiscalPrinterException {
+        public void printTicket(String sresourcename) throws TicketPrinterException {
             JPanelTicket.this.printTicket(sresourcename, ticket, ticketext);
         }
 

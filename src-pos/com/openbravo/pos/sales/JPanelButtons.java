@@ -22,8 +22,7 @@ package com.openbravo.pos.sales;
 import com.openbravo.data.loader.LocalRes;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppUser;
-import com.openbravo.pos.printer.TicketFiscalPrinterException;
-import com.openbravo.pos.printer.TicketPrinterException;
+import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.util.ThumbNailBuilder;
 import java.awt.Component;
 import java.awt.Insets;
@@ -67,7 +66,7 @@ public class JPanelButtons extends javax.swing.JPanel {
 
         this.panelticket = panelticket;
 
-        events = new HashMap<String, String>();  
+        events = new HashMap<String, String>();
 
         if (sConfigRes != null) {
             try {
@@ -142,7 +141,6 @@ public class JPanelButtons extends javax.swing.JPanel {
                             try {
                                 panelticket.printTicket(template);
                             } catch (TicketPrinterException e) {
-                            } catch (TicketFiscalPrinterException e) {
                             }
                         }
                     });

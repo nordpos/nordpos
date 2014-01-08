@@ -28,9 +28,8 @@ import com.openbravo.data.loader.Session;
 import com.openbravo.data.loader.StaticSentence;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.*;
-import com.openbravo.pos.printer.TicketFiscalPrinterException;
-import com.openbravo.pos.printer.TicketParser;
-import com.openbravo.pos.printer.TicketPrinterException;
+import com.nordpos.device.ticket.TicketParser;
+import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
@@ -167,7 +166,7 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
         jColumns.getColumn(1).setResizable(false);
     }
 
-    private void printPayments(String report) throws TicketPrinterException, TicketFiscalPrinterException {
+    private void printPayments(String report) throws TicketPrinterException {
 
         String sresource = m_dlSystem.getResourceAsXML(report);
         if (sresource == null) {
@@ -182,10 +181,6 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             } catch (TicketPrinterException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
-                throw e;
-            } catch (TicketFiscalPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
                 throw e;
@@ -531,15 +526,7 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
                     // Commiting changes
                     s.commit();
 
-                } catch (TicketPrinterException e) {
-                    logger.finer("Error while printing report, but committing transaction");
-                    s.commit();
-
-                } catch (TicketFiscalPrinterException e) {
-                    logger.finer("Error while printing report in fiscal mode, tollback transaction");
-                    s.rollback();
-
-                } catch (BasicException e) {
+                } catch (TicketPrinterException | BasicException e) {
                     s.rollback();
                     MessageInf msg = new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotclosecash"), e);
                     msg.show(this);
@@ -569,7 +556,6 @@ private void m_jPrintCashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
     // Not important errors
     } catch (TicketPrinterException e) {
-    } catch (TicketFiscalPrinterException e) {
     }
 
 }//GEN-LAST:event_m_jPrintCashActionPerformed

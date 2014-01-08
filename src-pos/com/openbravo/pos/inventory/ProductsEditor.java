@@ -31,9 +31,8 @@ import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.forms.DataLogicSystem;
-import com.openbravo.pos.printer.TicketFiscalPrinterException;
-import com.openbravo.pos.printer.TicketParser;
-import com.openbravo.pos.printer.TicketPrinterException;
+import com.nordpos.device.ticket.TicketParser;
+import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.sales.TaxesLogic;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
@@ -647,7 +646,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         }
     }
 
-    private void printProductLabel(ProductInfoEdit productinfo) throws TicketPrinterException, ScriptException, TicketFiscalPrinterException {
+    private void printProductLabel(ProductInfoEdit productinfo) throws TicketPrinterException, ScriptException {
         String sresource = m_dSystem.getResourceAsXML("Printer.ProductLabel");
         if (sresource == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
@@ -960,11 +959,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         try {
             printProductLabel(m_oCurrentProductEdit);
-        } catch (TicketPrinterException ex) {
-            Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ScriptException ex) {
-            Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TicketFiscalPrinterException ex) {
+        } catch (TicketPrinterException | ScriptException ex) {
             Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_m_jPrintLabelActionPerformed

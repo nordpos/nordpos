@@ -26,8 +26,8 @@ import com.openbravo.basic.BasicException;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.JPanelView;
 import com.openbravo.pos.forms.AppView;
-import com.openbravo.pos.printer.DeviceFiscalPrinter;
-import com.openbravo.pos.printer.DevicePrinter;
+import com.nordpos.device.fiscalprinter.DeviceFiscalPrinter;
+import com.nordpos.device.receiptprinter.DevicePrinter;
 
 /**
  *

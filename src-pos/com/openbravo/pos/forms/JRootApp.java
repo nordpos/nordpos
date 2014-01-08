@@ -27,13 +27,12 @@ import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.BatchSentence;
 import com.openbravo.data.loader.BatchSentenceResource;
 import com.openbravo.data.loader.Session;
-import com.openbravo.pos.pludevice.DevicePLUs;
-import com.openbravo.pos.pludevice.DevicePLUsFactory;
-import com.openbravo.pos.printer.DeviceTicket;
-import com.openbravo.pos.printer.TicketFiscalPrinterException;
-import com.openbravo.pos.printer.TicketParser;
-import com.openbravo.pos.printer.TicketPrinterException;
-import com.openbravo.pos.scale.DeviceScale;
+import com.nordpos.device.plu.DevicePLU;
+import com.nordpos.device.plu.DevicePLUFactory;
+import com.nordpos.device.ticket.DeviceTicketFactory;
+import com.nordpos.device.ticket.TicketParser;
+import com.nordpos.device.ticket.TicketPrinterException;
+import com.nordpos.device.scale.DeviceScaleFactory;
 import java.awt.CardLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
@@ -81,9 +80,9 @@ public class JRootApp extends JPanel implements AppView {
 
     private StringBuffer inputtext;
 
-    private DeviceScale m_Scale;
-    private DevicePLUs m_DevicePLUs;
-    private DeviceTicket m_TP;
+    private DeviceScaleFactory m_Scale;
+    private DevicePLU m_DevicePLUs;
+    private DeviceTicketFactory m_TP;
     private TicketParser m_TTP;
 
     private Map<String, BeanFactory> m_aBeanFactories;
@@ -271,17 +270,17 @@ public class JRootApp extends JPanel implements AppView {
         }
 
         // Inicializo la impresora...
-        m_TP = new DeviceTicket(this, m_props);
+        m_TP = new DeviceTicketFactory(this, m_props);
 
         // Inicializamos
         m_TTP = new TicketParser(getDeviceTicket(), m_dlSystem);
         printerStart();
 
         // Inicializamos la bascula
-        m_Scale = new DeviceScale(this, m_props);
+        m_Scale = new DeviceScaleFactory(this, m_props);
 
         // Inicializamos la scanpal
-        m_DevicePLUs = DevicePLUsFactory.createInstance(this, m_props);
+        m_DevicePLUs = DevicePLUFactory.createInstance(m_props);
 
         // Leemos los recursos basicos
         BufferedImage imgicon = m_dlSystem.getResourceAsImage("Window.Logo");
@@ -356,14 +355,14 @@ public class JRootApp extends JPanel implements AppView {
     }
 
     // Interfaz de aplicacion
-    public DeviceTicket getDeviceTicket(){
+    public DeviceTicketFactory getDeviceTicket(){
         return m_TP;
     }
 
-    public DeviceScale getDeviceScale() {
+    public DeviceScaleFactory getDeviceScale() {
         return m_Scale;
     }
-    public DevicePLUs getDevicePLUs() {
+    public DevicePLU getDevicePLUs() {
         return m_DevicePLUs;
     }
 
@@ -539,8 +538,6 @@ public class JRootApp extends JPanel implements AppView {
             try {
                 m_TTP.printTicket(this, sresource);
             } catch (TicketPrinterException eTP) {
-                m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);
-            } catch (TicketFiscalPrinterException eTP) {
                 m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);
             }
         }

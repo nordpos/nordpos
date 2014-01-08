@@ -25,8 +25,8 @@ import javax.swing.ListModel;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.user.BrowsableEditableData;
 import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.pludevice.DevicePLUs;
-import com.openbravo.pos.pludevice.DevicePLUsException;
+import com.nordpos.device.plu.DevicePLU;
+import com.nordpos.device.plu.DevicePLUException;
 
 /**
  *
@@ -35,7 +35,7 @@ import com.openbravo.pos.pludevice.DevicePLUsException;
 public class JDlgUploadProducts extends javax.swing.JDialog {
     
     // private AppView m_App;
-    private DevicePLUs m_deviceplu;
+    private DevicePLU m_deviceplu;
     private BrowsableEditableData m_bd;
     
     private static String m_sUserBarcode;
@@ -49,7 +49,7 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
         super(parent, modal);
     }       
 
-    private void init(DevicePLUs deviceplu, BrowsableEditableData bd) {
+    private void init(DevicePLU deviceplu, BrowsableEditableData bd) {
         
         initComponents();
 
@@ -74,7 +74,7 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
         }
     }    
     
-    public static void showMessage(Component parent, DevicePLUs deviceplu, BrowsableEditableData bd) {
+    public static void showMessage(Component parent, DevicePLU deviceplu, BrowsableEditableData bd) {
          
         Window window = getWindow(parent);      
         
@@ -179,7 +179,7 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
             m_deviceplu.stopUploadProduct();
             MessageInf msg = new MessageInf(MessageInf.SGN_SUCCESS, AppLocal.getIntString("message.scannerok"));
             msg.show(this);            
-        } catch (DevicePLUsException e) {
+        } catch (DevicePLUException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.scannerfail"), e);
             msg.show(this);            
         } finally {

@@ -28,9 +28,8 @@ import com.openbravo.data.user.EditorRecord;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSystem;
-import com.openbravo.pos.printer.TicketFiscalPrinterException;
-import com.openbravo.pos.printer.TicketParser;
-import com.openbravo.pos.printer.TicketPrinterException;
+import com.nordpos.device.ticket.TicketParser;
+import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
@@ -132,8 +131,6 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
            return payment;
         } catch (TicketPrinterException ex) {
             Logger.getLogger(PaymentsEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TicketFiscalPrinterException ex) {
-            Logger.getLogger(PaymentsEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -224,7 +221,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         }
     }
 
-    private void printPaymentReason(PaymentReasonRecord reasonrec) throws TicketPrinterException, TicketFiscalPrinterException {
+    private void printPaymentReason(PaymentReasonRecord reasonrec) throws TicketPrinterException {
         String sresource = m_dlSystem.getResourceAsXML("Printer.PaymentEdit");
         if (sresource == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
@@ -240,11 +237,6 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
                 msg.show(this);
                 Logger.getLogger(PaymentsEditor.class.getName()).log(Level.SEVERE, null, e);
             } catch (TicketPrinterException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
-                Logger.getLogger(PaymentsEditor.class.getName()).log(Level.SEVERE, null, e);
-                throw e;
-            } catch (TicketFiscalPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
                 Logger.getLogger(PaymentsEditor.class.getName()).log(Level.SEVERE, null, e);
