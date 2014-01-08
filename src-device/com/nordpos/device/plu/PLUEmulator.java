@@ -21,7 +21,6 @@
 package com.nordpos.device.plu;
 
 import com.nordpos.device.PLUInterface;
-import com.nordpos.device.util.SerialPortParameters;
 import com.openbravo.pos.util.StringParser;
 
 /**
@@ -35,15 +34,8 @@ public class PLUEmulator implements PLUInterface {
     public DevicePLU getPLU(String sProperty) throws Exception {
         StringParser pluProperty = new StringParser(sProperty);
         String sDevicePLUType = pluProperty.nextToken(':');
-        String sDevicePLUParam1 = pluProperty.nextToken(',');
-        Integer iDevicePLUSerialPortSpeed = SerialPortParameters.getSpeed(pluProperty.nextToken(','));
-        Integer iDevicePLUSerialPortDataBits = SerialPortParameters.getDataBits(pluProperty.nextToken(','));
-        Integer iDevicePLUSerialPortStopBits = SerialPortParameters.getStopBits(pluProperty.nextToken(','));
-        Integer iDevicePLUSerialPortParity = SerialPortParameters.getParity(pluProperty.nextToken(','));
 
         switch (sDevicePLUType) {
-            case "scanpal2":
-                return new DeviceScannerComm(sDevicePLUParam1, iDevicePLUSerialPortSpeed, iDevicePLUSerialPortDataBits, iDevicePLUSerialPortStopBits, iDevicePLUSerialPortParity);
             default:
                 return new DevicePLUNull();
         }

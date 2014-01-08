@@ -20,10 +20,7 @@
  */
 package com.nordpos.device;
 
-import com.nordpos.device.display.DeviceDisplay;
-import com.nordpos.device.labelprinter.DeviceLabelPrinter;
-import com.nordpos.device.receiptprinter.DevicePrinter;
-import java.awt.Component;
+import com.nordpos.device.fiscalprinter.DeviceFiscalPrinter;
 
 /**
  *
@@ -32,7 +29,5 @@ import java.awt.Component;
  */
 public interface FiscalPrinterInterface {
 
-    public DeviceDisplay getDisplay(String sProperty) throws Exception;
-
-    public DeviceLabelPrinter getLabelPrinter(String sProperty) throws Exception;
+    public DeviceFiscalPrinter getFiscalPrinter(String sProperty) throws Exception;
 }

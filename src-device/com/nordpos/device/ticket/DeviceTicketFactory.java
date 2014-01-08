@@ -25,17 +25,15 @@ import com.nordpos.device.receiptprinter.DevicePrinterPanel;
 import com.nordpos.device.display.DeviceDisplayNull;
 import com.nordpos.device.display.DeviceDisplay;
 import com.nordpos.device.DisplayInterface;
+import com.nordpos.device.FiscalPrinterInterface;
 import com.nordpos.device.LabelPrinterInterface;
 import com.nordpos.device.ReceiptPrinterInterface;
 import com.openbravo.pos.forms.AppProperties;
-import com.nordpos.device.javapos.DeviceFiscalPrinterJavaPOS;
 import com.nordpos.device.fiscalprinter.DeviceFiscalPrinter;
 import com.nordpos.device.fiscalprinter.DeviceFiscalPrinterNull;
 import com.nordpos.device.labelprinter.DeviceLabelPrinter;
 import com.nordpos.device.labelprinter.DeviceLabelPrinterNull;
-import com.nordpos.device.util.SerialPortParameters;
 import com.openbravo.pos.util.StringParser;
-import gnu.io.SerialPort;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,38 +67,21 @@ public class DeviceTicketFactory {
 
     public DeviceTicketFactory(Component parent, AppProperties props) {
 
+        ServiceLoader<FiscalPrinterInterface> fiscalLoader = ServiceLoader.load(FiscalPrinterInterface.class);
         ServiceLoader<DisplayInterface> displayLoader = ServiceLoader.load(DisplayInterface.class);
         ServiceLoader<LabelPrinterInterface> labelPrinterLoader = ServiceLoader.load(LabelPrinterInterface.class);
         ServiceLoader<ReceiptPrinterInterface> ticketPrinterLoader = ServiceLoader.load(ReceiptPrinterInterface.class);
 
+        m_deviceFiscal = new DeviceFiscalPrinterNull();
         m_deviceDisplay = new DeviceDisplayNull();
         m_deviceLabel = new DeviceLabelPrinterNull();
 
-        StringParser sf = new StringParser(props.getProperty("machine.fiscalprinter"));
-        String sFiscalType = sf.nextToken(':');
-        String sFiscalParam1 = sf.nextToken(',');
-        String sFiscalParam2 = sf.nextToken(',');
-
-        Integer iFiscalPrinterSerialPortSpeed = 115200;
-        Integer iFiscalPrinterSerialPortDataBits = SerialPort.DATABITS_8;
-        Integer iFiscalPrinterSerialPortStopBits = SerialPort.STOPBITS_1;
-        Integer iFiscalPrinterSerialPortParity = SerialPort.PARITY_NONE;
-
-        if ("serial".equals(sFiscalParam1)) {
-            iFiscalPrinterSerialPortSpeed = SerialPortParameters.getSpeed(sf.nextToken(','));
-            iFiscalPrinterSerialPortDataBits = SerialPortParameters.getDataBits(sf.nextToken(','));
-            iFiscalPrinterSerialPortStopBits = SerialPortParameters.getStopBits(sf.nextToken(','));
-            iFiscalPrinterSerialPortParity = SerialPortParameters.getParity(sf.nextToken(','));
-        }
-
-        try {
-            if ("javapos".equals(sFiscalType)) {
-                m_deviceFiscal = new DeviceFiscalPrinterJavaPOS(sFiscalParam1);
-            } else {
-                m_deviceFiscal = new DeviceFiscalPrinterNull();
+        for (FiscalPrinterInterface machineInterface : fiscalLoader) {
+            try {
+                m_deviceFiscal = machineInterface.getFiscalPrinter(props.getProperty("machine.fiscalprinter"));
+            } catch (Exception e) {
+                logger.log(Level.WARNING, e.getMessage(), e);
             }
-        } catch (TicketPrinterException e) {
-            m_deviceFiscal = new DeviceFiscalPrinterNull(e.getMessage());
         }
 
         for (DisplayInterface machineInterface : displayLoader) {
@@ -108,7 +89,6 @@ public class DeviceTicketFactory {
                 m_deviceDisplay = machineInterface.getDisplay(props.getProperty("machine.display"));
             } catch (Exception e) {
                 logger.log(Level.WARNING, e.getMessage(), e);
-                m_deviceDisplay = new DeviceDisplayNull(e.getMessage());
             }
         }
 
@@ -117,7 +97,6 @@ public class DeviceTicketFactory {
                 m_deviceLabel = machineInterface.getLabelPrinter(props.getProperty("machine.labelprinter"));
             } catch (Exception e) {
                 logger.log(Level.WARNING, e.getMessage(), e);
-                m_deviceLabel = new DeviceLabelPrinterNull(e.getMessage());
             }
         }
 
