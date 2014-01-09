@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-    Openbravo POS is a point of sales application designed for touch screens.
-    Copyright (C) 2007-2009 Openbravo, S.L.
-    http://sourceforge.net/projects/openbravopos
+<!--
 
-    This file is part of Openbravo POS.
+  NORD POS is a fork of Openbravo POS.
 
-    Openbravo POS is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+  Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
 
-    Openbravo POS is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  This file is part of NORD POS.
 
-    You should have received a copy of the GNU General Public License
-    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
- -->
+  NORD POS is free software: you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later
+  version.
+
+  NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+  A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with
+  NORD POS. If not, see <http://www.gnu.org/licenses/>.
+
+-->
 
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
+        xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line/>
         <line size="1">
-            <text align="center" length="42" bold="true">Закрытие смены</text>
+            <text align="center" length="42" bold="true">${local.getScriptString("closecash.reportheader")}</text>
         </line>
-        <line/>
+        <line />
         <line>
-            <text bold="true">Отчёт по категориям</text>
+            <text bold="true">${local.getScriptString("closecash.catreport")}</text>
         </line>
         <line>
-            <text align="left" length="25">Наименование</text>
-            <text align="center" length="7">Кол-во</text>
-            <text align="right" length="10">Сумма</text>
+            <text align="left" length="25">${local.getScriptString("closecash.catname")}</text>
+            <text align="center" length="7">${local.getScriptString("closecash.catunit")}</text>
+            <text align="right" length="10">${local.getScriptString("closecash.catsubtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -50,20 +51,20 @@
         <line>
             <text>------------------------------------------</text>
         </line>
-        <line/>
+        <line />
         <line size="1">
-            <text align="left" length="22" bold="true">Итого</text>
+            <text align="left" length="22" bold="true">${local.getScriptString("closecash.cattotal")}</text>
             <text align="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
             <text align="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
         </line>
-        <line/>        
+        <line />
         <line>
-            <text bold="true">Отчёт по кассирам</text>
+            <text bold="true">${local.getScriptString("closecash.cashierreport")}</text>
         </line>
         <line>
-            <text align="left" length="25">Имя</text>
-            <text align="center" length="7">Кол-во</text>
-            <text align="right" length="10">Сумма</text>        
+            <text align="left" length="25">${local.getScriptString("closecash.cashiername")}</text>
+            <text align="center" length="7">${local.getScriptString("closecash.cashierunit")}</text>
+            <text align="right" length="10">${local.getScriptString("closecash.cashiersubtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -73,51 +74,51 @@
             <text align="left" length="25">${line.printCashierName()}</text>
             <text align="center" length="7">${line.printCashierUnits()}</text>
             <text align="right" length="10">${line.printCashierValue()}</text>
-        </line> 
+        </line>
         #end
         <line>
             <text>------------------------------------------</text>
-        </line>         
-        <line/>
+        </line>
+        <line />
         <line size="1">
-            <text align="left" length="22" bold="true">Итого</text>
+            <text align="left" length="22" bold="true">${local.getScriptString("closecash.cashiertotal")}</text>
             <text align="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
             <text align="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
         </line>
-        <line/>        
+        <line />
         <line>
-            <text bold="true">Отчёт по платежам</text>
+            <text bold="true">${local.getScriptString("closecash.payreport")}</text>
         </line>
         <line>
-            <text align="right" length="42">Сумма</text>
+            <text align="right" length="42">${local.getScriptString("closecash.paysubtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
-        </line> 
+        </line>
         #foreach ($line in $payments.getPaymentLines())
         <line>
             <text align="left" length="32">${line.printType()}</text>
             <text align="right" length="10">${line.printValue()}</text>
-        </line> 
+        </line>
         #end
         <line>
             <text>------------------------------------------</text>
-        </line> 
+        </line>
         <line>
-            <text align="left" length="32">Платежи:</text>
+            <text align="left" length="32">${local.getScriptString("closecash.payments")}</text>
             <text align="right" length="10">${payments.printPayments()}</text>
         </line>
-        <line></line>
+        <line />
         <line size="1">
-            <text align="left" length="32" bold="true">Итого</text>
+            <text align="left" length="32" bold="true">${local.getScriptString("closecash.paysubtotal")}</text>
             <text align="right" length="10" bold="true">${payments.printPaymentsTotal()}</text>
         </line>
-        <line></line>
+        <line />
         <line>
-            <text bold="true">Отчёт по налогам</text>
+            <text bold="true">${local.getScriptString("closecash.paysubtotal")}</text>
         </line>
         <line>
-            <text align="right" length="42">Сумма</text>
+            <text align="right" length="42">${local.getScriptString("closecash.taxsubtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -126,44 +127,44 @@
         <line>
             <text align ="left" length="32">${line.printTaxName()}</text>
             <text align ="right" length="10">${line.printTaxes()}</text>
-        </line> 
-        #end        
+        </line>
+        #end
         <line>
             <text>------------------------------------------</text>
         </line>
         <line>
-            <text align="left" length="32">Чеков:</text>
+            <text align="left" length="32">${local.getScriptString("closecash.taxtotal")}</text>
             <text align="right" length="10">${payments.printSales()}</text>
         </line>
-        <line></line>
+        <line />
         <line size="1">
-            <text align="left" length="32" bold="true">Всего</text>
+            <text align="left" length="32" bold="true">${local.getScriptString("closecash.notaxtotal")}</text>
             <text align="right" length="10" bold="true">${payments.printSalesBase()}</text>
         </line>
         <line size="1">
-            <text align="left" length="22" bold="true">Итого</text>
+            <text align="left" length="22" bold="true">${local.getScriptString("closecash.taxtotal")}</text>
             <text align="right" length="10" bold="true">${payments.printSalesTaxes()}</text>
             <text align="right" length="10" bold="true">${payments.printSalesTotal()}</text>
         </line>
-        <line></line>
+        <line />
         <line>
-            <text length="18">Касса:</text>
+            <text length="18">${local.getScriptString("closecash.machine")}</text>
             <text>${payments.printHost()}</text>
-        </line>    
+        </line>
         <line>
-            <text length="18">Номер смены:</text>
+            <text length="18">${local.getScriptString("closecash.sequence")}</text>
             <text length="24" align="right">${payments.printSequence()}</text>
-        </line> 
+        </line>
         <line>
-            <text length="18">Дата открытия:</text>
+            <text length="18">${local.getScriptString("closecash.datestart")}</text>
             <text length="24" align="right">${payments.printDateStart()}</text>
-        </line>  
+        </line>
         <line>
-            <text length="18">Дата закрытия:</text>
+            <text length="18">${local.getScriptString("closecash.dateend")}</text>
             <text length="24" align="right">${payments.printDateEnd()}</text>
-        </line>  
+        </line>
     </ticket>
-    
+
     <fiscalreport>
         <fiscalzreport/>
         <cutpaper complete="true"/>

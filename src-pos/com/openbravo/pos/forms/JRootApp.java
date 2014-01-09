@@ -33,6 +33,9 @@ import com.nordpos.device.ticket.DeviceTicketFactory;
 import com.nordpos.device.ticket.TicketParser;
 import com.nordpos.device.ticket.TicketPrinterException;
 import com.nordpos.device.scale.DeviceScaleFactory;
+import com.openbravo.pos.scripting.ScriptEngine;
+import com.openbravo.pos.scripting.ScriptException;
+import com.openbravo.pos.scripting.ScriptFactory;
 import java.awt.CardLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
@@ -536,8 +539,10 @@ public class JRootApp extends JPanel implements AppView {
             m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);
         } else {
             try {
-                m_TTP.printTicket(this, sresource);
-            } catch (TicketPrinterException eTP) {
+                ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
+                script.put("local", new AppLocal());
+                m_TTP.printTicket(this, script.eval(sresource).toString());
+            } catch (ScriptException | TicketPrinterException eTP) {
                 m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);
             }
         }

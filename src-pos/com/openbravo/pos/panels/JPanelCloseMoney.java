@@ -176,6 +176,7 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("payments", m_PaymentsToClose);
+                script.put("local", new AppLocal());
                 m_TTP.printTicket(m_App, script.eval(sresource).toString());
             } catch (ScriptException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);

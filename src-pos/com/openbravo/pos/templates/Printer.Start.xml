@@ -27,7 +27,7 @@
             <text>NORD POS</text>
         </line>
         <line>
-            <text>Добро пожаловать!</text>
+            <text>${local.getScriptString("start.welcome")}</text>
         </line>
     </display>
 </output>

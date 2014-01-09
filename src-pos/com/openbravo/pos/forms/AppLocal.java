@@ -33,16 +33,17 @@ public class AppLocal {
     public static final String APP_VERSION = "2.30.2";
 
     // private static List<ResourceBundle> m_messages;
-    private static LocaleResources m_resources;
+    private static final LocaleResources m_resources;
 
     static {
         m_resources = new LocaleResources();
         m_resources.addBundleName("pos_messages");
+        m_resources.addBundleName("script_messages");
         m_resources.addBundleName("sync_messages");
     }
 
     /** Creates a new instance of AppLocal */
-    private AppLocal() {
+    public AppLocal() {
     }
 
     public static String getIntString(String sKey) {
@@ -51,5 +52,9 @@ public class AppLocal {
 
     public static String getIntString(String sKey, Object ... sValues) {
         return m_resources.getString(sKey, sValues);
+    }
+
+    public String getScriptString(String sKey) {
+        return m_resources.getString(sKey);
     }
 }
