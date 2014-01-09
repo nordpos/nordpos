@@ -198,16 +198,13 @@ public class JTicketsBagTicket extends JTicketsBag {
             m_jTicketId.setText(null);
         } else {
             m_jTicketId.setText(m_ticket.getName());
-
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", m_ticket);
+                script.put("local", new AppLocal());
                 m_TTP.printTicket(m_App, script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
-            } catch (ScriptException e) {
+            } catch (ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
-            } catch (TicketPrinterException eTP) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), eTP);
                 msg.show(this);
             }
         }
@@ -394,10 +391,9 @@ public class JTicketsBagTicket extends JTicketsBag {
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", m_ticket);
+                script.put("local", new AppLocal());
                 m_TTP2.printTicket(m_App, script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
-            } catch (ScriptException e) {
-                JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
-            } catch (TicketPrinterException e) {
+            } catch (ScriptException | TicketPrinterException e) {
                 JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
             }
         }

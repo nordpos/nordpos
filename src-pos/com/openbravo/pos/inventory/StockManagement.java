@@ -417,11 +417,9 @@ public class StockManagement extends JPanel implements JPanelView {
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("inventoryrecord", invrec);
+                script.put("local", new AppLocal());
                 m_TTP.printTicket(m_App, script.eval(sresource).toString());
-            } catch (ScriptException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
-            } catch (TicketPrinterException e) {
+            } catch (ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             }

@@ -208,6 +208,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", ticket);
                 script.put("customer", customer);
+                script.put("local", new AppLocal());
                 ttp.printTicket(app, script.eval(resource).toString());
             } catch (ScriptException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);

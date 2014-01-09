@@ -230,6 +230,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("payment", reasonrec);
+                script.put("local", new AppLocal());
                 m_TTP.printTicket(m_App, script.eval(sresource).toString());
                 //m_jPrintPaymentReason.setEnabled(jTotal.isEnabled());
             } catch (ScriptException e) {

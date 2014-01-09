@@ -655,6 +655,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("product", productinfo);
+                script.put("local", new AppLocal());
                 m_TTP.printTicket(m_App, script.eval(sresource).toString());
             } catch (ScriptException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
