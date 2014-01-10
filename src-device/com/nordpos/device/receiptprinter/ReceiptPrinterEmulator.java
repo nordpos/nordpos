@@ -32,7 +32,7 @@ import java.awt.Component;
 public class ReceiptPrinterEmulator implements ReceiptPrinterInterface {
 
     @Override
-    public DevicePrinter getTicketPrinter(String sProperty) throws Exception {
+    public DevicePrinter getReceiptPrinter(String sProperty) throws Exception {
         StringParser sp = new StringParser(sProperty);
         String sPrinterType = sp.nextToken(':');
         switch (sPrinterType) {
@@ -44,7 +44,7 @@ public class ReceiptPrinterEmulator implements ReceiptPrinterInterface {
     }
 
     @Override
-    public DevicePrinter getTicketPrinter(Component awtComponent, String sProperty, PaperFormat paperFormat) throws Exception {
+    public DevicePrinter getReceiptPrinter(Component awtComponent, String sProperty, PaperFormat paperFormat) throws Exception {
         StringParser sp = new StringParser(sProperty);
         String sPrinterType = sp.nextToken(':');
         String sPrinterParam1 = sp.nextToken(',');

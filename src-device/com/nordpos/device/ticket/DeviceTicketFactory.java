@@ -124,7 +124,7 @@ public class DeviceTicketFactory {
                 paperFormat.setHeight(Integer.parseInt(props.getProperty("paper." + sPrinterParam2 + ".height")));
                 for (ReceiptPrinterInterface machineInterface : ticketPrinterLoader) {
                     try {
-                        addPrinter(sPrinterIndex, machineInterface.getTicketPrinter(parent, sprinter, paperFormat));
+                        addPrinter(sPrinterIndex, machineInterface.getReceiptPrinter(parent, sprinter, paperFormat));
                     } catch (Exception e) {
                         logger.log(Level.WARNING, e.getMessage(), e);
                         addPrinter(sPrinterIndex, new DevicePrinterNull(e.getMessage()));
@@ -133,7 +133,7 @@ public class DeviceTicketFactory {
             } else {
                 for (ReceiptPrinterInterface machineInterface : ticketPrinterLoader) {
                     try {
-                        addPrinter(sPrinterIndex, machineInterface.getTicketPrinter(sprinter));
+                        addPrinter(sPrinterIndex, machineInterface.getReceiptPrinter(sprinter));
                     } catch (Exception e) {
                         logger.log(Level.WARNING, e.getMessage(), e);
                         addPrinter(sPrinterIndex, new DevicePrinterNull(e.getMessage()));

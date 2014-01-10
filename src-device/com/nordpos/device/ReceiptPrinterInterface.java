@@ -31,7 +31,7 @@ import java.awt.Component;
  */
 public interface ReceiptPrinterInterface {
 
-    public DevicePrinter getTicketPrinter(String sProperty) throws Exception;
+    public DevicePrinter getReceiptPrinter(String sProperty) throws Exception;
 
-    public DevicePrinter getTicketPrinter(Component awtComponent, String sProperty, PaperFormat paperFormat) throws Exception;
+    public DevicePrinter getReceiptPrinter(Component awtComponent, String sProperty, PaperFormat paperFormat) throws Exception;
 }
