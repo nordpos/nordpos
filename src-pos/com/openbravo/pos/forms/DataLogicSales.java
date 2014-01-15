@@ -25,11 +25,21 @@ import com.openbravo.data.model.Field;
 import com.openbravo.data.model.Row;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.customers.CustomerInfoExt;
-import com.openbravo.pos.inventory.*;
+import com.openbravo.pos.inventory.AttributeSetInfo;
+import com.openbravo.pos.inventory.LocationInfo;
+import com.openbravo.pos.inventory.MovementReason;
+import com.openbravo.pos.inventory.TaxCategoryInfo;
+import com.openbravo.pos.inventory.TaxCustCategoryInfo;
 import com.openbravo.pos.mant.FloorsInfo;
 import com.openbravo.pos.payment.PaymentInfo;
 import com.openbravo.pos.payment.PaymentInfoTicket;
-import com.openbravo.pos.ticket.*;
+import com.openbravo.pos.ticket.CategoryInfo;
+import com.openbravo.pos.ticket.FindTicketsInfo;
+import com.openbravo.pos.ticket.ProductInfoExt;
+import com.openbravo.pos.ticket.TaxInfo;
+import com.openbravo.pos.ticket.TicketInfo;
+import com.openbravo.pos.ticket.TicketLineInfo;
+import com.openbravo.pos.ticket.TicketTaxInfo;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -390,14 +400,14 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         getStockDiaryInsert().exec(new Object[] {
                             UUID.randomUUID().toString(),
                             ticket.getDate(),
-                            l.getMultiply() < 0.0
+                            (l.getMultiply().doubleValue() < 0.0)
                                 ? MovementReason.IN_REFUND.getKey()
                                 : MovementReason.OUT_SALE.getKey(),
                             location,
                             l.getProductID(),
                             l.getProductAttSetInstId(),
-                            new Double(-l.getMultiply()),
-                            new Double(l.getPrice())
+                            l.getMultiply().negate().doubleValue(),
+                            l.getPrice().doubleValue()
                         });
                     }
                 }
@@ -438,8 +448,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                             setString(1, UUID.randomUUID().toString());
                             setString(2, ticket.getId());
                             setString(3, tickettax.getTaxInfo().getId());
-                            setDouble(4, tickettax.getSubTotal());
-                            setDouble(5, tickettax.getTax());
+                            setDouble(4, tickettax.getSubTotal().doubleValue());
+                            setDouble(5, tickettax.getTax().doubleValue());
                         }});
                     }
                 }
@@ -463,14 +473,14 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         getStockDiaryInsert().exec( new Object[] {
                             UUID.randomUUID().toString(),
                             d,
-                            ticket.getLine(i).getMultiply() >= 0.0
+                            (ticket.getLine(i).getMultiply().doubleValue()) >= 0.0
                                 ? MovementReason.IN_REFUND.getKey()
                                 : MovementReason.OUT_SALE.getKey(),
                             location,
                             ticket.getLine(i).getProductID(),
                             ticket.getLine(i).getProductAttSetInstId(),
-                            new Double(ticket.getLine(i).getMultiply()),
-                            new Double(ticket.getLine(i).getPrice())
+                            ticket.getLine(i).getMultiply().doubleValue(),
+                            ticket.getLine(i).getPrice().doubleValue()
                         });
                     }
                 }

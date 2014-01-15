@@ -25,6 +25,10 @@ import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.ImageUtils;
 import com.openbravo.data.loader.SerializerRead;
 import com.openbravo.format.Formats;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Properties;
 
 /**
@@ -45,11 +49,11 @@ public class ProductInfoExt {
     protected String categoryid;
     protected String taxcategoryid;
     protected String attributesetid;
-    protected double m_dPriceBuy;
-    protected double m_dPriceSell;
+    protected BigDecimal priceBuy;
+    protected BigDecimal priceSell;
     protected BufferedImage m_Image;
     protected Properties attributes;
-    
+
     /** Creates new ProductInfo */
     public ProductInfoExt() {
         m_ID = null;
@@ -61,8 +65,10 @@ public class ProductInfoExt {
         categoryid = null;
         taxcategoryid = null;
         attributesetid = null;
-        m_dPriceBuy = 0.0;
-        m_dPriceSell = 0.0;
+        MathContext mt = new MathContext(2, RoundingMode.UP);
+
+        priceBuy = new BigDecimal(0.0, mt);
+        priceSell = new BigDecimal(0.0);
         m_Image = null;
         attributes = new Properties();
     }
@@ -138,41 +144,41 @@ public class ProductInfoExt {
         attributesetid = value;
     }
 
-    public final double getPriceBuy() {
-        return m_dPriceBuy;
+    public final BigDecimal getPriceBuy() {
+        return priceBuy;
     }
 
-    public final void setPriceBuy(double dPrice) {
-        m_dPriceBuy = dPrice;
+    public final void setPriceBuy(BigDecimal priceBuy) {
+        this.priceBuy = priceBuy;
     }
 
-    public final double getPriceSell() {
-        return m_dPriceSell;
+    public final BigDecimal getPriceSell() {
+        return priceSell;
     }
 
-    public final void setPriceSell(double dPrice) {
-        m_dPriceSell = dPrice;
+    public final void setPriceSell(BigDecimal priceSell) {
+        this.priceSell = priceSell;
     }
 
-    public final double getPriceSellTax(TaxInfo tax) {
-        return m_dPriceSell * (1.0 + tax.getRate());
+    public final BigDecimal getPriceSellTax(TaxInfo tax) {
+        return priceSell.multiply(new BigDecimal(1.0 + tax.getRate()));
     }
 
     public String printPriceSell() {
-        return Formats.CURRENCY.formatValue(new Double(getPriceSell()));
+        return Formats.CURRENCY.formatValue(priceSell.doubleValue());
     }
 
     public String printPriceSellTax(TaxInfo tax) {
-        return Formats.CURRENCY.formatValue(new Double(getPriceSellTax(tax)));
+        return Formats.CURRENCY.formatValue(getPriceSellTax(tax).doubleValue());
     }
-    
+
     public BufferedImage getImage() {
         return m_Image;
     }
     public void setImage(BufferedImage img) {
         m_Image = img;
     }
-    
+
     public String getProperty(String key) {
         return attributes.getProperty(key);
     }
@@ -195,8 +201,8 @@ public class ProductInfoExt {
             product.m_sName = dr.getString(4);
             product.m_bCom = dr.getBoolean(5).booleanValue();
             product.m_bScale = dr.getBoolean(6).booleanValue();
-            product.m_dPriceBuy = dr.getDouble(7).doubleValue();
-            product.m_dPriceSell = dr.getDouble(8).doubleValue();
+            product.priceBuy = new BigDecimal(dr.getDouble(7).doubleValue());
+            product.priceSell = new BigDecimal(dr.getDouble(8).doubleValue());
             product.taxcategoryid = dr.getString(9);
             product.categoryid = dr.getString(10);
             product.attributesetid = dr.getString(11);

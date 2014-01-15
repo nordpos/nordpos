@@ -20,51 +20,51 @@
 package com.openbravo.pos.ticket;
 
 import com.openbravo.format.Formats;
+import java.math.BigDecimal;
 
 
 public class TicketTaxInfo {
-    
+
     private TaxInfo tax;
-    
-    private double subtotal;
-    private double taxtotal;
-            
-    /** Creates a new instance of TicketTaxInfo */
+
+    private BigDecimal subtotal;
+    private BigDecimal taxtotal;
+
     public TicketTaxInfo(TaxInfo tax) {
         this.tax = tax;
-        
-        subtotal = 0.0;
-        taxtotal = 0.0;
+
+        subtotal = new BigDecimal(0.0);
+        taxtotal = new BigDecimal(0.0);
     }
-    
+
     public TaxInfo getTaxInfo() {
         return tax;
     }
-    
-    public void add(double dValue) {
-        subtotal += dValue;
-        taxtotal = subtotal * tax.getRate();
+
+    public void add(BigDecimal dValue) {
+        subtotal = subtotal.add(dValue);
+        taxtotal = subtotal.multiply(new BigDecimal(tax.getRate()));
     }
-    
-    public double getSubTotal() {    
+
+    public BigDecimal getSubTotal() {
         return subtotal;
     }
-    
-    public double getTax() {       
+
+    public BigDecimal getTax() {
         return taxtotal;
     }
-    
-    public double getTotal() {         
-        return subtotal + taxtotal;
+
+    public BigDecimal getTotal() {
+        return subtotal.add(taxtotal);
     }
-    
+
     public String printSubTotal() {
-        return Formats.CURRENCY.formatValue(new Double(getSubTotal()));
+        return Formats.CURRENCY.formatValue(getSubTotal());
     }
     public String printTax() {
-        return Formats.CURRENCY.formatValue(new Double(getTax()));
-    }    
+        return Formats.CURRENCY.formatValue(getTax());
+    }
     public String printTotal() {
-        return Formats.CURRENCY.formatValue(new Double(getTotal()));
-    }    
+        return Formats.CURRENCY.formatValue(getTotal());
+    }
 }

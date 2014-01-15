@@ -28,6 +28,8 @@ import com.openbravo.pos.payment.PaymentInfo;
 import com.openbravo.pos.payment.PaymentInfoMagcard;
 import com.openbravo.pos.util.StringUtils;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -191,7 +193,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
         } else {
             name.append(info.toString());
         }
-        
+
         return name.toString();
     }
 
@@ -230,13 +232,13 @@ public class TicketInfo implements SerializableRead, Externalizable {
             return m_Customer.getId();
         }
     }
-    
+
     public String getTransactionID(){
         return (getPayments().size()>0)
             ? ( getPayments().get(getPayments().size()-1) ).getTransactionID()
             : StringUtils.getCardNumber(); //random transaction ID
     }
-    
+
     public String getReturnMessage(){
         return ( (getPayments().get(getPayments().size()-1)) instanceof PaymentInfoMagcard )
             ? ((PaymentInfoMagcard)(getPayments().get(getPayments().size()-1))).getReturnMessage()
@@ -301,61 +303,60 @@ public class TicketInfo implements SerializableRead, Externalizable {
     public int getLinesCount() {
         return m_aLines.size();
     }
-    
-    public double getArticlesCount() {
-        double dArticles = 0.0;
+
+    public BigDecimal getArticlesCount() {
+        BigDecimal dArticles = new BigDecimal(0.0);
         TicketLineInfo oLine;
 
         for (Iterator<TicketLineInfo> i = m_aLines.iterator(); i.hasNext();) {
             oLine = i.next();
-            dArticles += oLine.getMultiply();
+            dArticles = dArticles.add(oLine.getMultiply());
         }
 
         return dArticles;
     }
 
-    public double getSubTotal() {
-        double sum = 0.0;
+    public BigDecimal getSubTotal() {
+        BigDecimal sum = new BigDecimal(0.0);
         for (TicketLineInfo line : m_aLines) {
-            sum += line.getSubValue();
+            sum = sum.add(line.getSubValue());
         }
         return sum;
     }
-    
-    public double getDiscountTotal() {
-        double discountsum = 0.0;
+
+    public BigDecimal getDiscountTotal() {
+        BigDecimal discountsum = new BigDecimal(0.0);
         for (TicketLineInfo line : m_aLines) {
-            discountsum += line.getDiscountTotalLine();
+            discountsum  = discountsum.add(line.getDiscountTotalLine());
         }
         return discountsum;
     }
 
-    public double getTotalNoDiscount() {
-        return getTotal() + getDiscountTotal();
+    public BigDecimal getTotalNoDiscount() {
+        return getTotal().add(getDiscountTotal());
     }
 
-    public double getDiscountAvgRate() {
-        return getDiscountTotal() / getTotalNoDiscount();
+    public BigDecimal getDiscountAvgRate() {
+        return getDiscountTotal().divide(getTotalNoDiscount(),MathContext.DECIMAL32);
     }
 
-    public double getTax() {
+    public BigDecimal getTax() {
 
-        double sum = 0.0;
+        BigDecimal sum = new BigDecimal(0.0);
         if (hasTaxesCalculated()) {
             for (TicketTaxInfo tax : taxes) {
-                sum += tax.getTax(); // Taxes are already rounded...
+                sum = sum.add(tax.getTax());
             }
         } else {
             for (TicketLineInfo line : m_aLines) {
-                sum += line.getTax();
+                sum = sum.add(line.getTax());
             }
         }
         return sum;
     }
 
-    public double getTotal() {
-        
-        return getSubTotal() + getTax();
+    public BigDecimal getTotal() {
+        return getSubTotal().add(getTax());
     }
 
     public double getTotalPaid() {
@@ -432,7 +433,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
             t.add(oLine.getSubValue());
         }
 
-        // return dSuma;       
+        // return dSuma;
         Collection<TicketTaxInfo> avalues = m.values();
         return avalues.toArray(new TicketTaxInfo[avalues.size()]);
     }
@@ -453,15 +454,15 @@ public class TicketInfo implements SerializableRead, Externalizable {
     public String printDate() {
         return Formats.TIMESTAMP.formatValue(m_dDate);
     }
-    
+
     public String printTime() {
         return Formats.DATE.formatValue(m_dDate);
-    }    
+    }
 
     public String printDay() {
         return Formats.TIME.formatValue(m_dDate);
-    }    
-    
+    }
+
     public String printUser() {
         return m_User == null ? "" : m_User.getName();
     }
@@ -471,34 +472,34 @@ public class TicketInfo implements SerializableRead, Externalizable {
     }
 
     public String printArticlesCount() {
-        return Formats.DOUBLE.formatValue(new Double(getArticlesCount()));
+        return Formats.DOUBLE.formatValue(getArticlesCount());
     }
 
     public String printSubTotal() {
-        return Formats.CURRENCY.formatValue(new Double(getSubTotal()));
+        return Formats.CURRENCY.formatValue(getSubTotal());
     }
 
     public String printTax() {
-        return Formats.CURRENCY.formatValue(new Double(getTax()));
+        return Formats.CURRENCY.formatValue(getTax());
     }
 
     public String printTotal() {
-        return Formats.CURRENCY.formatValue(new Double(getTotal()));
+        return Formats.CURRENCY.formatValue(getTotal());
     }
 
     public String printTotalPaid() {
         return Formats.CURRENCY.formatValue(new Double(getTotalPaid()));
     }
-    
+
     public String printDiscountTotal() {
-        return Formats.CURRENCY.formatValue(new Double(getDiscountTotal()));
-    }      
-    
+        return Formats.CURRENCY.formatValue(getDiscountTotal());
+    }
+
     public String printTotalNoDiscount() {
-        return Formats.CURRENCY.formatValue(new Double(getTotalNoDiscount()));
-    }      
-    
+        return Formats.CURRENCY.formatValue(getTotalNoDiscount());
+    }
+
     public String printDiscountAvgRate() {
-        return Formats.PERCENT.formatValue(new Double(getDiscountAvgRate()));
+        return Formats.PERCENT.formatValue(getDiscountAvgRate());
     }
 }

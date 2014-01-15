@@ -5,28 +5,29 @@
 package com.openbravo.pos.promotion;
 
 import com.openbravo.pos.ticket.TicketLineInfo;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class DiscountMoney {
-    
-    public TicketLineInfo LineDiscountMoney(TicketLineInfo TicketLine, Double dMoney) {
 
-        double linedicountmoney = TicketLine.getDiscountMoney();
-        double lineprice = TicketLine.getPriceTax();
-        double linenodisount = TicketLine.getPriceTaxNoDiscount();
+    public TicketLineInfo LineDiscountMoney(TicketLineInfo TicketLine, BigDecimal dMoney) {
 
-        if (linedicountmoney == 0.0 || linedicountmoney != dMoney) {
-            if (linedicountmoney != 0.0) {
-                TicketLine.setPriceTax(linenodisount + dMoney);
+        BigDecimal linedicountmoney = TicketLine.getDiscountMoney();
+        BigDecimal lineprice = TicketLine.getPriceTax();
+        BigDecimal linenodisount = TicketLine.getPriceTaxNoDiscount();
+
+        if (linedicountmoney.equals(new BigDecimal(0)) || !linedicountmoney.equals(dMoney)) {
+            if (!linedicountmoney.equals(new BigDecimal(0))) {
+                TicketLine.setPriceTax(linenodisount.add(dMoney));
             } else {
-                TicketLine.setPriceTax(lineprice - dMoney);
+                TicketLine.setPriceTax(lineprice.subtract(dMoney));
             }
-            TicketLine.setProperty("discountmoney", Double.toString(dMoney));
+            TicketLine.setProperty("discountmoney", dMoney.toString());
         }
-        
+
         return TicketLine;
-    }    
+    }
 }
