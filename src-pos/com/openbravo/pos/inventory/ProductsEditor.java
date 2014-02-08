@@ -37,6 +37,7 @@ import com.openbravo.pos.sales.TaxesLogic;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
+import com.openbravo.pos.ticket.CategoryInfo;
 import com.openbravo.pos.ticket.ProductInfoEdit;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -46,10 +47,12 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.krysalis.barcode4j.impl.upcean.*;
 
 /**
  *
@@ -157,6 +160,8 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         txtAttributes.setAntiAliasingEnabled(true);
         txtAttributes.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
 
+        m_jCategory.addActionListener(fm);
+
         writeValueEOF();
     }
 
@@ -242,58 +247,22 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jTitle.setText(AppLocal.getIntString("label.recordnew"));
         m_id = UUID.randomUUID().toString();
 
-        String GenCode = "";
-
-        try {
-            if (product.list() != null) {
-                GenCode = Integer.toString(product.list().size() + 1);
-            } else {
-                GenCode = "1";
-            }
-        } catch (BasicException ex) {
-        }
-
         if (s_GenRef.equals("true")) {
-            for (int i = GenCode.length(); i < 4; i++) {
-                GenCode = "0".concat(GenCode);
+            String sReferense = "1";
+            try {
+                if (product.list() != null) {
+                    sReferense = Integer.toString(product.list().size() + 1);
+                }
+            } catch (BasicException ex) {
+                Logger.getLogger(ProductsEditor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            m_jRef.setText(GenCode);
+
+            for (int i = sReferense.length(); i < 4; i++) {
+                sReferense = "0".concat(sReferense);
+            }
+            m_jRef.setText(sReferense);
         } else {
             m_jRef.setText(null);
-        }
-
-        if (s_GenBarcode.equals("true")) {
-
-            for (int i = GenCode.length(); i < 9; i++) {
-                GenCode = "0".concat(GenCode);
-            }
-
-            GenCode = s_DefBarcode.concat(GenCode);
-
-            int iBCC = 0;
-
-            for (int i = 0; i < 12; i++) {
-                if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11) {
-                    iBCC = iBCC + Integer.parseInt(GenCode.substring(i, i + 1)) * 3;
-                } else {
-                    iBCC = iBCC + Integer.parseInt(GenCode.substring(i, i + 1));
-                }
-            }
-
-            if (iBCC > 9) {
-                iBCC = 10 - Integer.parseInt(Integer.toString(iBCC).substring(1, 2));
-                if (iBCC == 10) {
-                    iBCC = 0;
-                }
-            } else {
-                iBCC = 10 - Integer.parseInt(Integer.toString(iBCC).substring(0, 1));
-            }
-
-            GenCode = GenCode.concat(Integer.toString(iBCC));
-
-            m_jCode.setText(GenCode);
-        } else {
-            m_jCode.setText(null);
         }
 
         m_jName.setText(null);
@@ -331,6 +300,17 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jInCatalog.setEnabled(true);
         m_jCatalogOrder.setEnabled(false);
         txtAttributes.setEnabled(true);
+
+        if (s_GenBarcode.equals("true")) {
+            try {
+                CategoryInfo mCurrentCategory = (CategoryInfo) m_CategoryModel.getSelectedItem();
+                m_jCode.setText(generateBarCode(m_dSales.countPonductsByCategory(mCurrentCategory.getID()), mCurrentCategory.getCode()));
+            } catch (BasicException ex) {
+                m_jCode.setText(null);
+            }
+        } else {
+            m_jCode.setText(null);
+        }
 
         calculateMargin();
         calculatePriceSellTax();
@@ -502,6 +482,18 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             }
             reportlock = false;
         }
+    }
+
+    private String generateBarCode(Integer iCountProducts, String sCategoryPrefix) {
+        String sCode = Integer.toString(iCountProducts + 1);
+
+        for (int i = sCode.length(); i < 5; i++) {
+            sCode = "0".concat(sCode);
+        }
+
+        sCode = s_DefBarcode.concat(sCategoryPrefix).concat(sCode);
+
+        return sCode.concat(Character.toString(EAN13LogicImpl.calcChecksum(sCode)));
     }
 
     private void calculatePriceSellfromMargin() {
@@ -697,9 +689,10 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jmargin = new javax.swing.JTextField();
         m_jPriceSellTax = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        m_jCodetype = new javax.swing.JComboBox();
         jLabel13 = new javax.swing.JLabel();
         m_jAtt = new javax.swing.JComboBox();
+        jButtonGenBarcode = new javax.swing.JButton();
+        m_jCodetype = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         m_jstockcost = new javax.swing.JTextField();
@@ -741,9 +734,9 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel6.setText(AppLocal.getIntString("label.prodbarcode")); // NOI18N
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(10, 20, 150, 18);
+        jLabel6.setBounds(10, 20, 150, 17);
         jPanel1.add(m_jCode);
-        m_jCode.setBounds(160, 20, 170, 28);
+        m_jCode.setBounds(160, 20, 130, 27);
 
         m_jImage.setMaxDimensions(new java.awt.Dimension(256, 256));
         jPanel1.add(m_jImage);
@@ -751,51 +744,60 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel3.setText(AppLocal.getIntString("label.prodpricebuy")); // NOI18N
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 50, 150, 18);
+        jLabel3.setBounds(10, 50, 150, 17);
 
         m_jPriceBuy.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jPriceBuy);
-        m_jPriceBuy.setBounds(160, 50, 80, 28);
+        m_jPriceBuy.setBounds(160, 50, 80, 27);
 
         jLabel4.setText(AppLocal.getIntString("label.prodpricesell")); // NOI18N
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(10, 80, 150, 18);
+        jLabel4.setBounds(10, 80, 150, 17);
 
         m_jPriceSell.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jPriceSell);
-        m_jPriceSell.setBounds(160, 80, 80, 28);
+        m_jPriceSell.setBounds(160, 80, 80, 27);
 
         jLabel5.setText(AppLocal.getIntString("label.prodcategory")); // NOI18N
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(10, 170, 150, 18);
+        jLabel5.setBounds(10, 170, 150, 17);
         jPanel1.add(m_jCategory);
         m_jCategory.setBounds(160, 170, 170, 20);
 
         jLabel7.setText(AppLocal.getIntString("label.taxcategory")); // NOI18N
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(10, 140, 150, 18);
+        jLabel7.setBounds(10, 140, 150, 17);
         jPanel1.add(m_jTax);
         m_jTax.setBounds(160, 140, 170, 20);
 
         m_jmargin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jmargin);
-        m_jmargin.setBounds(250, 80, 80, 28);
+        m_jmargin.setBounds(250, 80, 80, 27);
 
         m_jPriceSellTax.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jPriceSellTax);
-        m_jPriceSellTax.setBounds(160, 110, 80, 28);
+        m_jPriceSellTax.setBounds(160, 110, 80, 27);
 
         jLabel16.setText(AppLocal.getIntString("label.prodpriceselltax")); // NOI18N
         jPanel1.add(jLabel16);
-        jLabel16.setBounds(10, 110, 150, 18);
-        jPanel1.add(m_jCodetype);
-        m_jCodetype.setBounds(250, 40, 80, 20);
+        jLabel16.setBounds(10, 110, 150, 17);
 
         jLabel13.setText(AppLocal.getIntString("label.attributes")); // NOI18N
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(10, 200, 150, 18);
+        jLabel13.setBounds(10, 200, 150, 17);
         jPanel1.add(m_jAtt);
         m_jAtt.setBounds(160, 200, 170, 20);
+
+        jButtonGenBarcode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/color_line16.png"))); // NOI18N
+        jButtonGenBarcode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenBarcodeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonGenBarcode);
+        jButtonGenBarcode.setBounds(300, 20, 28, 28);
+        jPanel1.add(m_jCodetype);
+        m_jCodetype.setBounds(250, 40, 80, 20);
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.prodgeneral"), jPanel1); // NOI18N
 
@@ -803,19 +805,19 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel9.setText(AppLocal.getIntString("label.prodstockcost")); // NOI18N
         jPanel2.add(jLabel9);
-        jLabel9.setBounds(10, 20, 150, 18);
+        jLabel9.setBounds(10, 20, 150, 17);
 
         m_jstockcost.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jstockcost);
-        m_jstockcost.setBounds(160, 20, 80, 28);
+        m_jstockcost.setBounds(160, 20, 80, 27);
 
         jLabel10.setText(AppLocal.getIntString("label.prodstockvol")); // NOI18N
         jPanel2.add(jLabel10);
-        jLabel10.setBounds(10, 50, 150, 18);
+        jLabel10.setBounds(10, 50, 150, 17);
 
         m_jstockvolume.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jstockvolume);
-        m_jstockvolume.setBounds(160, 50, 80, 28);
+        m_jstockvolume.setBounds(160, 50, 80, 27);
         jPanel2.add(m_jScale);
         m_jScale.setBounds(160, 140, 80, 24);
         jPanel2.add(m_jComment);
@@ -823,11 +825,11 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel18.setText(AppLocal.getIntString("label.prodorder")); // NOI18N
         jPanel2.add(jLabel18);
-        jLabel18.setBounds(250, 80, 60, 18);
+        jLabel18.setBounds(250, 80, 60, 17);
 
         m_jCatalogOrder.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jCatalogOrder);
-        m_jCatalogOrder.setBounds(310, 80, 80, 28);
+        m_jCatalogOrder.setBounds(310, 80, 80, 27);
 
         m_jInCatalog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -839,15 +841,15 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel8.setText(AppLocal.getIntString("label.prodincatalog")); // NOI18N
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(10, 80, 150, 18);
+        jLabel8.setBounds(10, 80, 150, 17);
 
         jLabel11.setText(AppLocal.getIntString("label.prodaux")); // NOI18N
         jPanel2.add(jLabel11);
-        jLabel11.setBounds(10, 110, 150, 18);
+        jLabel11.setBounds(10, 110, 150, 17);
 
         jLabel12.setText(AppLocal.getIntString("label.prodscale")); // NOI18N
         jPanel2.add(jLabel12);
-        jLabel12.setBounds(10, 140, 150, 18);
+        jLabel12.setBounds(10, 140, 150, 17);
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.prodstock"), jPanel2); // NOI18N
 
@@ -965,8 +967,27 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         }
     }//GEN-LAST:event_m_jPrintLabelActionPerformed
 
+    private void jButtonGenBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenBarcodeActionPerformed
+
+        String sCode = m_jCode.getText();
+        if (sCode.length() == 12) {
+            m_jCode.setText(sCode.concat(Character.toString(EAN13LogicImpl.calcChecksum(sCode))));
+        } else {
+
+            if (JOptionPane.showConfirmDialog(this, AppLocal.getIntString("message.generatebarcode"), AppLocal.getIntString("title.editor"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                try {
+                    CategoryInfo mCurrentCategory = (CategoryInfo) m_CategoryModel.getSelectedItem();
+                    m_jCode.setText(generateBarCode(m_dSales.countPonductsByCategory(mCurrentCategory.getID()), mCurrentCategory.getCode()));
+                } catch (BasicException ex) {
+                    m_jCode.setText(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButtonGenBarcodeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonGenBarcode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

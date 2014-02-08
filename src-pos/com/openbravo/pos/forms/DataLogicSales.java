@@ -121,26 +121,29 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , ProductInfoExt.getSerializerRead()).find(sReference);
     }
 
+
     // Catalogo de productos
     public final List<CategoryInfo> getRootCategories() throws BasicException {
         return new PreparedSentence(s
-            , "SELECT ID, NAME, IMAGE FROM CATEGORIES WHERE PARENTID IS NULL ORDER BY NAME"
+            , "SELECT ID, NAME, CODE, IMAGE FROM CATEGORIES WHERE PARENTID IS NULL ORDER BY NAME"
             , null
             , CategoryInfo.getSerializerRead()).list();
     }
     public final List<CategoryInfo> getSubcategories(String category) throws BasicException  {
         return new PreparedSentence(s
-            , "SELECT ID, NAME, IMAGE FROM CATEGORIES WHERE PARENTID = ? ORDER BY NAME"
+            , "SELECT ID, NAME, CODE, IMAGE FROM CATEGORIES WHERE PARENTID = ? ORDER BY NAME"
             , SerializerWriteString.INSTANCE
             , CategoryInfo.getSerializerRead()).list(category);
     }
+
     public CategoryInfo findCategory(String catid) throws BasicException {
-        return (CategoryInfo) new PreparedSentence(s
-                , "SELECT ID, NAME, IMAGE " +
-                  "FROM CATEGORIES WHERE ID = ?"
-                , SerializerWriteString.INSTANCE
-                , new CategoryRead()).find(catid);
+        return (CategoryInfo) new PreparedSentence(s,
+                "SELECT ID, NAME, CODE, IMAGE "
+                + "FROM CATEGORIES WHERE ID = ?",
+                SerializerWriteString.INSTANCE,
+                CategoryInfo.getSerializerRead()).find(catid);
     }
+
     public List<ProductInfoExt> getProductCatalog(String category) throws BasicException  {
         return new PreparedSentence(s
             , "SELECT P.ID, P.REFERENCE, P.CODE, P.NAME, P.ISCOM, P.ISSCALE, P.PRICEBUY, P.PRICESELL, P.TAXCAT, P.CATEGORY, P.ATTRIBUTESET_ID, P.IMAGE, P.ATTRIBUTES " +
@@ -187,6 +190,13 @@ public class DataLogicSales extends BeanFactoryDataSingle {
               "FROM PRODUCTS WHERE ISCOM = " + s.DB.TRUE() + " AND ?(QBF_FILTER) ORDER BY REFERENCE", new String[] {"NAME", "PRICEBUY", "PRICESELL", "CATEGORY", "CODE"})
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , ProductInfoExt.getSerializerRead());
+    }
+
+    public Integer countPonductsByCategory(String sCategoryId) throws BasicException {
+        return (Integer) new StaticSentence(s,
+                "SELECT COUNT(*) FROM PRODUCTS WHERE CATEGORY = ?",
+                SerializerWriteString.INSTANCE,
+                SerializerReadInteger.INSTANCE).find(sCategoryId);
     }
 
     //Tickets and Receipt list
@@ -238,7 +248,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     }
     public final CategoryInfo getCategoryInfoById(String sID) throws BasicException {
         return (CategoryInfo) new PreparedSentence(s
-                , "SELECT ID, NAME, IMAGE FROM CATEGORIES "
+                , "SELECT ID, NAME, CODE, IMAGE FROM CATEGORIES "
                 + "WHERE ID = ?"
                 , SerializerWriteString.INSTANCE
                 , CategoryInfo.getSerializerRead()).find(sID);
@@ -805,14 +815,6 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             c.setCountry(dr.getString(23));
 
             return c;
-        }
-    }
-
-    protected static class CategoryRead implements SerializerRead {
-
-        @Override
-        public Object readValues(DataRead dr) throws BasicException {
-            return new CategoryInfo(dr.getString(1), dr.getString(2), ImageUtils.readImage(dr.getBytes(3)));
         }
     }
 }

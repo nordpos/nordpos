@@ -1,21 +1,23 @@
-//    Openbravo POS is a point of sales application designed for touch screens.
-//    Copyright (C) 2007-2009 Openbravo, S.L.
-//    http://www.openbravo.com/product/pos
-//
-//    This file is part of Openbravo POS.
-//
-//    Openbravo POS is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    Openbravo POS is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.openbravo.pos.ticket;
 
 import com.openbravo.basic.BasicException;
@@ -27,20 +29,21 @@ import com.openbravo.data.loader.SerializerRead;
 
 /**
  *
- * @author  Adrian
- * @version 
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3.0
  */
 public class CategoryInfo implements IKeyed {
 
     private static final long serialVersionUID = 8612449444103L;
     private String m_sID;
     private String m_sName;
+    private String m_sCode;
     private BufferedImage m_Image;
 
-    /** Creates new CategoryInfo */
-    public CategoryInfo(String id, String name, BufferedImage image) {
+    public CategoryInfo(String id, String name, String code, BufferedImage image) {
         m_sID = id;
         m_sName = name;
+        m_sCode = code;
         m_Image = image;
     }
 
@@ -64,6 +67,14 @@ public class CategoryInfo implements IKeyed {
         m_sName = sName;
     }
 
+    public String getCode() {
+        return m_sCode;
+    }
+
+    public void setCode(String sCode) {
+        m_sCode = sCode;
+    }
+
     public BufferedImage getImage() {
         return m_Image;
     }
@@ -78,8 +89,14 @@ public class CategoryInfo implements IKeyed {
     }
 
     public static SerializerRead getSerializerRead() {
-        return new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
-            return new CategoryInfo(dr.getString(1), dr.getString(2), ImageUtils.readImage(dr.getBytes(3)));
-        }};
+        return new SerializerRead() {
+            @Override
+            public Object readValues(DataRead dr) throws BasicException {
+                return new CategoryInfo(dr.getString(1),
+                        dr.getString(2),
+                        dr.getString(3),
+                        ImageUtils.readImage(dr.getBytes(4)));
+            }
+        };
     }
 }
