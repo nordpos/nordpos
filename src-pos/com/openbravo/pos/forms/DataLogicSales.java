@@ -232,7 +232,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     }
     public final SentenceList getCategoriesList() {
         return new StaticSentence(s
-            , "SELECT ID, NAME, IMAGE FROM CATEGORIES ORDER BY NAME"
+            , "SELECT ID, NAME, CODE, IMAGE FROM CATEGORIES ORDER BY NAME"
             , null
             , CategoryInfo.getSerializerRead());
     }
@@ -723,10 +723,10 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     public final TableDefinition getTableCategories() {
         return new TableDefinition(s,
             "CATEGORIES"
-            , new String[] {"ID", "NAME", "PARENTID", "IMAGE"}
-            , new String[] {"ID", AppLocal.getIntString("Label.Name"), "", AppLocal.getIntString("label.image")}
-            , new Datas[] {Datas.STRING, Datas.STRING, Datas.STRING, Datas.IMAGE}
-            , new Formats[] {Formats.STRING, Formats.STRING, Formats.STRING, Formats.NULL}
+            , new String[] {"ID", "NAME", "CODE",  "PARENTID", "IMAGE"}
+            , new String[] {"ID", AppLocal.getIntString("Label.Name"), "" , "", AppLocal.getIntString("label.image")}
+            , new Datas[] {Datas.STRING, Datas.STRING, Datas.STRING, Datas.STRING, Datas.IMAGE}
+            , new Formats[] {Formats.STRING, Formats.STRING, Formats.STRING, Formats.STRING, Formats.NULL}
             , "NAME"
             , new int[] {0}
         );
