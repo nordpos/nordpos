@@ -21,19 +21,18 @@ package com.nordpos.device.receiptprinter;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import com.openbravo.pos.forms.AppLocal;
 
 public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrinter {
 
-    private String m_sName;
+    private final String m_sName;
 
-    private JTicketContainer m_jTicketContainer;
+    private final JTicketContainer m_jTicketContainer;
     private BasicTicket m_ticketcurrent;
 
     public DevicePrinterPanel() {
         initComponents();
 
-        m_sName = AppLocal.getIntString("Printer.Screen");
+        m_sName = "label.ReceiptPrinterScreen";
 
         m_ticketcurrent = null;
 
@@ -41,18 +40,22 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
         m_jScrollView.setViewportView(m_jTicketContainer);
     }
 
+    @Override
     public String getPrinterName() {
         return m_sName;
     }
 
+    @Override
     public String getPrinterDescription() {
         return null;
     }
 
+    @Override
     public JComponent getPrinterComponent() {
         return this;
     }
 
+    @Override
     public void reset() {
         m_ticketcurrent = null;
         m_jTicketContainer.removeAllTickets();
@@ -60,40 +63,49 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
     }
 
     // INTERFAZ PRINTER 2
+    @Override
     public void beginReceipt() {
         m_ticketcurrent = new BasicTicketForScreen();
     }
 
+    @Override
     public void printImage(BufferedImage image) {
         m_ticketcurrent.printImage(image);
     }
 
+    @Override
     public void printBarCode(String type, String position, String code) {
         m_ticketcurrent.printBarCode(type, position, code);
     }
 
-    public void beginLine(int iTextSize) {
+    @Override
+    public void beginLine(Integer iTextSize) {
         m_ticketcurrent.beginLine(iTextSize);
     }
 
-    public void printText(int iStyle, String sText) {
-        m_ticketcurrent.printText(iStyle, sText);
+    @Override
+    public void printText(Integer iCharacterSize, String sUnderlineType, Boolean bBold, String sText) {
+        m_ticketcurrent.printText(iCharacterSize, sText);
     }
 
+    @Override
     public void endLine() {
         m_ticketcurrent.endLine();
     }
 
+    @Override
     public void endReceipt() {
         m_jTicketContainer.addTicket(new JTicket(m_ticketcurrent));
         m_ticketcurrent = null;
     }
 
+    @Override
     public void openDrawer() {
         // Una simulacion
         Toolkit.getDefaultToolkit().beep();
     }
 
+    @Override
     public void cutPaper(boolean complete) {
     }
 

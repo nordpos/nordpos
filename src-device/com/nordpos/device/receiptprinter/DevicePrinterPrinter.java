@@ -97,7 +97,7 @@ public class DevicePrinterPrinter implements DevicePrinter {
     public DevicePrinterPrinter(Component parent, String printername, int imageable_x, int imageable_y, int imageable_width, int imageable_height, String mediasizename) {
 
         this.parent = parent;
-        m_sName = "Printer"; // "AppLocal.getIntString("Printer.Screen");
+        m_sName = "label.ReceiptPrinterPrinter";
         m_ticketcurrent = null;
         printservice = ReportUtils.getPrintService(printername);
 
@@ -182,19 +182,19 @@ public class DevicePrinterPrinter implements DevicePrinter {
      * @param iTextSize a size of text in the line
      */
     @Override
-    public void beginLine(int iTextSize) {
+    public void beginLine(Integer iTextSize) {
         m_ticketcurrent.beginLine(iTextSize);
     }
 
     /**
      * Method that is responsible for printing text
      *
-     * @param iStyle style of text
+     * @param iCharacterSize size character of text
      * @param sText text to print
      */
     @Override
-    public void printText(int iStyle, String sText) {
-        m_ticketcurrent.printText(iStyle, sText);
+    public void printText(Integer iCharacterSize, String sUnderlineType, Boolean bBold, String sText) {
+        m_ticketcurrent.printText(iCharacterSize, sText);
     }
 
     /**

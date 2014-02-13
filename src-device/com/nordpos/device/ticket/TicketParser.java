@@ -79,6 +79,10 @@ public class TicketParser extends DefaultHandler {
 
     private String m_sPaymentType;
 
+    private Integer integerCharacterSize;
+    private String sUnderline;
+    private boolean bBold;
+
     private int m_iOutputType;
     private static final int OUTPUT_NONE = 0;
     private static final int OUTPUT_DISPLAY = 1;
@@ -222,31 +226,40 @@ public class TicketParser extends DefaultHandler {
             }
             break;
         case OUTPUT_TICKET:
-            if ("image".equals(qName)){
-                text = new StringBuffer();
-            } else if ("barcode".equals(qName)) {
-                text = new StringBuffer();
+            switch (qName) {
+                case "image":
+                    text = new StringBuffer();
+                    break;
+                case "line":
+                    m_oOutputPrinter.beginLine(parseInteger(attributes.getValue("size")));
+                    break;
+                case "barcode":
+                    text = new StringBuffer();
                     bctype = readString(attributes.getValue("type"), "EAN13");
                     bcposition = readString(attributes.getValue("position"), "bottom");
-            } else if ("line".equals(qName)) {
-                m_oOutputPrinter.beginLine(parseInt(attributes.getValue("size"), DevicePrinter.SIZE_0));
-            } else if ("text".equals(qName)) {
-                text = new StringBuffer();
-                m_iTextStyle = ("true".equals(attributes.getValue("bold")) ? DevicePrinter.STYLE_BOLD : DevicePrinter.STYLE_PLAIN)
-                             | ("true".equals(attributes.getValue("underline")) ? DevicePrinter.STYLE_UNDERLINE : DevicePrinter.STYLE_PLAIN);
-                    String sAlign = readString(attributes.getValue("align"), "left");
-                if ("right".equals(sAlign)) {
-                    m_iTextAlign = DevicePrinter.ALIGN_RIGHT;
-                } else if ("center".equals(sAlign)) {
-                    m_iTextAlign = DevicePrinter.ALIGN_CENTER;
-                } else {
-                    m_iTextAlign = DevicePrinter.ALIGN_LEFT;
+                    break;
+                case "text":
+                        text = new StringBuffer();
+                        integerCharacterSize = parseInteger(attributes.getValue("size"));
+                        sUnderline = readString(attributes.getValue("underline"));
+                        bBold = attributes.getValue("bold").equals("true");
+                        String sAlign = readString(attributes.getValue("align"));
+                        switch (sAlign) {
+                            case "right":
+                                m_iTextAlign = DevicePrinter.ALIGN_RIGHT;
+                                break;
+                            case "center":
+                                m_iTextAlign = DevicePrinter.ALIGN_CENTER;
+                                break;
+                            default:
+                                m_iTextAlign = DevicePrinter.ALIGN_LEFT;
+                                break;
+                        }
+                        m_iTextLength = parseInt(attributes.getValue("length"), 0);
+                case "cutpaper":
+                    m_oOutputPrinter.cutPaper(readBoolean(attributes.getValue("complete"), true));
                 }
-                m_iTextLength = parseInt(attributes.getValue("length"), 0);
-            } else if ("cutpaper".equals(qName)) {
-                m_oOutputPrinter.cutPaper(readBoolean(attributes.getValue("complete"), true));
-            }
-            break;
+                break;
         case OUTPUT_DISPLAY:
             if ("line".equals(qName)) { // line 1 or 2 of the display
                 m_sVisorLine = new StringBuffer();
@@ -372,47 +385,53 @@ public class TicketParser extends DefaultHandler {
             }
             break;
         case OUTPUT_TICKET:
-            if ("image".equals(qName)){
-                try {
-                    // BufferedImage image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(m_sText.toString()));
-                    BufferedImage image = m_system.getResourceAsImage(text.toString());
-                    if (image != null) {
-                        m_oOutputPrinter.printImage(image);
-                    }
-                } catch (Exception fnfe) {
-                    //throw new ResourceNotFoundException( fnfe.getMessage() );
+                switch (qName) {
+                    case "image":
+                        try {
+                            // BufferedImage image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(m_sText.toString()));
+                            BufferedImage image = m_system.getResourceAsImage(text.toString());
+                            if (image != null) {
+                                m_oOutputPrinter.printImage(image);
+                            }
+                        } catch (Exception fnfe) {
+                            //throw new ResourceNotFoundException( fnfe.getMessage() );
+                        }
+                        text = null;
+                        break;
+                    case "barcode":
+                        m_oOutputPrinter.printBarCode(
+                                bctype,
+                                bcposition,
+                                readString(text.toString(), "0"));
+                        text = null;
+                        break;
+                    case "text":
+                        if (m_iTextLength > 0) {
+                            switch (m_iTextAlign) {
+                                case DevicePrinter.ALIGN_RIGHT:
+                                    m_oOutputPrinter.printText(integerCharacterSize, sUnderline, bBold, StringUtils.alignRight(text.toString(), m_iTextLength));
+                                    break;
+                                case DevicePrinter.ALIGN_CENTER:
+                                    m_oOutputPrinter.printText(integerCharacterSize, sUnderline, bBold, StringUtils.alignCenter(text.toString(), m_iTextLength));
+                                    break;
+                                default:
+                                    m_oOutputPrinter.printText(integerCharacterSize, sUnderline, bBold, StringUtils.alignLeft(text.toString(), m_iTextLength));
+                                    break;
+                            }
+                        } else {
+                            m_oOutputPrinter.printText(integerCharacterSize, sUnderline, bBold, text.toString());
+                        }
+                        text = null;
+                        break;
+                    case "line":
+                        m_oOutputPrinter.endLine();
+                        break;
+                    case "ticket":
+                        m_oOutputPrinter.endReceipt();
+                        m_iOutputType = OUTPUT_NONE;
+                        m_oOutputPrinter = null;
+                        break;
                 }
-                text = null;
-            } else if ("barcode".equals(qName)) {
-                m_oOutputPrinter.printBarCode(
-                        bctype,
-                        bcposition,
-                        readString(text.toString(), "0"));
-                text = null;
-            } else if ("text".equals(qName)) {
-                if (m_iTextLength > 0) {
-                    switch(m_iTextAlign) {
-                    case DevicePrinter.ALIGN_RIGHT:
-                        m_oOutputPrinter.printText(m_iTextStyle, StringUtils.alignRight(text.toString(), m_iTextLength));
-                        break;
-                    case DevicePrinter.ALIGN_CENTER:
-                        m_oOutputPrinter.printText(m_iTextStyle, StringUtils.alignCenter(text.toString(), m_iTextLength));
-                        break;
-                    default: // DevicePrinter.ALIGN_LEFT
-                        m_oOutputPrinter.printText(m_iTextStyle, StringUtils.alignLeft(text.toString(), m_iTextLength));
-                        break;
-                    }
-                } else {
-                    m_oOutputPrinter.printText(m_iTextStyle, text.toString());
-                }
-                text = null;
-            } else if ("line".equals(qName)) {
-                m_oOutputPrinter.endLine();
-            } else if ("ticket".equals(qName)) {
-                m_oOutputPrinter.endReceipt();
-                m_iOutputType = OUTPUT_NONE;
-                m_oOutputPrinter = null;
-            }
             break;
         case OUTPUT_DISPLAY:
             if ("line".equals(qName)) { // line 1 or 2 of the display
@@ -531,6 +550,13 @@ public class TicketParser extends DefaultHandler {
         return parseInt(sValue, 0);
     }
 
+    private Integer parseInteger(String sValue) {
+        try {
+            return Integer.parseInt(sValue);
+        } catch (NumberFormatException eNF) {
+            return null;
+        }
+    }
     private double parseDouble(String sValue, double ddefault) {
         try {
             return Double.parseDouble(sValue);
@@ -541,6 +567,14 @@ public class TicketParser extends DefaultHandler {
 
     private double parseDouble(String sValue) {
         return parseDouble(sValue, 0.0);
+    }
+
+    private String readString(String sValue) {
+        if (sValue == null || sValue.equals("")) {
+            return null;
+        } else {
+            return sValue;
+        }
     }
 
     private String readString(String sValue, String sDefault) {

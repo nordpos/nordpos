@@ -90,15 +90,16 @@
                                                 <xs:simpleContent>
                                                     <xs:extension base="xs:string">
                                                         <xs:attribute name="bold" type="xs:boolean" default="false"/>
-                                                        <xs:attribute name="underline" type="xs:boolean" default="false"/>
+                                                        <xs:attribute name="underline" type="UnderlineType" default="none"/>
                                                         <xs:attribute name="align" type="TextAlign" default="left"/>
                                                         <xs:attribute name="length" type="xs:unsignedInt" default="0"/>
+                                                        <xs:attribute name="size" type="xs:unsignedInt"/>
                                                     </xs:extension>
                                                 </xs:simpleContent>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="size" type="LineSize" default="0" use="optional"/>
+                                    <xs:attribute name="size" type="xs:unsignedInt" default="0" use="optional"/>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="cutpaper" minOccurs="0" maxOccurs="unbounded">
@@ -333,6 +334,14 @@
     <xs:simpleType name="lengthType">
         <xs:restriction base="xs:string">
             <xs:pattern value="[\+]?\d*(dot|mm)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UnderlineType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="slim"/>
+            <xs:enumeration value="average"/>
+            <xs:enumeration value="thick"/>
+            <xs:enumeration value="none"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

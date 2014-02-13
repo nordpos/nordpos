@@ -75,7 +75,7 @@ public class MyPrinterState {
                 f = baseFont;
                 break;
         }
-        f = f.deriveFont((iStyle & DevicePrinter.STYLE_BOLD) != 0 ? Font.BOLD : baseFont.getStyle());
+        f = f.deriveFont((iStyle & 1) != 0 ? Font.BOLD : baseFont.getStyle());
         // Falta aplicar el subrayado
         return f;
     }
