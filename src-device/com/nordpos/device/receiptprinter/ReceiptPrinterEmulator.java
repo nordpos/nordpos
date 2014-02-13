@@ -22,20 +22,38 @@ package com.nordpos.device.receiptprinter;
 
 import com.nordpos.device.ReceiptPrinterInterface;
 import com.openbravo.pos.util.StringParser;
+import com.nordpos.device.writter.WritterFile;
 import java.awt.Component;
 
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
- * @version NORD POS 3.0
  */
 public class ReceiptPrinterEmulator implements ReceiptPrinterInterface {
+
+    private static final byte[] EOL_DOS = {0x0D, 0x0A}; // Print and carriage return
+    private static final byte[] EOL_UNIX = {0x0A};
 
     @Override
     public DevicePrinter getReceiptPrinter(String sProperty) throws Exception {
         StringParser sp = new StringParser(sProperty);
         String sPrinterType = sp.nextToken(':');
+        String sPrinterParam1 = sp.nextToken(',');
+        String sPrinterParam2 = sp.nextToken(',');
+        String sPrinterParam3 = sp.nextToken(',');
+
         switch (sPrinterType) {
+            case "plaintext":
+                if ("file".equals(sPrinterParam1)) {
+                    if ("unix".equals(sPrinterParam3)) {
+                        return new DevicePrinterPlainText(new WritterFile(sPrinterParam2), EOL_UNIX);
+                    } else {
+                        return new DevicePrinterPlainText(new WritterFile(sPrinterParam2), EOL_DOS);
+                    }
+
+                } else {
+                    return new DevicePrinterNull();
+                }
             case "screen":
                 return new DevicePrinterPanel();
             default:
