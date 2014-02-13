@@ -21,7 +21,6 @@ package com.nordpos.device.display;
 
 import java.awt.*;
 import javax.swing.*;
-import com.openbravo.pos.forms.AppLocal;
 
 /**
  *
@@ -40,7 +39,7 @@ public class DeviceDisplayPanel extends JPanel implements DeviceDisplay, DeviceD
     public DeviceDisplayPanel(double dZoom) {
         initComponents();
 
-        m_sName = AppLocal.getIntString("Display.Screen");
+        m_sName = "Display.Screen";
 
         jline1.setFont(new Font("Monospaced", Font.BOLD, (int)(16 * dZoom)));
         jline2.setFont(new Font("Monospaced", Font.BOLD, (int)(16 * dZoom)));

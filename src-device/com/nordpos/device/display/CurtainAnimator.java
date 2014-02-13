@@ -28,14 +28,15 @@ package com.nordpos.device.display;
 import com.openbravo.pos.util.StringUtils;
 
 public class CurtainAnimator extends BaseAnimator {
-    
+
     public CurtainAnimator(String line1, String line2) {
         baseLine1 = StringUtils.alignLeft(line1, 20);
         baseLine2 = StringUtils.alignLeft(line2, 20);
     }
-    
+
+    @Override
     public void setTiming(int i) {
-        
+
         int j = i / 2;
 
         if (j < 10) {

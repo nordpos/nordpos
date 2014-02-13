@@ -27,22 +27,25 @@ package com.nordpos.device.display;
 import com.openbravo.pos.util.StringUtils;
 
 public class NullAnimator implements DisplayAnimator {
-    
+
     protected String currentLine1;
-    protected String currentLine2; 
-    
+    protected String currentLine2;
+
     public NullAnimator(String line1, String line2) {
         currentLine1 = StringUtils.alignLeft(line1, 20);
         currentLine2 = StringUtils.alignLeft(line2, 20);
     }
 
+    @Override
     public void setTiming(int i) {
     }
 
+    @Override
     public String getLine1() {
         return currentLine1;
     }
 
+    @Override
     public String getLine2() {
         return currentLine2;
     }

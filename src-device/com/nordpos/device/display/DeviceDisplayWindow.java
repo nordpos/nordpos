@@ -20,7 +20,6 @@
 package com.nordpos.device.display;
 
 import javax.swing.JComponent;
-import com.openbravo.pos.forms.AppLocal;
 
 /**
  *
@@ -35,7 +34,7 @@ public class DeviceDisplayWindow extends javax.swing.JFrame implements DeviceDis
     public DeviceDisplayWindow() {
         initComponents();
 
-        m_sName = AppLocal.getIntString("Display.Window");
+        m_sName = "Display.Window";
         m_display = new DeviceDisplayPanel(3.0);
 
         m_jContainer.add(m_display.getDisplayComponent());
@@ -76,7 +75,7 @@ public class DeviceDisplayWindow extends javax.swing.JFrame implements DeviceDis
 
         m_jContainer = new javax.swing.JPanel();
 
-        setTitle(AppLocal.getIntString("Display.Window")); // NOI18N
+        setTitle("Display.Window");
 
         m_jContainer.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         m_jContainer.setLayout(new java.awt.BorderLayout());

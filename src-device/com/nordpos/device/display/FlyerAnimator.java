@@ -28,12 +28,13 @@ package com.nordpos.device.display;
 import com.openbravo.pos.util.StringUtils;
 
 public class FlyerAnimator extends BaseAnimator {
-    
+
     public FlyerAnimator(String line1, String line2) {
         baseLine1 = StringUtils.alignLeft(line1, 20);
         baseLine2 = StringUtils.alignLeft(line2, 20);
     }
-    
+
+    @Override
     public void setTiming(int i) {
 
         if (i < 20) {

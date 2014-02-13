@@ -21,7 +21,7 @@ package com.nordpos.device.display;
 
 
 import com.nordpos.device.writter.Writter;
-import com.openbravo.pos.forms.AppLocal;
+
 /**
  *
  * @author adrianromero
@@ -38,7 +38,7 @@ public abstract class DeviceDisplaySerial implements DeviceDisplay, DeviceDispla
     }
 
     protected void init(Writter display) {
-        m_sName = AppLocal.getIntString("Display.Serial");
+        m_sName = "Display.Serial";
         this.display = display;
         initVisor();
     }
@@ -49,10 +49,6 @@ public abstract class DeviceDisplaySerial implements DeviceDisplay, DeviceDispla
     }
     @Override
     public String getDisplayDescription() {
-        return null;
-    }
-    @Override
-    public javax.swing.JComponent getDisplayComponent() {
         return null;
     }
 
