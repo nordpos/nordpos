@@ -32,7 +32,7 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
     public DevicePrinterPanel() {
         initComponents();
 
-        m_sName = "label.ReceiptPrinterScreen";
+        m_sName = "ReceiptPrinter.Screen";
 
         m_ticketcurrent = null;
 
