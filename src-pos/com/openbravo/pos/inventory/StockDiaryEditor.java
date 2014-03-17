@@ -44,7 +44,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -54,10 +53,10 @@ import java.util.UUID;
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord {
-
+    
     private CatalogSelector m_cat;
-    private PropertiesConfig panelconfig;
-
+    private PropertiesConfig panelconfig;     
+   
     private String m_sID;
 
     private String productid;
@@ -67,29 +66,29 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
     private String attsetid;
     private String attsetinstid;
     private String attsetinstdesc;
-
+    
     private ComboBoxValModel m_ReasonModel;
-
+    
     private SentenceList m_sentlocations;
-    private ComboBoxValModel m_LocationsModel;
+    private ComboBoxValModel m_LocationsModel;    
 
     private AppView m_App;
     private DataLogicSales m_dlSales;
     private DataLogicSystem m_dlSystem;
-
+    
     /** Creates new form StockDiaryEditor */
     public StockDiaryEditor(AppView app, DirtyManager dirty) {
-
+        
         m_App = app;
         m_dlSales = (DataLogicSales) m_App.getBean("com.openbravo.pos.forms.DataLogicSales");
         m_dlSystem = (DataLogicSystem) m_App.getBean("com.openbravo.pos.forms.DataLogicSystem");
 
-        initComponents();
+        initComponents();      
 
         panelconfig = new PropertiesConfig(m_dlSystem.getResourceAsXML("Ticket.Buttons"));
         m_cat = new JCatalog(m_dlSales, panelconfig);
         m_cat.getComponent().setPreferredSize(new Dimension(
-                0,
+                0, 
                 Integer.parseInt(panelconfig.getProperty("cat-height", "200"))));
         m_cat.addActionListener(new CatalogListener());
         add(m_cat.getComponent(), BorderLayout.SOUTH);
@@ -97,7 +96,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         // El modelo de locales
         m_sentlocations = m_dlSales.getLocationsList();
         m_LocationsModel = new ComboBoxValModel();
-
+        
         m_ReasonModel = new ComboBoxValModel();
         m_ReasonModel.add(MovementReason.IN_PURCHASE);
         m_ReasonModel.add(MovementReason.IN_REFUND);
@@ -105,9 +104,9 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         m_ReasonModel.add(MovementReason.OUT_SALE);
         m_ReasonModel.add(MovementReason.OUT_REFUND);
         m_ReasonModel.add(MovementReason.OUT_BREAK);
-        m_ReasonModel.add(MovementReason.OUT_MOVEMENT);
+        m_ReasonModel.add(MovementReason.OUT_MOVEMENT);        
         m_jreason.setModel(m_ReasonModel);
-
+        
         m_jdate.getDocument().addDocumentListener(dirty);
         m_jreason.addActionListener(dirty);
         m_jLocation.addActionListener(dirty);
@@ -115,20 +114,20 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         jattributes.getDocument().addDocumentListener(dirty);
         m_junits.getDocument().addDocumentListener(dirty);
         m_jprice.getDocument().addDocumentListener(dirty);
-
+         
         writeValueEOF();
     }
-
+    
     public void activate() throws BasicException {
         m_cat.loadCatalog(m_App);
-
+        
         m_LocationsModel = new ComboBoxValModel(m_sentlocations.list());
-        m_jLocation.setModel(m_LocationsModel); // para que lo refresque
+        m_jLocation.setModel(m_LocationsModel); // para que lo refresque   
     }
-
+    
     public void refresh() {
     }
-
+    
     public void writeValueEOF() {
         m_sID = null;
         m_jdate.setText(null);
@@ -163,7 +162,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         m_jprice.setEnabled(false);
         m_cat.setComponentEnabled(false);
     }
-
+    
     public void writeValueInsert() {
         m_sID = UUID.randomUUID().toString();
         m_jdate.setText(Formats.TIMESTAMP.formatValue(DateUtils.getTodayMinutes()));
@@ -196,7 +195,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         jattributes.setEnabled(true);
         jEditAttributes.setEnabled(true);
         m_junits.setEnabled(true);
-        m_jprice.setEnabled(true);
+        m_jprice.setEnabled(true);   
         m_cat.setComponentEnabled(true);
     }
 
@@ -232,10 +231,10 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         jattributes.setEnabled(false);
         jEditAttributes.setEnabled(false);
         m_junits.setEnabled(false);
-        m_jprice.setEnabled(false);
+        m_jprice.setEnabled(false);   
         m_cat.setComponentEnabled(false);
     }
-
+    
     public void writeValueEdit(Object value) {
         Object[] diary = (Object[]) value;
         m_sID = (String) diary[0];
@@ -268,10 +267,10 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         jattributes.setEnabled(false);
         jEditAttributes.setEnabled(false);
         m_junits.setEnabled(false);
-        m_jprice.setEnabled(false);
+        m_jprice.setEnabled(false);  
         m_cat.setComponentEnabled(false);
     }
-
+    
     public Object createValue() throws BasicException {
         return new Object[] {
             m_sID,
@@ -289,7 +288,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
             attsetinstdesc
         };
     }
-
+    
     public Component getComponent() {
         return this;
     }
@@ -300,7 +299,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
 //            return null;
 //        }
 //    }
-
+    
     private Double signum(Double d, Integer i) {
         if (d == null || i == null) {
             return d;
@@ -308,11 +307,11 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
             return new Double(-d.doubleValue());
         } else {
             return d;
-        }
+        } 
     }
-
+    
     private Double samesignum(Double d, Integer i) {
-
+        
         if (d == null || i == null) {
             return d;
         } else if ((i.intValue() > 0 && d.doubleValue() < 0.0) ||
@@ -320,11 +319,11 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
             return new Double(-d.doubleValue());
         } else {
             return d;
-        }
+        }            
     }
-
+    
     private void assignProduct(ProductInfoExt prod) {
-
+        
         if (jproduct.isEnabled()) {
             if (prod == null) {
                 productid = null;
@@ -353,51 +352,51 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
 
                 // calculo el precio sugerido para la entrada.
                 MovementReason reason = (MovementReason)  m_ReasonModel.getSelectedItem();
-                double dPrice = reason.getPrice(prod.getPriceBuy().doubleValue(), prod.getPriceSell().doubleValue());
+                Double dPrice = reason.getPrice(prod.getPriceBuy(), prod.getPriceSell());
                 m_jprice.setText(Formats.CURRENCY.formatValue(dPrice));
             }
         }
     }
-
+    
     private void assignProductByCode() {
         try {
             ProductInfoExt oProduct = m_dlSales.getProductInfoByCode(m_jcodebar.getText());
-            if (oProduct == null) {
+            if (oProduct == null) {       
                 assignProduct(null);
-                Toolkit.getDefaultToolkit().beep();
+                Toolkit.getDefaultToolkit().beep();                   
             } else {
                 // Se anade directamente una unidad con el precio y todo
                 assignProduct(oProduct);
             }
-        } catch (BasicException eData) {
+        } catch (BasicException eData) {        
             assignProduct(null);
             MessageInf msg = new MessageInf(eData);
-            msg.show(this);
-        }
+            msg.show(this);            
+        }        
     }
-
+    
     private void assignProductByReference() {
         try {
             ProductInfoExt oProduct = m_dlSales.getProductInfoByReference(m_jreference.getText());
-            if (oProduct == null) {
+            if (oProduct == null) {       
                 assignProduct(null);
-                Toolkit.getDefaultToolkit().beep();
+                Toolkit.getDefaultToolkit().beep();                   
             } else {
                 // Se anade directamente una unidad con el precio y todo
                 assignProduct(oProduct);
             }
-        } catch (BasicException eData) {
+        } catch (BasicException eData) {        
             assignProduct(null);
             MessageInf msg = new MessageInf(eData);
-            msg.show(this);
-        }
+            msg.show(this);            
+        }        
     }
-
+    
     private class CatalogListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             assignProduct((ProductInfoExt) e.getSource());
-        }
-    }
+        }  
+    }    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -566,7 +565,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
     private void m_jEnter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jEnter1ActionPerformed
 
         assignProductByReference();
-
+        
     }//GEN-LAST:event_m_jEnter1ActionPerformed
 
     private void m_jreferenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jreferenceActionPerformed
@@ -576,15 +575,15 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
     }//GEN-LAST:event_m_jreferenceActionPerformed
 
     private void m_jcodebarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jcodebarActionPerformed
-
+       
         assignProductByCode();
 
     }//GEN-LAST:event_m_jcodebarActionPerformed
 
     private void m_jEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jEnterActionPerformed
-
+            
         assignProductByCode();
-
+   
     }//GEN-LAST:event_m_jEnterActionPerformed
 
     private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditAttributesActionPerformed
@@ -598,7 +597,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
                 JProductAttEdit attedit = JProductAttEdit.getAttributesEditor(this, m_App.getSession());
                 attedit.editAttributes(attsetid, attsetinstid);
                 attedit.setVisible(true);
-
+               
                 if (attedit.isOK()) {
                     // The user pressed OK
                     attsetinstid = attedit.getAttributeSetInst();
@@ -609,31 +608,31 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindattributes"), ex);
                 msg.show(this);
             }
-        }
+        }      
 }//GEN-LAST:event_jEditAttributesActionPerformed
 
     private void m_jbtndateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtndateActionPerformed
-
+        
         Date date;
         try {
             date = (Date) Formats.TIMESTAMP.parseValue(m_jdate.getText());
         } catch (BasicException e) {
             date = null;
-        }
+        }        
         date = JCalendarDialog.showCalendarTime(this, date);
         if (date != null) {
             m_jdate.setText(Formats.TIMESTAMP.formatValue(date));
         }
-
+        
     }//GEN-LAST:event_m_jbtndateActionPerformed
 
     private void jEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditProductActionPerformed
-
+        
         assignProduct(JProductFinder.showMessage(this, m_dlSales));
 
 }//GEN-LAST:event_jEditProductActionPerformed
-
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jEditAttributes;
     private javax.swing.JButton jEditProduct;
@@ -660,5 +659,5 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
     private javax.swing.JTextField m_jreference;
     private javax.swing.JTextField m_junits;
     // End of variables declaration//GEN-END:variables
-
+    
 }

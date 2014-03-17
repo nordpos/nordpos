@@ -47,7 +47,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 import javax.swing.JComponent;
@@ -181,7 +180,7 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }
 
-    private void addLine(ProductInfoExt oProduct, BigDecimal dpor, BigDecimal dprice) {
+    private void addLine(ProductInfoExt oProduct, double dpor, double dprice) {
         m_invlines.addLine(new InventoryLine(oProduct, dpor, dprice));
     }
 
@@ -193,7 +192,7 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }
 
-    private void incProduct(ProductInfoExt product, BigDecimal units) {
+    private void incProduct(ProductInfoExt product, double units) {
         // precondicion: prod != null
 
         MovementReason reason = (MovementReason) m_ReasonModel.getSelectedItem();
@@ -203,9 +202,9 @@ public class StockManagement extends JPanel implements JPanelView {
     }
 
     private void incProductByCode(String sCode) {
-        incProductByCode(sCode, new BigDecimal(1.0));
+        incProductByCode(sCode, 1.0);
     }
-    private void incProductByCode(String sCode, BigDecimal dQuantity) {
+    private void incProductByCode(String sCode, double dQuantity) {
     // precondicion: sCode != null
 
         try {
@@ -222,21 +221,21 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }
 
-    private void addUnits(BigDecimal dUnits) {
+    private void addUnits(double dUnits) {
         int i  = m_invlines.getSelectedRow();
         if (i >= 0 ) {
             InventoryLine inv = m_invlines.getLine(i);
-            BigDecimal dunits = inv.getMultiply().add(dUnits);
-            if (dunits.doubleValue() <= 0.0) {
+            double dunits = inv.getMultiply() + dUnits;
+            if (dunits <= 0.0) {
                 deleteLine(i);
             } else {
-                inv.setMultiply(dunits);
+                inv.setMultiply(inv.getMultiply() + dUnits);
                 m_invlines.setLine(i, inv);
             }
         }
     }
 
-    private void setUnits(BigDecimal dUnits) {
+    private void setUnits(double dUnits) {
         int i  = m_invlines.getSelectedRow();
         if (i >= 0 ) {
             InventoryLine inv = m_invlines.getLine(i);
@@ -251,8 +250,8 @@ public class StockManagement extends JPanel implements JPanelView {
 	// Begin Add Local Variable jldy0717
 	    InventoryLine current_stockmgtline;
 	    InventoryLine loop_stockmgtline;
-	    BigDecimal loop_unitsm;
-	    BigDecimal current_unitsm;
+	    double loop_unitsm;
+	    double current_unitsm;
         // End Add Local Variable jldy0717
 
         if (cTrans == '\u007f') {
@@ -262,13 +261,13 @@ public class StockManagement extends JPanel implements JPanelView {
             MULTIPLY = ACTIVE;
         } else if (cTrans == '+') {
             if (MULTIPLY != DEFAULT && NUMBER_STATE != DEFAULT) {
-                setUnits(new BigDecimal(m_jcodebar.getText()));
+                setUnits(Double.parseDouble(m_jcodebar.getText()));
                 m_jcodebar.setText(null);
             } else {
                 if (m_jcodebar.getText() == null || m_jcodebar.getText().equals("")) {
-                    addUnits(new BigDecimal(1.0));
+                    addUnits(1.0);
                 } else {
-                    addUnits(new BigDecimal(m_jcodebar.getText()));
+                    addUnits(Double.parseDouble(m_jcodebar.getText()));
                     m_jcodebar.setText(null);
                 }
             }
@@ -276,9 +275,9 @@ public class StockManagement extends JPanel implements JPanelView {
             MULTIPLY = DEFAULT;
         } else if (cTrans == '-') {
             if (m_jcodebar.getText() == null || m_jcodebar.getText().equals("")) {
-                addUnits(new BigDecimal(1.0).negate());
+                addUnits(-1.0);
             } else {
-                addUnits(new BigDecimal(m_jcodebar.getText()).negate());
+                addUnits(-Double.parseDouble(m_jcodebar.getText()));
                 m_jcodebar.setText(null);
             }
             NUMBER_STATE = DEFAULT;
@@ -305,7 +304,7 @@ public class StockManagement extends JPanel implements JPanelView {
                     current_stockmgtline = m_invlines.getLine(icounter);
                     current_unitsm = current_stockmgtline.getMultiply();
 
-                    if (!current_unitsm.equals(0.0)) {
+                    if (current_unitsm != 0) {
                         for (int jcounter = icounter + 1; jcounter < numlinessm; jcounter++) {
                             loop_stockmgtline = m_invlines.getLine(jcounter);
                             loop_unitsm = loop_stockmgtline.getMultiply();
@@ -313,9 +312,9 @@ public class StockManagement extends JPanel implements JPanelView {
                             String current_productatt = current_stockmgtline.getProductAttSetInstId();
                             String loop_productidsm = loop_stockmgtline.getProductID();
                             String loop_productatt = loop_stockmgtline.getProductAttSetInstId();
-                            if (loop_productidsm.equals(current_productidsm) && (!loop_unitsm.equals(0)) && ((loop_productatt!=null && loop_productatt.equals(current_productatt)) || (loop_productatt==null)&&(current_productatt==null)) ) {
-                                current_unitsm = current_unitsm.add(loop_unitsm);
-                                loop_stockmgtline.setMultiply(new BigDecimal(0.0));
+                            if (loop_productidsm.equals(current_productidsm) && (loop_unitsm != 0) && ((loop_productatt!=null && loop_productatt.equals(current_productatt)) || (loop_productatt==null)&&(current_productatt==null)) ) {
+                                current_unitsm = current_unitsm + loop_unitsm;
+                                loop_stockmgtline.setMultiply(0);
                             }
                         }
                         current_stockmgtline.setMultiply(current_unitsm);
@@ -324,7 +323,7 @@ public class StockManagement extends JPanel implements JPanelView {
                 for (int icounter = numlinessm - 1; icounter > 0; icounter--) {
                     loop_stockmgtline = m_invlines.getLine(icounter);
                     loop_unitsm = loop_stockmgtline.getMultiply();
-                    if (loop_unitsm.equals(0.0)) {
+                    if (loop_unitsm == 0) {
                         m_invlines.deleteLine(icounter);
                     }
                 }
@@ -399,7 +398,7 @@ public class StockManagement extends JPanel implements JPanelView {
                 rec.getLocation().getID(),
                 inv.getProductID(),
                 inv.getProductAttSetInstId(),
-                rec.getReason().samesignum(inv.getMultiply().doubleValue()),
+                rec.getReason().samesignum(inv.getMultiply()),
                 inv.getPrice()
             });
         }
@@ -429,16 +428,14 @@ public class StockManagement extends JPanel implements JPanelView {
 
 
     private class CatalogListener implements ActionListener {
-        @Override
         public void actionPerformed(ActionEvent e) {
             String sQty = m_jcodebar.getText();
-            BigDecimal dQty = new BigDecimal(sQty);
             if (sQty != null) {
-                dQty = dQty.equals(new BigDecimal(0.0)) ? new BigDecimal(1.0) : dQty;
-                incProduct((ProductInfoExt) e.getSource(), dQty);
+                Double dQty = (Double.valueOf(sQty)==0) ? 1.0 : Double.valueOf(sQty);
+                incProduct( (ProductInfoExt) e.getSource(), dQty);
                 m_jcodebar.setText(null);
             } else {
-                incProduct((ProductInfoExt) e.getSource(), new BigDecimal(1.0));
+                incProduct( (ProductInfoExt) e.getSource(),1.0);
             }
         }
     }
@@ -668,7 +665,7 @@ public class StockManagement extends JPanel implements JPanelView {
 
             ProductDownloaded p = s.recieveProduct();
             while (p != null) {
-                incProductByCode(p.getCode(), new BigDecimal(p.getQuantity()));
+                incProductByCode(p.getCode(), p.getQuantity());
                 p = s.recieveProduct();
             }
             // MessageInf msg = new MessageInf(MessageInf.SGN_SUCCESS, "Se ha subido con exito la lista de productos al ScanPal.");

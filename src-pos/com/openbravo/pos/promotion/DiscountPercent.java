@@ -6,31 +6,29 @@ package com.openbravo.pos.promotion;
 
 import com.openbravo.pos.ticket.TicketLineInfo;
 import com.openbravo.pos.util.RoundUtils;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
 /**
  *
  * @author svininykh-av
  */
 public class DiscountPercent {
+    
+    
+    public TicketLineInfo LineDiscountPercent(TicketLineInfo TicketLine, Double dDiscount) {
 
+        double linediscount = TicketLine.getDiscountRate();
+        double lineprice = TicketLine.getPriceTax();
+        double linenodisount = TicketLine.getPriceTaxNoDiscount();
 
-    public TicketLineInfo LineDiscountPercent(TicketLineInfo TicketLine, BigDecimal dDiscount) {
-
-        BigDecimal linediscount = TicketLine.getDiscountRate();
-        BigDecimal lineprice = TicketLine.getPriceTax();
-        BigDecimal linenodisount = TicketLine.getPriceTaxNoDiscount();
-
-        if (linediscount.equals(new BigDecimal(0)) || !linediscount.equals(dDiscount)) {
-            if (!linediscount.equals(new BigDecimal(0))) {
-                TicketLine.setPriceTax(linenodisount.subtract(linenodisount.multiply(dDiscount), MathContext.DECIMAL32));
+        if (linediscount == 0.0 || linediscount != dDiscount) {
+            if (linediscount != 0.0) {
+                TicketLine.setPriceTax(RoundUtils.getValue(linenodisount - linenodisount * dDiscount));
             } else {
-                TicketLine.setPriceTax(lineprice.subtract(lineprice.multiply(dDiscount), MathContext.DECIMAL32));
+                TicketLine.setPriceTax(RoundUtils.getValue(lineprice - lineprice * dDiscount));
             }
-            TicketLine.setProperty("discountrate", dDiscount.toString());
+            TicketLine.setProperty("discountrate", Double.toString(dDiscount));
         }
-
+        
         return TicketLine;
     }
 }

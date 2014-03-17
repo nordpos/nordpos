@@ -28,7 +28,6 @@ import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.ticket.TicketInfo;
 import com.openbravo.pos.ticket.TicketLineInfo;
 import java.awt.BorderLayout;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,63 +36,63 @@ import java.util.List;
  * @author  adrian
  */
 public class SimpleReceipt extends javax.swing.JPanel {
-
+    
     protected DataLogicCustomers dlCustomers;
     protected DataLogicSales dlSales;
     protected TaxesLogic taxeslogic;
-
+        
     private JTicketLines ticketlines;
     private TicketInfo ticket;
     private Object ticketext;
-
+    
     /** Creates new form SimpleReceipt */
-    public SimpleReceipt(String ticketline, DataLogicSales dlSales, DataLogicCustomers dlCustomers, TaxesLogic taxeslogic) {
-
+    public SimpleReceipt(String ticketline, DataLogicSales dlSales, DataLogicCustomers dlCustomers, TaxesLogic taxeslogic) {        
+        
         initComponents();
-
+        
         // dlSystem.getResourceAsXML("Ticket.Line")
         ticketlines = new JTicketLines(ticketline);
         this.dlCustomers = dlCustomers;
         this.dlSales = dlSales;
         this.taxeslogic = taxeslogic;
-
+        
         jPanel2.add(ticketlines, BorderLayout.CENTER);
     }
-
+    
     public void setCustomerEnabled(boolean value) {
         btnCustomer.setEnabled(value);
     }
-
+    
     public void setTicket(TicketInfo ticket, Object ticketext) {
-
+        
         this.ticket = ticket;
         this.ticketext = ticketext;
-
+        
         // The ticket name
-        m_jTicketId.setText(ticket.getName(ticketext));
-
+        m_jTicketId.setText(ticket.getName(ticketext));        
+        
         ticketlines.clearTicketLines();
         for (int i = 0; i < ticket.getLinesCount(); i++) {
             ticketlines.addTicketLine(ticket.getLine(i));
         }
-
+        
         if (ticket.getLinesCount() > 0) {
             ticketlines.setSelectedIndex(0);
         }
-
+        
         printTotals();
-
+               
     }
-
+    
     private void refreshTicketTaxes() {
-
+        
         for (TicketLineInfo line : ticket.getLines()) {
             line.setTaxInfo(taxeslogic.getTaxInfo(line.getProductTaxCategoryID(),  ticket.getDate(), ticket.getCustomer()));
         }
     }
-
+    
     private void printTotals() {
-
+        
         if (ticket.getLinesCount() == 0) {
             m_jSubtotalEuros.setText(null);
             m_jTaxesEuros.setText(null);
@@ -104,113 +103,113 @@ public class SimpleReceipt extends javax.swing.JPanel {
             m_jTotalEuros.setText(ticket.printTotal());
         }
     }
-
+    
     public TicketInfo getTicket()  {
         return ticket;
     }
-
+    
     private int findFirstNonAuxiliarLine() {
-
-        int i = ticketlines.getSelectedIndex();
+        
+        int i = ticketlines.getSelectedIndex();       
 	while (i >= 0 && ticket.getLine(i).isProductCom()) {
 	    i--;
-        }
+        } 
         return i;
     }
-
+    
     public TicketLineInfo[] getSelectedLines() {
-
+        
         // never returns an empty array, or null, or an array with at least one element.
-
-        int i = findFirstNonAuxiliarLine();
-
+               
+        int i = findFirstNonAuxiliarLine();       
+       
         if (i >= 0) {
 
             List<TicketLineInfo> l = new ArrayList<TicketLineInfo>();
-
+            
             TicketLineInfo line = ticket.getLine(i);
             l.add(line);
             ticket.removeLine(i);
             ticketlines.removeTicketLine(i);
-
+            
             // add also auxiliars
             while (i < ticket.getLinesCount() && ticket.getLine(i).isProductCom()) {
                 l.add(ticket.getLine(i));
                 ticket.removeLine(i);
                 ticketlines.removeTicketLine(i);
-            }
+            }        
             printTotals();
             return l.toArray(new TicketLineInfo[l.size()]);
         } else {
             return null;
         }
     }
-
+    
     public TicketLineInfo[] getSelectedLinesUnit() {
 
        // never returns an empty array, or null, or an array with at least one element.
 
         int i = findFirstNonAuxiliarLine();
-
-        if (i >= 0) {
-
+        
+        if (i >= 0) {       
+            
             TicketLineInfo line = ticket.getLine(i);
-
-            if (line.getMultiply().doubleValue() >= 1.0) {
-
-                List<TicketLineInfo> l = new ArrayList<>();
-
-                if (line.getMultiply().doubleValue() > 1.0) {
-                    line.setMultiply(line.getMultiply().subtract(new BigDecimal(-1.0)));
+            
+            if (line.getMultiply() >= 1.0) {
+                
+                List<TicketLineInfo> l = new ArrayList<TicketLineInfo>();
+                
+                if (line.getMultiply() > 1.0) {
+                    line.setMultiply(line.getMultiply() -1.0);
                     ticketlines.setTicketLine(i, line);
                     line = line.copyTicketLine();
-                    line.setMultiply(new BigDecimal(1.0));
-                    l.add(line);
+                    line.setMultiply(1.0);
+                    l.add(line);  
                     i++;
                 } else { // == 1.0
                     l.add(line);
                     ticket.removeLine(i);
                     ticketlines.removeTicketLine(i);
                 }
-
+                
                 // add also auxiliars
                 while (i < ticket.getLinesCount() && ticket.getLine(i).isProductCom()) {
                     l.add(ticket.getLine(i));
                     ticket.removeLine(i);
                     ticketlines.removeTicketLine(i);
-                }
+                }              
                 printTotals();
-                return l.toArray(new TicketLineInfo[l.size()]);
+                return l.toArray(new TicketLineInfo[l.size()]);                    
             } else { // < 1.0
                 return null;
-            }
+            }            
         } else {
             return null;
         }
     }
 
     public void addSelectedLines(TicketLineInfo[] lines) {
-
-        int i = findFirstNonAuxiliarLine();
-
+        
+        int i = findFirstNonAuxiliarLine();         
+              
         TicketLineInfo firstline = lines[0];
-
-        if (i >= 0
+        
+        if (i >= 0 
                 && ticket.getLine(i).getProductID() != null && firstline.getProductID() != null && ticket.getLine(i).getProductID().equals(firstline.getProductID())
                 && ticket.getLine(i).getTaxInfo().getId().equals(firstline.getTaxInfo().getId())
-                && ticket.getLine(i).getPrice() == firstline.getPrice()) {
-
+                && ticket.getLine(i).getPrice() == firstline.getPrice()) {  
+            
             // add the auxiliars.
             for (int j = 1; j < lines.length; j++) {
                 ticket.insertLine(i + 1, lines[j]);
                 ticketlines.insertTicketLine(i + 1, lines[j]);
             }
-
+            
             // inc the line
-            ticket.getLine(i).setMultiply(ticket.getLine(i).getMultiply().add(firstline.getMultiply()));
-            ticketlines.setTicketLine(i, ticket.getLine(i));
+            ticket.getLine(i).setMultiply(ticket.getLine(i).getMultiply() + firstline.getMultiply());
+            ticketlines.setTicketLine(i, ticket.getLine(i));  
             ticketlines.setSelectedIndex(i);
-
+            
         } else {
             // add all at the end in inverse order.
             int insertpoint = ticket.getLinesCount();
@@ -218,11 +217,11 @@ public class SimpleReceipt extends javax.swing.JPanel {
                 ticket.insertLine(insertpoint, lines[j]);
                 ticketlines.insertTicketLine(insertpoint, lines[j]);
             }
-        }
-
+        }       
+        
         printTotals();
     }
-
+  
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -358,31 +357,31 @@ public class SimpleReceipt extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
-
+        
         JCustomerFinder finder = JCustomerFinder.getCustomerFinder(this, dlCustomers);
         finder.search(ticket.getCustomer());
         finder.setVisible(true);
-
+        
         try {
             ticket.setCustomer(finder.getSelectedCustomer() == null
                     ? null
                     : dlSales.loadCustomerExt(finder.getSelectedCustomer().getId()));
         } catch (BasicException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"), e);
-            msg.show(this);
+            msg.show(this);            
         }
-
+        
         // The ticket name
         m_jTicketId.setText(ticket.getName(ticketext));
-
-        refreshTicketTaxes();
-
+        
+        refreshTicketTaxes();     
+        
         // refresh the receipt....
         setTicket(ticket, ticketext);
-
+        
     }//GEN-LAST:event_btnCustomerActionPerformed
-
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomer;
     private javax.swing.JPanel jPanel1;
@@ -397,5 +396,5 @@ public class SimpleReceipt extends javax.swing.JPanel {
     private javax.swing.JLabel m_jTicketId;
     private javax.swing.JLabel m_jTotalEuros;
     // End of variables declaration//GEN-END:variables
-
+    
 }

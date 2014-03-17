@@ -410,14 +410,14 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         getStockDiaryInsert().exec(new Object[] {
                             UUID.randomUUID().toString(),
                             ticket.getDate(),
-                            (l.getMultiply().doubleValue() < 0.0)
+                            l.getMultiply() < 0.0
                                 ? MovementReason.IN_REFUND.getKey()
                                 : MovementReason.OUT_SALE.getKey(),
                             location,
                             l.getProductID(),
                             l.getProductAttSetInstId(),
-                            l.getMultiply().negate().doubleValue(),
-                            l.getPrice().doubleValue()
+                            new Double(-l.getMultiply()),
+                            new Double(l.getPrice())
                         });
                     }
                 }
@@ -458,8 +458,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                             setString(1, UUID.randomUUID().toString());
                             setString(2, ticket.getId());
                             setString(3, tickettax.getTaxInfo().getId());
-                            setDouble(4, tickettax.getSubTotal().doubleValue());
-                            setDouble(5, tickettax.getTax().doubleValue());
+                            setDouble(4, tickettax.getSubTotal());
+                            setDouble(5, tickettax.getTax());
                         }});
                     }
                 }
@@ -483,14 +483,14 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         getStockDiaryInsert().exec( new Object[] {
                             UUID.randomUUID().toString(),
                             d,
-                            (ticket.getLine(i).getMultiply().doubleValue()) >= 0.0
+                            ticket.getLine(i).getMultiply() >= 0.0
                                 ? MovementReason.IN_REFUND.getKey()
                                 : MovementReason.OUT_SALE.getKey(),
                             location,
                             ticket.getLine(i).getProductID(),
                             ticket.getLine(i).getProductAttSetInstId(),
-                            ticket.getLine(i).getMultiply().doubleValue(),
-                            ticket.getLine(i).getPrice().doubleValue()
+                            new Double(ticket.getLine(i).getMultiply()),
+                            new Double(ticket.getLine(i).getPrice())
                         });
                     }
                 }

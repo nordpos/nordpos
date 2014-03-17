@@ -25,57 +25,56 @@ import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSystem;
 import com.openbravo.pos.ticket.TicketLineInfo;
 import com.openbravo.data.loader.ImageUtils;
-import java.math.BigDecimal;
 
 public class JRefundLines extends javax.swing.JPanel {
-
+    
     private JTicketLines ticketlines;
     private List m_aLines;
-    private List m_aLinesAll;
-
+    private List m_aLinesAll; 
+    
     private JPanelTicketEdits m_jTicketEdit;
     private boolean isMultiplyControl;
-
-
-
+    
+ 
+    
     /** Creates new form JRefundLines */
 public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
-
+        
         PropertiesConfig panelconfig;
-
+        
         m_jTicketEdit = jTicketEdit;
-
+        
         initComponents();
-
+        
         ticketlines = new JTicketLines(dlSystem.getResourceAsXML("Ticket.Line"));
         panelconfig = new PropertiesConfig(dlSystem.getResourceAsXML("Ticket.Buttons"));
         isMultiplyControl = "true".equals(panelconfig.getProperty("refmultcontrol", "false"));
-
+        
         m_aLinesAll = new ArrayList(0);
-
+        
         jPanel3.add(ticketlines, BorderLayout.CENTER);
     }
-
+    
     public void setLines(List aRefundLines) {
-
+        
         m_aLines = aRefundLines;
-
+                
         m_aLinesAll.clear();
         for (int i = 0; i < m_aLines.size(); i++ ){
-            byte[] aSerLine;
+            byte[] aSerLine; 
             aSerLine = ImageUtils.writeSerializable(m_aLines.get(i));
-            m_aLinesAll.add(ImageUtils.readSerializable(aSerLine));
+            m_aLinesAll.add(ImageUtils.readSerializable(aSerLine)); 
         }
 
         ticketlines.clearTicketLines();
-
+        
         if (m_aLines != null) {
             for (int i = 0; i < m_aLines.size(); i++) {
                 ticketlines.addTicketLine((TicketLineInfo) m_aLines.get(i));
             }
         }
     }
-
+     
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -160,8 +159,8 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
     private void m_jbtnAddAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnAddAllActionPerformed
         for (int i = 0; i < m_aLines.size(); i++) {
             TicketLineInfo oLine = (TicketLineInfo) m_aLines.get(i);
-            TicketLineInfo oNewLine = new TicketLineInfo(oLine);
-            oNewLine.setMultiply(oLine.getMultiply().negate());
+            TicketLineInfo oNewLine = new TicketLineInfo(oLine);            
+            oNewLine.setMultiply(-oLine.getMultiply());
             m_jTicketEdit.addTicketLine(oNewLine);
             if (isMultiplyControl) ticketlines.removeTicketLine(ticketlines.getSelectedIndex());
         }
@@ -174,19 +173,19 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         if (index >= 0) {
             TicketLineInfo oLine = (TicketLineInfo) m_aLines.get(index);
             TicketLineInfo oNewLine = new TicketLineInfo(oLine);
-            oNewLine.setMultiply(new BigDecimal(-1.0));
+            oNewLine.setMultiply(-1.0);
             if (isMultiplyControl) {
-                oLine.setMultiply(oLine.getMultiply().subtract(new BigDecimal(-1.0)));
+                oLine.setMultiply(oLine.getMultiply()-1.0);
                 ticketlines.setTicketLine(index, oLine);
                 ticketlines.setSelectedIndex(index);
-                if (oLine.getMultiply().equals(new BigDecimal(0.0))) {
+                if (oLine.getMultiply() == 0) { 
                    ticketlines.removeTicketLine(index);
                    m_aLines.remove(index);
                 }
-            }
+            }    
             m_jTicketEdit.addTicketLine(oNewLine);
-        }
-
+        }   
+        
     }//GEN-LAST:event_m_jbtnAddOneActionPerformed
 
     private void m_jbtnAddLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnAddLineActionPerformed
@@ -194,22 +193,22 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         int index = ticketlines.getSelectedIndex();
         if (index >= 0) {
             TicketLineInfo oLine = (TicketLineInfo) m_aLines.get(index);
-            TicketLineInfo oNewLine = new TicketLineInfo(oLine);
-            oNewLine.setMultiply(oLine.getMultiply().negate());
+            TicketLineInfo oNewLine = new TicketLineInfo(oLine);            
+            oNewLine.setMultiply(-oLine.getMultiply());
             m_jTicketEdit.addTicketLine(oNewLine);
             if (isMultiplyControl) {
               ticketlines.removeTicketLine(index);
               m_aLines.remove(index);
             }
-        }
+        }        
     }//GEN-LAST:event_m_jbtnAddLineActionPerformed
 
     private void m_jbtnCancelAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnCancelAllActionPerformed
         m_aLines.clear();
         for (int i = 0; i < m_aLinesAll.size(); i++ ){
-            byte[] aSerLine;
+            byte[] aSerLine; 
             aSerLine = ImageUtils.writeSerializable(m_aLinesAll.get(i));
-            m_aLines.add(ImageUtils.readSerializable(aSerLine));
+            m_aLines.add(ImageUtils.readSerializable(aSerLine)); 
         }
         ticketlines.clearTicketLines();
         if (m_aLines != null) {
@@ -219,8 +218,8 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         }
         while(m_jTicketEdit.getActiveTicket().getLinesCount()>0) m_jTicketEdit.removeTicketLine(0);
     }//GEN-LAST:event_m_jbtnCancelAllActionPerformed
-
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -230,5 +229,5 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
     private javax.swing.JButton m_jbtnAddOne;
     private javax.swing.JButton m_jbtnCancelAll;
     // End of variables declaration//GEN-END:variables
-
+    
 }

@@ -30,19 +30,18 @@ import javax.swing.JFrame;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.ticket.TicketLineInfo;
-import java.math.BigDecimal;
 
 /**
  *
  * @author adrianromero
  */
 public class JProductLineEdit extends javax.swing.JDialog {
-
+    
     private TicketLineInfo returnLine;
     private TicketLineInfo m_oLine;
     private boolean m_bunitsok;
     private boolean m_bpriceok;
-
+            
     /** Creates new form JProductLineEdit */
     private JProductLineEdit(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -51,7 +50,7 @@ public class JProductLineEdit extends javax.swing.JDialog {
     private JProductLineEdit(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
     }
-
+    
     private TicketLineInfo init(AppView app, TicketLineInfo oLine) throws BasicException {
         // Inicializo los componentes
         initComponents();
@@ -67,13 +66,13 @@ public class JProductLineEdit extends javax.swing.JDialog {
         m_jName.setEnabled(m_oLine.getProductID() == null && app.getAppUserView().getUser().hasPermission("com.openbravo.pos.sales.JPanelTicketEdits"));
         m_jPrice.setEnabled(app.getAppUserView().getUser().hasPermission("com.openbravo.pos.sales.JPanelTicketEdits"));
         m_jPriceTax.setEnabled(app.getAppUserView().getUser().hasPermission("com.openbravo.pos.sales.JPanelTicketEdits"));
-
+        
         m_jName.setText(m_oLine.getProperty("product.name"));
-        m_jUnits.setDoubleValue(oLine.getMultiply().doubleValue());
-        m_jPrice.setDoubleValue(oLine.getPrice().doubleValue());
-        m_jPriceTax.setDoubleValue(oLine.getPriceTax().doubleValue());
+        m_jUnits.setDoubleValue(oLine.getMultiply());
+        m_jPrice.setDoubleValue(oLine.getPrice()); 
+        m_jPriceTax.setDoubleValue(oLine.getPriceTax());
         m_jTaxrate.setText(oLine.getTaxInfo().getName());
-
+        
         m_jName.addPropertyChangeListener("Edition", new RecalculateName());
         m_jUnits.addPropertyChangeListener("Edition", new RecalculateUnits());
         m_jPrice.addPropertyChangeListener("Edition", new RecalculatePrice());
@@ -83,24 +82,24 @@ public class JProductLineEdit extends javax.swing.JDialog {
         m_jUnits.addEditorKeys(m_jKeys);
         m_jPrice.addEditorKeys(m_jKeys);
         m_jPriceTax.addEditorKeys(m_jKeys);
-
+        
         if (m_jName.isEnabled()) {
             m_jName.activate();
         } else {
             m_jUnits.activate();
         }
-
+        
         printTotals();
 
-        getRootPane().setDefaultButton(m_jButtonOK);
+        getRootPane().setDefaultButton(m_jButtonOK);   
         returnLine = null;
         setVisible(true);
-
+      
         return returnLine;
     }
-
+    
     private void printTotals() {
-
+        
         if (m_bunitsok && m_bpriceok) {
             m_jSubtotal.setText(m_oLine.printSubValue());
             m_jTotal.setText(m_oLine.printValue());
@@ -111,63 +110,60 @@ public class JProductLineEdit extends javax.swing.JDialog {
             m_jButtonOK.setEnabled(false);
         }
     }
-
+    
     private class RecalculateUnits implements PropertyChangeListener {
-        @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            BigDecimal value = new BigDecimal(m_jUnits.getDoubleValue());
-            if (value.equals(new BigDecimal(0.0))) {
+            Double value = m_jUnits.getDoubleValue();
+            if (value == null || value == 0.0) {
                 m_bunitsok = false;
             } else {
                 m_oLine.setMultiply(value);
-                m_bunitsok = true;
+                m_bunitsok = true;                
             }
 
             printTotals();
         }
     }
-
+    
     private class RecalculatePrice implements PropertyChangeListener {
-        @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-            BigDecimal value = new BigDecimal(m_jPrice.getDoubleValue());
-            if (value.equals(new BigDecimal(0.0))) {
+            Double value = m_jPrice.getDoubleValue();
+            if (value == null || value == 0.0) {
                 m_bpriceok = false;
             } else {
                 m_oLine.setPrice(value);
-                m_jPriceTax.setDoubleValue(m_oLine.getPriceTax().doubleValue());
+                m_jPriceTax.setDoubleValue(m_oLine.getPriceTax());
                 m_bpriceok = true;
             }
 
             printTotals();
         }
-    }
-
+    }    
+    
     private class RecalculatePriceTax implements PropertyChangeListener {
-        @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-            BigDecimal value = new BigDecimal(m_jPriceTax.getDoubleValue());
-            if (value.equals(new BigDecimal(0.0))) {
+            Double value = m_jPriceTax.getDoubleValue();
+            if (value == null || value == 0.0) {
+                // m_jPriceTax.setValue(m_oLine.getPriceTax());
                 m_bpriceok = false;
             } else {
                 m_oLine.setPriceTax(value);
-                m_jPrice.setDoubleValue(m_oLine.getPrice().doubleValue());
+                m_jPrice.setDoubleValue(m_oLine.getPrice());
                 m_bpriceok = true;
             }
 
             printTotals();
         }
-    }
-
+    }   
+    
     private class RecalculateName implements PropertyChangeListener {
-        @Override
         public void propertyChange(PropertyChangeEvent evt) {
             m_oLine.setProperty("product.name", m_jName.getText());
         }
-    }
-
+    }   
+    
     private static Window getWindow(Component parent) {
         if (parent == null) {
             return new JFrame();
@@ -176,22 +172,22 @@ public class JProductLineEdit extends javax.swing.JDialog {
         } else {
             return getWindow(parent.getParent());
         }
-    }
-
+    }       
+    
     public static TicketLineInfo showMessage(Component parent, AppView app, TicketLineInfo oLine) throws BasicException {
-
+         
         Window window = getWindow(parent);
-
+        
         JProductLineEdit myMsg;
-        if (window instanceof Frame) {
+        if (window instanceof Frame) { 
             myMsg = new JProductLineEdit((Frame) window, true);
         } else {
             myMsg = new JProductLineEdit((Dialog) window, true);
         }
         return myMsg.init(app, oLine);
-    }
+    }        
 
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -349,11 +345,11 @@ public class JProductLineEdit extends javax.swing.JDialog {
     private void m_jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jButtonOKActionPerformed
 
         returnLine = m_oLine;
-
+        
         dispose();
 
     }//GEN-LAST:event_m_jButtonOKActionPerformed
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -378,5 +374,5 @@ public class JProductLineEdit extends javax.swing.JDialog {
     private javax.swing.JLabel m_jTotal;
     private com.openbravo.editor.JEditorDouble m_jUnits;
     // End of variables declaration//GEN-END:variables
-
+    
 }

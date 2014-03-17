@@ -41,8 +41,7 @@ public class StockDiaryPanel extends JPanelTable {
     }
 
     protected void init() {
-        System.out.println(DataLogicSales.class.getName());
-        m_dlSales = (DataLogicSales) app.getBean("com.openbravo.pos.forms.DataLogicSales");
+        m_dlSales = (DataLogicSales) app.getBean(DataLogicSales.class.getName());
         jeditor = new StockDiaryEditor(app, dirty);
     }
 
