@@ -93,7 +93,7 @@
                                                         <xs:attribute name="underline" type="UnderlineType" default="none"/>
                                                         <xs:attribute name="align" type="TextAlign" default="left"/>
                                                         <xs:attribute name="length" type="xs:unsignedInt" default="0"/>
-                                                        <xs:attribute name="size" type="xs:unsignedInt"/>
+                                                        <xs:attribute name="size" type="xs:unsignedInt" default="0"/>
                                                     </xs:extension>
                                                 </xs:simpleContent>
                                             </xs:complexType>
