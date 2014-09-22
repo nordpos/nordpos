@@ -491,7 +491,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             sCode = "0".concat(sCode);
         }
 
-        sCode = s_DefBarcode.concat(sCategoryPrefix).concat(sCode);
+        sCode = s_DefBarcode.concat(sCategoryPrefix == null ? "0000" : sCategoryPrefix).concat(sCode);
 
         return sCode.concat(Character.toString(EAN13LogicImpl.calcChecksum(sCode)));
     }
