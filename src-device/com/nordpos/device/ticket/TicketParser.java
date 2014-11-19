@@ -231,7 +231,7 @@ public class TicketParser extends DefaultHandler {
                     text = new StringBuffer();
                     break;
                 case "line":
-                    m_oOutputPrinter.beginLine(parseInteger(attributes.getValue("size")));
+                    m_oOutputPrinter.beginLine(parseInt(attributes.getValue("size"), 0));
                     break;
                 case "barcode":
                     text = new StringBuffer();
