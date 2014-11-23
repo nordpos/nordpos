@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Openbravo POS is a point of sales application designed for touch screens.
-    Copyright (C) 2007-2009 Openbravo, S.L.
-    http://sourceforge.net/projects/openbravopos
+    NORD POS is a fork of Openbravo POS.
 
-    This file is part of Openbravo POS.
+    Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
 
-    Openbravo POS is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of NORD POS.
 
-    Openbravo POS is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    NORD POS is free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option) any later
+    version.
 
-    You should have received a copy of the GNU General Public License
-    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
- -->
+    NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with
+    NORD POS. If not, see <http://www.gnu.org/licenses/>.
+-->
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <display>
         <line>
-            <text align="left" length="10">Итого</text>
+            <text align="left" length="10">${local.getScriptString("sale.total")}</text>
             <text align="right" length="10">${ticket.printTotal()}</text>
         </line>
         <line>
         #if ($ticketline.getDiscountTotal() != 0.0)
-            <text align="left" length="10">Скидка</text>
+            <text align="left" length="10">${local.getScriptString("sale.discount")}</text>
             <text align ="right" length="10">${ticket.printDiscountTotal()}</text>
         #else
-            <text align="center" length="20">к оплате по чеку.</text>
+            <text align="center" length="20">${local.getScriptString("sale.payments")}</text>
         #end
         </line>
     </display>
@@ -42,31 +41,31 @@
             <text align="center" length="42">NORD POS</text>
         </line>
         <line>
-            <text align="center" length="42">система автоматизации для Казахстана</text>
+            <text align="center" length="42">${local.getScriptString("sale.header.2")}</text>
         </line>
         <line>
-            <text align="center" length="42">www.nordpos.com</text>
+            <text align="center" length="42">${local.getScriptString("sale.header.3")}</text>
         </line>
         <line></line>
         #if (${ticket.ticketType} == 0)
         <line>
-            <text align="left" length="15">Заказ:</text>
+            <text align="left" length="15">${local.getScriptString("sale.order")}</text>
             <text>${ticket.printTicketName()}</text>
         </line>
         #end
         #if (${ticket.ticketType} == 1)
         <line>
-            <text align="left" length="15">Возврат:</text>
+            <text align="left" length="15">${local.getScriptString("sale.refund")}</text>
             <text>${ticket.printId()}</text>
         </line>
         #end
         <line>
-            <text align="left" length="15">Дата:</text>
+            <text align="left" length="15">${local.getScriptString("sale.date")}</text>
             <text>${ticket.printDate()}</text>
         </line>
          #if ($ticket.getCustomer())
         <line>
-            <text align="left" length="15">Клиент:</text>
+            <text align="left" length="15">${local.getScriptString("sale.customer")}</text>
             <text>${ticket.getCustomer().printName()}</text>
         </line>
         <line>
@@ -76,16 +75,16 @@
         #end
         #if ($place.equals("") == false)
         <line>
-            <text align="left" length="15">Стол:</text>
+            <text align="left" length="15">${local.getScriptString("sale.place")}</text>
             <text>${place}</text>
         </line>
         #end
         <line></line>
         <line>
-            <text align ="left" length="17">Наименование</text>
-            <text align ="right" length="10">Цена</text>
+            <text align ="left" length="17">${local.getScriptString("product.name")}</text>
+            <text align ="right" length="10">${local.getScriptString("product.price")}</text>
             <text align ="right" length="5"></text>
-            <text align ="right" length="10">Сумма</text>
+            <text align ="right" length="10">${local.getScriptString("product.value")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -104,7 +103,7 @@
 
         #if ($ticketline.getDiscountRate() != 0.0)
         <line>
-            <text align ="right" length="12">Скидка</text>
+            <text align ="right" length="12">${local.getScriptString("sale.discount")}</text>
             <text align ="center" length="5">${ticketline.printDiscountRate()}</text>
             <text align ="right" length="10">${ticketline.printDiscountSubValue()}</text>
             <text align ="center" length="5"></text>
@@ -122,13 +121,13 @@
             <text>------------------------------------------</text>
         </line>
         <line>
-            <text align ="left" length="16">Кол-во товаров: </text>
+            <text align ="left" length="16">${local.getScriptString("sale.items")}</text>
             <text align ="left" length="26">${ticket.printArticlesCount()}</text>
         </line>
 
         <line></line>
         <line>
-            <text align ="left" length="16">Скидка по чеку.</text>
+            <text align ="left" length="16">${local.getScriptString("sale.discounts")}</text>
             <text align ="right" length="10">${ticket.printTotalNoDiscount()}</text>
             <text align ="center" length="6">${ticket.printDiscountAvgRate()}</text>
             <text align ="right" length="10">${ticket.printDiscountTotal()}</text>
@@ -136,20 +135,20 @@
 
         <line></line>
         <line>
-            <text align ="left" length="16">Всего.</text>
+            <text align ="left" length="16">${local.getScriptString("sale.subtotal")}</text>
             <text align ="right" length="13">${ticket.printTax()}</text>
             <text align ="right" length="13">${ticket.printSubTotal()}</text>
         </line>
         <line></line>
         <line size="1">
-            <text align ="left" length="16" bold="true">Итого.</text>
+            <text align ="left" length="16" bold="true">${local.getScriptString("sale.total")}</text>
             <text align ="right" length="26" bold="true">${ticket.printTotal()}</text>
         </line>
         #foreach ($paymentline in $ticket.payments)
          #if ($paymentline.name == "cash")
         <line></line>
         <line>
-            <text bold="true">Наличные</text>
+            <text bold="true">${local.getScriptString("paid.cash")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -158,7 +157,7 @@
          #if ($paymentline.name == "cashrefund")
         <line></line>
         <line>
-            <text bold="true">Возврат из кассы</text>
+            <text bold="true">${local.getScriptString("paid.cash.refund")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -167,7 +166,7 @@
          #if ($paymentline.name == "magcard")
         <line></line>
         <line>
-            <text bold="true">Карта</text>
+            <text bold="true">${local.getScriptString("paid.magcard")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -176,7 +175,7 @@
          #if ($paymentline.name == "magcardrefund")
         <line></line>
         <line>
-            <text bold="true">Возврат на карту</text>
+            <text bold="true">${local.getScriptString("paid.magcard.refund")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -185,7 +184,7 @@
          #if ($paymentline.name == "cheque")
         <line></line>
         <line>
-            <text bold="true">Чек</text>
+            <text bold="true">${local.getScriptString("paid.cheque")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -194,7 +193,7 @@
          #if ($paymentline.name == "chequerefund")
         <line></line>
         <line>
-            <text bold="true">Возврат чека</text>
+            <text bold="true">${local.getScriptString("paid.cheque.refund")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -203,7 +202,7 @@
          #if ($paymentline.name == "paperin")
         <line></line>
         <line>
-            <text bold="true">Выписка</text>
+            <text bold="true">${local.getScriptString("paid.note")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -212,7 +211,7 @@
          #if ($paymentline.name == "paperout")
         <line></line>
         <line>
-            <text bold="true">Возврат по выписке</text>
+            <text bold="true">${local.getScriptString("paid.note.refund")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -221,7 +220,7 @@
          #if ($paymentline.name == "free")
         <line></line>
         <line>
-            <text bold="true">Без оплаты</text>
+            <text bold="true">${local.getScriptString("paid.free")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -230,7 +229,7 @@
          #if ($paymentline.name == "debt")
         <line></line>
         <line>
-            <text bold="true">В кредит</text>
+            <text bold="true">${local.getScriptString("paid.debt")}</text>
         </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -239,12 +238,12 @@
          #end
         <line></line>
         <line>
-            <text align="left" length="15">Кассир:</text>
+            <text align="left" length="15">${local.getScriptString("label.cashier")}</text>
             <text>${ticket.printUser()}</text>
         </line>
         <line></line>
         <line>
-            <text align="center" length="42">Спасибо за покупку.</text>
+            <text align="center" length="42">${local.getScriptString("label.thankyouvisit")}</text>
         </line>
     </ticket>
 </output>

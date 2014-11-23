@@ -1,60 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-    Openbravo POS is a point of sales application designed for touch screens.
-    Copyright (C) 2008-2009 Openbravo, S.L.
-    http://sourceforge.net/projects/openbravopos
+<!--
+    NORD POS is a fork of Openbravo POS.
 
-    This file is part of Openbravo POS.
+    Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
 
-    Openbravo POS is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of NORD POS.
 
-    Openbravo POS is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    NORD POS is free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option) any later
+    version.
 
-    You should have received a copy of the GNU General Public License
-    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
- -->
+    NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with
+    NORD POS. If not, see <http://www.gnu.org/licenses/>.
+-->
 <output  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
        
     <display>
         <line>
-            <text align="left" length="10">Итого к оплате.</text>
+            <text align="left" length="10">${local.getScriptString("paid.total")}</text>
             <text align="right" length="10">${ticket.printTotalPaid()}</text>
         </line>
         <line>
-            <text align="center" length="20">Спасибо.</text>
+            <text align="center" length="20">${local.getScriptString("paid.thankyou")}</text>
         </line>
     </display>
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line></line>
         <line>
-            <text align="center" length="42">Пример текста чека.</text>
-        </line>
-        <line>
-            <text align="center" length="42">Вы можете его изменить</text>
-        </line>
-        <line>
-            <text align="center" length="42">через раздел Ресурсы.</text>
-        </line>
-        <line></line>
-        <line>
-            <text align="left" length="15">Чек:</text>
+            <text align="left" length="15">${local.getScriptString("paid.receipt")}</text>
             <text>${ticket.printId()}</text>
         </line>    
         <line>
-            <text align="left" length="15">Дата:</text>
+            <text align="left" length="15">${local.getScriptString("paid.date")}</text>
             <text>${ticket.printDate()}</text>
         </line>  
          #if ($ticket.getCustomer())
         <line>
-            <text align="left" length="15">Клиент:</text>
+            <text align="left" length="15">${local.getScriptString("paid.customer")}</text>
             <text>${ticket.getCustomer().printName()}</text>
         </line>      
         <line>
@@ -64,57 +53,57 @@
         #end       
         <line></line> 
         <line size="1">
-            <text align ="left" length="16" bold="true">Всего оплачено.</text>
+            <text align ="left" length="16" bold="true">${local.getScriptString("paid.total")}</text>
             <text align ="right" length="20" bold="true">${ticket.printTotalPaid()}</text>
         </line>    
         <line>
-            <text align ="left" length="16" bold="true">К оплате.</text>
+            <text align ="left" length="16" bold="true">${local.getScriptString("paid.pending")}</text>
             <text align ="right" length="20" bold="true">${customer.printCurDebt()}</text>
         </line>          
         #foreach ($paymentline in $ticket.payments)      
         #if ($paymentline.name == "cash")
         <line></line>     
         <line>
-            <text bold="true">Наличные</text>
+            <text bold="true">${local.getScriptString("paid.cash")}</text>
         </line>  
         <line>
-            <text align="left" length="22">Оплачено:</text>
+            <text align="left" length="22">${local.getScriptString("paid.cash.tendered")}</text>
             <text align ="right" length="20">${paymentline.printPaid()}</text>
         </line>  
         <line>
-            <text align="left" length="22">Сдача:</text>
+            <text align="left" length="22">${local.getScriptString("paid.cash.change")}</text>
             <text align ="right" length="20">${paymentline.printChange()}</text>
         </line>   
         #end
         #if ($paymentline.name == "magcard")
         <line></line>  
         <line>
-            <text bold="true">Карта</text>
+            <text bold="true">${local.getScriptString("paid.magcard")}</text>
         </line>   
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
         </line>    
         <line>
-            <text align ="left" length="22">Номер:</text>
+            <text align ="left" length="22">${local.getScriptString("paid.magcard.number")}</text>
             <text>${paymentline.printCardNumber()}</text>
         </line>
         <line>
-            <text align ="left" length="22">Дата закрытия:</text>
+            <text align ="left" length="22">${local.getScriptString("paid.magcard.expirationdate")}</text>
             <text>${paymentline.printExpirationDate()}</text>
         </line>
         <line>
-            <text align ="left" length="22">Операция:</text>
+            <text align ="left" length="22">${local.getScriptString("paid.magcard.operation")}</text>
             <text>${paymentline.printTransactionID()}</text>
         </line>
         <line>
-            <text align ="left" length="22">Идентификация:</text>
+            <text align ="left" length="22">${local.getScriptString("paid.magcard.authorization")}</text>
             <text>${paymentline.printAuthorization()}</text>
         </line>
         #end  
         #if ($paymentline.name == "cheque")
         <line></line>     
         <line>
-            <text bold="true">Чек</text>
+            <text bold="true">${local.getScriptString("paid.cheque")}</text>
         </line>    
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -123,7 +112,7 @@
          #if ($paymentline.name == "paperin")
         <line></line>     
         <line>
-            <text bold="true">Выписка</text>
+            <text bold="true">${local.getScriptString("paid.note")}</text>
         </line>    
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
@@ -132,12 +121,12 @@
         #end 
         <line></line>            
         <line>
-            <text align="left" length="15">Платильщик:</text>
+            <text align="left" length="15">${local.getScriptString("label.cashier")}</text>
             <text>${ticket.printUser()}</text>
         </line>
         <line></line>            
         <line>
-            <text align="center" length="42">Спасибо за визит.</text>
+            <text align="center" length="42">${local.getScriptString("label.thankyouvisit")}</text>
         </line>    
     </ticket>
     #foreach ($paymentline in $ticket.payments)      
