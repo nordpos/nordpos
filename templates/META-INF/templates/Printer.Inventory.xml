@@ -1,61 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-    Openbravo POS is a point of sales application designed for touch screens.
-    Copyright (C) 2008-2009 Openbravo, S.L.
-    http://sourceforge.net/projects/openbravopos
+<!--
+    NORD POS is a fork of Openbravo POS.
 
-    This file is part of Openbravo POS.
+    Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
 
-    Openbravo POS is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of NORD POS.
 
-    Openbravo POS is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    NORD POS is free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option) any later
+    version.
 
-    You should have received a copy of the GNU General Public License
-    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
- -->
+    NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with
+    NORD POS. If not, see <http://www.gnu.org/licenses/>.
+-->
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line></line>
         <line>
-            <text align="center" length="42">Пример текста складской накладной.</text>
+            <text align="center" length="42">NORD POS</text>
         </line>
         <line>
-            <text align="center" length="42">Вы можете его изменить</text>
+            <text align="center" length="42">${local.getScriptString("sale.header.2")}</text>
         </line>
         <line>
-            <text align="center" length="42">через раздел Ресурсы.</text>
+            <text align="center" length="42">${local.getScriptString("sale.header.3")}</text>
         </line>
         <line></line>
         <line>
-            <text>Дата:     ${inventoryrecord.printDate()}</text>
+            <text align="left" length="15">${local.getScriptString("inventory.date")}</text>
+            <text>${inventoryrecord.printDate()}</text>
         </line>
         <line>
-            <text>Действие:   ${inventoryrecord.printReason()}</text>
+            <text align="left" length="15">${local.getScriptString("inventory.reason")}</text>
+            <text>${inventoryrecord.printReason()}</text>
         </line>
         <line>
-            <text>Склад: ${inventoryrecord.printLocation()}</text>
-        </line>
+            <text align="left" length="15">${local.getScriptString("inventory.location")}</text>
+            <text>${inventoryrecord.printLocation()}</text>
+        </line>            
         <line size="1">
             #if ($inventoryrecord.isInput())
-            <text align ="center" length="42">Поступило</text>
+            <text align ="center" length="42">${local.getScriptString("inventory.in")}</text>
             #else
-            <text align ="center" length="42">Выбыло</text>
+            <text align ="center" length="42">${local.getScriptString("inventory.out")}</text>
             #end
         </line>
         <line></line>    
         <line>
-            <text align ="left" length="17">Наименование</text>
-            <text align ="right" length="10">Цена</text>
+            <text align ="left" length="17">${local.getScriptString("product.name")}</text>
+            <text align ="right" length="10">${local.getScriptString("product.price")}</text>
             <text align ="right" length="5"></text>
-            <text align ="right" length="10">Сумма</text>
+            <text align ="right" length="10">${local.getScriptString("product.value")}</text>
         </line>      
         <line>
             <text>------------------------------------------</text>
@@ -78,7 +80,7 @@
         </line>   
         <line></line>            
         <line>
-            <text align="center" length="42">Спасибо за ваш визит.</text>
+            <text align="center" length="42">${local.getScriptString("")}</text>
         </line>   
     </ticket>
     

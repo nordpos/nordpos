@@ -2,7 +2,7 @@
 <!--
     NORD POS is a fork of Openbravo POS.
 
-    Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+    Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
 
     This file is part of NORD POS.
 
@@ -18,23 +18,22 @@
     You should have received a copy of the GNU General Public License along with
     NORD POS. If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
         xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line/>
         <line size="1">
-            <text align="center" length="42" bold="true">${local.getScriptString("closecash.reportheader")}</text>
+            <text align="center" length="42" bold="true">${local.getScriptString("report.closecash.header")}</text>
         </line>
         <line />
         <line>
-            <text bold="true">${local.getScriptString("closecash.catreport")}</text>
+            <text bold="true">${local.getScriptString("report.category")}</text>
         </line>
         <line>
-            <text align="left" length="25">${local.getScriptString("closecash.catname")}</text>
-            <text align="center" length="7">${local.getScriptString("closecash.catunit")}</text>
-            <text align="right" length="10">${local.getScriptString("closecash.catsubtotal")}</text>
+            <text align="left" length="25">${local.getScriptString("report.name")}</text>
+            <text align="center" length="7">${local.getScriptString("report.unit")}</text>
+            <text align="right" length="10">${local.getScriptString("report.subtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -51,18 +50,18 @@
         </line>
         <line />
         <line size="1">
-            <text align="left" length="22" bold="true">${local.getScriptString("closecash.cattotal")}</text>
+            <text align="left" length="22" bold="true">${local.getScriptString("report.total")}</text>
             <text align="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
             <text align="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
         </line>
         <line />
         <line>
-            <text bold="true">${local.getScriptString("closecash.cashierreport")}</text>
+            <text bold="true">${local.getScriptString("report.cashier")}</text>
         </line>
         <line>
-            <text align="left" length="25">${local.getScriptString("closecash.cashiername")}</text>
-            <text align="center" length="7">${local.getScriptString("closecash.cashierunit")}</text>
-            <text align="right" length="10">${local.getScriptString("closecash.cashiersubtotal")}</text>
+            <text align="left" length="25">${local.getScriptString("report.name")}</text>
+            <text align="center" length="7">${local.getScriptString("report.unit")}</text>
+            <text align="right" length="10">${local.getScriptString("report.subtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -79,16 +78,16 @@
         </line>
         <line />
         <line size="1">
-            <text align="left" length="22" bold="true">${local.getScriptString("closecash.cashiertotal")}</text>
+            <text align="left" length="22" bold="true">${local.getScriptString("report.total")}</text>
             <text align="center" length="10" bold="true">${payments.printProductSalesTotalUnits()}</text>
             <text align="right" length="10" bold="true">${payments.printProductSalesTotal()}</text>
         </line>
         <line />
         <line>
-            <text bold="true">${local.getScriptString("closecash.payreport")}</text>
+            <text bold="true">${local.getScriptString("report.payment")}</text>
         </line>
         <line>
-            <text align="right" length="42">${local.getScriptString("closecash.paysubtotal")}</text>
+            <text align="right" length="42">${local.getScriptString("report.subtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -103,20 +102,20 @@
             <text>------------------------------------------</text>
         </line>
         <line>
-            <text align="left" length="32">${local.getScriptString("closecash.payments")}</text>
+            <text align="left" length="32">${local.getScriptString("report.payment.payments")}</text>
             <text align="right" length="10">${payments.printPayments()}</text>
         </line>
         <line />
         <line size="1">
-            <text align="left" length="32" bold="true">${local.getScriptString("closecash.paysubtotal")}</text>
+            <text align="left" length="32" bold="true">${local.getScriptString("report.total")}</text>
             <text align="right" length="10" bold="true">${payments.printPaymentsTotal()}</text>
         </line>
         <line />
         <line>
-            <text bold="true">${local.getScriptString("closecash.paysubtotal")}</text>
+            <text bold="true">${local.getScriptString("report.tax")}</text>
         </line>
         <line>
-            <text align="right" length="42">${local.getScriptString("closecash.taxsubtotal")}</text>
+            <text align="right" length="42">${local.getScriptString("report.subtotal")}</text>
         </line>
         <line>
             <text>------------------------------------------</text>
@@ -131,34 +130,34 @@
             <text>------------------------------------------</text>
         </line>
         <line>
-            <text align="left" length="32">${local.getScriptString("closecash.taxtotal")}</text>
+            <text align="left" length="32">${local.getScriptString("report.receipts")}</text>
             <text align="right" length="10">${payments.printSales()}</text>
         </line>
         <line />
         <line size="1">
-            <text align="left" length="32" bold="true">${local.getScriptString("closecash.notaxtotal")}</text>
+            <text align="left" length="32" bold="true">${local.getScriptString("report.notaxtotal")}</text>
             <text align="right" length="10" bold="true">${payments.printSalesBase()}</text>
         </line>
         <line size="1">
-            <text align="left" length="22" bold="true">${local.getScriptString("closecash.taxtotal")}</text>
+            <text align="left" length="22" bold="true">${local.getScriptString("report.total")}</text>
             <text align="right" length="10" bold="true">${payments.printSalesTaxes()}</text>
             <text align="right" length="10" bold="true">${payments.printSalesTotal()}</text>
         </line>
         <line />
         <line>
-            <text length="18">${local.getScriptString("closecash.machine")}</text>
+            <text length="18">${local.getScriptString("report.machine")}</text>
             <text>${payments.printHost()}</text>
         </line>
         <line>
-            <text length="18">${local.getScriptString("closecash.sequence")}</text>
+            <text length="18">${local.getScriptString("report.sequence")}</text>
             <text length="24" align="right">${payments.printSequence()}</text>
         </line>
         <line>
-            <text length="18">${local.getScriptString("closecash.datestart")}</text>
+            <text length="18">${local.getScriptString("report.datestart")}</text>
             <text length="24" align="right">${payments.printDateStart()}</text>
         </line>
         <line>
-            <text length="18">${local.getScriptString("closecash.dateend")}</text>
+            <text length="18">${local.getScriptString("report.dateend")}</text>
             <text length="24" align="right">${payments.printDateEnd()}</text>
         </line>
     </ticket>

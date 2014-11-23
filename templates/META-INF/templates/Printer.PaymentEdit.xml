@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
-    Document   : Printer.PaymentEdit.xml
-    Created on : 8 Ноябрь 2011 г., 15:25
-    Author     : Andrey Svininykh
-               : Artur Akchurin
-    Description:
-        Purpose of the document follows.
--->
+    NORD POS is a fork of Openbravo POS.
 
+    Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
+
+    This file is part of NORD POS.
+
+    NORD POS is free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option) any later
+    version.
+
+    NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with
+    NORD POS. If not, see <http://www.gnu.org/licenses/>.
+-->
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <ticket>
@@ -18,29 +27,29 @@
             <text align="center" length="42">NORD POS</text>
         </line>
         <line>
-            <text align="center" length="42">система автоматизации на основе</text>
+            <text align="center" length="42">${local.getScriptString("sale.header.2")}</text>
         </line>
         <line>
-            <text align="center" length="42">Openbravo POS для Казахстана.</text>
+            <text align="center" length="42">${local.getScriptString("sale.header.3")}</text>
         </line>
         <line></line>
         <line size="1">
         #if ($payment.getReason().equals("cashin"))
-            <text align="center">Внесение в кассу</text>
+            <text align="center">${local.getScriptString("payment.cashin")}</text>
         #elseif ($payment.getReason().equals("cashout"))
-            <text align="center">Выдача из кассы</text>
+            <text align="center">${local.getScriptString("payment.cashout")}</text>
         #end
         </line>
         <line> 
-            <text align="left" length="10">Дата:</text>
+            <text align="left" length="10">${local.getScriptString("payment.date")}</text>
             <text align="center" length="32">${payment.printDate()}</text>
         </line>
         <line> 
-            <text align="left" length="10" bold="true">Итого:</text>
+            <text align="left" length="10" bold="true">${local.getScriptString("payment.total")}</text>
             <text align="right" length="32" bold="true" underline="true">${payment.printTotal()}</text>        
         </line>        
         <line>
-            <text align="center" length="42">СПАСИБО!!!</text>
+            <text align="center" length="42">${local.getScriptString("label.thankyouvisit")}</text>
         </line> 
     </ticket>
     <fiscalcash>
