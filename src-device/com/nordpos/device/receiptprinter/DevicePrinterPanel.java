@@ -85,7 +85,7 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
 
     @Override
     public void printText(Integer iCharacterSize, String sUnderlineType, Boolean bBold, String sText) {
-        m_ticketcurrent.printText(iCharacterSize, sText);
+        m_ticketcurrent.printText(iCharacterSize == null ? 0 : iCharacterSize, sText);
     }
 
     @Override

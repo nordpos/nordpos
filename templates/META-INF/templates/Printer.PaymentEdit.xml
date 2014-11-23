@@ -49,5 +49,5 @@
       #elseif ($payment.getReason().equals("cashout"))
        <fiscalcashout value="${payment.getTotal()}"/>
       #end 
-    </fiscash>      
+    </fiscalcash>      
 </output>

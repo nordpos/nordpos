@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.inventory;
 
 import com.openbravo.basic.BasicException;
@@ -47,6 +46,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.UUID;
 import javax.swing.JComponent;
@@ -60,43 +60,44 @@ import javax.swing.JPanel;
  */
 public class StockManagement extends JPanel implements JPanelView {
 
-    private AppView m_App;
-    private DataLogicSystem m_dlSystem;
-    private DataLogicSales m_dlSales;
+    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
+    private static final String PRINT_INVENTORY = "META-INF/templates/Printer.Inventory.xml";
+
+    private final AppView m_App;
+    private final DataLogicSystem m_dlSystem;
+    final private DataLogicSales m_dlSales;
     private TicketParser m_TTP;
 
-    private CatalogSelector m_cat;
-    private PropertiesConfig panelconfig;
-    private ComboBoxValModel m_ReasonModel;
+    private final CatalogSelector m_cat;
+    private final PropertiesConfig panelconfig;
+    private final ComboBoxValModel m_ReasonModel;
 
-    private SentenceList m_sentlocations;
+    private final SentenceList m_sentlocations;
     private ComboBoxValModel m_LocationsModel;
     private ComboBoxValModel m_LocationsModelDes;
 
-    private JInventoryLines m_invlines;
+    private final JInventoryLines m_invlines;
 
     private int NUMBER_STATE = 0;
     private int MULTIPLY = 0;
-    private static int DEFAULT = 0;
-    private static int ACTIVE = 1;
-    private static int DECIMAL = 2;
+    private static final int DEFAULT = 0;
+    private static final int ACTIVE = 1;
+    private static final int DECIMAL = 2;
 
-    /** Creates new form StockManagement */
     public StockManagement(AppView app) {
 
         m_App = app;
-        m_dlSystem = (DataLogicSystem) m_App.getBean("com.openbravo.pos.forms.DataLogicSystem");
-        m_dlSales = (DataLogicSales) m_App.getBean("com.openbravo.pos.forms.DataLogicSales");
-        m_TTP = new TicketParser(m_App.getDeviceTicket(), m_dlSystem);
+        m_dlSystem = (DataLogicSystem) m_App.getBean(DataLogicSystem.class.getName());
+        m_dlSales = (DataLogicSales) m_App.getBean(DataLogicSales.class.getName());
+//        m_TTP = new TicketParser(m_App.getDeviceTicket(), m_dlSystem);
 
         initComponents();
 
         btnDownloadProducts.setEnabled(m_App.getDevicePLUs() != null);
 
-
         // El modelo de locales
         m_sentlocations = m_dlSales.getLocationsList();
-        m_LocationsModel =  new ComboBoxValModel();
+        m_LocationsModel = new ComboBoxValModel();
         m_LocationsModelDes = new ComboBoxValModel();
 
         m_ReasonModel = new ComboBoxValModel();
@@ -126,14 +127,17 @@ public class StockManagement extends JPanel implements JPanelView {
         jPanel5.add(m_invlines, BorderLayout.CENTER);
     }
 
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.StockMovement");
     }
 
+    @Override
     public JComponent getComponent() {
         return this;
     }
 
+    @Override
     public void activate() throws BasicException {
         m_cat.loadCatalog(m_App);
 
@@ -146,12 +150,12 @@ public class StockManagement extends JPanel implements JPanelView {
         stateToInsert();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 jTextField1.requestFocus();
             }
         });
     }
-
 
     public void stateToInsert() {
         // Inicializamos las cajas de texto
@@ -163,6 +167,7 @@ public class StockManagement extends JPanel implements JPanelView {
         m_jcodebar.setText(null);
     }
 
+    @Override
     public boolean deactivate() {
 
         if (m_invlines.getCount() > 0) {
@@ -170,10 +175,8 @@ public class StockManagement extends JPanel implements JPanelView {
             if (res == JOptionPane.YES_OPTION) {
                 saveData();
                 return true;
-            } else if (res == JOptionPane.NO_OPTION) {
-                return true;
             } else {
-                return false;
+                return res == JOptionPane.NO_OPTION;
             }
         } else {
             return true;
@@ -185,7 +188,7 @@ public class StockManagement extends JPanel implements JPanelView {
     }
 
     private void deleteLine(int index) {
-        if (index < 0){
+        if (index < 0) {
             Toolkit.getDefaultToolkit().beep(); // No hay ninguna seleccionada
         } else {
             m_invlines.deleteLine(index);
@@ -204,8 +207,9 @@ public class StockManagement extends JPanel implements JPanelView {
     private void incProductByCode(String sCode) {
         incProductByCode(sCode, 1.0);
     }
+
     private void incProductByCode(String sCode, double dQuantity) {
-    // precondicion: sCode != null
+        // precondicion: sCode != null
 
         try {
             ProductInfoExt oProduct = m_dlSales.getProductInfoByCode(sCode);
@@ -222,8 +226,8 @@ public class StockManagement extends JPanel implements JPanelView {
     }
 
     private void addUnits(double dUnits) {
-        int i  = m_invlines.getSelectedRow();
-        if (i >= 0 ) {
+        int i = m_invlines.getSelectedRow();
+        if (i >= 0) {
             InventoryLine inv = m_invlines.getLine(i);
             double dunits = inv.getMultiply() + dUnits;
             if (dunits <= 0.0) {
@@ -236,8 +240,8 @@ public class StockManagement extends JPanel implements JPanelView {
     }
 
     private void setUnits(double dUnits) {
-        int i  = m_invlines.getSelectedRow();
-        if (i >= 0 ) {
+        int i = m_invlines.getSelectedRow();
+        if (i >= 0) {
             InventoryLine inv = m_invlines.getLine(i);
             inv.setMultiply(dUnits);
             m_invlines.setLine(i, inv);
@@ -247,11 +251,11 @@ public class StockManagement extends JPanel implements JPanelView {
     private void stateTransition(char cTrans) {
 
         // 19 November 2009
-	// Begin Add Local Variable jldy0717
-	    InventoryLine current_stockmgtline;
-	    InventoryLine loop_stockmgtline;
-	    double loop_unitsm;
-	    double current_unitsm;
+        // Begin Add Local Variable jldy0717
+        InventoryLine current_stockmgtline;
+        InventoryLine loop_stockmgtline;
+        double loop_unitsm;
+        double current_unitsm;
         // End Add Local Variable jldy0717
 
         if (cTrans == '\u007f') {
@@ -285,7 +289,7 @@ public class StockManagement extends JPanel implements JPanelView {
         } else if (cTrans == '.') {
             if (m_jcodebar.getText() == null || m_jcodebar.getText().equals("")) {
                 m_jcodebar.setText("0.");
-            } else if (NUMBER_STATE != DECIMAL){
+            } else if (NUMBER_STATE != DECIMAL) {
                 m_jcodebar.setText(m_jcodebar.getText() + cTrans);
             }
             NUMBER_STATE = DECIMAL;
@@ -297,7 +301,6 @@ public class StockManagement extends JPanel implements JPanelView {
 
 // 19 November 2009
 // Begin Add Code jldy0717
-
                 int numlinessm = m_invlines.getCount();
                 for (int icounter = 0; icounter < numlinessm; icounter++) {
 
@@ -312,7 +315,7 @@ public class StockManagement extends JPanel implements JPanelView {
                             String current_productatt = current_stockmgtline.getProductAttSetInstId();
                             String loop_productidsm = loop_stockmgtline.getProductID();
                             String loop_productatt = loop_stockmgtline.getProductAttSetInstId();
-                            if (loop_productidsm.equals(current_productidsm) && (loop_unitsm != 0) && ((loop_productatt!=null && loop_productatt.equals(current_productatt)) || (loop_productatt==null)&&(current_productatt==null)) ) {
+                            if (loop_productidsm.equals(current_productidsm) && (loop_unitsm != 0) && ((loop_productatt != null && loop_productatt.equals(current_productatt)) || (loop_productatt == null) && (current_productatt == null))) {
                                 current_unitsm = current_unitsm + loop_unitsm;
                                 loop_stockmgtline.setMultiply(0);
                             }
@@ -361,19 +364,19 @@ public class StockManagement extends JPanel implements JPanelView {
                         d, MovementReason.OUT_MOVEMENT,
                         (LocationInfo) m_LocationsModel.getSelectedItem(),
                         m_invlines.getLines()
-                    ));
+                ));
                 saveData(new InventoryRecord(
                         d, MovementReason.IN_MOVEMENT,
                         (LocationInfo) m_LocationsModelDes.getSelectedItem(),
                         m_invlines.getLines()
-                    ));
+                ));
             } else {
                 // Es un movimiento
                 saveData(new InventoryRecord(
                         d, reason,
                         (LocationInfo) m_LocationsModel.getSelectedItem(),
                         m_invlines.getLines()
-                    ));
+                ));
             }
 
             stateToInsert();
@@ -391,7 +394,7 @@ public class StockManagement extends JPanel implements JPanelView {
         for (int i = 0; i < m_invlines.getCount(); i++) {
             InventoryLine inv = rec.getLines().get(i);
 
-            sent.exec(new Object[] {
+            sent.exec(new Object[]{
                 UUID.randomUUID().toString(),
                 rec.getDate(),
                 rec.getReason().getKey(),
@@ -409,16 +412,19 @@ public class StockManagement extends JPanel implements JPanelView {
 
     private void printTicket(InventoryRecord invrec) {
 
-        String sresource = m_dlSystem.getResourceAsXML("Printer.Inventory");
-        if (sresource == null) {
+        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_INVENTORY);
+
+        if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(this);
         } else {
+            m_TTP = new TicketParser(schema, m_App.getDeviceTicket());
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("inventoryrecord", invrec);
                 script.put("local", new AppLocal());
-                m_TTP.printTicket(m_App, script.eval(sresource).toString());
+                m_TTP.printTicket(template, script);
             } catch (ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
@@ -426,24 +432,24 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }
 
-
     private class CatalogListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
             String sQty = m_jcodebar.getText();
             if (sQty != null) {
-                Double dQty = (Double.valueOf(sQty)==0) ? 1.0 : Double.valueOf(sQty);
-                incProduct( (ProductInfoExt) e.getSource(), dQty);
+                Double dQty = (Double.valueOf(sQty) == 0) ? 1.0 : Double.valueOf(sQty);
+                incProduct((ProductInfoExt) e.getSource(), dQty);
                 m_jcodebar.setText(null);
             } else {
-                incProduct( (ProductInfoExt) e.getSource(),1.0);
+                incProduct((ProductInfoExt) e.getSource(), 1.0);
             }
         }
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -737,9 +743,9 @@ private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
 
 private void m_jcodebarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_m_jcodebarMouseClicked
     java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                jTextField1.requestFocus();
-            }
+        public void run() {
+            jTextField1.requestFocus();
+        }
     });
 }//GEN-LAST:event_m_jcodebarMouseClicked
 

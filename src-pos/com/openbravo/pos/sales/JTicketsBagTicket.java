@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.sales;
 
 import com.nordpos.device.ticket.TicketParser;
@@ -36,40 +35,41 @@ import com.openbravo.pos.customers.DataLogicCustomers;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
-import com.openbravo.pos.forms.DataLogicSystem;
 import com.openbravo.pos.panels.JTicketsFinder;
 import com.openbravo.pos.ticket.FindTicketsInfo;
+import java.io.InputStream;
 
+/**
+ *
+ * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ */
 public class JTicketsBagTicket extends JTicketsBag {
 
-    private DataLogicSystem m_dlSystem = null;
-    protected DataLogicCustomers dlCustomers = null;
+    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
+    private static final String PRINT_TICKET_PREVIEW = "META-INF/templates/Printer.TicketPreview.xml";
 
-    private DeviceTicketFactory m_TP;
+    protected DataLogicCustomers dlCustomers;
+
+    private final DeviceTicketFactory m_TP;
     private TicketParser m_TTP;
     private TicketParser m_TTP2;
 
     private TicketInfo m_ticket;
     private TicketInfo m_ticketCopy;
 
-    private JTicketsBagTicketBag m_TicketsBagTicketBag;
+    private final JTicketsBagTicketBag m_TicketsBagTicketBag;
 
-    private JPanelTicketEdits m_panelticketedit;
+    private final JPanelTicketEdits m_panelticketedit;
 
-    /** Creates new form JTicketsBagTicket */
     public JTicketsBagTicket(AppView app, JPanelTicketEdits panelticket) {
 
         super(app, panelticket);
         m_panelticketedit = panelticket;
-        m_dlSystem = (DataLogicSystem) m_App.getBean("com.openbravo.pos.forms.DataLogicSystem");
-        dlCustomers = (DataLogicCustomers) m_App.getBean("com.openbravo.pos.customers.DataLogicCustomers");
+        dlCustomers = (DataLogicCustomers) m_App.getBean(DataLogicCustomers.class.getName());
 
         // Inicializo la impresora...
         m_TP = new DeviceTicketFactory();
-
-        // Inicializo el parser de documentos de ticket
-        m_TTP = new TicketParser(m_TP, m_dlSystem); // para visualizar el ticket
-        m_TTP2 = new TicketParser(m_App.getDeviceTicket(), m_dlSystem); // para imprimir el ticket
 
         initComponents();
 
@@ -81,10 +81,10 @@ public class JTicketsBagTicket extends JTicketsBag {
         m_jPanelTicket.add(m_TP.getDevicePrinter("1").getPrinterComponent(), BorderLayout.CENTER);
     }
 
+    @Override
     public void activate() {
 
         // precondicion es que no tenemos ticket activado ni ticket en el panel
-
         m_ticket = null;
         m_ticketCopy = null;
 
@@ -104,6 +104,7 @@ public class JTicketsBagTicket extends JTicketsBag {
         // postcondicion es que tenemos ticket activado aqui y ticket en el panel
     }
 
+    @Override
     public boolean deactivate() {
 
         // precondicion es que tenemos ticket activado aqui y ticket en el panel
@@ -113,6 +114,7 @@ public class JTicketsBagTicket extends JTicketsBag {
         // postcondicion es que no tenemos ticket activado ni ticket en el panel
     }
 
+    @Override
     public void deleteTicket() {
 
         if (m_ticketCopy != null) {
@@ -143,10 +145,12 @@ public class JTicketsBagTicket extends JTicketsBag {
         m_panelticketedit.setActiveTicket(null, null);
     }
 
+    @Override
     protected JComponent getBagComponent() {
         return m_TicketsBagTicketBag;
     }
 
+    @Override
     protected JComponent getNullComponent() {
         return this;
     }
@@ -154,9 +158,9 @@ public class JTicketsBagTicket extends JTicketsBag {
     private void readTicket(int iTicketid, int iTickettype) {
 
         try {
-            TicketInfo ticket = (iTicketid==-1)
-                ? m_dlSales.loadTicket(iTickettype,  m_jTicketEditor.getValueInteger())
-                : m_dlSales.loadTicket(iTickettype, iTicketid) ;
+            TicketInfo ticket = (iTicketid == -1)
+                    ? m_dlSales.loadTicket(iTickettype, m_jTicketEditor.getValueInteger())
+                    : m_dlSales.loadTicket(iTickettype, iTicketid);
 
             if (ticket == null) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.notexiststicket"));
@@ -179,7 +183,6 @@ public class JTicketsBagTicket extends JTicketsBag {
     private void printTicket() {
 
         // imprimo m_ticket
-
         try {
             m_jEdit.setEnabled(
                     m_ticket != null
@@ -198,11 +201,14 @@ public class JTicketsBagTicket extends JTicketsBag {
             m_jTicketId.setText(null);
         } else {
             m_jTicketId.setText(m_ticket.getName());
+            InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
+            InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_TICKET_PREVIEW);
+            m_TTP = new TicketParser(schema, m_TP);
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", m_ticket);
                 script.put("local", new AppLocal());
-                m_TTP.printTicket(m_App, script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
+                m_TTP.printTicket(template, script);
             } catch (ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
@@ -210,10 +216,10 @@ public class JTicketsBagTicket extends JTicketsBag {
         }
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -387,12 +393,16 @@ public class JTicketsBagTicket extends JTicketsBag {
 
     private void m_jPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jPrintActionPerformed
 
+        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_TICKET_PREVIEW);
+
         if (m_ticket != null) {
+            m_TTP2 = new TicketParser(schema, m_App.getDeviceTicket());
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticket", m_ticket);
                 script.put("local", new AppLocal());
-                m_TTP2.printTicket(m_App, script.eval(m_dlSystem.getResourceAsXML("Printer.TicketPreview")).toString());
+                m_TTP2.printTicket(template, script);
             } catch (ScriptException | TicketPrinterException e) {
                 JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotprint"), e));
             }
@@ -404,7 +414,7 @@ public class JTicketsBagTicket extends JTicketsBag {
 
         java.util.List aRefundLines = new ArrayList();
 
-        for(int i = 0; i < m_ticket.getLinesCount(); i++) {
+        for (int i = 0; i < m_ticket.getLinesCount(); i++) {
             TicketLineInfo newline = new TicketLineInfo(m_ticket.getLine(i));
             aRefundLines.add(newline);
         }
@@ -434,15 +444,15 @@ public class JTicketsBagTicket extends JTicketsBag {
     }//GEN-LAST:event_m_jKeysActionPerformed
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JTicketsFinder finder = JTicketsFinder.getReceiptFinder(this, m_dlSales, dlCustomers);
-        finder.setVisible(true);
-        FindTicketsInfo selectedTicket = finder.getSelectedCustomer();
-        if (selectedTicket == null) {
-            m_jTicketEditor.reset();
-            m_jTicketEditor.activate();
-        } else {
-            readTicket(selectedTicket.getTicketId(), selectedTicket.getTicketType());
-        }
+    JTicketsFinder finder = JTicketsFinder.getReceiptFinder(this, m_dlSales, dlCustomers);
+    finder.setVisible(true);
+    FindTicketsInfo selectedTicket = finder.getSelectedCustomer();
+    if (selectedTicket == null) {
+        m_jTicketEditor.reset();
+        m_jTicketEditor.activate();
+    } else {
+        readTicket(selectedTicket.getTicketId(), selectedTicket.getTicketType());
+    }
 }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

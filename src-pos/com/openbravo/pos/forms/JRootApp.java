@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.forms;
 
 import com.openbravo.basic.BasicException;
@@ -42,7 +41,9 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -54,6 +55,9 @@ import javax.swing.*;
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class JRootApp extends JPanel implements AppView {
+
+    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
+    private static final String PRINT_START = "META-INF/templates/Printer.Start.xml";
 
     private AppProperties m_props;
     private Session session;
@@ -88,23 +92,16 @@ public class JRootApp extends JPanel implements AppView {
     private DeviceTicketFactory m_TP;
     private TicketParser m_TTP;
 
-    private Map<String, BeanFactory> m_aBeanFactories;
+    private final Map<String, BeanFactory> m_aBeanFactories;
 
     private JPrincipalApp m_principalapp = null;
 
-    private static HashMap<String, String> m_oldclasses; // This is for backwards compatibility purposes
-
-    static {
-        initOldClasses();
-    }
-
-    /** Creates new form JRootApp */
     public JRootApp() {
 
-        m_aBeanFactories = new HashMap<String, BeanFactory>();
+        m_aBeanFactories = new HashMap<>();
 
         // Inicializo los componentes visuales
-        initComponents ();
+        initComponents();
         jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(35, 35));
     }
 
@@ -124,7 +121,7 @@ public class JRootApp extends JPanel implements AppView {
             return false;
         }
 
-        m_dlSystem = (DataLogicSystem) getBean("com.openbravo.pos.forms.DataLogicSystem");
+        m_dlSystem = (DataLogicSystem) getBean(DataLogicSystem.class.getName());
 
         // Create or upgrade the database if database version is not the expected
         String sDBVersion = readDataBaseVersion();
@@ -182,7 +179,7 @@ public class JRootApp extends JPanel implements AppView {
 
                 // creamos la caja activa
                 m_dlSystem.execInsertCash(
-                        new Object[] {getActiveCashIndex(), m_props.getHost(), getActiveCashSequence(), getActiveCashDateStart(), getActiveCashDateEnd()});
+                        new Object[]{getActiveCashIndex(), m_props.getHost(), getActiveCashSequence(), getActiveCashDateStart(), getActiveCashDateEnd()});
             } else {
                 setActiveCash(sActiveCashIndex, (Integer) valcash[1], (Date) valcash[2], (Date) valcash[3]);
             }
@@ -276,7 +273,6 @@ public class JRootApp extends JPanel implements AppView {
         m_TP = new DeviceTicketFactory(this, m_props);
 
         // Inicializamos
-        m_TTP = new TicketParser(getDeviceTicket(), m_dlSystem);
         printerStart();
 
         // Inicializamos la bascula
@@ -286,22 +282,22 @@ public class JRootApp extends JPanel implements AppView {
         m_DevicePLUs = DevicePLUFactory.createInstance(m_props);
 
         // Leemos los recursos basicos
-        BufferedImage imgicon = m_dlSystem.getResourceAsImage("Window.Logo");
+        BufferedImage imgicon = DataLogicSystem.getResourceAsImage("Window.Logo");
         m_jLblTitle.setIcon(imgicon == null ? null : new ImageIcon(imgicon));
-        m_jLblTitle.setText(m_dlSystem.getResourceAsText("Window.Title"));
+        m_jLblTitle.setText(DataLogicSystem.getResourceAsText("Window.Title"));
 
-        BufferedImage imgdesclogo1 = m_dlSystem.getResourceAsImage("Window.DescLogo");
+        BufferedImage imgdesclogo1 = DataLogicSystem.getResourceAsImage("Window.DescLogo");
         m_jLblDescriptionFirst.setIcon(imgdesclogo1 == null ? new ImageIcon(getClass().getResource("/com/openbravo/images/logo.png")) : new ImageIcon(imgdesclogo1));
-        m_jLblDescriptionFirst.setText(m_dlSystem.getResourceAsText("Window.Description"));
+        m_jLblDescriptionFirst.setText(DataLogicSystem.getResourceAsText("Window.Description"));
 
-        BufferedImage imgdesclogo2 = m_dlSystem.getResourceAsImage("Window.DescLogoSecond");
+        BufferedImage imgdesclogo2 = DataLogicSystem.getResourceAsImage("Window.DescLogoSecond");
         m_jLblDescriptionSecond.setIcon(imgdesclogo2 == null ? null : new ImageIcon(imgdesclogo2));
-        m_jLblDescriptionSecond.setText(m_dlSystem.getResourceAsText("Window.DescriptionSecond"));
+        m_jLblDescriptionSecond.setText(DataLogicSystem.getResourceAsText("Window.DescriptionSecond"));
 
-        BufferedImage imgpoweredby = m_dlSystem.getResourceAsImage("Window.PoweredBy");
+        BufferedImage imgpoweredby = DataLogicSystem.getResourceAsImage("Window.PoweredBy");
         m_jLblPoweredBy.setIcon(imgpoweredby == null ? new ImageIcon(getClass().getResource("/com/openbravo/images/poweredby.png")) : new ImageIcon(imgpoweredby));
 
-        BufferedImage imgsupportby = m_dlSystem.getResourceAsImage("Window.SupportBy");
+        BufferedImage imgsupportby = DataLogicSystem.getResourceAsImage("Window.SupportBy");
         m_jLblSupportBy.setIcon(imgsupportby == null ? null : new ImageIcon(imgsupportby));
 
         String sWareHouse;
@@ -346,7 +342,6 @@ public class JRootApp extends JPanel implements AppView {
         if (closeAppView()) {
 
             // success. continue with the shut down
-
             // apago el visor
             m_TP.getDeviceDisplay().clearVisor();
             // me desconecto de la base de datos.
@@ -358,78 +353,102 @@ public class JRootApp extends JPanel implements AppView {
     }
 
     // Interfaz de aplicacion
-    public DeviceTicketFactory getDeviceTicket(){
+    @Override
+    public DeviceTicketFactory getDeviceTicket() {
         return m_TP;
     }
 
+    @Override
     public DeviceScaleFactory getDeviceScale() {
         return m_Scale;
     }
+
+    @Override
     public DevicePLU getDevicePLUs() {
         return m_DevicePLUs;
     }
 
+    @Override
     public Session getSession() {
         return session;
     }
 
+    @Override
     public String getInventoryLocation() {
         return m_sInventoryLocation;
     }
 
+    @Override
     public String getDefaultTaxCategory() {
         return m_sDefaultTaxCategory;
     }
 
+    @Override
     public String getDefaultProductCategory() {
         return m_sDefaultProductCategory;
     }
 
+    @Override
     public String getCustomerCard() {
         return m_sCustomerCard;
     }
 
+    @Override
     public String getUserCard() {
         return m_sUserCard;
     }
 
+    @Override
     public String getUserBarcode() {
         return m_sUserBarcode;
     }
 
+    @Override
     public String getPriceBarcode() {
         return m_sPriceBarcode;
     }
 
+    @Override
     public String getUnitBarcode() {
         return m_sUnitBarcode;
     }
 
+    @Override
     public String getProductPriceBarcode() {
         return m_sProductPriceBarcode;
     }
 
+    @Override
     public String getGenerateProductReference() {
         return m_sGenerateProductReference;
     }
 
+    @Override
     public String getGenerateProductBarcode() {
         return m_sGenerateProductBarcode;
     }
 
-
+    @Override
     public String getActiveCashIndex() {
         return m_sActiveCashIndex;
     }
+
+    @Override
     public int getActiveCashSequence() {
         return m_iActiveCashSequence;
     }
+
+    @Override
     public Date getActiveCashDateStart() {
         return m_dActiveCashDateStart;
     }
-    public Date getActiveCashDateEnd(){
+
+    @Override
+    public Date getActiveCashDateEnd() {
         return m_dActiveCashDateEnd;
     }
+
+    @Override
     public void setActiveCash(String sIndex, int iSeq, Date dStart, Date dEnd) {
         m_sActiveCashIndex = sIndex;
         m_iActiveCashSequence = iSeq;
@@ -440,15 +459,13 @@ public class JRootApp extends JPanel implements AppView {
         m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
     }
 
+    @Override
     public AppProperties getProperties() {
         return m_props;
     }
 
+    @Override
     public Object getBean(String beanfactory) throws BeanFactoryException {
-
-        // For backwards compatibility
-        beanfactory = mapNewClass(beanfactory);
-
 
         BeanFactory bf = m_aBeanFactories.get(beanfactory);
         if (bf == null) {
@@ -465,13 +482,13 @@ public class JRootApp extends JPanel implements AppView {
                         bf = (BeanFactory) bfclass.newInstance();
                     } else {
                         // the old construction for beans...
-                        Constructor constMyView = bfclass.getConstructor(new Class[] {AppView.class});
-                        Object bean = constMyView.newInstance(new Object[] {this});
+                        Constructor constMyView = bfclass.getConstructor(new Class[]{AppView.class});
+                        Object bean = constMyView.newInstance(new Object[]{this});
 
                         bf = new BeanFactoryObj(bean);
                     }
 
-                } catch (Exception e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
                     // ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException
                     throw new BeanFactoryException(e);
                 }
@@ -488,60 +505,34 @@ public class JRootApp extends JPanel implements AppView {
         return bf.getBean();
     }
 
-    private static String mapNewClass(String classname) {
-        String newclass = m_oldclasses.get(classname);
-        return newclass == null
-                ? classname
-                : newclass;
-    }
-
-    private static void initOldClasses() {
-        m_oldclasses = new HashMap<String, String>();
-
-        // update bean names from 2.00 to 2.20
-        m_oldclasses.put("com.openbravo.pos.reports.JReportCustomers", "/com/openbravo/reports/customers.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportCustomersB", "/com/openbravo/reports/customersb.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportClosedPos", "/com/openbravo/reports/closedpos.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportClosedProducts", "/com/openbravo/reports/closedproducts.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JChartSales", "/com/openbravo/reports/chartsales.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportInventory", "/com/openbravo/reports/inventory.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportInventory2", "/com/openbravo/reports/inventoryb.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportInventoryBroken", "/com/openbravo/reports/inventorybroken.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportInventoryDiff", "/com/openbravo/reports/inventorydiff.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportPeople", "/com/openbravo/reports/people.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportTaxes", "/com/openbravo/reports/taxes.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportUserSales", "/com/openbravo/reports/usersales.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportProducts", "/com/openbravo/reports/products.bs");
-        m_oldclasses.put("com.openbravo.pos.reports.JReportCatalog", "/com/openbravo/reports/productscatalog.bs");
-
-        // update bean names from 2.10 to 2.20
-        m_oldclasses.put("com.openbravo.pos.panels.JPanelTax", "com.openbravo.pos.inventory.TaxPanel");
-
-    }
-
+    @Override
     public void waitCursorBegin() {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
     }
 
-    public void waitCursorEnd(){
+    @Override
+    public void waitCursorEnd() {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
+    @Override
     public AppUserView getAppUserView() {
         return m_principalapp;
     }
 
-
     private void printerStart() {
 
-        String sresource = m_dlSystem.getResourceAsXML("Printer.Start");
-        if (sresource == null) {
+        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_START);
+
+        if (schema == null || template == null) {
             m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);
         } else {
-            try {
+            m_TTP = new TicketParser(schema, getDeviceTicket());
+            try {                
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("local", new AppLocal());
-                m_TTP.printTicket(this, script.eval(sresource).toString());
+                m_TTP.printTicket(template, script);
             } catch (ScriptException | TicketPrinterException eTP) {
                 m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);
             }
@@ -559,10 +550,8 @@ public class JRootApp extends JPanel implements AppView {
 
             java.util.List people = m_dlSystem.listPeopleVisible();
 
-            for (int i = 0; i < people.size(); i++) {
-
-                AppUser user = (AppUser) people.get(i);
-
+            for (Object people1 : people) {
+                AppUser user = (AppUser) people1;
                 JButton btn = new JButton(new AppUserAction(user));
                 btn.applyComponentOrientation(getComponentOrientation());
                 btn.setFocusPainted(false);
@@ -572,7 +561,6 @@ public class JRootApp extends JPanel implements AppView {
                 btn.setMaximumSize(new Dimension(150, 50));
                 btn.setPreferredSize(new Dimension(150, 50));
                 btn.setMinimumSize(new Dimension(150, 50));
-
                 jPeople.add(btn);
             }
             jScrollPane1.getViewport().setView(jPeople);
@@ -581,10 +569,11 @@ public class JRootApp extends JPanel implements AppView {
             ee.printStackTrace();
         }
     }
+
     // La accion del selector
     private class AppUserAction extends AbstractAction {
 
-        private AppUser m_actionuser;
+        private final AppUser m_actionuser;
 
         public AppUserAction(AppUser user) {
             m_actionuser = user;
@@ -596,6 +585,7 @@ public class JRootApp extends JPanel implements AppView {
             return m_actionuser;
         }
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             // String sPassword = m_actionuser.getPassword();
             if (m_actionuser.authenticate()) {
@@ -620,7 +610,7 @@ public class JRootApp extends JPanel implements AppView {
     }
 
     private void showView(String view) {
-        CardLayout cl = (CardLayout)(m_jPanelContainer.getLayout());
+        CardLayout cl = (CardLayout) (m_jPanelContainer.getLayout());
         cl.show(m_jPanelContainer, view);
     }
 
@@ -677,6 +667,7 @@ public class JRootApp extends JPanel implements AppView {
         inputtext = new StringBuffer();
         m_txtKeys.setText(null);
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 m_txtKeys.requestFocus();
             }
@@ -694,7 +685,7 @@ public class JRootApp extends JPanel implements AppView {
                 e.printStackTrace();
             }
 
-            if (user == null)  {
+            if (user == null) {
                 // user not found
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.nocard"));
                 msg.show(this);
@@ -708,11 +699,10 @@ public class JRootApp extends JPanel implements AppView {
         }
     }
 
-
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the FormEditor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the FormEditor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

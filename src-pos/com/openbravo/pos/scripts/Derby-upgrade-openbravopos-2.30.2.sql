@@ -21,17 +21,18 @@
 
 -- Openbravo POS v2.30.2 -> NORD POS v2.30.2
 
-UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Administrator.xml} WHERE ID = '0';
-UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Manager.xml} WHERE ID = '1';
+UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Administrator.xml} WHERE NAME = 'Role.Administrator';
+UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Manager.xml} WHERE NAME = 'Role.Manager';
 
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Logo.png} WHERE ID = '9';
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Title.txt} WHERE ID = '10';
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.txt} WHERE ID = '14';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Logo.png} WHERE NAME = 'Window.Logo';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Title.txt} WHERE NAME = 'Window.Title';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.txt} WHERE NAME = 'Menu.Root';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Ticket.Buttons.xml} WHERE NAME = 'Ticket.Buttons';
 
 INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90005', 'Window.Description', 0, $FILE{/com/openbravo/pos/templates/Window.Description.txt});
 INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90006', 'Window.DescLogo', 1, $FILE{/com/openbravo/pos/templates/Window.DescLogo.png});
 INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90007', 'Window.SupportBy', 1, $FILE{/com/openbravo/pos/templates/Window.SupportBy.png});
-INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('92001', 'Printer.ProductLabel', 0, $FILE{/com/openbravo/pos/templates/Printer.ProductLabel.xml});
+--INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('92001', 'Printer.ProductLabel', 0, $FILE{/com/openbravo/pos/templates/Printer.ProductLabel.xml});
 
 ALTER TABLE TICKETLINES ADD COLUMN ID VARCHAR(256);
 ALTER TABLE CATEGORIES ADD COLUMN CODE VARCHAR(256);

@@ -16,9 +16,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 // TODO: Transaction keeping while payment from customer
-
 package com.openbravo.pos.customers;
 
 import com.openbravo.basic.BasicException;
@@ -42,6 +40,7 @@ import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.ticket.TicketInfo;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComponent;
@@ -49,9 +48,14 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author  adrianromero
+ * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class CustomersPayment extends javax.swing.JPanel implements JPanelView, BeanFactoryApp {
+
+    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
+    private static final String PRINT_CUSTOMER_PAID = "META-INF/templates/Printer.CustomerPaid.xml";
+    private static final String PRINT_CUSTOMER_PAID_2 = "META-INF/templates/Printer.CustomerPaid2.xml";
 
     private AppView app;
     private DataLogicCustomers dlcustomers;
@@ -61,9 +65,8 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
     private JPaymentSelect paymentdialog;
 
     private CustomerInfoExt customerext;
-    private DirtyManager dirty;
+    private final DirtyManager dirty;
 
-    /** Creates new form CustomersPayment */
     public CustomersPayment() {
 
         initComponents();
@@ -75,23 +78,27 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         txtNotes.addPropertyChangeListener("Text", dirty);
     }
 
+    @Override
     public void init(AppView app) throws BeanFactoryException {
 
         this.app = app;
-        dlcustomers = (DataLogicCustomers) app.getBean("com.openbravo.pos.customers.DataLogicCustomers");
-        dlsales = (DataLogicSales) app.getBean("com.openbravo.pos.forms.DataLogicSales");
-        dlsystem = (DataLogicSystem) app.getBean("com.openbravo.pos.forms.DataLogicSystem");
-        ttp = new TicketParser(app.getDeviceTicket(), dlsystem);
+        dlcustomers = (DataLogicCustomers) app.getBean(DataLogicCustomers.class.getName());
+        dlsales = (DataLogicSales) app.getBean(DataLogicSales.class.getName());
+        dlsystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
+        ttp = new TicketParser(getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA), app.getDeviceTicket());
     }
 
+    @Override
     public Object getBean() {
         return this;
     }
 
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.CustomersPayment");
     }
 
+    @Override
     public void activate() throws BasicException {
 
         paymentdialog = JPaymentSelectCustomer.getDialog(this);
@@ -103,6 +110,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         editorcard.activate();
     }
 
+    @Override
     public boolean deactivate() {
         if (dirty.isDirty()) {
             int res = JOptionPane.showConfirmDialog(this, AppLocal.getIntString("message.wannasave"), AppLocal.getIntString("title.editor"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -117,6 +125,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         }
     }
 
+    @Override
     public JComponent getComponent() {
         return this;
     }
@@ -139,7 +148,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         dirty.setDirty(false);
 
         btnSave.setEnabled(true);
-        btnPay.setEnabled(customer.getCurdebt() != null && customer.getCurdebt().doubleValue() > 0.0);
+        btnPay.setEnabled(customer.getCurdebt() != null && customer.getCurdebt() > 0.0);
     }
 
     private void resetCustomer() {
@@ -199,7 +208,8 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
 
     private void printTicket(String resname, TicketInfo ticket, CustomerInfoExt customer) {
 
-        String resource = dlsystem.getResourceAsXML(resname);
+        InputStream resource = getClass().getClassLoader().getResourceAsStream(resname);
+
         if (resource == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(this);
@@ -209,21 +219,18 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
                 script.put("ticket", ticket);
                 script.put("customer", customer);
                 script.put("local", new AppLocal());
-                ttp.printTicket(app, script.eval(resource).toString());
-            } catch (ScriptException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
-            } catch (TicketPrinterException e) {
+                ttp.printTicket(resource, script);
+            } catch (ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             }
         }
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -527,7 +534,6 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
                 msg.show(this);
             }
 
-
             // reload customer
             CustomerInfoExt c;
             try {
@@ -545,8 +551,8 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
             }
 
             printTicket(paymentdialog.isPrintSelected()
-                    ? "Printer.CustomerPaid"
-                    : "Printer.CustomerPaid2",
+                    ? PRINT_CUSTOMER_PAID
+                    : PRINT_CUSTOMER_PAID_2,
                     ticket, c);
         }
 

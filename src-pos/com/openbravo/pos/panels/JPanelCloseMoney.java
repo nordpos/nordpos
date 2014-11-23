@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.panels;
 
 import com.openbravo.basic.BasicException;
@@ -34,6 +33,7 @@ import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
 import java.awt.Dimension;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
@@ -46,8 +46,13 @@ import javax.swing.table.TableColumnModel;
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
  */
 public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryApp {
+
+    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
+    private static final String PRINT_CLOSE_CASH = "META-INF/templates/Printer.CloseCash.xml";
+    private static final String PRINT_PARTIAL_CASH = "META-INF/templates/Printer.PartialCash.xml";
 
     private AppView m_App;
     private DataLogicSystem m_dlSystem;
@@ -58,51 +63,58 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
 
     private static final Logger logger = Logger.getLogger(JPanelCloseMoney.class.getName());
 
-    /** Creates new form JPanelCloseMoney */
+    /**
+     * Creates new form JPanelCloseMoney
+     */
     public JPanelCloseMoney() {
 
         initComponents();
     }
 
+    @Override
     public void init(AppView app) throws BeanFactoryException {
 
         m_App = app;
-        m_dlSystem = (DataLogicSystem) m_App.getBean("com.openbravo.pos.forms.DataLogicSystem");
-        m_TTP = new TicketParser(m_App.getDeviceTicket(), m_dlSystem);
+        m_dlSystem = (DataLogicSystem) m_App.getBean(DataLogicSystem.class.getName());
 
         m_jTicketTable.setDefaultRenderer(Object.class, new TableRendererBasic(
-                new Formats[] {new FormatsPayment(), Formats.CURRENCY}));
+                new Formats[]{new FormatsPayment(), Formats.CURRENCY}));
         m_jTicketTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        m_jScrollTableTicket.getVerticalScrollBar().setPreferredSize(new Dimension(25,25));
+        m_jScrollTableTicket.getVerticalScrollBar().setPreferredSize(new Dimension(25, 25));
         m_jTicketTable.getTableHeader().setReorderingAllowed(false);
         m_jTicketTable.setRowHeight(25);
         m_jTicketTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         m_jsalestable.setDefaultRenderer(Object.class, new TableRendererBasic(
-                new Formats[] {Formats.STRING, Formats.CURRENCY, Formats.CURRENCY, Formats.CURRENCY}));
+                new Formats[]{Formats.STRING, Formats.CURRENCY, Formats.CURRENCY, Formats.CURRENCY}));
         m_jsalestable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        m_jScrollSales.getVerticalScrollBar().setPreferredSize(new Dimension(25,25));
+        m_jScrollSales.getVerticalScrollBar().setPreferredSize(new Dimension(25, 25));
         m_jsalestable.getTableHeader().setReorderingAllowed(false);
         m_jsalestable.setRowHeight(25);
         m_jsalestable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
+    @Override
     public Object getBean() {
         return this;
     }
 
+    @Override
     public JComponent getComponent() {
         return this;
     }
 
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.CloseTPV");
     }
 
+    @Override
     public void activate() throws BasicException {
         loadData();
     }
 
+    @Override
     public boolean deactivate() {
         // se me debe permitir cancelar el deactivate
         return true;
@@ -167,17 +179,18 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
     }
 
     private void printPayments(String report) throws TicketPrinterException {
-
-        String sresource = m_dlSystem.getResourceAsXML(report);
-        if (sresource == null) {
+        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getClassLoader().getResourceAsStream(report);
+        if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(this);
         } else {
             try {
+                m_TTP = new TicketParser(schema, m_App.getDeviceTicket());
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("payments", m_PaymentsToClose);
                 script.put("local", new AppLocal());
-                m_TTP.printTicket(m_App, script.eval(sresource).toString());
+                m_TTP.printTicket(template, script);
             } catch (ScriptException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
@@ -190,21 +203,27 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
     }
 
     private class FormatsPayment extends Formats {
+
+        @Override
         protected String formatValueInt(Object value) {
             return AppLocal.getIntString("transpayment." + (String) value);
         }
+
+        @Override
         protected Object parseValueInt(String value) throws ParseException {
             return value;
         }
+
+        @Override
         public int getAlignment() {
             return javax.swing.SwingConstants.LEFT;
         }
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -497,10 +516,8 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
                 try {
                     // Cerramos la caja si esta pendiente de cerrar.
                     if (m_App.getActiveCashDateEnd() == null) {
-                        new StaticSentence(m_App.getSession()
-                            , "UPDATE CLOSEDCASH SET DATEEND = ? WHERE HOST = ? AND MONEY = ?"
-                            , new SerializerWriteBasic(new Datas[] {Datas.TIMESTAMP, Datas.STRING, Datas.STRING}))
-                            .exec(new Object[] {dNow, m_App.getProperties().getHost(), m_App.getActiveCashIndex()});
+                        new StaticSentence(m_App.getSession(), "UPDATE CLOSEDCASH SET DATEEND = ? WHERE HOST = ? AND MONEY = ?", new SerializerWriteBasic(new Datas[]{Datas.TIMESTAMP, Datas.STRING, Datas.STRING}))
+                                .exec(new Object[]{dNow, m_App.getProperties().getHost(), m_App.getActiveCashIndex()});
                     }
                 } catch (BasicException e) {
                     MessageInf msg = new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.cannotclosecash"), e);
@@ -513,13 +530,13 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
 
                     // creamos la caja activa
                     m_dlSystem.execInsertCash(
-                            new Object[] {m_App.getActiveCashIndex(), m_App.getProperties().getHost(), m_App.getActiveCashSequence(), m_App.getActiveCashDateStart(), m_App.getActiveCashDateEnd()});
+                            new Object[]{m_App.getActiveCashIndex(), m_App.getProperties().getHost(), m_App.getActiveCashSequence(), m_App.getActiveCashDateStart(), m_App.getActiveCashDateEnd()});
 
                     // ponemos la fecha de fin
                     m_PaymentsToClose.setDateEnd(dNow);
 
                     // print report
-                    printPayments("Printer.CloseCash");
+                    printPayments(PRINT_CLOSE_CASH);
 
                     // Mostramos el mensaje
                     JOptionPane.showMessageDialog(this, AppLocal.getIntString("message.closecashok"), AppLocal.getIntString("message.title"), JOptionPane.INFORMATION_MESSAGE);
@@ -553,9 +570,8 @@ private void m_jPrintCashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
     // print report
     try {
-        printPayments("Printer.PartialCash");
-
-    // Not important errors
+        printPayments(PRINT_PARTIAL_CASH);
+        // Not important errors
     } catch (TicketPrinterException e) {
     }
 

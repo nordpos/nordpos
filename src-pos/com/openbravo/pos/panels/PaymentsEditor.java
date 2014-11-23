@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.panels;
 
 import com.openbravo.basic.BasicException;
@@ -34,6 +33,7 @@ import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
 import java.awt.Component;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -46,20 +46,21 @@ import java.util.logging.Logger;
  */
 public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
 
-    private ComboBoxValModel m_ReasonModel;
+    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
+    private static final String PRINT_PAYMENT_EDIT = "META-INF/templates/Printer.PaymentEdit.xml";
+
+    private final ComboBoxValModel m_ReasonModel;
     private String m_sId;
     private String m_sPaymentId;
     private Date datenew;
-    private AppView m_App;
-    private DataLogicSystem m_dlSystem;
+    private final AppView m_App;
+    private final DataLogicSystem m_dlSystem;
     private TicketParser m_TTP;
 
-    /** Creates new form JPanelPayments */
     public PaymentsEditor(AppView oApp, DirtyManager dirty) {
 
         m_App = oApp;
-        m_dlSystem = (DataLogicSystem) m_App.getBean("com.openbravo.pos.forms.DataLogicSystem");
-        m_TTP = new TicketParser(m_App.getDeviceTicket(), m_dlSystem);
+        m_dlSystem = (DataLogicSystem) m_App.getBean(DataLogicSystem.class.getName());
 
         initComponents();
 
@@ -76,6 +77,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         writeValueEOF();
     }
 
+    @Override
     public void writeValueEOF() {
         m_sId = null;
         m_sPaymentId = null;
@@ -85,6 +87,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         jTotal.setEnabled(false);
     }
 
+    @Override
     public void writeValueInsert() {
         m_sId = null;
         m_sPaymentId = null;
@@ -95,6 +98,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         jTotal.activate();
     }
 
+    @Override
     public void writeValueDelete(Object value) {
         Object[] payment = (Object[]) value;
         m_sId = (String) payment[0];
@@ -105,6 +109,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         jTotal.setEnabled(false);
     }
 
+    @Override
     public void writeValueEdit(Object value) {
         Object[] payment = (Object[]) value;
         m_sId = (String) payment[0];
@@ -116,29 +121,32 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         jTotal.activate();
     }
 
+    @Override
     public Object createValue() throws BasicException {
         try {
-           printPaymentReason(new PaymentReasonRecord(datenew == null ? new Date() : datenew, m_ReasonModel.getSelectedKey().toString(), jTotal.getDoubleValue()));
-           Object[] payment = new Object[6];
-           payment[0] = m_sId == null ? UUID.randomUUID().toString() : m_sId;
-           payment[1] = m_App.getActiveCashIndex();
-           payment[2] = datenew == null ? new Date() : datenew;
-           payment[3] = m_sPaymentId == null ? UUID.randomUUID().toString() : m_sPaymentId;
-           payment[4] = m_ReasonModel.getSelectedKey();
-           PaymentReason reason = (PaymentReason) m_ReasonModel.getSelectedItem();
-           Double dtotal = jTotal.getDoubleValue();
-           payment[5] = reason == null ? dtotal : reason.addSignum(dtotal);
-           return payment;
+            printPaymentReason(new PaymentReasonRecord(datenew == null ? new Date() : datenew, m_ReasonModel.getSelectedKey().toString(), jTotal.getDoubleValue()));
+            Object[] payment = new Object[6];
+            payment[0] = m_sId == null ? UUID.randomUUID().toString() : m_sId;
+            payment[1] = m_App.getActiveCashIndex();
+            payment[2] = datenew == null ? new Date() : datenew;
+            payment[3] = m_sPaymentId == null ? UUID.randomUUID().toString() : m_sPaymentId;
+            payment[4] = m_ReasonModel.getSelectedKey();
+            PaymentReason reason = (PaymentReason) m_ReasonModel.getSelectedItem();
+            Double dtotal = jTotal.getDoubleValue();
+            payment[5] = reason == null ? dtotal : reason.addSignum(dtotal);
+            return payment;
         } catch (TicketPrinterException ex) {
             Logger.getLogger(PaymentsEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
 
+    @Override
     public void refresh() {
     }
 
@@ -157,14 +165,15 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
 
     private static abstract class PaymentReason implements IKeyed {
 
-        private String m_sKey;
-        private String m_sText;
+        private final String m_sKey;
+        private final String m_sText;
 
         public PaymentReason(String key, String text) {
             m_sKey = key;
             m_sText = text;
         }
 
+        @Override
         public Object getKey() {
             return m_sKey;
         }
@@ -185,15 +194,17 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
             super(key, text);
         }
 
+        @Override
         public Double positivize(Double d) {
             return d;
         }
 
+        @Override
         public Double addSignum(Double d) {
             if (d == null) {
                 return null;
-            } else if (d.doubleValue() < 0.0) {
-                return new Double(-d.doubleValue());
+            } else if (d < 0.0) {
+                return -d;
             } else {
                 return d;
             }
@@ -206,15 +217,17 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
             super(key, text);
         }
 
+        @Override
         public Double positivize(Double d) {
-            return d == null ? null : new Double(-d.doubleValue());
+            return d == null ? null : -d;
         }
 
+        @Override
         public Double addSignum(Double d) {
             if (d == null) {
                 return null;
-            } else if (d.doubleValue() > 0.0) {
-                return new Double(-d.doubleValue());
+            } else if (d > 0.0) {
+                return -d;
             } else {
                 return d;
             }
@@ -222,17 +235,18 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
     }
 
     private void printPaymentReason(PaymentReasonRecord reasonrec) throws TicketPrinterException {
-        String sresource = m_dlSystem.getResourceAsXML("Printer.PaymentEdit");
-        if (sresource == null) {
+        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_PAYMENT_EDIT);
+        if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(this);
         } else {
+            m_TTP = new TicketParser(schema, m_App.getDeviceTicket());
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("payment", reasonrec);
                 script.put("local", new AppLocal());
-                m_TTP.printTicket(m_App, script.eval(sresource).toString());
-                //m_jPrintPaymentReason.setEnabled(jTotal.isEnabled());
+                m_TTP.printTicket(template, script);
             } catch (ScriptException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
@@ -246,10 +260,10 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         }
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
