@@ -46,7 +46,7 @@ public class StartPOS {
 
     private static final Logger logger = Logger.getLogger(StartPOS.class.getName());
 
-    private static final int DEFAULT_WEBAPPSEVER_PORT = 8585;
+    private static final int DEFAULT_WEBAPPSEVER_PORT = 8135;
     private static final String DEFAULT_WEBAPPSEVER_FOLDER = new File("webapps/").getAbsolutePath();
 
     private StartPOS() {
@@ -106,9 +106,10 @@ public class StartPOS {
                 }
 
                 if (config.getProperty("server.webapp.startup") != null ? config.getProperty("server.webapp.startup").equals("enable") : false) {
-                    StartUpWebAppServer(config.getProperty(
-                            "server.webapp.port") != null ? Integer.parseInt(config.getProperty("server.webapp.port")) : DEFAULT_WEBAPPSEVER_PORT,
-                            config.getProperty("server.webapp.context") != null ? config.getProperty("server.webapp.context") : "/");
+                    StartUpWebAppServer(
+                            config.getProperty("server.webapp.port") != null ? Integer.parseInt(config.getProperty("server.webapp.port")) : DEFAULT_WEBAPPSEVER_PORT,
+                            config.getProperty("server.webapp.context") != null ? config.getProperty("server.webapp.context") : "/"
+                    );
                 }
 
                 String screenmode = config.getProperty("machine.screenmode");

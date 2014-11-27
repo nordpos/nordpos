@@ -62,18 +62,22 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
         jcboDBType.addActionListener(dirty);
     }
     
+    @Override
     public boolean hasChanged() {
         return dirty.isDirty();
     }
     
+    @Override
     public Component getConfigComponent() {
         return this;
     }
     
+    @Override
     public String getPanelConfigName() {
         return AppLocal.getIntString("Label.Database");
     }
    
+    @Override
     public void loadProperties(AppConfig config) {
         
         jtxtDbDriverLib.setText(config.getProperty("db.driverlib"));
@@ -102,6 +106,7 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
         dirty.setDirty(false);
     }
    
+    @Override
     public void saveProperties(AppConfig config) {
         
         config.setProperty("db.driverlib", jtxtDbDriverLib.getText());
@@ -117,18 +122,25 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
     }
     
     private void readDBType(String sDB) {
-        if (sDB.equals("org.hsqldb.jdbcDriver")) {
-            jcboDBType.setSelectedItem("HSQLDB");
-        } else if (sDB.equals("com.mysql.jdbc.Driver")) {
-            jcboDBType.setSelectedItem("MySQL");
-        } else if (sDB.equals("org.postgresql.Driver")) {
-            jcboDBType.setSelectedItem("PostgreSQL");
-        } else if (sDB.equals("org.firebirdsql.jdbc.FBDriver")) {
-            jcboDBType.setSelectedItem("FirebirdSQL");
-        } else if (sDB.equals("org.apache.derby.jdbc.ClientDriver")) {
-            jcboDBType.setSelectedItem("Derby Client");
-        } else {
-            jcboDBType.setSelectedItem("Derby");
+        switch (sDB) {
+            case "org.hsqldb.jdbcDriver":
+                jcboDBType.setSelectedItem("HSQLDB");
+                break;
+            case "com.mysql.jdbc.Driver":
+                jcboDBType.setSelectedItem("MySQL");
+                break;
+            case "org.postgresql.Driver":
+                jcboDBType.setSelectedItem("PostgreSQL");
+                break;
+            case "org.firebirdsql.jdbc.FBDriver":
+                jcboDBType.setSelectedItem("FirebirdSQL");
+                break;
+            case "org.apache.derby.jdbc.ClientDriver":
+                jcboDBType.setSelectedItem("Derby Client");
+                break;
+            default:
+                jcboDBType.setSelectedItem("Derby");
+                break;
         }
     }
     
@@ -287,37 +299,37 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
                 String sTypeJDBC = jcboDBType.getSelectedItem().toString();
 
                 if (sTypeJDBC.equals("HSQLDB")) {
-                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/hsqldb.jar").getAbsolutePath());
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("org.hsqldb.jdbcDriver");
                     jtxtDbURL.setText("jdbc:hsqldb:file:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-db").getAbsolutePath() + ";shutdown=true");
                     jtxtDbUser.setText("sa");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("MySQL")) {
-                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/mysql.jar").getAbsolutePath());
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("com.mysql.jdbc.Driver");
                     jtxtDbURL.setText("jdbc:mysql://localhost:3306/" + AppLocal.APP_ID + "-db?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8");
                     jtxtDbUser.setText("");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("PostgreSQL")) {
-                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/postgresql.jar").getAbsolutePath());
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("org.postgresql.Driver");
                     jtxtDbURL.setText("jdbc:postgresql://localhost:5432/" + AppLocal.APP_ID + "-db");
                     jtxtDbUser.setText("");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("FirebirdSQL")) {
-                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/jaybird-full.jar").getAbsolutePath());
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("org.firebirdsql.jdbc.FBDriver");
                     jtxtDbURL.setText("jdbc:firebirdsql:localhost/3051:c:/" + AppLocal.APP_ID + "-db.fdb?charSet=Cp1251");
                     jtxtDbUser.setText("");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("Derby Client")) {
-                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/derbyclient.jar").getAbsolutePath());
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/derbyclient.jar").getAbsolutePath());
                     jtxtDbDriver.setText("org.apache.derby.jdbc.ClientDriver");
                     jtxtDbURL.setText("jdbc:derby://localhost:1527/" + AppLocal.APP_ID + "-database;create=true");
                     jtxtDbUser.setText("APP");
                     jtxtDbPassword.setText("1234");
                 } else {
-                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib/jdbc/derby.jar").getAbsolutePath());
+                    jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/derby.jar").getAbsolutePath());
                     jtxtDbDriver.setText("org.apache.derby.jdbc.EmbeddedDriver");
                     jtxtDbURL.setText("jdbc:derby:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-database").getAbsolutePath() + ";create=true");
                     jtxtDbUser.setText("");
