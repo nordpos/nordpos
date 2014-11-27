@@ -125,8 +125,10 @@ public class StartPOS {
 
             private void StartUpWebAppServer(int port, String context) {
                 ContextHandlerCollection contexts = new ContextHandlerCollection();
-
                 final File folder = new File(DEFAULT_WEBAPPSEVER_FOLDER);
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }
                 List handlerList = new ArrayList();
                 for (final File fileEntry : folder.listFiles()) {
                     if (fileEntry.isDirectory()) {
