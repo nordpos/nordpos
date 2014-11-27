@@ -16,16 +16,25 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.forms;
 
+import com.nordpos.server.jetty.AppContextBuilder;
+import com.nordpos.server.jetty.ServerApp;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.instance.InstanceQuery;
+import java.io.File;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.api.SubstanceSkin;
 
@@ -36,45 +45,45 @@ import org.jvnet.substance.api.SubstanceSkin;
 public class StartPOS {
 
     private static final Logger logger = Logger.getLogger(StartPOS.class.getName());
-    
-    /** Creates a new instance of StartPOS */
+
+    private static final int DEFAULT_WEBAPPSEVER_PORT = 8135;
+    private static final String DEFAULT_WEBAPPSEVER_FOLDER = new File("webapps/").getAbsolutePath();
+
     private StartPOS() {
     }
-    
-    
+
     public static boolean registerApp() {
-                       
-        // vemos si existe alguna instancia        
-        InstanceQuery i = null;
         try {
-            i = new InstanceQuery();
+            // vemos si existe alguna instancia        
+            InstanceQuery i = new InstanceQuery();
             i.getAppMessage().restoreWindow();
             return false;
-        } catch (Exception e) {
+        } catch (RemoteException | NotBoundException e) {
             return true;
-        }  
+        }
     }
-    
-    public static void main (final String args[]) {
-        
+
+    public static void main(final String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                
+
                 if (!registerApp()) {
                     System.exit(1);
                 }
-                
+
                 AppConfig config = new AppConfig(args);
                 config.load();
-                
+
                 // set Locale.
                 String slang = config.getProperty("user.language");
                 String scountry = config.getProperty("user.country");
                 String svariant = config.getProperty("user.variant");
-                if (slang != null && !slang.equals("") && scountry != null && svariant != null) {                                        
+                if (slang != null && !slang.equals("") && scountry != null && svariant != null) {
                     Locale.setDefault(new Locale(slang, scountry, svariant));
                 }
-                
+
                 // Set the format patterns
                 Formats.setIntegerPattern(config.getProperty("format.integer"));
                 Formats.setDoublePattern(config.getProperty("format.double"));
@@ -82,31 +91,64 @@ public class StartPOS {
                 Formats.setPercentPattern(config.getProperty("format.percent"));
                 Formats.setDatePattern(config.getProperty("format.date"));
                 Formats.setTimePattern(config.getProperty("format.time"));
-                Formats.setDateTimePattern(config.getProperty("format.datetime"));               
-                
+                Formats.setDateTimePattern(config.getProperty("format.datetime"));
+
                 // Set the look and feel.
-                try {             
-                    
+                try {
                     Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();
-                    
-                    if (laf instanceof LookAndFeel){
+                    if (laf instanceof LookAndFeel) {
                         UIManager.setLookAndFeel((LookAndFeel) laf);
-                    } else if (laf instanceof SubstanceSkin) {                      
-                        SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);                   
+                    } else if (laf instanceof SubstanceSkin) {
+                        SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);
                     }
-                } catch (Exception e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     logger.log(Level.WARNING, "Cannot set look and feel", e);
                 }
-                
+
+                if (config.getProperty("server.webapp.startup") != null ? config.getProperty("server.webapp.startup").equals("enable") : false) {
+                    StartUpWebAppServer(
+                            config.getProperty("server.webapp.port") != null ? Integer.parseInt(config.getProperty("server.webapp.port")) : DEFAULT_WEBAPPSEVER_PORT,
+                            config.getProperty("server.webapp.context") != null ? config.getProperty("server.webapp.context") : "/"
+                    );
+                }
+
                 String screenmode = config.getProperty("machine.screenmode");
+
                 if ("fullscreen".equals(screenmode)) {
                     JRootKiosk rootkiosk = new JRootKiosk();
                     rootkiosk.initFrame(config);
                 } else {
-                    JRootFrame rootframe = new JRootFrame(); 
+                    JRootFrame rootframe = new JRootFrame();
                     rootframe.initFrame(config);
                 }
             }
-        });    
-    }    
+
+            private void StartUpWebAppServer(int port, String context) {
+                ContextHandlerCollection contexts = new ContextHandlerCollection();
+
+                final File folder = new File(DEFAULT_WEBAPPSEVER_FOLDER);
+                List handlerList = new ArrayList();
+                for (final File fileEntry : folder.listFiles()) {
+                    if (fileEntry.isDirectory()) {
+                        handlerList.add(new AppContextBuilder().buildWebAppContext(context, DEFAULT_WEBAPPSEVER_FOLDER, fileEntry.getName()));
+                    }
+                }
+                Handler[] handlers = new Handler[handlerList.size()];
+                for (int i = 0; i < handlers.length; i++) {
+                    handlers[i] = (Handler) handlerList.get(i);
+                }
+
+                ServerApp server = new ServerApp(port);
+                contexts.setHandlers(handlers);
+                server.setHandler(contexts);
+
+                try {
+                    server.start();
+                } catch (Exception ex) {
+                    logger.log(Level.SEVERE, "Cannot run Jetty Server", ex);
+                }
+            }
+        }
+        );
+    }
 }

@@ -59,26 +59,32 @@ public class AppConfig implements AppProperties {
         return new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + ".properties");
     }
 
+    @Override
     public String getProperty(String sKey) {
         return m_propsconfig.getProperty(sKey);
     }
 
+    @Override
     public String getHost() {
         return getProperty("machine.hostname");
     }
 
+    @Override
     public String getDBDriver() {
         return getProperty("db.driver");
     }
 
+    @Override
     public String getDBDriverLib() {
         return getProperty("db.driverlib");
     }
 
+    @Override
     public String getDBUser() {
         return getProperty("db.user");
     }
 
+    @Override
     public String getDBPassword() {
         String sPassword = getProperty("db.password");
         String sUser = getDBUser();
@@ -91,10 +97,12 @@ public class AppConfig implements AppProperties {
         return sPassword;
     }
 
+    @Override
     public String getDBURL() {
         return getProperty("db.URL");
     }
 
+    @Override
     public File getConfigFile() {
         return configfile;
     }
@@ -153,7 +161,7 @@ public class AppConfig implements AppProperties {
         dirname = dirname == null ? "./" : dirname;
 
         m_propsconfig.setProperty("db.type", "Derby");
-        m_propsconfig.setProperty("db.driverlib", new File(new File(dirname), "lib/jdbc/derby.jar").getAbsolutePath());
+        m_propsconfig.setProperty("db.driverlib", new File(new File(dirname), "lib-jdbc/derby.jar").getAbsolutePath());
         m_propsconfig.setProperty("db.driver", "org.apache.derby.jdbc.EmbeddedDriver");
         m_propsconfig.setProperty("db.URL", "jdbc:derby:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-database").getAbsolutePath() + ";create=true");
         m_propsconfig.setProperty("db.user", "");
@@ -178,7 +186,7 @@ public class AppConfig implements AppProperties {
         m_propsconfig.setProperty("machine.ticketsbag", "standard");
 //        m_propsconfig.setProperty("machine.scanner", "Not defined");
         m_propsconfig.setProperty("machine.pludevice", "Not defined");
-//        m_propsconfig.setProperty("machine.labelprinter", "Not defined");
+        m_propsconfig.setProperty("machine.labelprinter", "Not defined");
 
         m_propsconfig.setProperty("payment.gateway", "external");
         m_propsconfig.setProperty("payment.magcardreader", "Not defined");
@@ -203,5 +211,11 @@ public class AppConfig implements AppProperties {
         m_propsconfig.setProperty("paper.standard.mediasizename", "A4");
 
         m_propsconfig.setProperty("machine.uniqueinstance", "false");
+        
+        m_propsconfig.setProperty("machine.uniqueinstance", "false");
+        m_propsconfig.setProperty("server.webapp.startup", "disable");
+        m_propsconfig.setProperty("server.webapp.port", "8135");
+        m_propsconfig.setProperty("server.webapp.context", "/");
+        
     }
 }

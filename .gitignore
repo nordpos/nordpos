@@ -1,6 +1,10 @@
 *.class
 
 # Package Files #
-*.jar
+*.tar.gz
 *.war
 *.ear
+/build/
+/dist/
+/installer
+/nbproject/private/

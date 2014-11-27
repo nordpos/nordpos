@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.java.j2seproject</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
+            <name>nordpos</name>
+            <source-roots>
+                <root id="src.src-server.dir"/>
+                <root id="services.dir"/>
+                <root id="src.templates.dir"/>
+                <root id="src.src-device.dir"/>
+                <root id="src.dir" name="locales"/>
+                <root id="reports.dir"/>
+                <root id="src-beans.dir"/>
+                <root id="src-data.dir"/>
+                <root id="src-pos.dir"/>
+                <root id="src-sync.dir"/>
+                <root id="transformations.dir"/>
+            </source-roots>
+            <test-roots/>
+        </data>
+        <references xmlns="http://www.netbeans.org/ns/ant-project-references/1"/>
+    </configuration>
+</project>
