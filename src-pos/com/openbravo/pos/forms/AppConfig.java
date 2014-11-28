@@ -160,14 +160,15 @@ public class AppConfig implements AppProperties {
         String dirname = System.getProperty("dirname.path");
         dirname = dirname == null ? "./" : dirname;
 
-        m_propsconfig.setProperty("db.type", "Derby");
-        m_propsconfig.setProperty("db.driverlib", new File(new File(dirname), "lib-jdbc/derby.jar").getAbsolutePath());
-        m_propsconfig.setProperty("db.driver", "org.apache.derby.jdbc.EmbeddedDriver");
-        m_propsconfig.setProperty("db.URL", "jdbc:derby:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-database").getAbsolutePath() + ";create=true");
-        m_propsconfig.setProperty("db.user", "");
-        m_propsconfig.setProperty("db.password", "");
+        m_propsconfig.setProperty("db.type", "Derby Client");
+        m_propsconfig.setProperty("db.driverlib", new File(new File(dirname), "lib-jdbc/derbyclient.jar").getAbsolutePath());
+        m_propsconfig.setProperty("db.driver", "org.apache.derby.jdbc.ClientDriver");
+        m_propsconfig.setProperty("db.URL", "jdbc:derby://localhost:1527/" + AppLocal.APP_ID + ";create=true");
+        m_propsconfig.setProperty("db.user", "APP");
+        m_propsconfig.setProperty("db.password", "app");
 
         m_propsconfig.setProperty("machine.hostname", getLocalHostName());
+        m_propsconfig.setProperty("machine.leftpanel", "open");
 
         Locale l = Locale.getDefault();
         m_propsconfig.setProperty("user.language", l.getLanguage());
@@ -212,10 +213,11 @@ public class AppConfig implements AppProperties {
 
         m_propsconfig.setProperty("machine.uniqueinstance", "false");
         
-        m_propsconfig.setProperty("machine.uniqueinstance", "false");
         m_propsconfig.setProperty("server.webapp.startup", "disable");
         m_propsconfig.setProperty("server.webapp.port", "8135");
         m_propsconfig.setProperty("server.webapp.context", "/");
+        
+        m_propsconfig.setProperty("server.database.startup", "enable");
         
     }
 }
