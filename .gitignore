@@ -4,7 +4,9 @@
 *.tar.gz
 *.war
 *.ear
+/.derby-db/
 /build/
 /dist/
-/installer
+/webapps/
+/installer/
 /nbproject/private/

@@ -1,10 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.nordpos.server.jetty;
 
+import com.nordpos.server.ServerInterface;
 import java.lang.management.ManagementFactory;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Server;
@@ -12,9 +28,10 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
 /**
  *
- * @author svininykh-av
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
-public class ServerApp {
+public class ServerApp implements ServerInterface {
 
     private Server server;
 
@@ -30,6 +47,7 @@ public class ServerApp {
         server.setHandler(contexts);
     }
 
+    @Override
     public void start() throws Exception {
         MBeanContainer mbContainer=new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
         server.addBean(mbContainer);
@@ -51,9 +69,11 @@ public class ServerApp {
         }
     }
 
+    @Override
     public void stop() throws Exception {
         if (server.isRunning()) {
             Thread t = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     try {
                         server.stop();

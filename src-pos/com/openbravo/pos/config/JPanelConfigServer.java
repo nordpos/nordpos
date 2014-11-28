@@ -1,21 +1,23 @@
-//    Openbravo POS is a point of sales application designed for touch screens.
-//    Copyright (C) 2007-2009 Openbravo, S.L.
-//    http://www.openbravo.com/product/pos
-//
-//    This file is part of Openbravo POS.
-//
-//    Openbravo POS is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    Openbravo POS is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.openbravo.pos.config;
 
 import com.openbravo.data.user.DirtyManager;
@@ -25,7 +27,8 @@ import com.openbravo.pos.forms.AppLocal;
 
 /**
  *
- * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfig {
 
@@ -35,7 +38,6 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
         "disable",
         "enable"};
 
-//        private boolean isStartUpFlag = false;
     public JPanelConfigServer() {
 
         initComponents();
@@ -62,11 +64,17 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
 
     @Override
     public void loadProperties(AppConfig config) {
-        if(config.getProperty("server.webapp.startup") != null && config.getProperty("server.webapp.startup").equals("enable")) {
+        if (config.getProperty("server.webapp.startup") != null && config.getProperty("server.webapp.startup").equals("enable")) {
             jcboServletWebAppStartUpFlag.setSelectedItem("enable");
         } else {
             jcboServletWebAppStartUpFlag.setSelectedItem("disable");
-        }        
+        }
+
+        if (config.getProperty("server.database.startup") != null && config.getProperty("server.database.startup").equals("enable")) {
+            jcboEmbeddedDatabaseStartUpFlag.setSelectedItem("enable");
+        } else {
+            jcboEmbeddedDatabaseStartUpFlag.setSelectedItem("disable");
+        }
 
         jTxtServletWebAppContext.setText(config.getProperty("server.webapp.context"));
         jtxtServletWebAppPort.setText(config.getProperty("server.webapp.port"));
@@ -77,7 +85,8 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
     public void saveProperties(AppConfig config) {
         config.setProperty("server.webapp.startup", jcboServletWebAppStartUpFlag.getSelectedItem().toString());
         config.setProperty("server.webapp.port", jtxtServletWebAppPort.getText());
-        config.setProperty("server.webapp.context", jTxtServletWebAppContext.getText());        
+        config.setProperty("server.webapp.context", jTxtServletWebAppContext.getText());
+        config.setProperty("server.database.startup", jcboEmbeddedDatabaseStartUpFlag.getSelectedItem().toString());
         dirty.setDirty(false);
     }
 
@@ -96,6 +105,9 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
         jLabel18 = new javax.swing.JLabel();
         jcboServletWebAppStartUpFlag = new javax.swing.JComboBox();
         jLabel19 = new javax.swing.JLabel();
+        jPanelPrefix1 = new javax.swing.JPanel();
+        jcboEmbeddedDatabaseStartUpFlag = new javax.swing.JComboBox();
+        jLabel21 = new javax.swing.JLabel();
 
         jPanelPrefix.setBorder(javax.swing.BorderFactory.createTitledBorder(AppLocal.getIntString("Label.WebAppsServer"))); // NOI18N
 
@@ -122,7 +134,7 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
                     .addComponent(jcboServletWebAppStartUpFlag, 0, 165, Short.MAX_VALUE)
                     .addComponent(jTxtServletWebAppContext, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                     .addComponent(jtxtServletWebAppPort))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         jPanelPrefixLayout.setVerticalGroup(
             jPanelPrefixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,13 +154,42 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanelPrefix1.setBorder(javax.swing.BorderFactory.createTitledBorder(AppLocal.getIntString("Label.DatabaseServer"))); // NOI18N
+
+        jcboEmbeddedDatabaseStartUpFlag.setModel(new javax.swing.DefaultComboBoxModel(startupFlag));
+
+        jLabel21.setText(AppLocal.getIntString("label.ServerWebApps.startup")); // NOI18N
+
+        javax.swing.GroupLayout jPanelPrefix1Layout = new javax.swing.GroupLayout(jPanelPrefix1);
+        jPanelPrefix1.setLayout(jPanelPrefix1Layout);
+        jPanelPrefix1Layout.setHorizontalGroup(
+            jPanelPrefix1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPrefix1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel21)
+                .addGap(7, 7, 7)
+                .addComponent(jcboEmbeddedDatabaseStartUpFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(196, Short.MAX_VALUE))
+        );
+        jPanelPrefix1Layout.setVerticalGroup(
+            jPanelPrefix1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPrefix1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanelPrefix1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(jcboEmbeddedDatabaseStartUpFlag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(jPanelPrefix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelPrefix1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelPrefix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -156,7 +197,9 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(jPanelPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelPrefix1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -164,8 +207,11 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanelPrefix;
+    private javax.swing.JPanel jPanelPrefix1;
     private javax.swing.JTextField jTxtServletWebAppContext;
+    private javax.swing.JComboBox jcboEmbeddedDatabaseStartUpFlag;
     private javax.swing.JComboBox jcboServletWebAppStartUpFlag;
     private javax.swing.JTextField jtxtServletWebAppPort;
     // End of variables declaration//GEN-END:variables

@@ -18,30 +18,16 @@
  * You should have received a copy of the GNU General Public License along with
  * NORD POS. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nordpos.server.jetty;
-
-import java.io.File;
-import org.eclipse.jetty.webapp.WebAppContext;
+package com.nordpos.server;
 
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3
  */
-public class AppContextBuilder {
-
-    private WebAppContext webAppContext;
-
-    public WebAppContext buildWebAppContext(String context, String folder, String name) {
-        webAppContext = new WebAppContext();
-        if (!name.equals("ROOT")) {
-            webAppContext.setContextPath(context.concat(name));
-        }
-        webAppContext.setExtractWAR(true);
-        webAppContext.setWar(new File(folder.concat("/" + name)).getAbsolutePath());
-        webAppContext.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
-                ".*/[^/]*servlet-api-[^/]*\\.jar$|.*/javax.servlet.jsp.jstl-.*\\.jar$|.*/[^/]*taglibs.*\\.jar$");
-        webAppContext.setAttribute("webContext", webAppContext);
-        return webAppContext;
-    }
+public interface ServerInterface {
+    
+    public void start() throws Exception;
+    public void stop() throws Exception;
+    
 }

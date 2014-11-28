@@ -18,6 +18,7 @@
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 package com.openbravo.pos.forms;
 
+import com.nordpos.server.derby.ServerDatabase;
 import com.nordpos.server.jetty.AppContextBuilder;
 import com.nordpos.server.jetty.ServerApp;
 import com.openbravo.format.Formats;
@@ -112,6 +113,10 @@ public class StartPOS {
                     );
                 }
 
+                if (!config.getProperty("server.database.startup").equals("disable")) {
+                    StartUpDatabaseServer();
+                }
+
                 String screenmode = config.getProperty("machine.screenmode");
 
                 if ("fullscreen".equals(screenmode)) {
@@ -148,6 +153,16 @@ public class StartPOS {
                     server.start();
                 } catch (Exception ex) {
                     logger.log(Level.SEVERE, "Cannot run Jetty Server", ex);
+                }
+            }
+
+            private void StartUpDatabaseServer() {
+                ServerDatabase server = new ServerDatabase();
+
+                try {
+                    server.start();
+                } catch (Exception ex) {
+                    logger.log(Level.SEVERE, "Cannot run Derby Server", ex);
                 }
             }
         }
