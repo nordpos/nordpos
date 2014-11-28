@@ -26,7 +26,7 @@ UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Manager.x
 
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Logo.png} WHERE NAME = 'Window.Logo';
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Title.txt} WHERE NAME = 'Window.Title';
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.txt} WHERE NAME = 'Menu.Root';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.bsh} WHERE NAME = 'Menu.Root';
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Ticket.Buttons.xml} WHERE NAME = 'Ticket.Buttons';
 
 INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90005', 'Window.Description', 0, $FILE{/com/openbravo/pos/templates/Window.Description.txt});

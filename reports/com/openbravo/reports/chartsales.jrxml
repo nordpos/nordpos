@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="chartsales" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="chartsales" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="4a8b37cf-7ebb-431f-8c87-87160176aaa4">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="ARG" class="java.lang.Object" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT TICKETS.PERSON, TICKETS.HOST, SUM(PRODUCTSOUT.UNITS * PRODUCTSOUT.PRICE) AS TOTAL
-FROM TICKETS, PRODUCTSOUT 
+FROM TICKETS, PRODUCTSOUT
 WHERE TICKETS.TICKETID = PRODUCTSOUT.TICKETID
 
 GROUP BY TICKETS.HOST, TICKETS.PERSON]]>
@@ -23,73 +26,76 @@ GROUP BY TICKETS.HOST, TICKETS.PERSON]]>
 	<title>
 		<band height="73">
 			<rectangle radius="5">
-				<reportElement key="rectangle-1" mode="Opaque" x="0" y="0" width="530" height="36" forecolor="#000000" backcolor="#409617"/>
+				<reportElement uuid="92548ef9-7acf-4d7d-adb0-57223fb6148c" key="rectangle-1" mode="Opaque" x="0" y="0" width="530" height="36" forecolor="#000000" backcolor="#003278"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<image scaleImage="Clip">
-				<reportElement key="image-1" x="390" y="1" width="132" height="34"/>
+				<reportElement uuid="4822a760-bb45-41e3-8aaf-7b83a10c7db2" key="image-1" x="390" y="1" width="132" height="34"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression class="java.awt.Image"><![CDATA[com.openbravo.data.loader.ImageUtils.readImageFromResource("/com/openbravo/images/poweredby.png")]]></imageExpression>
+				<imageExpression><![CDATA[com.openbravo.pos.forms.DataLogicSystem.getResourceAsImage("Window.SupportBy")]]></imageExpression>
 			</image>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-10" mode="Transparent" x="13" y="7" width="375" height="28" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<reportElement uuid="e408159e-0b91-4e07-b32e-cfb9c7fef31b" key="textField-10" mode="Transparent" x="13" y="7" width="375" height="28" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 					<font fontName="Dialog" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$R{label.title}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$R{label.title}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" mode="Transparent" x="272" y="43" width="120" height="20"/>
+				<reportElement uuid="b49db117-b46c-4f74-872e-75ca49a05ab5" key="textField-8" mode="Transparent" x="272" y="43" width="120" height="20"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 					<font fontName="Dialog" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[com.openbravo.format.Formats.DATE.formatValue((java.util.Date)((Object[])((Object[])$P{ARG})[0])[1])]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.openbravo.format.Formats.DATE.formatValue((java.util.Date)((Object[])((Object[])$P{ARG})[0])[1])]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-9" mode="Transparent" x="401" y="43" width="120" height="20"/>
+				<reportElement uuid="5170e64b-f334-492c-9ad2-add86c654962" key="textField-9" mode="Transparent" x="401" y="43" width="120" height="20"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
 					<font fontName="Dialog" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[com.openbravo.format.Formats.DATE.formatValue((java.util.Date)((Object[])((Object[])$P{ARG})[0])[3])]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.openbravo.format.Formats.DATE.formatValue((java.util.Date)((Object[])((Object[])$P{ARG})[0])[3])]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-6" mode="Transparent" x="392" y="43" width="10" height="20"/>
+				<reportElement uuid="c56d04f2-8f7f-4fd6-a5b9-ec4b5235a410" key="staticText-6" mode="Transparent" x="392" y="43" width="10" height="20"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
 					<font fontName="Dialog" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[-
-]]></text>
+				<text><![CDATA[-]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -112,7 +118,7 @@ GROUP BY TICKETS.HOST, TICKETS.PERSON]]>
 		<band height="411">
 			<stackedBar3DChart>
 				<chart>
-					<reportElement key="element-1" mode="Opaque" x="0" y="11" width="535" height="309" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement uuid="4270fa87-f92a-4ee1-a065-8052adade7e9" key="element-1" mode="Opaque" x="0" y="11" width="535" height="309" forecolor="#000000" backcolor="#FFFFFF"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -128,25 +134,13 @@ GROUP BY TICKETS.HOST, TICKETS.PERSON]]>
 						<seriesExpression><![CDATA[$F{NAME}]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{HOST}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{TOTAL}]]></valueExpression>
-						<itemHyperlink/>
 					</categorySeries>
 				</categoryDataset>
 				<bar3DPlot isShowLabels="true">
 					<plot/>
+					<itemLabel/>
 					<categoryAxisLabelExpression><![CDATA[$R{label.axisx}]]></categoryAxisLabelExpression>
-					<categoryAxisFormat>
-						<axisFormat>
-							<labelFont/>
-							<tickLabelFont/>
-						</axisFormat>
-					</categoryAxisFormat>
 					<valueAxisLabelExpression><![CDATA[$R{label.axisy}]]></valueAxisLabelExpression>
-					<valueAxisFormat>
-						<axisFormat>
-							<labelFont/>
-							<tickLabelFont/>
-						</axisFormat>
-					</valueAxisFormat>
 				</bar3DPlot>
 			</stackedBar3DChart>
 		</band>

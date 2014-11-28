@@ -1,0 +1,33 @@
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+payment.addButton("banknote.50euro", 50.0);
+payment.addButton("banknote.20euro", 20.0);
+payment.addButton("banknote.10euro", 10.0);
+payment.addButton("banknote.5euro", 5.0);
+payment.addButton("coin.2euro", 2.0);
+payment.addButton("coin.1euro", 1.0);
+payment.addButton("coin.50cent", 0.50);
+payment.addButton("coin.20cent", 0.20);
+payment.addButton("coin.10cent", 0.10);
+payment.addButton("coin.5cent", 0.05);
+payment.addButton("coin.2cent", 0.02);
+payment.addButton("coin.1cent", 0.01);
