@@ -20,7 +20,6 @@ package com.openbravo.sync.process;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
-import com.openbravo.data.loader.ImageUtils;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppProperties;
 import com.openbravo.pos.forms.AppView;
@@ -30,8 +29,6 @@ import com.openbravo.pos.util.AltEncrypter;
 import com.openbravo.sync.kettle.KettleJob;
 import com.openbravo.sync.util.TransformationFileCreate;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Properties;
 import org.pentaho.di.core.logging.LogLevel;
 
@@ -58,7 +55,7 @@ public class ProductsSync implements ProcessAction {
     private String sLocation;
 
     public ProductsSync(AppView app) {
-        dlSystem = (DataLogicSystem) app.getBean("com.openbravo.pos.forms.DataLogicSystem");
+        dlSystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
         appProp = app.getProperties();
         hostProp = dlSystem.getResourceAsProperties(appProp.getHost() + "/properties");
     }
@@ -72,23 +69,7 @@ public class ProductsSync implements ProcessAction {
 
         File f = new File("");
 
-        if (sImportType.equals("generaterows")) {
-            TransformationFileCreate.createTransFile(sImportType, "Product Categories.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "Products.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "Warehouse.ktr");
-            f = TransformationFileCreate.createTransFile(sImportType, "IMPORT PRODUCTS JOB.kjb");
-        } else if (sImportType.equals("atol")) {
-            TransformationFileCreate.createTransFile(sImportType, "Check Content Import File.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "CHECK IMPORT FILES.kjb");
-            TransformationFileCreate.createTransFile(sImportType, "Check Import Variables.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "Get Commands and Rows.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "Import Products.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "Import Tax Categories.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "Import Taxes.ktr");
-            TransformationFileCreate.createTransFile(sImportType, "IMPORT TAXES JOB.kjb");
-            f = TransformationFileCreate.createTransFile(sImportType, "IMPORT PRODUCTS JOB.kjb");
-        } else if (sImportType.equals("csv")) {
-        } else if (sImportType.equals("openbravoerp")) {
+        if (sImportType.equals("openbravoerp")) {
             TransformationFileCreate.createTransFile(sImportType, "Attribute Instance.ktr");
             TransformationFileCreate.createTransFile(sImportType, "Attributes.ktr");
             TransformationFileCreate.createTransFile(sImportType, "Attribute Set.ktr");

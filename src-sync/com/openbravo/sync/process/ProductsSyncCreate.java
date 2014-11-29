@@ -31,6 +31,7 @@ import com.openbravo.pos.forms.BeanFactoryException;
 
 public class ProductsSyncCreate extends BeanFactoryCache {
 
+    @Override
     public Object constructBean(AppView app) throws BeanFactoryException {
         ProductsSync bean = new ProductsSync(app);
         return bean;

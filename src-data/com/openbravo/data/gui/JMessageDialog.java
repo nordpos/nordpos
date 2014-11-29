@@ -196,7 +196,9 @@ public class JMessageDialog extends javax.swing.JDialog {
         jcmdMore.setEnabled(false);
         jscrException.setVisible(true);
         setSize(getWidth(), 310);
-        validateTree();
+        synchronized (getTreeLock()) {
+            validateTree();
+        }
         
     }//GEN-LAST:event_jcmdMoreActionPerformed
 

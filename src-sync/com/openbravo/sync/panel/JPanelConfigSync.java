@@ -1,11 +1,26 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.openbravo.sync.panel;
 
 import com.openbravo.basic.BasicException;
-import com.openbravo.beans.LocaleResources;
 import com.openbravo.data.gui.JMessageDialog;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.user.DirtyManager;
@@ -30,7 +45,8 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author svininykh-av
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3.0
  */
 public class JPanelConfigSync extends JPanel implements JPanelView, BeanFactoryApp {
 
@@ -40,8 +56,6 @@ public class JPanelConfigSync extends JPanel implements JPanelView, BeanFactoryA
     private Properties hostProp;
 
     String[] modelSyncType = {"openbravoerp",
-                              "generaterows",
-                              "csv",
                               "none"};
 
     public JPanelConfigSync() {
@@ -63,7 +77,7 @@ public class JPanelConfigSync extends JPanel implements JPanelView, BeanFactoryA
 
     @Override
     public void init(AppView app) throws BeanFactoryException {
-        dlSystem = (DataLogicSystem) app.getBean("com.openbravo.pos.forms.DataLogicSystem");
+        dlSystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
         appProp = app.getProperties();
         hostProp = dlSystem.getResourceAsProperties(appProp.getHost() + "/properties");
 
@@ -98,7 +112,7 @@ public class JPanelConfigSync extends JPanel implements JPanelView, BeanFactoryA
         }
 
         String sType = hostProp.getProperty("sync.type");
-        if (sType.isEmpty()) {
+        if (sType == null || sType.isEmpty()) {
             jcboSyncType.setSelectedItem("none");
         } else {
             jcboSyncType.setSelectedItem(sType);
@@ -461,9 +475,7 @@ public class JPanelConfigSync extends JPanel implements JPanelView, BeanFactoryA
 
         cl.show(m_jSyncParams, jcboSyncType.getSelectedItem().toString());
 
-        if ("csv".equals(jcboSyncType.getSelectedItem())) {
-            cl.show(m_jSyncParams, "csv");
-        } else if ("openbravoerp".equals(jcboSyncType.getSelectedItem())) {
+        if ("openbravoerp".equals(jcboSyncType.getSelectedItem())) {
             cl.show(m_jSyncParams, "openbravoerp");
         } else {
             cl.show(m_jSyncParams, "none");

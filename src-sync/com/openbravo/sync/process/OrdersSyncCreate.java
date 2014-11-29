@@ -29,6 +29,7 @@ import com.openbravo.pos.forms.BeanFactoryException;
  */
 public class OrdersSyncCreate extends BeanFactoryCache {
 
+    @Override
     public Object constructBean(AppView app) throws BeanFactoryException {
         OrdersSync bean = new OrdersSync(app);
         return bean;

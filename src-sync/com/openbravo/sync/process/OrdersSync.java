@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.pentaho.di.core.RowMetaAndData;
 import org.pentaho.di.core.logging.LogLevel;
 
@@ -44,7 +46,7 @@ import org.pentaho.di.core.logging.LogLevel;
  */
 public class OrdersSync implements ProcessAction {
 
-    private AppProperties appProp;
+    private final AppProperties appProp;
     private final Properties hostProp;
     private final DataLogicSystem dlSystem;
 
@@ -58,7 +60,7 @@ public class OrdersSync implements ProcessAction {
     private String sExportType;
 
     public OrdersSync(AppView app) {
-        dlSystem = (DataLogicSystem) app.getBean("com.openbravo.pos.forms.DataLogicSystem");
+        dlSystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
         appProp = app.getProperties();
         hostProp = dlSystem.getResourceAsProperties(appProp.getHost() + "/properties");
     }
@@ -66,48 +68,52 @@ public class OrdersSync implements ProcessAction {
     @Override
     public MessageInf execute() throws BasicException {
 
-        initSyncParameters();
-        initSyncFolders();
-        initERPParameters();
-
-        File f = createTransFile("/com/openbravo/transformations/" + sExportType + "/" + "ORDERS.ktr");
-
-        if (f == null) {
-            return new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.ktrnotexist"));
-        } else {
-
-            KettleTransformation kt = new KettleTransformation(f, LogLevel.DETAILED, null);
-
-            kt.setVariable("erp.URL", sERPUrl);
-            kt.setVariable("erp.id", sERPClientId);
-            kt.setVariable("erp.org", sERPOrgId);
-            kt.setVariable("erp.pos", sERPPos);
-            kt.setVariable("erp.user", sERPUser);
-            kt.setVariable("erp.password", sERPPassword);
-
-            kt.setVariable("sync.exportdir", sExportDirectory);
-
-            kt.setVariable("db.URL", appProp.getDBURL());
-            kt.setVariable("db.driver", appProp.getDBDriver());
-            kt.setVariable("db.user", appProp.getDBUser());
-            kt.setVariable("db.password", appProp.getDBPassword());
-
-            kt.runLocal();
-
-            String log = kt.getLogContent();
-
-            if (kt.hasFinish()) {
-                return new MessageInf(MessageInf.SGN_SUCCESS, AppLocal.getIntString("message.syncok"), log);
+        try {
+            initSyncParameters();
+            initSyncFolders();
+            initERPParameters();
+            
+            File f = createTransFile("/com/openbravo/transformations/" + sExportType + "/" + "ORDERS.ktr");
+            
+            if (f == null) {
+                return new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.ktrnotexist"));
             } else {
-                return new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.syncerror"), log);
+
+                KettleTransformation kt = new KettleTransformation(f, LogLevel.DETAILED, null);
+                
+                kt.setVariable("erp.URL", sERPUrl);
+                kt.setVariable("erp.id", sERPClientId);
+                kt.setVariable("erp.org", sERPOrgId);
+                kt.setVariable("erp.pos", sERPPos);
+                kt.setVariable("erp.user", sERPUser);
+                kt.setVariable("erp.password", sERPPassword);
+                
+                kt.setVariable("sync.exportdir", sExportDirectory);
+                
+                kt.setVariable("db.URL", appProp.getDBURL());
+                kt.setVariable("db.driver", appProp.getDBDriver());
+                kt.setVariable("db.user", appProp.getDBUser());
+                kt.setVariable("db.password", appProp.getDBPassword());
+                
+                kt.runLocal();
+                
+                String log = kt.getLogContent();
+                
+                if (kt.hasFinish()) {
+                    return new MessageInf(MessageInf.SGN_SUCCESS, AppLocal.getIntString("message.syncok"), log);
+                } else {
+                    return new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.syncerror"), log);
+                }
             }
+        } catch (IOException ex) {
+            return new MessageInf(MessageInf.SGN_NOTICE, AppLocal.getIntString("message.syncerror"), ex.getMessage());
         }
 
     }
 
     private int getOrderNumSync(KettleTransformation kt) {
         int cont = 0;
-        Map<String, String> ord = new HashMap<String, String>();
+        Map<String, String> ord = new HashMap<>();
         for (RowMetaAndData r : kt.getStepRows("Parse ExternalPOS", "write")) {
             Object[] t = r.getData();
             if (!ord.containsKey((String) t[0])) {
@@ -138,7 +144,7 @@ public class OrdersSync implements ProcessAction {
         sExportType = hostProp.getProperty("sync.type", "generaterows").toLowerCase();
     }
 
-    private File createTransFile(String path) {
+    private File createTransFile(String path) throws IOException {
         FileWriter fw = null;
         File f = null;
         try {
@@ -151,11 +157,9 @@ public class OrdersSync implements ProcessAction {
                 String text = new String(bytes);
                 fw.write(text);
             }
-        } catch (IOException ex) {
         } finally {
-            try {
+            if (fw != null) {
                 fw.close();
-            } catch (IOException ex) {
             }
         }
         return f;

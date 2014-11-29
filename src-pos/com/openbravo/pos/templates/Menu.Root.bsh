@@ -83,7 +83,6 @@
         submenu.addTitle("Menu.Maintenance.Reports");
         submenu.addPanel("/com/openbravo/images/appointment.png", "Menu.UsersReport", "/com/openbravo/reports/people.bsh");
         submenu.addTitle("Menu.Maintenance.Sync");
-        submenu.addPanel("/com/openbravo/images/list.png", "Menu.PreviewSync", "com.openbravo.sync.panel.Preview");
         submenu.addExecution("/com/openbravo/images/database_imp.png", "Menu.SyncImpProducts", "com.openbravo.sync.process.ProductsSyncCreate");
         submenu.addExecution("/com/openbravo/images/database_exp.png", "Menu.SyncExpOrders", "com.openbravo.sync.process.OrdersSyncCreate");
         submenu.addPanel("/com/openbravo/images/package_settings.png", "Menu.ConfigureSync", "com.openbravo.sync.panel.JPanelConfigSync");

@@ -15,7 +15,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program; if not, write to the Free Software
 //    Foundation, Inc., 51 Franklin Street, Fifth floor, Boston, MA  02110-1301  USA
-
 package com.openbravo.sync.kettle;
 
 import java.io.File;
@@ -44,9 +43,9 @@ public class KettleJob {
 
     private Job job;
     private JobMeta jobMeta;
-    private LogWriter log;
+    private final LogWriter log;
     private String logInFile;
-    private Log4jBufferAppender bufferAppender;
+    private final Log4jBufferAppender bufferAppender;
     private LogMessage logMessage;
     private boolean finishOk;
 
@@ -104,7 +103,6 @@ public class KettleJob {
 
     public void runLocal() {
 
-        Result result = new Result();
         Date start, stop;
         Calendar cal;
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
@@ -117,7 +115,7 @@ public class KettleJob {
         job.start();
         job.waitUntilFinished();
 
-        result = job.getResult();
+        Result result = job.getResult();
 
         if (result.getNrErrors() != 0) {
             finishOk = false;
@@ -129,8 +127,8 @@ public class KettleJob {
 
         cal = Calendar.getInstance();
         stop = cal.getTime();
-        String begin = df.format(start).toString();
-        String end = df.format(stop).toString();
+        String begin = df.format(start);
+        String end = df.format(stop);
 
         printLogMessage("Start time:" + begin + " Stop time:" + end); // 4.x
 
@@ -143,20 +141,20 @@ public class KettleJob {
             printLogMessage("Processing ended after " + String.valueOf(min) + " minutes and " + rem + " seconds (" + seconds + " seconds total)."); // 4.x
         } else if (seconds <= 60 * 60 * 24) {
             int rem;
-            int hour = (int)(seconds / (60 * 60));
-            rem = (int)(seconds % (60 * 60));
+            int hour = (int) (seconds / (60 * 60));
+            rem = (int) (seconds % (60 * 60));
             int min = rem / 60;
             rem = rem % 60;
             printLogMessage("Processing ended after " + String.valueOf(hour) + " hours, " + String.valueOf(min) + " minutes and " + String.valueOf(rem) + " seconds (" + String.valueOf(seconds) + " seconds total)."); // 4.x
         } else {
             int rem;
-            int days = (int)(seconds / (60 * 60 * 24));
-            rem = (int)(seconds % (60 * 60 * 24));
+            int days = (int) (seconds / (60 * 60 * 24));
+            rem = (int) (seconds % (60 * 60 * 24));
             int hour = rem / (60 * 60);
             rem = rem % (60 * 60);
             int min = rem / 60;
             rem = rem % 60;
-            printLogMessage("Processing ended after " +  String.valueOf(days) + " days, " + String.valueOf(hour) + " hours, " + String.valueOf(min) + " minutes and " + String.valueOf(rem) + " seconds (" + String.valueOf(seconds) + " seconds total)."); // 4.x
+            printLogMessage("Processing ended after " + String.valueOf(days) + " days, " + String.valueOf(hour) + " hours, " + String.valueOf(min) + " minutes and " + String.valueOf(rem) + " seconds (" + String.valueOf(seconds) + " seconds total)."); // 4.x
         }
 
         exit(1);
@@ -170,7 +168,7 @@ public class KettleJob {
         // Close the open appenders...
         LogWriter.getInstance().close();
 
-        switch(exitCode) {
+        switch (exitCode) {
             case 0:
                 finishOk = false;
                 throw new RuntimeException("There were errors during transformation execution. See the log.");

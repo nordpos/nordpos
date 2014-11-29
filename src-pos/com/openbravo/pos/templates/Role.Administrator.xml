@@ -88,7 +88,6 @@
     <class name="com.openbravo.pos.mant.JPanelPlaces"/>
     <class name="com.openbravo.pos.config.JPanelSettingsDefault"/>
     <class name="/com/openbravo/reports/people.bsh"/>
-    <class name="com.openbravo.sync.panel.Preview"/>
     <class name="com.openbravo.sync.process.ProductsSyncCreate"/>
     <class name="com.openbravo.sync.process.OrdersSyncCreate"/>
     <class name="com.openbravo.sync.panel.JPanelConfigSync"/>
