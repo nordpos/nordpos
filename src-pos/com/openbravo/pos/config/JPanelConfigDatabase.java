@@ -295,47 +295,48 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
 
                 String dirname = System.getProperty("dirname.path");
                 dirname = dirname == null ? "./" : dirname;
+                
+                String dbName = AppLocal.APP_ID.concat("-db");
 
                 String sTypeJDBC = jcboDBType.getSelectedItem().toString();
 
                 if (sTypeJDBC.equals("HSQLDB")) {
                     jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("org.hsqldb.jdbcDriver");
-                    jtxtDbURL.setText("jdbc:hsqldb:file:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-db").getAbsolutePath() + ";shutdown=true");
+                    jtxtDbURL.setText("jdbc:hsqldb:file:" + new File(new File(System.getProperty("user.home")), dbName).getAbsolutePath() + ";shutdown=true");
                     jtxtDbUser.setText("sa");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("MySQL")) {
                     jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("com.mysql.jdbc.Driver");
-                    jtxtDbURL.setText("jdbc:mysql://localhost:3306/" + AppLocal.APP_ID + "-db?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8");
+                    jtxtDbURL.setText("jdbc:mysql://localhost:3306/" + dbName + "?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8");
                     jtxtDbUser.setText("");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("PostgreSQL")) {
                     jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("org.postgresql.Driver");
-                    jtxtDbURL.setText("jdbc:postgresql://localhost:5432/" + AppLocal.APP_ID + "-db");
+                    jtxtDbURL.setText("jdbc:postgresql://localhost:5432/" + dbName);
                     jtxtDbUser.setText("");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("FirebirdSQL")) {
                     jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/").getAbsolutePath());
                     jtxtDbDriver.setText("org.firebirdsql.jdbc.FBDriver");
-                    jtxtDbURL.setText("jdbc:firebirdsql:localhost/3051:c:/" + AppLocal.APP_ID + "-db.fdb?charSet=Cp1251");
+                    jtxtDbURL.setText("jdbc:firebirdsql:localhost/3051:" + new File(new File(System.getProperty("user.home")), dbName + ".fdb").getAbsolutePath() + "?charSet=Cp1251");
                     jtxtDbUser.setText("");
                     jtxtDbPassword.setText("");
                 } else if (sTypeJDBC.equals("Derby Client")) {
                     jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/derbyclient.jar").getAbsolutePath());
                     jtxtDbDriver.setText("org.apache.derby.jdbc.ClientDriver");
-                    jtxtDbURL.setText("jdbc:derby://localhost:1527/" + AppLocal.APP_ID + "-database;create=true");
+                    jtxtDbURL.setText("jdbc:derby://localhost:1527/" + dbName + ";create=true");
                     jtxtDbUser.setText("APP");
-                    jtxtDbPassword.setText("1234");
+                    jtxtDbPassword.setText("app");
                 } else {
                     jtxtDbDriverLib.setText(new File(new File(dirname), "lib-jdbc/derby.jar").getAbsolutePath());
                     jtxtDbDriver.setText("org.apache.derby.jdbc.EmbeddedDriver");
-                    jtxtDbURL.setText("jdbc:derby:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-database").getAbsolutePath() + ";create=true");
+                    jtxtDbURL.setText("jdbc:derby:" + new File(new File(System.getProperty("user.home")), dbName).getAbsolutePath() + ";create=true");
                     jtxtDbUser.setText("");
                     jtxtDbPassword.setText("");
                 }
-                bSelectDBType = false;
             } else {
                 readDBType(jtxtDbDriver.getText());
             }

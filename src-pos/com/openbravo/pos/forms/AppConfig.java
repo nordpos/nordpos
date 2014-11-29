@@ -163,7 +163,7 @@ public class AppConfig implements AppProperties {
         m_propsconfig.setProperty("db.type", "Derby Client");
         m_propsconfig.setProperty("db.driverlib", new File(new File(dirname), "lib-jdbc/derbyclient.jar").getAbsolutePath());
         m_propsconfig.setProperty("db.driver", "org.apache.derby.jdbc.ClientDriver");
-        m_propsconfig.setProperty("db.URL", "jdbc:derby://localhost:1527/" + AppLocal.APP_ID + ";create=true");
+        m_propsconfig.setProperty("db.URL", "jdbc:derby://localhost:1527/" + AppLocal.APP_ID + "-db;create=true");
         m_propsconfig.setProperty("db.user", "APP");
         m_propsconfig.setProperty("db.password", "app");
 
