@@ -27,9 +27,9 @@ import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import org.jvnet.substance.SubstanceLookAndFeel;
-import org.jvnet.substance.api.SubstanceSkin;
-import org.jvnet.substance.skin.SkinInfo;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.SubstanceSkin;
+import org.pushingpixels.substance.api.skin.SkinInfo;
 
 /**
  *

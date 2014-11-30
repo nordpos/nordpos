@@ -1588,9 +1588,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow22.png"))); // NOI18N
         m_jUp.setFocusPainted(false);
         m_jUp.setFocusable(false);
-        m_jUp.setMargin(new java.awt.Insets(8, 14, 8, 14));
-        m_jUp.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jUp.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jUp.setMargin(new java.awt.Insets(3, 0, 3, 0));
         m_jUp.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jUp.setRequestFocusEnabled(false);
         m_jUp.addActionListener(new java.awt.event.ActionListener() {
@@ -1603,9 +1601,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1downarrow22.png"))); // NOI18N
         m_jDown.setFocusPainted(false);
         m_jDown.setFocusable(false);
-        m_jDown.setMargin(new java.awt.Insets(8, 14, 8, 14));
-        m_jDown.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jDown.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jDown.setMargin(new java.awt.Insets(3, 0, 3, 0));
         m_jDown.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jDown.setRequestFocusEnabled(false);
         m_jDown.addActionListener(new java.awt.event.ActionListener() {
@@ -1618,9 +1614,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/locationbar_erase.png"))); // NOI18N
         m_jDelete.setFocusPainted(false);
         m_jDelete.setFocusable(false);
-        m_jDelete.setMargin(new java.awt.Insets(8, 14, 8, 14));
-        m_jDelete.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jDelete.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jDelete.setMargin(new java.awt.Insets(3, 0, 3, 0));
         m_jDelete.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jDelete.setRequestFocusEnabled(false);
         m_jDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -1633,9 +1627,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/search22.png"))); // NOI18N
         m_jList.setFocusPainted(false);
         m_jList.setFocusable(false);
-        m_jList.setMargin(new java.awt.Insets(8, 14, 8, 14));
-        m_jList.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jList.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jList.setMargin(new java.awt.Insets(3, 0, 3, 0));
         m_jList.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jList.setRequestFocusEnabled(false);
         m_jList.addActionListener(new java.awt.event.ActionListener() {
@@ -1648,9 +1640,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jEditLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/color_line.png"))); // NOI18N
         m_jEditLine.setFocusPainted(false);
         m_jEditLine.setFocusable(false);
-        m_jEditLine.setMargin(new java.awt.Insets(8, 14, 8, 14));
-        m_jEditLine.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jEditLine.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jEditLine.setMargin(new java.awt.Insets(3, 0, 3, 0));
         m_jEditLine.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jEditLine.setRequestFocusEnabled(false);
         m_jEditLine.addActionListener(new java.awt.event.ActionListener() {
@@ -1663,7 +1653,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         jEditAttributes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/colorize.png"))); // NOI18N
         jEditAttributes.setFocusPainted(false);
         jEditAttributes.setFocusable(false);
-        jEditAttributes.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        jEditAttributes.setMargin(new java.awt.Insets(3, 0, 3, 0));
         jEditAttributes.setRequestFocusEnabled(false);
         jEditAttributes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1682,9 +1672,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jbtnDiscountRate.setText("ROW");
         m_jbtnDiscountRate.setFocusPainted(false);
         m_jbtnDiscountRate.setFocusable(false);
-        m_jbtnDiscountRate.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jbtnDiscountRate.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jbtnDiscountRate.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jbtnDiscountRate.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jbtnDiscountRate.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jbtnDiscountRate.setRequestFocusEnabled(false);
         m_jbtnDiscountRate.addActionListener(new java.awt.event.ActionListener() {
@@ -1697,9 +1685,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jDisableDiscountRate.setFocusPainted(false);
         m_jDisableDiscountRate.setFocusable(false);
         m_jDisableDiscountRate.setLabel("0 %");
-        m_jDisableDiscountRate.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDisableDiscountRate.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jDisableDiscountRate.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jDisableDiscountRate.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDisableDiscountRate.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jDisableDiscountRate.setRequestFocusEnabled(false);
         m_jDisableDiscountRate.addActionListener(new java.awt.event.ActionListener() {
@@ -1711,9 +1697,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jDiscount1.setFocusPainted(false);
         m_jDiscount1.setFocusable(false);
-        m_jDiscount1.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDiscount1.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jDiscount1.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jDiscount1.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDiscount1.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jDiscount1.setRequestFocusEnabled(false);
         m_jDiscount1.addActionListener(new java.awt.event.ActionListener() {
@@ -1725,9 +1709,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jDiscount2.setFocusPainted(false);
         m_jDiscount2.setFocusable(false);
-        m_jDiscount2.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDiscount2.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jDiscount2.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jDiscount2.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDiscount2.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jDiscount2.setRequestFocusEnabled(false);
         m_jDiscount2.addActionListener(new java.awt.event.ActionListener() {
@@ -1739,9 +1721,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jDiscount3.setFocusPainted(false);
         m_jDiscount3.setFocusable(false);
-        m_jDiscount3.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDiscount3.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jDiscount3.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jDiscount3.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDiscount3.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jDiscount3.setRequestFocusEnabled(false);
         m_jDiscount3.addActionListener(new java.awt.event.ActionListener() {
@@ -1754,9 +1734,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jKeypadDiscountRate.setFocusPainted(false);
         m_jKeypadDiscountRate.setFocusable(false);
         m_jKeypadDiscountRate.setLabel("... %");
-        m_jKeypadDiscountRate.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jKeypadDiscountRate.setMaximumSize(new java.awt.Dimension(62, 44));
-        m_jKeypadDiscountRate.setMinimumSize(new java.awt.Dimension(62, 44));
+        m_jKeypadDiscountRate.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jKeypadDiscountRate.setPreferredSize(new java.awt.Dimension(62, 44));
         m_jKeypadDiscountRate.setRequestFocusEnabled(false);
         m_jKeypadDiscountRate.addActionListener(new java.awt.event.ActionListener() {
@@ -1774,9 +1752,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jbtnDiscountMoney.setText("ROW");
         m_jbtnDiscountMoney.setFocusPainted(false);
         m_jbtnDiscountMoney.setFocusable(false);
-        m_jbtnDiscountMoney.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jbtnDiscountMoney.setMaximumSize(new java.awt.Dimension(62, 50));
-        m_jbtnDiscountMoney.setMinimumSize(new java.awt.Dimension(62, 50));
+        m_jbtnDiscountMoney.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jbtnDiscountMoney.setPreferredSize(new java.awt.Dimension(62, 50));
         m_jbtnDiscountMoney.setRequestFocusEnabled(false);
         m_jbtnDiscountMoney.addActionListener(new java.awt.event.ActionListener() {
@@ -1789,9 +1765,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jDisableDiscountMoney.setText("0");
         m_jDisableDiscountMoney.setFocusPainted(false);
         m_jDisableDiscountMoney.setFocusable(false);
-        m_jDisableDiscountMoney.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDisableDiscountMoney.setMaximumSize(new java.awt.Dimension(62, 50));
-        m_jDisableDiscountMoney.setMinimumSize(new java.awt.Dimension(62, 50));
+        m_jDisableDiscountMoney.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDisableDiscountMoney.setPreferredSize(new java.awt.Dimension(62, 50));
         m_jDisableDiscountMoney.setRequestFocusEnabled(false);
         m_jDisableDiscountMoney.addActionListener(new java.awt.event.ActionListener() {
@@ -1803,9 +1777,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jDiscount4.setFocusPainted(false);
         m_jDiscount4.setFocusable(false);
-        m_jDiscount4.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDiscount4.setMaximumSize(new java.awt.Dimension(62, 50));
-        m_jDiscount4.setMinimumSize(new java.awt.Dimension(62, 50));
+        m_jDiscount4.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDiscount4.setPreferredSize(new java.awt.Dimension(62, 50));
         m_jDiscount4.setRequestFocusEnabled(false);
         m_jDiscount4.addActionListener(new java.awt.event.ActionListener() {
@@ -1817,9 +1789,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jDiscount5.setFocusPainted(false);
         m_jDiscount5.setFocusable(false);
-        m_jDiscount5.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDiscount5.setMaximumSize(new java.awt.Dimension(62, 50));
-        m_jDiscount5.setMinimumSize(new java.awt.Dimension(62, 50));
+        m_jDiscount5.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDiscount5.setPreferredSize(new java.awt.Dimension(62, 50));
         m_jDiscount5.setRequestFocusEnabled(false);
         m_jDiscount5.addActionListener(new java.awt.event.ActionListener() {
@@ -1831,9 +1801,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jDiscount6.setFocusPainted(false);
         m_jDiscount6.setFocusable(false);
-        m_jDiscount6.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jDiscount6.setMaximumSize(new java.awt.Dimension(62, 50));
-        m_jDiscount6.setMinimumSize(new java.awt.Dimension(62, 50));
+        m_jDiscount6.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jDiscount6.setPreferredSize(new java.awt.Dimension(62, 50));
         m_jDiscount6.setRequestFocusEnabled(false);
         m_jDiscount6.addActionListener(new java.awt.event.ActionListener() {
@@ -1846,9 +1814,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jKeypadDiscountMoney.setText("...");
         m_jKeypadDiscountMoney.setFocusPainted(false);
         m_jKeypadDiscountMoney.setFocusable(false);
-        m_jKeypadDiscountMoney.setMargin(new java.awt.Insets(8, 5, 8, 5));
-        m_jKeypadDiscountMoney.setMaximumSize(new java.awt.Dimension(62, 50));
-        m_jKeypadDiscountMoney.setMinimumSize(new java.awt.Dimension(62, 50));
+        m_jKeypadDiscountMoney.setMargin(new java.awt.Insets(2, 0, 2, 0));
         m_jKeypadDiscountMoney.setPreferredSize(new java.awt.Dimension(62, 50));
         m_jKeypadDiscountMoney.setRequestFocusEnabled(false);
         m_jKeypadDiscountMoney.addActionListener(new java.awt.event.ActionListener() {

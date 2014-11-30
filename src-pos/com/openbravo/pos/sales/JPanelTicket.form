@@ -219,13 +219,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 14, 8, 14]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[3, 0, 3, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -244,13 +238,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 14, 8, 14]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[3, 0, 3, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -269,13 +257,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 14, 8, 14]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[3, 0, 3, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -294,13 +276,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 14, 8, 14]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[3, 0, 3, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -319,13 +295,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 14, 8, 14]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[3, 0, 3, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -344,7 +314,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 14, 8, 14]"/>
+                          <Insets value="[3, 0, 3, 0]"/>
                         </Property>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
                       </Properties>
@@ -382,13 +352,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -405,13 +369,7 @@
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="label" type="java.lang.String" value="0 %"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -427,13 +385,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -449,13 +401,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -471,13 +417,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -494,13 +434,7 @@
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="label" type="java.lang.String" value="... %"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 44]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 44]"/>
@@ -535,13 +469,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 50]"/>
@@ -558,13 +486,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 50]"/>
@@ -580,13 +502,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 50]"/>
@@ -602,13 +518,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 50]"/>
@@ -624,13 +534,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 50]"/>
@@ -647,13 +551,7 @@
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[8, 5, 8, 5]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
+                          <Insets value="[2, 0, 2, 0]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[62, 50]"/>

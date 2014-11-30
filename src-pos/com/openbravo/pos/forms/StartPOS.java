@@ -36,12 +36,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
-import org.jvnet.substance.SubstanceLookAndFeel;
-import org.jvnet.substance.api.SubstanceSkin;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.SubstanceSkin;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class StartPOS {
 
