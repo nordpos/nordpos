@@ -20,7 +20,7 @@
 -->
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
-    <display>
+    <!--<display>
         <line>
             <text align="left" length="10">${local.getScriptString("sale.total")}</text>
             <text align="right" length="10">${ticket.printTotal()}</text>
@@ -33,7 +33,7 @@
             <text align="center" length="20">${local.getScriptString("sale.payments")}</text>
         #end
         </line>
-    </display>
+    </display>-->
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line></line>

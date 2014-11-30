@@ -1523,10 +1523,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jTicketId.setRequestFocusEnabled(false);
         m_jButtons.add(m_jTicketId);
 
-        btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/kuser.png"))); // NOI18N
+        btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/kdmconfig32.png"))); // NOI18N
         btnCustomer.setFocusPainted(false);
         btnCustomer.setFocusable(false);
-        btnCustomer.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        btnCustomer.setMargin(new java.awt.Insets(0, 4, 0, 4));
         btnCustomer.setRequestFocusEnabled(false);
         btnCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1538,7 +1538,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         btnSplit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editcut.png"))); // NOI18N
         btnSplit.setFocusPainted(false);
         btnSplit.setFocusable(false);
-        btnSplit.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        btnSplit.setMargin(new java.awt.Insets(0, 4, 0, 4));
         btnSplit.setRequestFocusEnabled(false);
         btnSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1664,9 +1664,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         jEditAttributes.setFocusPainted(false);
         jEditAttributes.setFocusable(false);
         jEditAttributes.setMargin(new java.awt.Insets(8, 14, 8, 14));
-        jEditAttributes.setMaximumSize(new java.awt.Dimension(62, 50));
-        jEditAttributes.setMinimumSize(new java.awt.Dimension(62, 50));
-        jEditAttributes.setPreferredSize(new java.awt.Dimension(62, 50));
         jEditAttributes.setRequestFocusEnabled(false);
         jEditAttributes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

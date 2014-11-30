@@ -64,11 +64,11 @@ public class JTicketsBagTicketBag extends javax.swing.JPanel {
 
         jPanEdit.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        m_jBtnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editdelete.png"))); // NOI18N
+        m_jBtnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/list-remove.png"))); // NOI18N
         m_jBtnDelete.setText(AppLocal.getIntString("Button.DeleteTicket")); // NOI18N
         m_jBtnDelete.setFocusPainted(false);
         m_jBtnDelete.setFocusable(false);
-        m_jBtnDelete.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jBtnDelete.setMargin(new java.awt.Insets(0, 14, 0, 14));
         m_jBtnDelete.setRequestFocusEnabled(false);
         m_jBtnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,11 +77,11 @@ public class JTicketsBagTicketBag extends javax.swing.JPanel {
         });
         jPanEdit.add(m_jBtnDelete);
 
-        m_jBtnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/fileclose.png"))); // NOI18N
+        m_jBtnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/process-stop.png"))); // NOI18N
         m_jBtnCancel.setText(AppLocal.getIntString("Button.Cancel")); // NOI18N
         m_jBtnCancel.setFocusPainted(false);
         m_jBtnCancel.setFocusable(false);
-        m_jBtnCancel.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jBtnCancel.setMargin(new java.awt.Insets(0, 14, 0, 14));
         m_jBtnCancel.setRequestFocusEnabled(false);
         m_jBtnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

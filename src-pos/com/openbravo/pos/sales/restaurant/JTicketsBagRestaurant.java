@@ -57,10 +57,10 @@ public class JTicketsBagRestaurant extends javax.swing.JPanel {
 
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        m_jDelTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editdelete.png"))); // NOI18N
+        m_jDelTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/list-remove.png"))); // NOI18N
         m_jDelTicket.setFocusPainted(false);
         m_jDelTicket.setFocusable(false);
-        m_jDelTicket.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jDelTicket.setMargin(new java.awt.Insets(0, 4, 0, 4));
         m_jDelTicket.setRequestFocusEnabled(false);
         m_jDelTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +72,7 @@ public class JTicketsBagRestaurant extends javax.swing.JPanel {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/redo16.png"))); // NOI18N
         jButton2.setFocusPainted(false);
         jButton2.setFocusable(false);
-        jButton2.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        jButton2.setMargin(new java.awt.Insets(0, 4, 0, 4));
         jButton2.setRequestFocusEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,10 +81,10 @@ public class JTicketsBagRestaurant extends javax.swing.JPanel {
         });
         add(jButton2);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/atlantikdesignersmall.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/atlantikdesigner.png"))); // NOI18N
         jButton1.setFocusPainted(false);
         jButton1.setFocusable(false);
-        jButton1.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        jButton1.setMargin(new java.awt.Insets(0, 4, 0, 4));
         jButton1.setRequestFocusEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

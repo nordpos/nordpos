@@ -40,11 +40,11 @@
     <event key="ticket.setline" code="Script.StockCurrentSet"/>
 -->
 
-    <img-width value="80"/>
-    <img-height value="80"/>
+    <img-width value="96"/>
+    <img-height value="96"/>
     <font-size value="12"/>
     <catvisible value="true" />  
-    <cat-height value="120" />
+    <cat-height value="256" />
     <pricevisible value="true" />
     
     <taxesincluded value="true"/>   

@@ -78,12 +78,12 @@
                 <Component class="javax.swing.JButton" name="btnCustomer">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/com/openbravo/images/kuser.png"/>
+                      <Image iconType="3" name="/com/openbravo/images/kdmconfig32.png"/>
                     </Property>
                     <Property name="focusPainted" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                      <Insets value="[8, 14, 8, 14]"/>
+                      <Insets value="[0, 4, 0, 4]"/>
                     </Property>
                     <Property name="requestFocusEnabled" type="boolean" value="false"/>
                   </Properties>
@@ -99,7 +99,7 @@
                     <Property name="focusPainted" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                      <Insets value="[8, 14, 8, 14]"/>
+                      <Insets value="[0, 4, 0, 4]"/>
                     </Property>
                     <Property name="requestFocusEnabled" type="boolean" value="false"/>
                   </Properties>
@@ -191,8 +191,8 @@
               </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
-                <Property name="verticalGap" type="int" value="0"/>
                 <Property name="horizontalGap" type="int" value="0"/>
+                <Property name="verticalGap" type="int" value="0"/>
               </Layout>
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="jPanel2">
@@ -205,10 +205,10 @@
                   </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                    <Property name="verticalGap" type="int" value="5"/>
-                    <Property name="horizontalGap" type="int" value="5"/>
                     <Property name="columns" type="int" value="1"/>
+                    <Property name="horizontalGap" type="int" value="5"/>
                     <Property name="rows" type="int" value="6"/>
+                    <Property name="verticalGap" type="int" value="5"/>
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="m_jUp">
@@ -346,15 +346,6 @@
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                           <Insets value="[8, 14, 8, 14]"/>
                         </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[62, 50]"/>
-                        </Property>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
@@ -379,10 +370,10 @@
                   </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                    <Property name="verticalGap" type="int" value="5"/>
-                    <Property name="horizontalGap" type="int" value="5"/>
                     <Property name="columns" type="int" value="1"/>
+                    <Property name="horizontalGap" type="int" value="5"/>
                     <Property name="rows" type="int" value="6"/>
+                    <Property name="verticalGap" type="int" value="5"/>
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="m_jbtnDiscountRate">
@@ -532,10 +523,10 @@
                   </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                    <Property name="verticalGap" type="int" value="5"/>
-                    <Property name="horizontalGap" type="int" value="5"/>
                     <Property name="columns" type="int" value="1"/>
+                    <Property name="horizontalGap" type="int" value="5"/>
                     <Property name="rows" type="int" value="6"/>
+                    <Property name="verticalGap" type="int" value="5"/>
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="m_jbtnDiscountMoney">
