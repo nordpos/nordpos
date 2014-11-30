@@ -35,6 +35,9 @@ public abstract class JEditorText extends JEditorAbstract {
     public static final int MODE_Cyr1 = 4;
     public static final int MODE_cyr1 = 5;
     public static final int MODE_CYR1 = 6;
+    
+    public static final int TOTAL_MODES = 4;
+    
     public int m_iMode;
     
     protected int m_iTicks;
@@ -251,7 +254,7 @@ public abstract class JEditorText extends JEditorAbstract {
             }
             m_iTicks = 0;
             m_cLastChar = '\u0000';           
-            m_iMode = (m_iMode + 1) % 7;
+            m_iMode = (m_iMode + 1) % TOTAL_MODES;
         } else if (c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '0') {
             if (m_iMode == MODE_123) {
                 m_svalue = appendChar2Value(c);
