@@ -50,16 +50,18 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
         jcboMachineLeftPanel.addActionListener(dirty);
         jcboTicketsBag.addActionListener(dirty);
 
+        jcboLAF.addItem(new LAFInfo("System", UIManager.getSystemLookAndFeelClassName()));
+        
         // Installed skins
         LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
-        for (int i = 0; i < lafs.length; i++) {
-            jcboLAF.addItem(new LAFInfo(lafs[i].getName(), lafs[i].getClassName()));
+        for (LookAndFeelInfo laf : lafs) {
+            jcboLAF.addItem(new LAFInfo(laf.getName(), laf.getClassName()));
         }
 
         // Substance skins
         // new SubstanceLookAndFeel(); // TODO: Remove in Substance 5.0. Workaround for Substance 4.3 to initialize static variables
         Map<String, SkinInfo> skins = SubstanceLookAndFeel.getAllSkins();
-        for (SkinInfo skin : skins.values()) {
+        for (SkinInfo skin : skins.values()) {            
             jcboLAF.addItem(new LAFInfo(skin.getDisplayName(), skin.getClassName()));
         }
 
