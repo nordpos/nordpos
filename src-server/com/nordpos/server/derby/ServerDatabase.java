@@ -21,6 +21,7 @@
 package com.nordpos.server.derby;
 
 import com.nordpos.server.ServerInterface;
+import java.io.File;
 import java.net.InetAddress;
 import org.apache.derby.drda.NetworkServerControl;
 
@@ -36,6 +37,7 @@ public class ServerDatabase implements ServerInterface {
         NetworkServerControl server;
 
         server = new NetworkServerControl(InetAddress.getByName("localhost"), 1527);
+        System.setProperty("derby.system.home", new File(new File(System.getProperty("user.home")), ".derby-db").getAbsolutePath());
         java.io.PrintWriter consoleWriter = new java.io.PrintWriter(System.out, true);
         server.start(consoleWriter);
 

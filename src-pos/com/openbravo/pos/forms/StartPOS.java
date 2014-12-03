@@ -99,11 +99,11 @@ public class StartPOS {
                 // Set the look and feel.
                 try {
                     Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();
-                    if (laf instanceof LookAndFeel) {
-                        UIManager.setLookAndFeel((LookAndFeel) laf);
-                    } else if (laf instanceof SubstanceSkin) {
-                        SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);
-                    }
+                        if (laf instanceof LookAndFeel) {
+                            UIManager.setLookAndFeel((LookAndFeel) laf);
+                        } else if (laf instanceof SubstanceSkin) {
+                            SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);
+                        }
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     logger.log(Level.WARNING, "Cannot set look and feel", e);
                 }

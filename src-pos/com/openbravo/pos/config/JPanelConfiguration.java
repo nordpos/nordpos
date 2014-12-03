@@ -51,7 +51,7 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
         initComponents();
         
         // Inicio lista de paneles
-        m_panelconfig = new ArrayList<PanelConfig>();
+        m_panelconfig = new ArrayList<>();
         m_panelconfig.add(new JPanelConfigGeneral());
         m_panelconfig.add(new JPanelConfigDatabase());
         m_panelconfig.add(new JPanelConfigHardware());        
