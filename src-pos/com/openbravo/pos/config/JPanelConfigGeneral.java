@@ -27,6 +27,7 @@ import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.SubstanceSkin;
 import org.pushingpixels.substance.api.skin.SkinInfo;
@@ -35,10 +36,11 @@ import org.pushingpixels.substance.api.skin.SkinInfo;
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConfig {
 
-    private DirtyManager dirty = new DirtyManager();
+    private final DirtyManager dirty = new DirtyManager();
 
     public JPanelConfigGeneral() {
 
@@ -66,6 +68,7 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
         }
 
         jcboLAF.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeLAF();
             }
@@ -83,18 +86,22 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
 
     }
 
+    @Override
     public boolean hasChanged() {
         return dirty.isDirty();
     }
 
+    @Override
     public Component getConfigComponent() {
         return this;
     }
 
+    @Override
     public String getPanelConfigName() {
         return AppLocal.getIntString("Label.CashMachine");
     }
 
+    @Override
     public void loadProperties(AppConfig config) {
 
         jtxtMachineHostname.setText(config.getProperty("machine.hostname"));
@@ -117,13 +124,14 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
         dirty.setDirty(false);
     }
 
+    @Override
     public void saveProperties(AppConfig config) {
 
         config.setProperty("machine.hostname", jtxtMachineHostname.getText());
 
         LAFInfo laf = (LAFInfo) jcboLAF.getSelectedItem();
         config.setProperty("swing.defaultlaf", laf == null
-                ? System.getProperty("swing.defaultlaf", "javax.swing.plaf.metal.MetalLookAndFeel")
+                ? System.getProperty("swing.defaultlaf", "org.pushingpixels.substance.api.skin.CremeSkin")
                 : laf.getClassName());
 
         config.setProperty("machine.screenmode", comboValue(jcboMachineScreenmode.getSelectedItem()));
@@ -132,14 +140,6 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
         config.setProperty("machine.leftpanel", comboValue(jcboMachineLeftPanel.getSelectedItem()));
 
         dirty.setDirty(false);
-    }
-
-    private String unifySerialInterface(String sparam) {
-
-        // for backward compatibility
-        return ("rxtx".equals(sparam))
-                ? "serial"
-                : sparam;
     }
 
     private String comboValue(Object value) {
@@ -153,6 +153,7 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
             // The selected look and feel is different from the current look and feel.
             SwingUtilities.invokeLater(new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         String lafname = laf.getClassName();
@@ -165,7 +166,7 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
                         }
 
                         SwingUtilities.updateComponentTreeUI(JPanelConfigGeneral.this.getTopLevelAncestor());
-                    } catch (Exception e) {
+                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     }
                 }
             });
@@ -174,8 +175,8 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
 
     private static class LAFInfo {
 
-        private String name;
-        private String classname;
+        private final String name;
+        private final String classname;
 
         public LAFInfo(String name, String classname) {
             this.name = name;

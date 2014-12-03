@@ -24,12 +24,12 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.UIManager;
 
 /**
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class AppConfig implements AppProperties {
 
@@ -176,7 +176,7 @@ public class AppConfig implements AppProperties {
         m_propsconfig.setProperty("user.country", l.getCountry());
         m_propsconfig.setProperty("user.variant", l.getVariant());
 
-        m_propsconfig.setProperty("swing.defaultlaf", System.getProperty("swing.defaultlaf", UIManager.getSystemLookAndFeelClassName()));
+        m_propsconfig.setProperty("swing.defaultlaf", System.getProperty("swing.defaultlaf", "org.pushingpixels.substance.api.skin.CremeSkin"));
 
         m_propsconfig.setProperty("machine.printer", "screen");
         m_propsconfig.setProperty("machine.printer.2", "Not defined");
