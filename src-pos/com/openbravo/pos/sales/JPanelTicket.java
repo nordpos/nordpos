@@ -160,9 +160,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         dlCustomers = (DataLogicCustomers) m_App.getBean(DataLogicCustomers.class.getName());
 
         // borramos el boton de bascula si no hay bascula conectada
-        if (!m_App.getDeviceScale().existsScale()) {
-            m_jbtnScale.setVisible(false);
-        }
+        m_jbtnScale.setVisible(m_App.getDeviceScale().existsScale());
 
         m_ticketsbag = getJTicketsBag();
         m_jPanelBag.add(m_ticketsbag.getBagComponent(), BorderLayout.LINE_START);

@@ -20,11 +20,8 @@
  */
 package com.nordpos.device.scale;
 
-import com.nordpos.device.DisplayInterface;
 import com.nordpos.device.ScaleInterface;
-import com.nordpos.device.util.SerialPortParameters;
-import com.openbravo.pos.util.StringParser;
-import gnu.io.SerialPort;
+import com.nordpos.device.util.StringParser;
 import java.awt.Component;
 
 /**
@@ -33,32 +30,19 @@ import java.awt.Component;
  * @version NORD POS 3.0
  */
 public class ScaleEmulator implements ScaleInterface {
+
     @Override
     public DeviceScale getScale(String sProperty) throws Exception {
-        StringParser scaleProperty = new StringParser(sProperty);
-        String sScaleType = scaleProperty.nextToken(':');
-        String sScaleParam1 = scaleProperty.nextToken(',');
-
-        Integer iScaleSerialPortSpeed = SerialPortParameters.getSpeed(scaleProperty.nextToken(','));
-        Integer iScaleSerialPortDataBits =  SerialPortParameters.getDataBits(scaleProperty.nextToken(','));
-        Integer iScaleSerialPortStopBits = SerialPortParameters.getStopBits(scaleProperty.nextToken(','));
-        Integer iScaleSerialPortParity = SerialPortParameters.getParity(scaleProperty.nextToken(','));
-
-        switch (sScaleType) {
-            case "fake":
-                return new ScaleFake();
-            case "comm":
-                return new ScaleComm(sScaleParam1, iScaleSerialPortSpeed, iScaleSerialPortDataBits, iScaleSerialPortStopBits, iScaleSerialPortParity);
-            default:
-                return new DeviceScaleNull();
-        }
+        return new DeviceScaleNull();
     }
 
     @Override
     public DeviceScale getScale(Component awtComponent, String sProperty) throws Exception {
         StringParser sp = new StringParser(sProperty);
-        String sPrinterType = sp.nextToken(':');
-        switch (sPrinterType) {
+        String sScaleType = sp.nextToken(':');
+        switch (sScaleType) {
+            case "fake":
+                return new ScaleFake();
             case "screen":
                 return new ScaleDialog(awtComponent);
             default:

@@ -33,7 +33,7 @@ import com.nordpos.device.fiscalprinter.DeviceFiscalPrinter;
 import com.nordpos.device.fiscalprinter.DeviceFiscalPrinterNull;
 import com.nordpos.device.labelprinter.DeviceLabelPrinter;
 import com.nordpos.device.labelprinter.DeviceLabelPrinterNull;
-import com.openbravo.pos.util.StringParser;
+import com.nordpos.device.util.StringParser;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;

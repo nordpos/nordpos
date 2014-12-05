@@ -22,7 +22,7 @@ import com.openbravo.data.user.DirtyManager;
 import com.openbravo.pos.forms.AppConfig;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.util.ReportUtils;
-import com.openbravo.pos.util.StringParser;
+import com.nordpos.device.util.StringParser;
 import java.awt.CardLayout;
 import java.awt.Component;
 

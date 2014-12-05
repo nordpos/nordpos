@@ -21,7 +21,7 @@
 package com.nordpos.device.receiptprinter;
 
 import com.nordpos.device.ReceiptPrinterInterface;
-import com.openbravo.pos.util.StringParser;
+import com.nordpos.device.util.StringParser;
 import com.nordpos.device.writter.WritterFile;
 import java.awt.Component;
 
