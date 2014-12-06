@@ -39,7 +39,7 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="m_jLocation" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="m_jLocation" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>

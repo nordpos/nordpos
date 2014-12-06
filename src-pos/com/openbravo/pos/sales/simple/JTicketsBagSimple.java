@@ -70,10 +70,13 @@ public class JTicketsBagSimple extends JTicketsBag {
 
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        m_jDelTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editdelete.png"))); // NOI18N
+        m_jDelTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/list-remove.png"))); // NOI18N
         m_jDelTicket.setFocusPainted(false);
         m_jDelTicket.setFocusable(false);
-        m_jDelTicket.setMargin(new java.awt.Insets(0, 14, 0, 14));
+        m_jDelTicket.setMargin(new java.awt.Insets(0, 4, 0, 4));
+        m_jDelTicket.setMaximumSize(new java.awt.Dimension(52, 44));
+        m_jDelTicket.setMinimumSize(new java.awt.Dimension(52, 44));
+        m_jDelTicket.setPreferredSize(new java.awt.Dimension(52, 44));
         m_jDelTicket.setRequestFocusEnabled(false);
         m_jDelTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -105,13 +105,8 @@ public class JParamsCustomer extends javax.swing.JPanel implements ReportEditorC
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(AppLocal.getIntString("label.bycustomer"))); // NOI18N
         setPreferredSize(new java.awt.Dimension(400, 60));
-        setLayout(null);
 
         jLabel1.setText(AppLocal.getIntString("label.customer")); // NOI18N
-        add(jLabel1);
-        jLabel1.setBounds(20, 20, 120, 15);
-        add(jTextField1);
-        jTextField1.setBounds(140, 20, 200, 20);
 
         btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/kuser.png"))); // NOI18N
         btnCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -119,8 +114,27 @@ public class JParamsCustomer extends javax.swing.JPanel implements ReportEditorC
                 btnCustomerActionPerformed(evt);
             }
         });
-        add(btnCustomer);
-        btnCustomer.setBounds(350, 20, 50, 26);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btnCustomer)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addComponent(jLabel1)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCustomer))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed

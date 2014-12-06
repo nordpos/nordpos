@@ -562,13 +562,7 @@ public class StockManagement extends JPanel implements JPanelView {
 
         add(jPanel1, java.awt.BorderLayout.EAST);
 
-        jPanel3.setLayout(null);
-
         jLabel1.setText(AppLocal.getIntString("label.stockdate")); // NOI18N
-        jPanel3.add(jLabel1);
-        jLabel1.setBounds(10, 30, 150, 18);
-        jPanel3.add(m_jdate);
-        m_jdate.setBounds(160, 30, 180, 28);
 
         m_jbtndate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
         m_jbtndate.addActionListener(new java.awt.event.ActionListener() {
@@ -576,37 +570,26 @@ public class StockManagement extends JPanel implements JPanelView {
                 m_jbtndateActionPerformed(evt);
             }
         });
-        jPanel3.add(m_jbtndate);
-        m_jbtndate.setBounds(350, 30, 40, 28);
 
         jLabel2.setText(AppLocal.getIntString("label.stockreason")); // NOI18N
-        jPanel3.add(jLabel2);
-        jLabel2.setBounds(10, 60, 150, 18);
 
         m_jreason.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jreasonActionPerformed(evt);
             }
         });
-        jPanel3.add(m_jreason);
-        m_jreason.setBounds(160, 60, 180, 20);
 
         jLabel8.setText(AppLocal.getIntString("label.warehouse")); // NOI18N
-        jPanel3.add(jLabel8);
-        jLabel8.setBounds(10, 90, 150, 18);
-        jPanel3.add(m_jLocation);
-        m_jLocation.setBounds(160, 90, 180, 20);
-        jPanel3.add(m_jLocationDes);
-        m_jLocationDes.setBounds(350, 90, 180, 20);
 
         jPanel5.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(jPanel5);
-        jPanel5.setBounds(10, 120, 440, 220);
 
         m_jDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/locationbar_erase.png"))); // NOI18N
         m_jDelete.setFocusPainted(false);
         m_jDelete.setFocusable(false);
         m_jDelete.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jDelete.setMaximumSize(new java.awt.Dimension(54, 44));
+        m_jDelete.setMinimumSize(new java.awt.Dimension(54, 44));
+        m_jDelete.setPreferredSize(new java.awt.Dimension(54, 44));
         m_jDelete.setRequestFocusEnabled(false);
         m_jDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -619,6 +602,9 @@ public class StockManagement extends JPanel implements JPanelView {
         m_jUp.setFocusPainted(false);
         m_jUp.setFocusable(false);
         m_jUp.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jUp.setMaximumSize(new java.awt.Dimension(54, 44));
+        m_jUp.setMinimumSize(new java.awt.Dimension(54, 44));
+        m_jUp.setPreferredSize(new java.awt.Dimension(54, 44));
         m_jUp.setRequestFocusEnabled(false);
         m_jUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -631,6 +617,9 @@ public class StockManagement extends JPanel implements JPanelView {
         m_jDown.setFocusPainted(false);
         m_jDown.setFocusable(false);
         m_jDown.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jDown.setMaximumSize(new java.awt.Dimension(54, 44));
+        m_jDown.setMinimumSize(new java.awt.Dimension(54, 44));
+        m_jDown.setPreferredSize(new java.awt.Dimension(54, 44));
         m_jDown.setRequestFocusEnabled(false);
         m_jDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -643,6 +632,9 @@ public class StockManagement extends JPanel implements JPanelView {
         jEditAttributes.setFocusPainted(false);
         jEditAttributes.setFocusable(false);
         jEditAttributes.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        jEditAttributes.setMaximumSize(new java.awt.Dimension(54, 44));
+        jEditAttributes.setMinimumSize(new java.awt.Dimension(54, 44));
+        jEditAttributes.setPreferredSize(new java.awt.Dimension(54, 44));
         jEditAttributes.setRequestFocusEnabled(false);
         jEditAttributes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -651,8 +643,56 @@ public class StockManagement extends JPanel implements JPanelView {
         });
         jPanel7.add(jEditAttributes);
 
-        jPanel3.add(jPanel7);
-        jPanel7.setBounds(450, 120, 80, 230);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(m_jdate, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(m_jbtndate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(m_jreason, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(m_jLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(m_jLocationDes, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
+                    .addComponent(m_jdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jbtndate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2)
+                    .addComponent(m_jreason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel8)
+                    .addComponent(m_jLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jLocationDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         add(jPanel3, java.awt.BorderLayout.CENTER);
 
