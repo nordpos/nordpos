@@ -23,90 +23,96 @@
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
   </AuxValues>
 
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel13" min="-2" pref="130" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jcboPaymentGateway" min="-2" pref="240" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jchkPaymentTest" min="-2" pref="130" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel11" min="-2" pref="130" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jcboCardReader" min="-2" pref="240" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="jPanel2" alignment="0" pref="687" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jcboCardReader" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jcboPaymentGateway" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="jchkPaymentTest" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" pref="104" max="-2" attributes="0"/>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+    <Property name="alignment" type="int" value="3"/>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel11">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="pos_messages.properties" key="label.magcardreader" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jcboCardReader">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel13">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="pos_messages.properties" key="label.paymentgateway" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jcboPaymentGateway">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcboPaymentGatewayActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="jchkPaymentTest">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="pos_messages.properties" key="label.paymenttestmode" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Container class="javax.swing.JPanel" name="jPanel2">
+    <Container class="javax.swing.JPanel" name="jPanel1">
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-        <Property name="columns" type="int" value="1"/>
-        <Property name="rows" type="int" value="1"/>
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel13" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="jLabel11" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jcboCardReader" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="jcboPaymentGateway" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jchkPaymentTest" min="-2" pref="130" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jPanel2" alignment="0" pref="687" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcboCardReader" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="jLabel13" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcboPaymentGateway" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jchkPaymentTest" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanel2" min="-2" pref="104" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel11">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="pos_messages.properties" key="label.magcardreader" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jcboCardReader">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel13">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="pos_messages.properties" key="label.paymentgateway" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jcboPaymentGateway">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcboPaymentGatewayActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="jchkPaymentTest">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="pos_messages.properties" key="label.paymenttestmode" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JPanel" name="jPanel2">
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+            <Property name="columns" type="int" value="1"/>
+            <Property name="rows" type="int" value="1"/>
+          </Layout>
+        </Container>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>

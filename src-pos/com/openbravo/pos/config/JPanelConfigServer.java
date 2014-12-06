@@ -98,6 +98,7 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jPanelPrefix = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTxtServletWebAppContext = new javax.swing.JTextField();
@@ -108,6 +109,8 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
         jPanelPrefix1 = new javax.swing.JPanel();
         jcboEmbeddedDatabaseStartUpFlag = new javax.swing.JComboBox();
         jLabel21 = new javax.swing.JLabel();
+
+        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
 
         jPanelPrefix.setBorder(javax.swing.BorderFactory.createTitledBorder(AppLocal.getIntString("Label.WebAppsServer"))); // NOI18N
 
@@ -124,23 +127,23 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
         jPanelPrefixLayout.setHorizontalGroup(
             jPanelPrefixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrefixLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addGroup(jPanelPrefixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel1))
-                .addGap(5, 5, 5)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelPrefixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jcboServletWebAppStartUpFlag, 0, 165, Short.MAX_VALUE)
-                    .addComponent(jTxtServletWebAppContext, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addComponent(jcboServletWebAppStartUpFlag, 0, 200, Short.MAX_VALUE)
+                    .addComponent(jTxtServletWebAppContext)
                     .addComponent(jtxtServletWebAppPort))
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelPrefixLayout.setVerticalGroup(
             jPanelPrefixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrefixLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanelPrefixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addContainerGap()
+                .addGroup(jPanelPrefixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel19)
                     .addComponent(jcboServletWebAppStartUpFlag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
@@ -165,42 +168,43 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
         jPanelPrefix1Layout.setHorizontalGroup(
             jPanelPrefix1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrefix1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel21)
-                .addGap(7, 7, 7)
-                .addComponent(jcboEmbeddedDatabaseStartUpFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcboEmbeddedDatabaseStartUpFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(206, Short.MAX_VALUE))
         );
         jPanelPrefix1Layout.setVerticalGroup(
             jPanelPrefix1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrefix1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanelPrefix1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addContainerGap()
+                .addGroup(jPanelPrefix1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel21)
                     .addComponent(jcboEmbeddedDatabaseStartUpFlag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelPrefix1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelPrefix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanelPrefix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanelPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelPrefix1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -208,6 +212,7 @@ public class JPanelConfigServer extends javax.swing.JPanel implements PanelConfi
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelPrefix;
     private javax.swing.JPanel jPanelPrefix1;
     private javax.swing.JTextField jTxtServletWebAppContext;

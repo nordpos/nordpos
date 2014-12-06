@@ -151,7 +151,6 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -171,101 +170,20 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 5, 10, 5));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel18.setText(AppLocal.getIntString("label.dbdriverlib")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        jPanel1.add(jLabel18, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel1.add(jtxtDbDriverLib, gridBagConstraints);
 
         jbtnDbDriverLib.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/fileopen.png"))); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel1.add(jbtnDbDriverLib, gridBagConstraints);
 
         jLabel1.setText(AppLocal.getIntString("Label.DbDriver")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        jPanel1.add(jLabel1, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel1.add(jtxtDbDriver, gridBagConstraints);
 
         jLabel2.setText(AppLocal.getIntString("Label.DbURL")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        jPanel1.add(jLabel2, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel1.add(jtxtDbURL, gridBagConstraints);
 
         jLabel3.setText(AppLocal.getIntString("Label.DbUser")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        jPanel1.add(jLabel3, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel1.add(jtxtDbUser, gridBagConstraints);
 
         jLabel4.setText(AppLocal.getIntString("Label.DbPassword")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        jPanel1.add(jLabel4, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel1.add(jtxtDbPassword, gridBagConstraints);
 
         jLabel19.setText(AppLocal.getIntString("label.dbtype")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        jPanel1.add(jLabel19, gridBagConstraints);
 
         jcboDBType.setModel(new javax.swing.DefaultComboBoxModel(modelDBType));
         jcboDBType.addActionListener(new java.awt.event.ActionListener() {
@@ -273,13 +191,61 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
                 jcboDBTypeActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel1.add(jcboDBType, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtxtDbURL, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtDbDriverLib, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtDbDriver, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtDbPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcboDBType, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtDbUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbtnDbDriverLib)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel19)
+                    .addComponent(jcboDBType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel18)
+                    .addComponent(jtxtDbDriverLib, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnDbDriverLib))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
+                    .addComponent(jtxtDbDriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2)
+                    .addComponent(jtxtDbURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel3)
+                    .addComponent(jtxtDbUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(jtxtDbPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
