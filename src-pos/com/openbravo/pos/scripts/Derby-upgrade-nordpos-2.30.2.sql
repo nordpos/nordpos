@@ -28,16 +28,11 @@ UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Logo.pn
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Title.txt} WHERE NAME = 'Window.Title';
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.bsh} WHERE NAME = 'Menu.Root';
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Ticket.Buttons.xml} WHERE NAME = 'Ticket.Buttons';
-
-INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90005', 'Window.Description', 0, $FILE{/com/openbravo/pos/templates/Window.Description.txt});
-INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90006', 'Window.DescLogo', 1, $FILE{/com/openbravo/pos/templates/Window.DescLogo.png});
-INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90007', 'Window.SupportBy', 1, $FILE{/com/openbravo/pos/templates/Window.SupportBy.png});
-
-ALTER TABLE TICKETLINES ADD COLUMN ID VARCHAR(256);
-ALTER TABLE CATEGORIES ADD COLUMN CODE VARCHAR(256);
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Description.xml} WHERE NAME = 'Window.Description';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.DescLogo.xml} WHERE NAME = 'Window.DescLogo';
 
 -- final script
 
 DELETE FROM SHAREDTICKETS;
 
-UPDATE APPLICATIONS SET ID = $APP_ID{}, NAME = $APP_NAME{}, VERSION = $APP_VERSION{} WHERE ID = 'openbravopos';
+UPDATE APPLICATIONS SET ID = $APP_ID{}, NAME = $APP_NAME{}, VERSION = $APP_VERSION{} WHERE ID = 'nordpos';

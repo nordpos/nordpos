@@ -27,9 +27,11 @@ UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Manager.x
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Title.txt} WHERE NAME = 'Window.Title';
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.bsh} WHERE NAME = 'Menu.Root';
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Ticket.Buttons.xml} WHERE NAME = 'Ticket.Buttons';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Description.xml} WHERE NAME = 'Window.Description';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.DescLogo.xml} WHERE NAME = 'Window.DescLogo';
 
 -- final script
 
 DELETE FROM SHAREDTICKETS;
 
-UPDATE APPLICATIONS SET ID = $APP_ID{}, NAME = $APP_NAME{}, VERSION = $APP_VERSION{} WHERE ID = 'openbravopos';
+UPDATE APPLICATIONS SET ID = $APP_ID{}, NAME = $APP_NAME{}, VERSION = $APP_VERSION{} WHERE ID = 'nordpos';
