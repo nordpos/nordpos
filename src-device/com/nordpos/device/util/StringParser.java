@@ -18,26 +18,41 @@
  * You should have received a copy of the GNU General Public License along with
  * NORD POS. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nordpos.device.plu;
-
-import com.nordpos.device.PLUInterface;
-import com.nordpos.device.util.StringParser;
+package com.nordpos.device.util;
 
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3.0
  */
-public class PLUEmulator implements PLUInterface {
+public class StringParser {
 
-    @Override
-    public DevicePLU getPLU(String sProperty) throws Exception {
-        StringParser pluProperty = new StringParser(sProperty);
-        String sDevicePLUType = pluProperty.nextToken(':');
+    private int currentPosition;
+    private final int maxPosition;
+    private final String str;
 
-        switch (sDevicePLUType) {
-            default:
-                return new DevicePLUNull();
+    public StringParser(String str) {
+        this.str = str;
+        currentPosition = 0;
+        maxPosition = str == null ? 0 : str.length();
+    }
+
+    public String nextToken(char c) {
+
+        if (currentPosition < maxPosition) {
+
+            int start = currentPosition;
+            while (currentPosition < maxPosition && c != str.charAt(currentPosition)) {
+                currentPosition ++;
+            }
+
+            if (currentPosition < maxPosition) {
+                return str.substring(start, currentPosition++);
+            } else {
+                return str.substring(start);
+            }
+        } else {
+            return "";
         }
     }
 }

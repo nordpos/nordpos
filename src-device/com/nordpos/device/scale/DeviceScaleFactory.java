@@ -21,7 +21,7 @@ package com.nordpos.device.scale;
 import com.nordpos.device.ScaleInterface;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppProperties;
-import com.openbravo.pos.util.StringParser;
+import com.nordpos.device.util.StringParser;
 import java.awt.Component;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
@@ -58,8 +58,8 @@ public class DeviceScaleFactory {
         }
     }
 
-    public boolean existsScale() {
-        return m_scale != null;
+    public boolean existsScale() {       
+        return !sScaleType.equals("Not defined");
     }
 
     public Double readWeight() throws ScaleException {
@@ -70,15 +70,6 @@ public class DeviceScaleFactory {
             Double result = m_scale.readWeight();
             if (result == null) {
                 return null; // Canceled by the user / scale
-            } else if ((result.doubleValue() < 0.002) && "massak".equals(sScaleType) == false) {
-                // invalid result. nothing on the scale
-                throw new ScaleException(AppLocal.getIntString("scale.invalidvalue"));
-            } else if ("massak".equals(sScaleType)) {
-                if ((result >= 0.04 && result <= 15000.0) || (result <= -0.04 && result >= -15000.0)) {
-                    return result;
-                } else {
-                    throw new ScaleException(AppLocal.getIntString("scale.invalidvalue"));
-                }
             } else {
                 // valid result
                 return result;
