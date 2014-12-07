@@ -25,12 +25,13 @@ import com.openbravo.beans.LocaleResources;
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class AppLocal {
 
     public static final String APP_NAME = "NORD POS";
     public static final String APP_ID = "nordpos";
-    public static final String APP_VERSION = "2.30.2";
+    public static final String APP_VERSION = "3.0CE";
 
     // private static List<ResourceBundle> m_messages;
     private static final LocaleResources m_resources;

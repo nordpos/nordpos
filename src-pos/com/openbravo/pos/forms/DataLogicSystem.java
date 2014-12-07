@@ -71,7 +71,7 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
 
         m_sInitScript = "/com/openbravo/pos/scripts/" + s.DB.getName();
 
-        m_version = new PreparedSentence(s, "SELECT VERSION FROM APPLICATIONS WHERE ID = ?", SerializerWriteString.INSTANCE, SerializerReadString.INSTANCE);
+        m_version = new StaticSentence(s, "SELECT VERSION FROM APPLICATIONS",  null, SerializerReadString.INSTANCE);
         m_application = new StaticSentence(s, "SELECT ID FROM APPLICATIONS", null, SerializerReadString.INSTANCE);
         m_dummy = new StaticSentence(s, "SELECT * FROM PEOPLE WHERE 1 = 0");
 
@@ -147,7 +147,7 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
     }
 
     public final String findVersion() throws BasicException {
-        return (String) m_version.find(AppLocal.APP_ID);
+        return (String) m_version.find();
     }
 
     public final String findApplication() throws BasicException {

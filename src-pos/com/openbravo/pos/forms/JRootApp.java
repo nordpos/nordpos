@@ -124,9 +124,9 @@ public class JRootApp extends JPanel implements AppView {
         m_dlSystem = (DataLogicSystem) getBean(DataLogicSystem.class.getName());
 
         // Create or upgrade the database if database version is not the expected
-        String sDBVersion = readDataBaseVersion();
         String sDBApplication = readDataBaseApplication();
-        if (!AppLocal.APP_VERSION.equals(sDBVersion)) {
+        String sDBVersion = readDataBaseVersion();        
+        if (!AppLocal.APP_ID.equals(sDBApplication) || !AppLocal.APP_VERSION.equals(sDBVersion)) {
 
             // Create or upgrade database
             String sScript = (sDBVersion == null && sDBApplication == null)
