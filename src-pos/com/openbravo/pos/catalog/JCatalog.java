@@ -418,7 +418,7 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
         m_jPanelImageViewer.setPreferredSize(new java.awt.Dimension(236, 275));
         m_jPanelImageViewer.setLayout(new java.awt.BorderLayout());
 
-        m_jImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        m_jImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
         m_jPanelImageViewer.add(m_jImage, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(m_jPanelImageViewer, java.awt.BorderLayout.EAST);

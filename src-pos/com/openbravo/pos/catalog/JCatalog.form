@@ -7,6 +7,7 @@
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
@@ -65,9 +66,9 @@
               </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                <Property name="verticalGap" type="int" value="2"/>
                 <Property name="columns" type="int" value="1"/>
                 <Property name="rows" type="int" value="0"/>
+                <Property name="verticalGap" type="int" value="2"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JButton" name="m_btnBackRoot">
@@ -127,7 +128,7 @@
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                    <EmptyBorder bottom="0" left="10" right="0" top="0"/>
+                    <EmptyBorder bottom="0" left="5" right="5" top="0"/>
                   </Border>
                 </Property>
               </Properties>
