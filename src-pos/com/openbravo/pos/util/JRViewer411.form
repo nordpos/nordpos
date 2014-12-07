@@ -276,7 +276,7 @@
             <Component class="javax.swing.JButton" name="btnPrint">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/openbravo/images/yast_printer.png"/>
+                  <Image iconType="3" name="/com/openbravo/images/printer.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="getBundleString(&quot;print&quot;)" type="code"/>

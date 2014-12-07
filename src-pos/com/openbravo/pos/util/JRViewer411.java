@@ -809,7 +809,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
         });
         jToolBar.add(btnSave);
 
-        btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/yast_printer.png"))); // NOI18N
+        btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/printer.png"))); // NOI18N
         btnPrint.setToolTipText(getBundleString("print"));
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
