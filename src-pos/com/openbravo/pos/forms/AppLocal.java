@@ -31,7 +31,7 @@ public class AppLocal {
 
     public static final String APP_NAME = "NORD POS";
     public static final String APP_ID = "nordpos";
-    public static final String APP_VERSION = "3.0CE";
+    public static final String APP_VERSION = "3.0.0CE";
 
     // private static List<ResourceBundle> m_messages;
     private static final LocaleResources m_resources;
