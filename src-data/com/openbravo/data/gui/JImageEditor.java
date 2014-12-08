@@ -16,10 +16,8 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.data.gui;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -38,17 +36,23 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import com.openbravo.data.loader.LocalRes;
+import org.imgscalr.Scalr;
 
+/**
+ *
+ * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
+ */
 public class JImageEditor extends javax.swing.JPanel {
 
     private Dimension m_maxsize;
-    private ZoomIcon m_icon;
+    private final ZoomIcon m_icon;
     private BufferedImage m_Img = null;
 
     private static File m_fCurrentDirectory = null;
-    private static NumberFormat m_percentformat = new DecimalFormat("#,##0.##%");
+    private static final NumberFormat m_percentformat = new DecimalFormat("#,##0.##%");
 
-    /** Creates new form JImageEditor */
     public JImageEditor() {
         initComponents();
 
@@ -63,10 +67,12 @@ public class JImageEditor extends javax.swing.JPanel {
     public void setMaxDimensions(Dimension size) {
         m_maxsize = size;
     }
+
     public Dimension getMaxDimensions() {
         return m_maxsize;
     }
 
+    @Override
     public void setEnabled(boolean value) {
 
         privateSetEnabled(value);
@@ -158,41 +164,18 @@ public class JImageEditor extends javax.swing.JPanel {
         int myheight = img.getHeight();
         int mywidth = img.getWidth();
 
-        if (myheight > m_maxsize.height) {
-            mywidth = (int) (mywidth * m_maxsize.height / myheight);
-            myheight = m_maxsize.height;
+        if (mywidth > m_maxsize.width || myheight > m_maxsize.height) {
+            if (mywidth > myheight) {
+                img = Scalr.resize(img, Scalr.Mode.FIT_TO_HEIGHT, m_maxsize.height);
+            } else {
+                img = Scalr.resize(img, Scalr.Mode.FIT_TO_WIDTH, m_maxsize.width);
+            }
         }
-        if (mywidth > m_maxsize.width) {
-            myheight = (int) (myheight * m_maxsize.width / mywidth);
-            mywidth = m_maxsize.width;
-        }
 
-        BufferedImage thumb = new BufferedImage(mywidth, myheight, BufferedImage.TYPE_4BYTE_ABGR);
-
-        double scalex = (double) mywidth / (double) img.getWidth(null);
-        double scaley = (double) myheight / (double) img.getHeight(null);
-
-        Graphics2D g2d = thumb.createGraphics();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        //g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-        g2d.setColor(new Color(0, 0, 0, 0)); // Transparent
-
-        g2d.fillRect(0, 0, mywidth, myheight);
-        if (scalex < scaley) {
-            g2d.drawImage(img, 0,(int) ((myheight - img.getHeight(null) * scalex) / 2.0)
-            , mywidth, (int) (img.getHeight(null) * scalex),  null);
-        } else {
-           g2d.drawImage(img, (int) ((mywidth - img.getWidth(null) * scaley) / 2.0), 0
-           , (int) (img.getWidth(null) * scaley), myheight, null);
-        }
-        g2d.dispose();
-
-        return thumb;
+        return img;
     }
 
-    private static class ZoomIcon implements Icon {
+    public static class ZoomIcon implements Icon {
 
         private Icon ico;
         private double zoom;
@@ -201,12 +184,18 @@ public class JImageEditor extends javax.swing.JPanel {
             this.ico = null;
             this.zoom = 0.5;
         }
+
+        @Override
         public int getIconHeight() {
             return ico == null ? 0 : (int) (zoom * ico.getIconHeight());
         }
+
+        @Override
         public int getIconWidth() {
             return ico == null ? 0 : (int) (zoom * ico.getIconWidth());
         }
+
+        @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             if (ico != null) {
                 Graphics2D g2d = (Graphics2D) g;
@@ -218,26 +207,31 @@ public class JImageEditor extends javax.swing.JPanel {
                 g2d.setTransform(oldt);
             }
         }
+
         public void setIcon(Icon ico) {
             this.ico = ico;
         }
+
         public void setZoom(double zoom) {
             this.zoom = zoom;
         }
+
         public double getZoom() {
             return zoom;
         }
     }
+
     private static class ExtensionsFilter extends FileFilter {
 
-        private String message;
-        private String[] extensions;
+        private final String message;
+        private final String[] extensions;
 
         public ExtensionsFilter(String message, String... extensions) {
             this.message = message;
             this.extensions = extensions;
         }
 
+        @Override
         public boolean accept(java.io.File f) {
             if (f.isDirectory()) {
                 return true;
@@ -246,7 +240,7 @@ public class JImageEditor extends javax.swing.JPanel {
                 int ipos = sFileName.lastIndexOf('.');
                 if (ipos >= 0) {
                     String sExt = sFileName.substring(ipos + 1);
-                    for(String s : extensions) {
+                    for (String s : extensions) {
                         if (s.equalsIgnoreCase(sExt)) {
                             return true;
                         }
@@ -256,15 +250,16 @@ public class JImageEditor extends javax.swing.JPanel {
             }
         }
 
+        @Override
         public String getDescription() {
             return message;
         }
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
