@@ -37,8 +37,11 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
     private final DirtyManager dirty = new DirtyManager();
 
     private final ParametersConfig printer1PrinterParams;
+    private final ParametersConfig printer1ExtParams;
     private final ParametersConfig printer2PrinterParams;
+    private final ParametersConfig printer2ExtParams;
     private final ParametersConfig printer3PrinterParams;
+    private final ParametersConfig printer3ExtParams;
     private final ParametersConfig displayExtParams;
 
     String[] modelDisplayName = {"screen",
@@ -47,6 +50,7 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
         "Not defined"};
     String[] modelPrinterName = {"screen",
         "printer",
+        "extended",
         "Not defined"};
     String[] modelFiscalPrinterName = {"Not defined"};
     String[] modelLabelPrinterName = {"Not defined"};
@@ -66,16 +70,25 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
         printer1PrinterParams = new ParametersPrinter(printernames);
         printer1PrinterParams.addDirtyManager(dirty);
         m_jPrinterParams1.add(printer1PrinterParams.getComponent(), "printer");
+        printer1ExtParams = new ParametersExtendDriver();
+        printer1ExtParams.addDirtyManager(dirty);
+        m_jPrinterParams1.add(printer1ExtParams.getComponent(), "extended");
 
         jcboMachinePrinter2.addActionListener(dirty);
         printer2PrinterParams = new ParametersPrinter(printernames);
         printer2PrinterParams.addDirtyManager(dirty);
         m_jPrinterParams2.add(printer2PrinterParams.getComponent(), "printer");
+        printer2ExtParams = new ParametersExtendDriver();
+        printer2ExtParams.addDirtyManager(dirty);
+        m_jPrinterParams2.add(printer2ExtParams.getComponent(), "extended");
 
         jcboMachinePrinter3.addActionListener(dirty);
         printer3PrinterParams = new ParametersPrinter(printernames);
         printer3PrinterParams.addDirtyManager(dirty);
         m_jPrinterParams3.add(printer3PrinterParams.getComponent(), "printer");
+        printer3ExtParams = new ParametersExtendDriver();
+        printer3ExtParams.addDirtyManager(dirty);
+        m_jPrinterParams3.add(printer3ExtParams.getComponent(), "extended");
 
         jcboMachineFiscalPrinter.addActionListener(dirty);
 
@@ -122,23 +135,56 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
 
         StringParser p = new StringParser(config.getProperty("machine.printer"));
         String sParamPrinter1 = p.nextToken(':');
-        jcboMachinePrinter.setSelectedItem(sParamPrinter1);
-        if (sParamPrinter1.equals("printer")) {
-            printer1PrinterParams.setParameters(p);
+        switch (sParamPrinter1) {
+            case "printer":
+            case "screen":
+            case "window":
+            case "Not defined":
+                jcboMachinePrinter.setSelectedItem(sParamPrinter1);
+                if (sParamPrinter1.equals("printer")) {
+                    printer1PrinterParams.setParameters(p);
+                }
+                break;
+            default:
+                jcboMachinePrinter.setSelectedItem("extended");
+                printer1ExtParams.setParameters(new StringParser(config.getProperty("machine.printer")));
+                break;
         }
 
         p = new StringParser(config.getProperty("machine.printer.2"));
         String sParamPrinter2 = p.nextToken(':');
-        jcboMachinePrinter2.setSelectedItem(sParamPrinter2);
-        if (sParamPrinter2.equals("printer")) {
-            printer2PrinterParams.setParameters(p);
+        switch (sParamPrinter2) {
+            case "printer":
+            case "screen":
+            case "window":
+            case "Not defined":
+                jcboMachinePrinter2.setSelectedItem(sParamPrinter2);
+                if (sParamPrinter2.equals("printer")) {
+                    printer2PrinterParams.setParameters(p);
+                }
+                break;
+            default:
+                jcboMachinePrinter2.setSelectedItem("extended");
+                printer2ExtParams.setParameters(new StringParser(config.getProperty("machine.printer.2")));
+                break;
         }
 
         p = new StringParser(config.getProperty("machine.printer.3"));
         String sParamPrinter3 = p.nextToken(':');
-        jcboMachinePrinter3.setSelectedItem(sParamPrinter3);
-        if (sParamPrinter3.equals("printer")) {
-            printer3PrinterParams.setParameters(p);
+        switch (sParamPrinter3) {
+            case "printer":
+            case "screen":
+            case "window":
+            case "Not defined":
+                jcboMachinePrinter3.setSelectedItem(sParamPrinter3);
+                if (sParamPrinter3.equals("printer")) {
+                    printer3PrinterParams.setParameters(p);
+                }
+                break;
+            default:
+                jcboMachinePrinter3.setSelectedItem("extended");
+                printer3ExtParams.setParameters(new StringParser(config.getProperty("machine.printer.3")));
+                break;
         }
 
         p = new StringParser(config.getProperty("machine.fiscalprinter"));
@@ -149,11 +195,16 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
 
         p = new StringParser(config.getProperty("machine.display"));
         String sParamDisplay = p.nextToken(':');
-        if (sParamDisplay.equals("screen") || sParamDisplay.equals("window") || sParamDisplay.equals("Not defined")) {
-            jcboMachineDisplay.setSelectedItem(sParamDisplay);
-        } else {
-            jcboMachineDisplay.setSelectedItem("extended");
-            displayExtParams.setParameters(new StringParser(config.getProperty("machine.display")));
+        switch (sParamDisplay) {
+            case "screen":
+            case "window":
+            case "Not defined":
+                jcboMachineDisplay.setSelectedItem(sParamDisplay);
+                break;
+            default:
+                jcboMachineDisplay.setSelectedItem("extended");
+                displayExtParams.setParameters(new StringParser(config.getProperty("machine.display")));
+                break;
         }
 
         p = new StringParser(config.getProperty("machine.scale"));
@@ -171,24 +222,42 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
     public void saveProperties(AppConfig config) {
 
         String sMachinePrinter = comboValue(jcboMachinePrinter.getSelectedItem());
-        if (sMachinePrinter.equals("printer")) {
-            config.setProperty("machine.printer", sMachinePrinter + ":" + printer1PrinterParams.getParameters());
-        } else {
-            config.setProperty("machine.printer", sMachinePrinter);
+        switch (sMachinePrinter) {
+            case "printer":
+                config.setProperty("machine.printer", sMachinePrinter + ":" + printer1PrinterParams.getParameters());
+                break;
+            case "extended":
+                config.setProperty("machine.printer", printer1ExtParams.getParameters());
+                break;
+            default:
+                config.setProperty("machine.printer", sMachinePrinter);
+                break;
         }
 
         String sMachinePrinter2 = comboValue(jcboMachinePrinter2.getSelectedItem());
-        if (sMachinePrinter2.equals("printer")) {
-            config.setProperty("machine.printer.2", sMachinePrinter2 + ":" + printer2PrinterParams.getParameters());
-        } else {
-            config.setProperty("machine.printer.2", sMachinePrinter2);
+        switch (sMachinePrinter2) {
+            case "printer":
+                config.setProperty("machine.printer.2", sMachinePrinter2 + ":" + printer2PrinterParams.getParameters());
+                break;
+            case "extended":
+                config.setProperty("machine.printer.2", printer2ExtParams.getParameters());
+                break;
+            default:
+                config.setProperty("machine.printer.2", sMachinePrinter2);
+                break;
         }
 
         String sMachinePrinter3 = comboValue(jcboMachinePrinter3.getSelectedItem());
-        if (sMachinePrinter3.equals("printer")) {
-            config.setProperty("machine.printer.3", sMachinePrinter3 + ":" + printer3PrinterParams.getParameters());
-        } else {
-            config.setProperty("machine.printer.3", sMachinePrinter3);
+        switch (sMachinePrinter3) {
+            case "printer":
+                config.setProperty("machine.printer.3", sMachinePrinter3 + ":" + printer3PrinterParams.getParameters());
+                break;
+            case "extended":
+                config.setProperty("machine.printer.3", printer3ExtParams.getParameters());
+                break;
+            default:
+                config.setProperty("machine.printer.3", sMachinePrinter3);
+                break;
         }
 
         String sMachineFiscalPrinter = comboValue(jcboMachineFiscalPrinter.getSelectedItem());
@@ -477,6 +546,8 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
         CardLayout cl = (CardLayout) (m_jPrinterParams1.getLayout());
         if (jcboMachinePrinter.getSelectedItem().equals("printer")) {
             cl.show(m_jPrinterParams1, "printer");
+        } else if (jcboMachinePrinter.getSelectedItem().equals("extended")) {
+            cl.show(m_jPrinterParams1, "extended");
         } else {
             cl.show(m_jPrinterParams1, "empty");
         }
@@ -484,9 +555,10 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
 
     private void jcboMachinePrinter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboMachinePrinter2ActionPerformed
         CardLayout cl = (CardLayout) (m_jPrinterParams2.getLayout());
-
         if (jcboMachinePrinter2.getSelectedItem().equals("printer")) {
             cl.show(m_jPrinterParams2, "printer");
+        } else if (jcboMachinePrinter2.getSelectedItem().equals("extended")) {
+            cl.show(m_jPrinterParams2, "extended");
         } else {
             cl.show(m_jPrinterParams2, "empty");
         }
@@ -494,9 +566,10 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
 
     private void jcboMachinePrinter3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboMachinePrinter3ActionPerformed
         CardLayout cl = (CardLayout) (m_jPrinterParams3.getLayout());
-
         if (jcboMachinePrinter3.getSelectedItem().equals("printer")) {
             cl.show(m_jPrinterParams3, "printer");
+        } else if (jcboMachinePrinter3.getSelectedItem().equals("extended")) {
+            cl.show(m_jPrinterParams3, "extended");
         } else {
             cl.show(m_jPrinterParams3, "empty");
         }
@@ -504,7 +577,6 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
 
     private void jcboMachineDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboMachineDisplayActionPerformed
         CardLayout cl = (CardLayout) (m_jDisplayParams.getLayout());
-
         if (jcboMachineDisplay.getSelectedItem().equals("extended")) {
             cl.show(m_jDisplayParams, "extended");
         } else {

@@ -31,8 +31,8 @@ import java.awt.Component;
  */
 public class ReceiptPrinterEmulator implements ReceiptPrinterInterface {
 
-    private static final byte[] EOL_DOS = {0x0D, 0x0A}; // Print and carriage return
-    private static final byte[] EOL_UNIX = {0x0A};
+    public static final byte[] EOL_DOS = {0x0D, 0x0A}; // Print and carriage return
+    public static final byte[] EOL_UNIX = {0x0A};
 
     @Override
     public DevicePrinter getReceiptPrinter(String sProperty) throws Exception {

@@ -266,6 +266,7 @@ public class DevicePrinterPrinter implements DevicePrinter {
         Toolkit.getDefaultToolkit().beep();
     }
 
+    @Override
     public void cutPaper(boolean complete) {
     }
 
