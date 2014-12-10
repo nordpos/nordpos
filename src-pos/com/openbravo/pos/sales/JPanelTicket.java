@@ -86,11 +86,11 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
  */
 public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFactoryApp, TicketsEditor {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_TICKET_TOTAL = "META-INF/templates/Printer.TicketTotal.xml";
-    private static final String PRINT_TICKET = "META-INF/templates/Printer.Ticket.xml";
-    private static final String PRINT_TICKET_2 = "META-INF/templates/Printer.Ticket2.xml";
-    private static final String PRINT_TICKET_LINE = "META-INF/templates/Printer.TicketLine.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_TICKET_TOTAL = "/com/nordpos/templates/Printer.TicketTotal.xml";
+    private static final String PRINT_TICKET = "/com/nordpos/templates/Printer.Ticket.xml";
+    private static final String PRINT_TICKET_2 = "/com/nordpos/templates/Printer.Ticket2.xml";
+    private static final String PRINT_TICKET_LINE = "/com/nordpos/templates/Printer.TicketLine.xml";
 
     // Variable numerica
     private final static int NUMBERZERO = 0;
@@ -1096,8 +1096,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private void printTicket(String sresourcename, TicketInfo ticket, Object ticketext)
             throws TicketPrinterException {
 
-        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-        InputStream template = getClass().getClassLoader().getResourceAsStream(sresourcename);
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(sresourcename);
         if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(JPanelTicket.this);
@@ -1169,12 +1169,12 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         if (oLine == null) {
             m_App.getDeviceTicket().getDeviceDisplay().clearVisor();
         } else {
-            m_TTP = new TicketParser(getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA), m_App.getDeviceTicket());
+            m_TTP = new TicketParser(getClass().getResourceAsStream(PRINTER_SHEMA), m_App.getDeviceTicket());
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticketline", oLine);
                 script.put("local", new AppLocal());
-                m_TTP.printTicket(getClass().getClassLoader().getResourceAsStream(PRINT_TICKET_LINE), script);
+                m_TTP.printTicket(getClass().getResourceAsStream(PRINT_TICKET_LINE), script);
             } catch (ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintline"), e);
                 msg.show(JPanelTicket.this);

@@ -22,8 +22,8 @@
 <configuration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xsi:noNamespaceSchemaLocation="Schema.Ticket.xsd">
        
-    <button key="button.print" titlekey="button.print" template="META-INF/templates/Printer.TicketPreview.xml"/>
-    <button key="button.opendrawer" titlekey="button.opendrawer" template="META-INF/templates/Printer.OpenDrawer.xml"/>
+    <button key="button.print" titlekey="button.print" template="/com/nordpos/templates/Printer.TicketPreview.xml"/>
+    <button key="button.opendrawer" titlekey="button.opendrawer" template="/com/nordpos/templates/Printer.OpenDrawer.xml"/>
 
 <!-- 
     <event key="ticket.change" code="event.change"/>

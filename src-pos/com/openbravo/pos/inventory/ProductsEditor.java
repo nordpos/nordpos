@@ -61,8 +61,8 @@ import org.krysalis.barcode4j.impl.upcean.*;
  */
 public class ProductsEditor extends JPanel implements EditorRecord {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_PRODUCT_LABEL = "META-INF/templates/Printer.ProductLabel.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_PRODUCT_LABEL = "/com/nordpos/templates/Printer.ProductLabel.xml";
 
     private String s_GenRef;
     private String s_GenBarcode;
@@ -674,8 +674,8 @@ public class ProductsEditor extends JPanel implements EditorRecord {
     }
 
     private void printProductLabel(ProductInfoEdit productinfo) throws TicketPrinterException, ScriptException {
-        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_PRODUCT_LABEL);
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(PRINT_PRODUCT_LABEL);
         if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(this);

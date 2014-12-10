@@ -46,8 +46,8 @@ import java.io.InputStream;
  */
 public class JTicketsBagTicket extends JTicketsBag {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_TICKET_PREVIEW = "META-INF/templates/Printer.TicketPreview.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_TICKET_PREVIEW = "/com/nordpos/templates/Printer.TicketPreview.xml";
 
     protected DataLogicCustomers dlCustomers;
 
@@ -201,8 +201,8 @@ public class JTicketsBagTicket extends JTicketsBag {
             m_jTicketId.setText(null);
         } else {
             m_jTicketId.setText(m_ticket.getName());
-            InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-            InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_TICKET_PREVIEW);
+            InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+            InputStream template = getClass().getResourceAsStream(PRINT_TICKET_PREVIEW);
             m_TTP = new TicketParser(schema, m_TP);
             try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
@@ -392,8 +392,8 @@ public class JTicketsBagTicket extends JTicketsBag {
 
     private void m_jPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jPrintActionPerformed
 
-        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_TICKET_PREVIEW);
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(PRINT_TICKET_PREVIEW);
 
         if (m_ticket != null) {
             m_TTP2 = new TicketParser(schema, m_App.getDeviceTicket());

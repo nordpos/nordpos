@@ -56,8 +56,8 @@ import javax.swing.*;
  */
 public class JRootApp extends JPanel implements AppView {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_START = "META-INF/templates/Printer.Start.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_START = "/com/nordpos/templates/Printer.Start.xml";
 
     private AppProperties m_props;
     private Session session;
@@ -522,8 +522,8 @@ public class JRootApp extends JPanel implements AppView {
 
     private void printerStart() {
 
-        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_START);
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(PRINT_START);
 
         if (schema == null || template == null) {
             m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);

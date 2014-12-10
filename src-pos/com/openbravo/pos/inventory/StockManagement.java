@@ -60,8 +60,8 @@ import javax.swing.JPanel;
  */
 public class StockManagement extends JPanel implements JPanelView {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_INVENTORY = "META-INF/templates/Printer.Inventory.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_INVENTORY = "/com/nordpos/templates/Printer.Inventory.xml";
 
     private final AppView m_App;
     private final DataLogicSystem m_dlSystem;
@@ -412,8 +412,8 @@ public class StockManagement extends JPanel implements JPanelView {
 
     private void printTicket(InventoryRecord invrec) {
 
-        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_INVENTORY);
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(PRINT_INVENTORY);
 
         if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));

@@ -43,6 +43,7 @@ import com.openbravo.pos.ticket.TicketInfo;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.jar.JarInputStream;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
@@ -53,9 +54,9 @@ import javax.swing.JOptionPane;
  */
 public class CustomersPayment extends javax.swing.JPanel implements JPanelView, BeanFactoryApp {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_CUSTOMER_PAID = "META-INF/templates/Printer.CustomerPaid.xml";
-    private static final String PRINT_CUSTOMER_PAID_2 = "META-INF/templates/Printer.CustomerPaid2.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_CUSTOMER_PAID = "/com/nordpos/templates/Printer.CustomerPaid.xml";
+    private static final String PRINT_CUSTOMER_PAID_2 = "/com/nordpos/templates/Printer.CustomerPaid2.xml";
 
     private AppView app;
     private DataLogicCustomers dlcustomers;
@@ -85,7 +86,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         dlcustomers = (DataLogicCustomers) app.getBean(DataLogicCustomers.class.getName());
         dlsales = (DataLogicSales) app.getBean(DataLogicSales.class.getName());
         dlsystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
-        ttp = new TicketParser(getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA), app.getDeviceTicket());
+        ttp = new TicketParser(getClass().getResourceAsStream(PRINTER_SHEMA), app.getDeviceTicket());
     }
 
     @Override
@@ -208,7 +209,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
 
     private void printTicket(String resname, TicketInfo ticket, CustomerInfoExt customer) {
 
-        InputStream resource = getClass().getClassLoader().getResourceAsStream(resname);
+        InputStream resource = getClass().getResourceAsStream(resname);
 
         if (resource == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));

@@ -50,9 +50,9 @@ import javax.swing.table.TableColumnModel;
  */
 public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryApp {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_CLOSE_CASH = "META-INF/templates/Printer.CloseCash.xml";
-    private static final String PRINT_PARTIAL_CASH = "META-INF/templates/Printer.PartialCash.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_CLOSE_CASH = "/com/nordpos/templates/Printer.CloseCash.xml";
+    private static final String PRINT_PARTIAL_CASH = "/com/nordpos/templates/Printer.PartialCash.xml";
 
     private AppView m_App;
     private DataLogicSystem m_dlSystem;
@@ -179,8 +179,8 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
     }
 
     private void printPayments(String report) throws TicketPrinterException {
-        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-        InputStream template = getClass().getClassLoader().getResourceAsStream(report);
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(report);
         if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(this);

@@ -46,8 +46,8 @@ import java.util.logging.Logger;
  */
 public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
 
-    private static final String PRINTER_SHEMA = "META-INF/templates/Schema.Printer.xsd";
-    private static final String PRINT_PAYMENT_EDIT = "META-INF/templates/Printer.PaymentEdit.xml";
+    private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
+    private static final String PRINT_PAYMENT_EDIT = "/com/nordpos/templates/Printer.PaymentEdit.xml";
 
     private final ComboBoxValModel m_ReasonModel;
     private String m_sId;
@@ -235,8 +235,8 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
     }
 
     private void printPaymentReason(PaymentReasonRecord reasonrec) throws TicketPrinterException {
-        InputStream schema = getClass().getClassLoader().getResourceAsStream(PRINTER_SHEMA);
-        InputStream template = getClass().getClassLoader().getResourceAsStream(PRINT_PAYMENT_EDIT);
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(PRINT_PAYMENT_EDIT);
         if (schema == null || template == null) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
             msg.show(this);
