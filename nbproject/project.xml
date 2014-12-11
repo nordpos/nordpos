@@ -9,8 +9,6 @@
                 <root id="src-data.dir"/>
                 <root id="src-pos.dir"/>
                 <root id="src.src-device.dir"/>
-                <root id="services.dir"/>
-                <root id="src.templates.dir"/>
                 <root id="src.src-sync.dir"/>
                 <root id="src.src-server.dir"/>
             </source-roots>
