@@ -205,7 +205,7 @@
         </line>
         <line/>
         <line size="1">
-            <text align="left" length="32" bold="true">Всего</text>
+            <text align="left" length="32" bold="true">${local.getScriptString("report.subtotal")}</text>
             <text align="right" length="10" bold="true">${payments.printSalesBase()}</text>
         </line>
         <line size="1">
