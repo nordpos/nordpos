@@ -16,18 +16,19 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.nordpos.device.fiscalprinter;
 
 import com.nordpos.device.ticket.TicketPrinterException;
 import javax.swing.JComponent;
 
 /**
- * @author: Gennady Kovalev <gik@bigur.ru>
- * @author: Andrey Svininykh <svininykh@gmail.com>
- * @author: Artur Akchurin <akartkam@gmail.com>
+ * 
+ * @author adrianromero
+ * @author Gennady Kovalev <gik@bigur.ru>
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @author Artur Akchurin <akartkam@gmail.com>
+ * @version NORD POS 3
  */
-
 public interface DeviceFiscalPrinter {
 
     public String getFiscalName();

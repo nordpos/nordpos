@@ -308,7 +308,7 @@
     #end
 
     #if ($fiscaltickettype == "sale" || $fiscaltickettype == "refund")
-    <fiscalreceipt type="${fiscaltickettype}" number="${ticket.printId()}" date="${ticket.printDMY()}" time="${ticket.printTime()}" cashier="${ticket.printUser()}">
+    <fiscalreceipt type="${fiscaltickettype}" cashier="${ticket.printUser()}">
       #foreach ($ticketline in $ticket.getLines())
             #if (${ticketline.getTaxInfo().getRate()}==0.1)
                     #set ($vatinfo ="2")
@@ -330,21 +330,21 @@
       #end
         <message>========================================</message>
       #if ($fiscaltickettype == "sale")
-        <message>Кол-во продаж: ${ticket.printArticlesCount()}</message>
+        <message>${local.getScriptString("units.sale")} ${ticket.printArticlesCount()}</message>
       #elseif ($fiscaltickettype == "refund")
-        <message>Кол-во возвратов: ${ticket.printArticlesCount()}</message>
+        <message>${local.getScriptString("units.refund")} ${ticket.printArticlesCount()}</message>
       #end
       #foreach ($paymentline in $ticket.payments)
             #if ($paymentline.name == "cash")
-        <total type="$paymentline.name" paid="${paymentline.getPaid()}">К оплате по чеку:</total>
+        <total type="$paymentline.name" paid="${paymentline.getPaid()}">${local.getScriptString("ticketpayment.cash")} </total>
             #elseif ($paymentline.name == "cashrefund")
-        <total type="$paymentline.name" paid="${paymentline.getTotal()}">Возврат по чеку:</total>
+        <total type="$paymentline.name" paid="${paymentline.getTotal()}">${local.getScriptString("ticketpayment.cash")}total>
             #elseif ($paymentline.name == "debt")
-        <total type="$paymentline.name" paid="${paymentline.getPaid()}">Продажа в кредит:</total>
+        <total type="$paymentline.name" paid="${paymentline.getPaid()}">${local.getScriptString("ticketpayment.debt")}</total>
             #elseif ($paymentline.name == "magcard")
-        <total type="$paymentline.name" paid="${paymentline.getPaid()}">К оплате по карте:</total>
+        <total type="$paymentline.name" paid="${paymentline.getPaid()}">${local.getScriptString("ticketpayment.magcard")}</total>
             #elseif ($paymentline.name == "magcardrefund")
-        <total type="$paymentline.name" paid="${paymentline.getTotal()}">Возврат по карте:</total>
+        <total type="$paymentline.name" paid="${paymentline.getTotal()}">${local.getScriptString("ticketpayment.magcardrefund")}</total>
             #end
       #end
     </fiscalreceipt>
