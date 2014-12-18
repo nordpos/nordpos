@@ -1,8 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.openbravo.pos.util;
+package com.nordpos.device.util;
 
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -24,17 +40,14 @@ import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
 import org.krysalis.barcode4j.impl.upcean.UPCABean;
 import org.krysalis.barcode4j.impl.upcean.UPCEBean;
 import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider;
-import com.google.zxing.datamatrix.decoder.Decoder;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.encoder.ByteMatrix;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.google.zxing.client.j2se.*;
 
 /**
  *
  * @author adrian
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class BarcodeImage {
 
