@@ -4,6 +4,8 @@
  */
 package com.openbravo.pos.util;
 
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -17,12 +19,17 @@ import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.impl.datamatrix.DataMatrixBean;
 import org.krysalis.barcode4j.impl.int2of5.Interleaved2Of5Bean;
 import org.krysalis.barcode4j.impl.postnet.POSTNETBean;
-import org.krysalis.barcode4j.impl.qr.QRCodeBean;
 import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
 import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
 import org.krysalis.barcode4j.impl.upcean.UPCABean;
 import org.krysalis.barcode4j.impl.upcean.UPCEBean;
 import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider;
+import com.google.zxing.datamatrix.decoder.Decoder;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.encoder.ByteMatrix;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.google.zxing.client.j2se.*;
 
 /**
  *
@@ -117,11 +124,14 @@ public class BarcodeImage {
     }
 
     public static Image getQRCode(String value) {
-        QRCodeBean m_qrcode = new QRCodeBean();
-        value = BarcodeString.getBarcodeStringQRCode(value);
-        m_qrcode.setEncoding("Cp1251");
-        m_qrcode.setModuleWidth(5.0);
-        return getBarcode(value, m_qrcode);
+        BitMatrix matrix;
+        com.google.zxing.Writer writer = new QRCodeWriter();
+        try {
+            matrix = writer.encode(value, com.google.zxing.BarcodeFormat.QR_CODE, 100, 100);
+            return MatrixToImageWriter.toBufferedImage(matrix);
+        } catch (WriterException ex) {
+            return null;
+        }
     }
 
     private static Image getBarcode(String value, AbstractBarcodeBean barcode) {

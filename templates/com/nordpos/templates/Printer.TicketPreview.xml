@@ -37,6 +37,7 @@
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line></line>
+        <barcode type="QRCODE">http://nordpos.mobi</barcode>
         <line>
             <text align="center" length="42">NORD POS</text>
         </line>

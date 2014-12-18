@@ -19,6 +19,7 @@
 
 package com.nordpos.device.receiptprinter;
 
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.openbravo.pos.util.BarcodeString;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -28,7 +29,6 @@ import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.impl.datamatrix.DataMatrixBean;
-import org.krysalis.barcode4j.impl.qr.QRCodeBean;
 import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
 import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
 import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider;
@@ -36,13 +36,11 @@ import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider;
 public class PrintItemBarcode implements PrintItem {
 
     protected AbstractBarcodeBean m_barcode;
-    protected QRCodeBean m_qrcode;
     protected String m_sCode;
     protected int m_iWidth;
     protected int m_iHeight;
     protected double scale;
 
-    /** Creates a new instance of PrinterItemBarcode */
     public PrintItemBarcode(String type, String position, String code, double scale) {
 
         m_sCode = code;
@@ -61,10 +59,7 @@ public class PrintItemBarcode implements PrintItem {
             m_barcode = new DataMatrixBean();
             m_sCode = BarcodeString.getBarcodeStringDataMatrix(m_sCode);
         } else if (DevicePrinter.BARCODE_QRCODE.equals(type)) {
-            m_qrcode = new QRCodeBean();
             m_sCode = BarcodeString.getBarcodeStringQRCode(m_sCode);
-            m_qrcode.setEncoding("Cp1251");
-            m_barcode = m_qrcode;
         } else {
             m_barcode = new EAN13Bean();
             m_sCode = BarcodeString.getBarcodeStringEAN13(m_sCode);
