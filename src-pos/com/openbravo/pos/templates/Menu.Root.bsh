@@ -70,7 +70,7 @@
 //        submenu.addPanel("/com/openbravo/images/appointment.png", "Menu.SalesCatalog", "/com/openbravo/reports/salecatalog.bsh");
         submenu.addTitle("Menu.SalesManagement.Charts");
         submenu.addPanel("/com/openbravo/images/cakes3d.png", "Menu.ProductSales", "/com/openbravo/reports/productsales.bsh");
-//        submenu.addPanel("/com/openbravo/images/cakes3d.png", "Menu.CategoryProductSalesChart", "/com/openbravo/reports/piesalescat.bsh");
+        submenu.addPanel("/com/openbravo/images/cakes3d.png", "Menu.CategoryProductSalesChart", "/com/nordpos/reports/piesalescat.bsh");
     submenu = group.addSubmenu("/com/openbravo/images/contents.png", "Menu.Maintenance", "com.openbravo.pos.forms.MenuMaintenance");
         submenu.addTitle("Menu.Maintenance.POS");
         submenu.addPanel("/com/openbravo/images/contact-new.png", "Menu.Users", "com.openbravo.pos.admin.PeoplePanel");

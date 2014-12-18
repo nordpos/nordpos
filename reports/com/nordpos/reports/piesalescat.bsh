@@ -1,0 +1,48 @@
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+report = new com.openbravo.pos.reports.PanelReportBean();
+
+report.setTitleKey("Menu.CategoryProductSalesChart");
+report.setReport("/com/nordpos/reports/piesalescat");
+report.setResourceBundle("com/nordpos/reports/piesalescat_messages");
+
+report.setSentence("SELECT "+
+                   " CATEGORIES.NAME AS CAT, "+
+                   " SUM(TICKETLINES.UNITS) AS UNITS, "+
+                   " SUM(TICKETLINES.PRICE * TICKETLINES.UNITS) AS TOTAL "+
+                   "FROM TICKETLINES "+
+                   " LEFT OUTER JOIN PRODUCTS ON TICKETLINES.PRODUCT = PRODUCTS.ID "+
+                   " LEFT OUTER JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID "+
+                   " LEFT OUTER JOIN TICKETS ON TICKETLINES.TICKET = TICKETS.ID " +
+                   " LEFT OUTER JOIN RECEIPTS ON TICKETS.ID = RECEIPTS.ID " +
+                   "WHERE ?(QBF_FILTER) " +
+                   "GROUP BY CATEGORIES.NAME "+
+                   "ORDER BY CATEGORIES.NAME ASC");
+report.addParameter("RECEIPTS.DATENEW");
+report.addParameter("RECEIPTS.DATENEW");
+report.addQBFFilter(new com.openbravo.pos.reports.JParamsDatesInterval());
+
+report.addField("CAT", com.openbravo.data.loader.Datas.STRING);
+report.addField("UNITS", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("TOTAL", com.openbravo.data.loader.Datas.DOUBLE);
+
+report;
