@@ -245,5 +245,6 @@
         <line>
             <text align="center" length="42">${local.getScriptString("label.thankyouvisit")}</text>
         </line>
+        <barcode type="QRCODE">http://nordpos.mobi</barcode>        
     </ticket>
 </output>

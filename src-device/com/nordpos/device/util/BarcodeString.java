@@ -1,31 +1,31 @@
-//    Исходный код для Openbravo POS, автоматизированной системы продаж для работы
-//    с сенсорным экраном, предоставлен ТОО "Норд-Трейдинг ЛТД", Республика Казахстан,
-//    в период 2008-2011 годов на условиях лицензионного соглашения GNU LGPL.
-//
-//    Исходный код данного файл разработан в рамках проекта Openbravo POS ru
-//    для использования системы Openbravo POS на территории бывшего СССР
-//    <http://code.google.com/p/openbravoposru/>.
-//
-//    Openbravo POS является свободным программным обеспечением. Вы имеете право
-//    любым доступным образом его распространять и/или модифицировать соблюдая
-//    условия изложенные в GNU Lesser General Public License версии 3 и выше.
-//
-//    Данный исходный распространяется как есть, без каких либо гарантий на его
-//    использование в каких либо целях, включая коммерческое применение. Данный
-//    исход код может быть использован для связи с сторонними библиотеками
-//    распространяемыми под другими лицензионными соглашениями. Подробности
-//    смотрите в описании лицензионного соглашение GNU Lesser General Public License.
-//
-//    Ознакомится с условиями изложенными в GNU Lesser General Public License
-//    вы можете в файле lgpl-3.0.txt каталога licensing проекта Openbravo POS ru.
-//    А также на сайте <http://www.gnu.org/licenses/>.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.nordpos.device.util;
 
-package com.openbravo.pos.util;
-
+import com.openbravo.pos.util.StringUtils;
 import java.io.UnsupportedEncodingException;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class BarcodeString {
 
