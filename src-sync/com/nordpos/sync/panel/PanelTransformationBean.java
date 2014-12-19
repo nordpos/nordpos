@@ -1,112 +1,75 @@
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.nordpos.sync.panel;
 
 import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.BaseSentence;
-import com.openbravo.data.loader.Datas;
-import com.openbravo.data.loader.QBFBuilder;
-import com.openbravo.data.loader.SerializerReadBasic;
-import com.openbravo.data.loader.StaticSentence;
-import com.openbravo.data.user.EditorCreator;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.BeanFactoryException;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ *
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
+ */
 public class PanelTransformationBean extends JPanelTransformation {
 
-    private String title;
-    private String transformation;
+    private String sTitle;
+    private String sTransformation;
 
-    private String resourcebundle = null;
-
-    private String sentence;
-
-    private final List<Datas> fielddatas = new ArrayList<>();
-    private final List<String> fieldnames = new ArrayList<>();
-
-    private final List<String> paramnames = new ArrayList<>();
-
-//    private JParamsComposed qbffilter = new JParamsComposed();
     @Override
     public void init(AppView app) throws BeanFactoryException {
 
-//        qbffilter.init(app);       
         super.init(app);
     }
 
     @Override
     public void activate() throws BasicException {
 
-//        qbffilter.activate();
         super.activate();
 
-//        if (qbffilter.isEmpty()) {
         setVisibleFilter(false);
         setVisibleButtonFilter(false);
-////        }
-    }
-
-    @Override
-    protected EditorCreator getEditorCreator() {
-
-//        return qbffilter;
-        return null;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.sTitle = title;
     }
 
     public void setTitleKey(String titlekey) {
-        title = AppLocal.getIntString(titlekey);
+        sTitle = AppLocal.getIntString(titlekey);
     }
 
+    @Override
     public String getTitle() {
-        return title;
+        return sTitle;
     }
 
     public void setTransformation(String transformation) {
-        this.transformation = transformation;
+        this.sTransformation = transformation;
     }
 
+    @Override
     protected String getTransformation() {
-        return transformation;
+        return sTransformation;
     }
-
-    public void setResourceBundle(String resourcebundle) {
-        this.resourcebundle = resourcebundle;
-    }
-
-    protected String getResourceBundle() {
-        return resourcebundle == null
-                ? transformation
-                : resourcebundle;
-    }
-
-    public void setSentence(String sentence) {
-        this.sentence = sentence;
-    }
-
-    public void addField(String name, Datas data) {
-        fieldnames.add(name);
-        fielddatas.add(data);
-    }
-
-    public void addParameter(String name) {
-        paramnames.add(name);
-    }
-
-    protected BaseSentence getSentence() {
-        return new StaticSentence(m_App.getSession(), new QBFBuilder(sentence, paramnames.toArray(new String[paramnames.size()])) //            , qbffilter.getSerializerWrite()
-                , null, new SerializerReadBasic(fielddatas.toArray(new Datas[fielddatas.size()])));
-    }
-
-//    protected ReportFields getReportFields() {
-//        return new ReportFieldsArray(fieldnames.toArray(new String[fieldnames.size()]));
-//    }       
-//    
-//    public void addQBFFilter(ReportEditorCreator qbff) {
-//        qbffilter.addEditor(qbff);
-//    }    
+   
 }

@@ -19,6 +19,8 @@
  * NORD POS. If not, see <http://www.gnu.org/licenses/>.
  */
 
-transformation = new com.openbravo.sync.panel.PanelTransformationBean();
+transformation = new com.nordpos.sync.panel.PanelTransformationBean();
+
+transformation.setTransformation("/com/nordpos/transformations/dummy/DUMMY_RANDOM.ktr");
 
 transformation;

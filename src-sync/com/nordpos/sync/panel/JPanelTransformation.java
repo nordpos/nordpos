@@ -1,30 +1,52 @@
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.nordpos.sync.panel;
 
 import com.openbravo.pos.forms.JPanelView;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.AppLocal;
 
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
-import com.openbravo.data.loader.BaseSentence;
-import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.user.EditorCreator;
 import com.openbravo.pos.forms.BeanFactoryApp;
 import com.openbravo.pos.forms.BeanFactoryException;
-import com.openbravo.pos.forms.DataLogicSales;
-import com.openbravo.pos.sales.TaxesLogic;
+import java.io.InputStream;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import org.pentaho.di.core.KettleEnvironment;
+import org.pentaho.di.core.Result;
+import org.pentaho.di.core.exception.KettleException;
+import org.pentaho.di.core.util.EnvUtil;
+import org.pentaho.di.trans.Trans;
+import org.pentaho.di.trans.TransMeta;
 
+/**
+ *
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
+ */
 public abstract class JPanelTransformation extends JPanel implements JPanelView, BeanFactoryApp {
 
-    private EditorCreator editor = null;
-
     protected AppView m_App;
-
-    protected SentenceList taxsent;
-    protected TaxesLogic taxeslogic;
+    protected Trans trans;
 
     public JPanelTransformation() {
         initComponents();
@@ -32,38 +54,19 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
     @Override
     public void init(AppView app) throws BeanFactoryException {
-
         m_App = app;
-        DataLogicSales dlSales = (DataLogicSales) app.getBean(DataLogicSales.class.getName());
-        taxsent = dlSales.getTaxList();
-
-        editor = getEditorCreator();
-//        if (editor instanceof ReportEditorCreator) {
-//            jPanelFilter.add(((ReportEditorCreator) editor).getComponent(), BorderLayout.CENTER);
-//        }
-//
-//        reportviewer = new JRViewer411(null);
-//
-//        add(reportviewer, BorderLayout.CENTER);
-//
-//        try {
-//
-//            InputStream in = getClass().getResourceAsStream(getReport() + ".ser");
-//            if (in == null) {
-//                // read and compile the report
-//                JasperDesign jd = JRXmlLoader.load(getClass().getResourceAsStream(getReport() + ".jrxml"));
-//                jr = JasperCompileManager.compileReport(jd);
-//            } else {
-//                // read the compiled report
-//                ObjectInputStream oin = new ObjectInputStream(in);
-//                jr = (JasperReport) oin.readObject();
-//                oin.close();
-//            }
-//        } catch (Exception e) {
-//            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadreport"), e);
-//            msg.show(this);
-//            jr = null;
-//        }
+        m_App.waitCursorBegin();
+        InputStream resource = getClass().getResourceAsStream(getTransformation());
+        try {
+            KettleEnvironment.init(false);
+            EnvUtil.environmentInit();
+            TransMeta metaData = new TransMeta(resource, null, false, null, null);
+            trans = new Trans(metaData);
+        } catch (KettleException ex) {
+            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.syncerror"), ex);
+            msg.show(this);
+        }
+        m_App.waitCursorEnd();
     }
 
     @Override
@@ -72,15 +75,6 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     }
 
     protected abstract String getTransformation();
-
-    protected abstract String getResourceBundle();
-
-    protected abstract BaseSentence getSentence();
-//    protected abstract ReportFields getReportFields();
-
-    protected EditorCreator getEditorCreator() {
-        return null;
-    }
 
     @Override
     public JComponent getComponent() {
@@ -107,8 +101,12 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     }
 
     private void launchTransformation() {
-
         m_App.waitCursorBegin();
+        try {
+
+            trans.execute(null); // You can pass arguments instead of null.
+            trans.waitUntilFinished();
+            Result r = trans.getResult();
 
 //        if (jr != null) {
 //            try {
@@ -145,6 +143,11 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 //                msg.show(this);
 //            }
 //        }
+        } catch (KettleException ex) {
+            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.syncerror"), ex);
+            msg.show(this);
+        }
+
         m_App.waitCursorEnd();
     }
 

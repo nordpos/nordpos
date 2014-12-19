@@ -89,9 +89,10 @@
     <class name="com.openbravo.pos.config.JPanelSettingsDefault"/>
     <class name="/com/openbravo/reports/people.bsh"/>
     <class name="/com/openbravo/reports/chartsales.bsh"/>
-    <class name="com.openbravo.sync.process.ProductsSyncCreate"/>
-    <class name="com.openbravo.sync.process.OrdersSyncCreate"/>
-    <class name="com.openbravo.sync.panel.JPanelConfigSync"/>
+    <class name="com.nordpos.sync.process.ProductsSyncCreate"/>
+    <class name="com.nordpos.sync.process.OrdersSyncCreate"/>
+    <class name="com.nordpos.sync.panel.JPanelConfigSync"/>
+    <class name="/com/nordpos/transformations/dummy/dummy_random.bsh"/>    
     <class name="Menu.ChangePassword"/>
     <class name="com.openbravo.pos.panels.JPanelPrinter"/>
     <class name="com.openbravo.pos.config.JPanelConfiguration"/>
