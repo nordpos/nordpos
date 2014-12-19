@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.openbravo.sync.util;
+package com.nordpos.sync.util;
 
 import com.openbravo.data.loader.ImageUtils;
 import java.io.File;

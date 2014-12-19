@@ -16,7 +16,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-package com.openbravo.sync.process;
+package com.nordpos.sync.process;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
@@ -26,8 +26,8 @@ import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSystem;
 import com.openbravo.pos.forms.ProcessAction;
 import com.openbravo.pos.util.AltEncrypter;
-import com.openbravo.sync.kettle.KettleJob;
-import com.openbravo.sync.util.TransformationFileCreate;
+import com.nordpos.sync.kettle.KettleJob;
+import com.nordpos.sync.util.TransformationFileCreate;
 import java.io.File;
 import java.util.Properties;
 import org.pentaho.di.core.logging.LogLevel;

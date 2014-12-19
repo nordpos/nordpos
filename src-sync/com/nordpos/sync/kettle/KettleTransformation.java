@@ -17,7 +17,7 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.openbravo.sync.kettle;
+package com.nordpos.sync.kettle;
 
 import java.io.File;
 import java.util.HashMap;

@@ -17,7 +17,7 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.openbravo.sync.process;
+package com.nordpos.sync.process;
 
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.BeanFactoryCache;
