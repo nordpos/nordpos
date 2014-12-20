@@ -20,10 +20,13 @@
  */
 package com.nordpos.sync.panel;
 
+import com.nordpos.sync.kettle.TransVariable;
 import com.openbravo.basic.BasicException;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.BeanFactoryException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -34,6 +37,8 @@ public class PanelTransformationBean extends JPanelTransformation {
 
     private String sTitle;
     private String sTransformation;
+
+    private final List<TransVariable> listVariable = new ArrayList<>();
 
     @Override
     public void init(AppView app) throws BeanFactoryException {
@@ -46,8 +51,6 @@ public class PanelTransformationBean extends JPanelTransformation {
 
         super.activate();
 
-        setVisibleFilter(false);
-        setVisibleButtonFilter(false);
     }
 
     public void setTitle(String title) {
@@ -71,5 +74,13 @@ public class PanelTransformationBean extends JPanelTransformation {
     protected String getTransformation() {
         return sTransformation;
     }
-   
+
+    @Override
+    protected List<TransVariable> getTransVaribles() {
+        return listVariable;
+    }
+
+    public void addTransVariable(String name, String value) {
+        listVariable.add(new TransVariable(name, value));
+    }
 }

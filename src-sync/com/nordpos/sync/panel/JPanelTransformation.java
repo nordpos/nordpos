@@ -20,15 +20,20 @@
  */
 package com.nordpos.sync.panel;
 
+import com.nordpos.sync.kettle.TransVariable;
 import com.openbravo.pos.forms.JPanelView;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.AppLocal;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
+import com.openbravo.pos.forms.AppProperties;
 import com.openbravo.pos.forms.BeanFactoryApp;
 import com.openbravo.pos.forms.BeanFactoryException;
+import com.openbravo.pos.forms.DataLogicSystem;
 import java.awt.Color;
+import java.util.List;
+import java.util.Properties;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.pentaho.di.core.KettleEnvironment;
@@ -48,6 +53,8 @@ import org.pentaho.di.trans.TransMeta;
 public abstract class JPanelTransformation extends JPanel implements JPanelView, BeanFactoryApp {
 
     protected AppView m_App;
+//    private DataLogicSystem dlSystem;
+//    private Properties hostProp;
     protected Trans trans;
 
     public JPanelTransformation() {
@@ -57,6 +64,9 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     @Override
     public void init(AppView app) throws BeanFactoryException {
         m_App = app;
+//        dlSystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
+//        hostProp = dlSystem.getResourceAsProperties(app.getProperties() + "/properties");
+
         m_App.waitCursorBegin();
         try {
             KettleEnvironment.init(false);
@@ -74,6 +84,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     }
 
     protected abstract String getTransformation();
+    protected abstract List<TransVariable> getTransVaribles();
 
     @Override
     public JComponent getComponent() {
@@ -83,7 +94,6 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     @Override
     public void activate() throws BasicException {
         jPanelRows.setVisible(false);
-        setVisibleFilter(true);
     }
 
     @Override
@@ -95,15 +105,6 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
         return true;
     }
 
-    protected void setVisibleButtonFilter(boolean value) {
-        jToggleFilter.setVisible(value);
-    }
-
-    protected void setVisibleFilter(boolean value) {
-        jToggleFilter.setSelected(value);
-        jToggleFilterActionPerformed(null);
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,9 +114,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     private void initComponents() {
 
         jPanelHeader = new javax.swing.JPanel();
-        jPanelFilter = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jToggleFilter = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
         jPanelRows = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -128,20 +127,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
         jPanelHeader.setLayout(new java.awt.BorderLayout());
 
-        jPanelFilter.setLayout(new java.awt.BorderLayout());
-        jPanelHeader.add(jPanelFilter, java.awt.BorderLayout.CENTER);
-
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jToggleFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1downarrow.png"))); // NOI18N
-        jToggleFilter.setSelected(true);
-        jToggleFilter.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow.png"))); // NOI18N
-        jToggleFilter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleFilterActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jToggleFilter);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/launch.png"))); // NOI18N
         jButton1.setText(AppLocal.getIntString("label.RunTransformation")); // NOI18N
@@ -183,7 +169,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
         m_App.waitCursorBegin();
         jPanelRows.setVisible(true);
-        Trans t = runTransformationFromResource(getTransformation());
+        Trans t = runTransformationFromResource(getTransformation(), getTransVaribles());
         // retrieve logging appender
         Log4jBufferAppender appender = CentralLogStore.getAppender();
         // retrieve logging lines for job
@@ -213,12 +199,6 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jToggleFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleFilterActionPerformed
-
-        jPanelFilter.setVisible(jToggleFilter.isSelected());
-
-    }//GEN-LAST:event_jToggleFilterActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -226,14 +206,12 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     private javax.swing.JLabel jMessage;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanelFilter;
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelRows;
-    private javax.swing.JToggleButton jToggleFilter;
     private javax.swing.JScrollPane m_jScrollTableRow;
     // End of variables declaration//GEN-END:variables
 
-    public Trans runTransformationFromResource(String resource) {
+    public Trans runTransformationFromResource(String resource, List<TransVariable> listVaribale) {
         try {
             // load latest revision of the transformation
             // The TransMeta object is the programmatic representation of a transformation definition.
@@ -242,6 +220,11 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
             // Creating a transformation object which is the programmatic representation of a transformation 
             // A transformation object can be executed, report success, etc.
             Trans transformation = new Trans(transMeta);
+            if (listVaribale != null) {
+                for (TransVariable variable : listVaribale) {
+                    transformation.setVariable(variable.getName(), variable.getValue());
+                }
+            }
 
             // adjust the log level
             transformation.setLogLevel(LogLevel.BASIC);
