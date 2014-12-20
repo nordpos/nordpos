@@ -28,12 +28,14 @@ import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.pos.forms.BeanFactoryApp;
 import com.openbravo.pos.forms.BeanFactoryException;
-import java.io.InputStream;
+import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.pentaho.di.core.KettleEnvironment;
-import org.pentaho.di.core.Result;
 import org.pentaho.di.core.exception.KettleException;
+import org.pentaho.di.core.logging.CentralLogStore;
+import org.pentaho.di.core.logging.Log4jBufferAppender;
+import org.pentaho.di.core.logging.LogLevel;
 import org.pentaho.di.core.util.EnvUtil;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
@@ -56,12 +58,9 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     public void init(AppView app) throws BeanFactoryException {
         m_App = app;
         m_App.waitCursorBegin();
-        InputStream resource = getClass().getResourceAsStream(getTransformation());
         try {
             KettleEnvironment.init(false);
             EnvUtil.environmentInit();
-            TransMeta metaData = new TransMeta(resource, null, false, null, null);
-            trans = new Trans(metaData);
         } catch (KettleException ex) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.syncerror"), ex);
             msg.show(this);
@@ -83,11 +82,16 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
     @Override
     public void activate() throws BasicException {
+        jPanelRows.setVisible(false);
         setVisibleFilter(true);
     }
 
     @Override
     public boolean deactivate() {
+        jMessage.setText(null);
+        jMessage.setBackground(Color.GRAY);
+        jLogArea.setText(null);
+        jPanelRows.setVisible(false);
         return true;
     }
 
@@ -98,57 +102,6 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
     protected void setVisibleFilter(boolean value) {
         jToggleFilter.setSelected(value);
         jToggleFilterActionPerformed(null);
-    }
-
-    private void launchTransformation() {
-        m_App.waitCursorBegin();
-        try {
-
-            trans.execute(null); // You can pass arguments instead of null.
-            trans.waitUntilFinished();
-            Result r = trans.getResult();
-
-//        if (jr != null) {
-//            try {
-//
-//                // Archivo de recursos
-//                String res = getResourceBundle();
-//
-//                // Parametros y los datos
-//                Object params = (editor == null) ? null : editor.createValue();
-//                JRDataSource data = new JRDataSourceBasic(getSentence(), getReportFields(), params);
-//
-//                // Construyo el mapa de los parametros.
-//                Map reportparams = new HashMap();
-//                reportparams.put("ARG", params);
-//                if (res != null) {
-//                      reportparams.put("REPORT_RESOURCE_BUNDLE", ResourceBundle.getBundle(res));
-//                }
-//                reportparams.put("TAXESLOGIC", taxeslogic);
-//
-//                JasperPrint jp = JasperFillManager.fillReport(jr, reportparams, data);
-//
-//                reportviewer.loadJasperPrint(jp);
-//
-//                setVisibleFilter(false);
-//
-//            } catch (MissingResourceException e) {
-//                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadresourcedata"), e);
-//                msg.show(this);
-//            } catch (JRException e) {
-//                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfillreport"), e);
-//                msg.show(this);
-//            } catch (BasicException e) {
-//                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadreportdata"), e);
-//                msg.show(this);
-//            }
-//        }
-        } catch (KettleException ex) {
-            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.syncerror"), ex);
-            msg.show(this);
-        }
-
-        m_App.waitCursorEnd();
     }
 
     /**
@@ -164,6 +117,11 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
         jPanel1 = new javax.swing.JPanel();
         jToggleFilter = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
+        jPanelRows = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jMessage = new javax.swing.JLabel();
+        m_jScrollTableRow = new javax.swing.JScrollPane();
+        jLogArea = new javax.swing.JTextArea();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
@@ -186,7 +144,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
         jPanel1.add(jToggleFilter);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/launch.png"))); // NOI18N
-        jButton1.setText(AppLocal.getIntString("Button.ExecuteReport")); // NOI18N
+        jButton1.setText(AppLocal.getIntString("label.RunTransformation")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -194,14 +152,64 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
         });
         jPanel1.add(jButton1);
 
-        jPanelHeader.add(jPanel1, java.awt.BorderLayout.SOUTH);
+        jPanelHeader.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         add(jPanelHeader, java.awt.BorderLayout.NORTH);
+
+        jPanelRows.setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jMessage.setBackground(java.awt.Color.white);
+        jMessage.setFont(jMessage.getFont().deriveFont(jMessage.getFont().getStyle() | java.awt.Font.BOLD));
+        jMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMessage.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(4, 1, 4, 1)));
+        jMessage.setEnabled(false);
+        jMessage.setOpaque(true);
+        jPanel2.add(jMessage, java.awt.BorderLayout.CENTER);
+
+        jPanelRows.add(jPanel2, java.awt.BorderLayout.NORTH);
+
+        jLogArea.setColumns(20);
+        jLogArea.setRows(5);
+        m_jScrollTableRow.setViewportView(jLogArea);
+
+        jPanelRows.add(m_jScrollTableRow, java.awt.BorderLayout.CENTER);
+
+        add(jPanelRows, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        launchTransformation();
+        m_App.waitCursorBegin();
+        jPanelRows.setVisible(true);
+        Trans t = runTransformationFromResource(getTransformation());
+        // retrieve logging appender
+        Log4jBufferAppender appender = CentralLogStore.getAppender();
+        // retrieve logging lines for job
+        String logText = appender.getBuffer(t.getLogChannelId(), true).toString();
+
+        if (t.nrActiveSteps() == 0) {
+            t.cleanup();
+        }
+
+        if (t.isFinished()) {
+            jMessage.setEnabled(true);
+            int errors = t.getErrors();
+            if (errors > 0) {
+                jMessage.setText(AppLocal.getIntString("label.TransformationError"));
+                jMessage.setBackground(Color.RED);
+            } else {
+                jMessage.setText(AppLocal.getIntString("label.TransformationComplete"));
+                jMessage.setBackground(Color.GREEN);
+            }
+
+            jLogArea.setText(logText);
+            appender.clear();
+            appender.close();
+        }
+
+        m_App.waitCursorEnd();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -214,10 +222,41 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JTextArea jLogArea;
+    private javax.swing.JLabel jMessage;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelFilter;
     private javax.swing.JPanel jPanelHeader;
+    private javax.swing.JPanel jPanelRows;
     private javax.swing.JToggleButton jToggleFilter;
+    private javax.swing.JScrollPane m_jScrollTableRow;
     // End of variables declaration//GEN-END:variables
 
+    public Trans runTransformationFromResource(String resource) {
+        try {
+            // load latest revision of the transformation
+            // The TransMeta object is the programmatic representation of a transformation definition.
+            TransMeta transMeta = new TransMeta(getClass().getResourceAsStream(resource), null, false, null, null);
+
+            // Creating a transformation object which is the programmatic representation of a transformation 
+            // A transformation object can be executed, report success, etc.
+            Trans transformation = new Trans(transMeta);
+
+            // adjust the log level
+            transformation.setLogLevel(LogLevel.BASIC);
+
+            // starting the transformation, which will execute asynchronously
+            transformation.execute(null);
+
+            // waiting for the transformation to finish
+            transformation.waitUntilFinished();
+
+            return transformation;
+        } catch (KettleException ex) {
+            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.syncerror"), ex);
+            msg.show(this);
+            return null;
+        }
+    }
 }

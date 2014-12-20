@@ -21,6 +21,7 @@
 
 transformation = new com.nordpos.sync.panel.PanelTransformationBean();
 
+transformation.setTitleKey("Menu.SyncDummy");
 transformation.setTransformation("/com/nordpos/transformations/dummy/DUMMY_RANDOM.ktr");
 
 transformation;
