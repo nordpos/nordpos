@@ -85,9 +85,9 @@
         submenu.addPanel("/com/openbravo/images/cakes3d.png", "Menu.SalesChart", "/com/openbravo/reports/chartsales.bsh");
         submenu.addTitle("Menu.Maintenance.Sync");
 //        submenu.addExecution("/com/openbravo/images/database_imp.png", "Menu.SyncImpProducts", "com.nordpos.sync.process.ProductsSyncCreate");
-//        submenu.addExecution("/com/openbravo/images/database_exp.png", "Menu.SyncExpOrders", "com.nordpos.sync.process.OrdersSyncCreate");
 //        submenu.addPanel("/com/openbravo/images/preferences-desktop.png", "Menu.ConfigureSync", "com.nordpos.sync.panel.JPanelConfigSync");
         submenu.addPanel("/com/openbravo/images/pentaho-di.png", "Menu.SyncDummy", "/com/nordpos/transformations/dummy/dummy_random.bsh");
+        submenu.addPanel("/com/openbravo/images/database_exp.png", "Menu.SyncExportProducts", "/com/nordpos/transformations/csv/export_products.bsh");
     group = menu.addGroup("Menu.System");
     group.addChangePasswordAction();
     group.addPanel("/com/openbravo/images/package_settings.png", "Menu.Configuration", "com.openbravo.pos.config.JPanelConfiguration");

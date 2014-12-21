@@ -52,7 +52,7 @@ import org.pentaho.di.trans.TransMeta;
  */
 public abstract class JPanelTransformation extends JPanel implements JPanelView, BeanFactoryApp {
 
-    protected AppView m_App;
+    protected AppView app;
 //    private DataLogicSystem dlSystem;
 //    private Properties hostProp;
     protected Trans trans;
@@ -63,11 +63,11 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
     @Override
     public void init(AppView app) throws BeanFactoryException {
-        m_App = app;
+        this.app = app;        
 //        dlSystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
 //        hostProp = dlSystem.getResourceAsProperties(app.getProperties() + "/properties");
 
-        m_App.waitCursorBegin();
+        this.app.waitCursorBegin();
         try {
             KettleEnvironment.init(false);
             EnvUtil.environmentInit();
@@ -75,7 +75,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.syncerror"), ex);
             msg.show(this);
         }
-        m_App.waitCursorEnd();
+        this.app.waitCursorEnd();
     }
 
     @Override
@@ -167,7 +167,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        m_App.waitCursorBegin();
+        this.app.waitCursorBegin();
         jPanelRows.setVisible(true);
         Trans t = runTransformationFromResource(getTransformation(), getTransVaribles());
         // retrieve logging appender
@@ -195,7 +195,7 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
             appender.close();
         }
 
-        m_App.waitCursorEnd();
+        this.app.waitCursorEnd();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
