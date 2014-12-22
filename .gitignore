@@ -8,5 +8,7 @@
 /build/
 /dist/
 /webapps/
+/import
+/export
 /installer
 /nbproject/private/
