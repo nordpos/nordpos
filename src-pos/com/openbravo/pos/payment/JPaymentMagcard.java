@@ -19,6 +19,8 @@
 
 package com.openbravo.pos.payment;
 
+import com.nordpos.payment.gateway.PaymentGateway;
+import com.nordpos.payment.gateway.PaymentGatewayFactory;
 import com.openbravo.pos.customers.CustomerInfoExt;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
@@ -42,8 +44,9 @@ public class JPaymentMagcard extends javax.swing.JPanel implements JPaymentInter
         initComponents();   
         
         m_notifier = notifier;
+        PaymentGatewayFactory gatewayFactory = new PaymentGatewayFactory(app.getProperties());
         
-        m_paymentgateway = PaymentGatewayFac.getPaymentGateway(app.getProperties());
+        m_paymentgateway = gatewayFactory.getPaymentGateway();
         
         if (m_paymentgateway == null) {
             jlblMessage.setText(AppLocal.getIntString("message.nopaymentgateway"));            

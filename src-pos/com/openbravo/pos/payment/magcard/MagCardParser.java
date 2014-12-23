@@ -1,5 +1,5 @@
 //    Openbravo POS is a point of sales application designed for touch screens.
-//    Copyright (C) 2008-2009 Openbravo, S.L.
+//    Copyright (C) 2007-2009 Openbravo, S.L.
 //    http://www.openbravo.com/product/pos
 //
 //    This file is part of Openbravo POS.
@@ -17,18 +17,23 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.openbravo.pos.payment;
+package com.openbravo.pos.payment.magcard;
 
-import com.openbravo.format.Formats;
+/**
+ *
+ * @author adrian
+ */
+public interface MagCardParser {
 
-public abstract class PaymentInfo {
-    
-    public abstract String getName();
-    public abstract double getTotal();
-    public abstract PaymentInfo copyPayment();
-    public abstract String getTransactionID();
-    
-    public String printTotal() {
-        return Formats.CURRENCY.formatValue(getTotal());
-    }
+    public void reset();
+    public void append(char c);
+    public boolean isComplete();
+
+    public String getHolderName();
+    public String getCardNumber();
+    public String getExpirationDate();
+
+    public String getTrack1();
+    public String getTrack2();
+    public String getTrack3();
 }

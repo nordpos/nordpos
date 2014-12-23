@@ -1,5 +1,5 @@
 //    Openbravo POS is a point of sales application designed for touch screens.
-//    Copyright (C) 2008-2009 Openbravo, S.L.
+//    Copyright (C) 2007-2009 Openbravo, S.L.
 //    http://www.openbravo.com/product/pos
 //
 //    This file is part of Openbravo POS.
@@ -17,18 +17,19 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.openbravo.pos.payment;
+package com.nordpos.payment.gateway;
 
-import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppConfig;
+import javax.swing.JPanel;
 
-public abstract class PaymentInfo {
+/**
+ *
+ * @author Mikel Irurita
+ */
+public interface PaymentGatewayConfiguration {
     
-    public abstract String getName();
-    public abstract double getTotal();
-    public abstract PaymentInfo copyPayment();
-    public abstract String getTransactionID();
+    public JPanel getComponent();
+    public void loadProperties(AppConfig config);
+    public void saveProperties(AppConfig config);
     
-    public String printTotal() {
-        return Formats.CURRENCY.formatValue(getTotal());
-    }
 }
