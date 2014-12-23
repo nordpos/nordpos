@@ -19,6 +19,10 @@
 
 package com.openbravo.pos.payment;
 
+import com.openbravo.pos.payment.magcard.MagCardReaderAlternative;
+import com.openbravo.pos.payment.magcard.MagCardReaderGeneric;
+import com.openbravo.pos.payment.magcard.MagCardReaderIntelligent;
+
 /**
  *
  * @author adrianromero

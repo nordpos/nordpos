@@ -5,12 +5,12 @@
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>nordpos</name>
             <source-roots>
-                <root id="src.dir" name="src-beans"/>
-                <root id="src-data.dir"/>
-                <root id="src-device.dir"/>
-                <root id="src-pos.dir"/>
-                <root id="src-server.dir"/>
-                <root id="src-sync.dir"/>
+                <root id="src.src-beans.dir"/>
+                <root id="src.src-data.dir"/>
+                <root id="src.src-peripheral.dir"/>
+                <root id="src.src-pos.dir"/>
+                <root id="src.src-server.dir"/>
+                <root id="src.src-sync.dir"/>
             </source-roots>
             <test-roots/>
         </data>

@@ -19,6 +19,7 @@
 
 package com.openbravo.pos.payment;
 
+import com.openbravo.pos.payment.magcard.MagCardReader;
 import com.openbravo.pos.forms.AppLocal;
 import javax.swing.*;
 
