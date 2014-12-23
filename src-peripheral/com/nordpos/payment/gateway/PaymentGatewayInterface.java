@@ -23,9 +23,10 @@ package com.nordpos.payment.gateway;
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
- * @version NORD POS 3.0
+ * @version NORD POS 3
  */
 public interface PaymentGatewayInterface {
 
-    public PaymentGateway getPaymentGateway(String sProperty) throws Exception;
+    public PaymentGateway getPaymentGateway(String sProperty);
+    public PaymentGatewayConfiguration getPaymentGatewayConfiguration(String sProperty);
 }

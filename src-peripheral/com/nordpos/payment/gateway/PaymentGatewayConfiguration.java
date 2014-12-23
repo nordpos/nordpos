@@ -17,7 +17,7 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.openbravo.pos.payment;
+package com.nordpos.payment.gateway;
 
 import com.openbravo.pos.forms.AppConfig;
 import javax.swing.JPanel;
@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  *
  * @author Mikel Irurita
  */
-public interface PaymentConfiguration {
+public interface PaymentGatewayConfiguration {
     
     public JPanel getComponent();
     public void loadProperties(AppConfig config);

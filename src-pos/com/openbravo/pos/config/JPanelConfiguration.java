@@ -19,19 +19,26 @@
 
 package com.openbravo.pos.config;
 
-import javax.swing.*;
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.gui.JMessageDialog;
+import com.openbravo.data.gui.MessageInf;
+import com.openbravo.pos.forms.AppConfig;
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.forms.AppProperties;
+import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.forms.JPanelView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import com.openbravo.basic.BasicException;
-
-import com.openbravo.pos.forms.*;
-import com.openbravo.data.gui.MessageInf;
-import com.openbravo.data.gui.JMessageDialog;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class JPanelConfiguration extends JPanel implements JPanelView {
         
@@ -39,7 +46,6 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
 
     private AppConfig config;
     
-    /** Creates new form JPanelConfiguration */
     public JPanelConfiguration(AppView oApp) {
         this(oApp.getProperties());  
     }
@@ -56,7 +62,7 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
         m_panelconfig.add(new JPanelConfigDatabase());
         m_panelconfig.add(new JPanelConfigHardware());        
         m_panelconfig.add(new JPanelConfigLocale());
-        m_panelconfig.add(new JPanelConfigPayment());
+        m_panelconfig.add(new JPanelConfigPayment(props));
         m_panelconfig.add(new JPanelConfigServer());
         
         // paneles auxiliares
@@ -99,18 +105,22 @@ public class JPanelConfiguration extends JPanel implements JPanelView {
         }
     }
 
+    @Override
     public JComponent getComponent() {
         return this;
     }
     
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.Configuration");
     } 
     
+    @Override
     public void activate() throws BasicException {
         loadProperties();        
     }
     
+    @Override
     public boolean deactivate() {
         
         boolean haschanged = false;

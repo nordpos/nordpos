@@ -20,23 +20,19 @@
  */
 package com.nordpos.payment.gateway;
 
-import com.nordpos.device.util.StringParser;
+import com.openbravo.pos.payment.PaymentInfoMagcard;
 
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
- * @version NORD POS 3.0
+ * @version NORD POS 3
  */
-public class PaymentGatewayDriver implements PaymentGatewayInterface {
+public class PaymentGatewayNull implements PaymentGateway {
+    
+    public PaymentGatewayNull() {
+    }
+  
     @Override
-    public PaymentGateway getPaymentGateway(String sProperty) throws Exception {
-        StringParser displayProperty = new StringParser(sProperty);
-        String sDisplayType = displayProperty.nextToken(':');
-        switch (sDisplayType) {
-            case "external":
-                return new PaymentGatewayExt();
-            default:
-                return null;
-        }
+    public void execute(PaymentInfoMagcard payinfo) {
     }
 }
