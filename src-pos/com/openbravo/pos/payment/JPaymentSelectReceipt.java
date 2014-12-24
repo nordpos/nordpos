@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.payment;
 
 import java.awt.Component;
@@ -30,44 +29,44 @@ import java.awt.Window;
  * @author adrianromero
  */
 public class JPaymentSelectReceipt extends JPaymentSelect {
-    
-    /** Creates new form JPaymentSelect */
+
     protected JPaymentSelectReceipt(java.awt.Frame parent, boolean modal, ComponentOrientation o) {
         super(parent, modal, o);
     }
-    /** Creates new form JPaymentSelect */
+
     protected JPaymentSelectReceipt(java.awt.Dialog parent, boolean modal, ComponentOrientation o) {
         super(parent, modal, o);
-    } 
-    
+    }
+
     public static JPaymentSelect getDialog(Component parent) {
-         
+
         Window window = getWindow(parent);
-        
-        if (window instanceof Frame) { 
+
+        if (window instanceof Frame) {
             return new JPaymentSelectReceipt((Frame) window, true, parent.getComponentOrientation());
         } else {
             return new JPaymentSelectReceipt((Dialog) window, true, parent.getComponentOrientation());
         }
-    } 
-    
+    }
+
     protected void addTabs() {
-        
+
         addTabPayment(new JPaymentSelect.JPaymentCashCreator());
         addTabPayment(new JPaymentSelect.JPaymentChequeCreator());
-        addTabPayment(new JPaymentSelect.JPaymentPaperCreator());            
-        addTabPayment(new JPaymentSelect.JPaymentMagcardCreator());                
-        addTabPayment(new JPaymentSelect.JPaymentFreeCreator());                
-        addTabPayment(new JPaymentSelect.JPaymentDebtCreator());                
+        addTabPayment(new JPaymentSelect.JPaymentPaperCreator());
+        addTabPayment(new JPaymentSelect.JPaymentMagcardCreator());
+        addTabPayment(new JPaymentSelect.JPaymentBitcoinCreator());        
+        addTabPayment(new JPaymentSelect.JPaymentFreeCreator());
+        addTabPayment(new JPaymentSelect.JPaymentDebtCreator());
         setHeaderVisible(true);
     }
-    
+
     protected void setStatusPanel(boolean isPositive, boolean isComplete) {
-        
+
         setAddEnabled(isPositive && !isComplete);
         setOKEnabled(isComplete);
     }
-    
+
     protected PaymentInfo getDefaultPayment(double total) {
         return new PaymentInfoCash(total, total);
     }

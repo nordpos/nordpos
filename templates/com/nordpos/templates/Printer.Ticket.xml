@@ -226,6 +226,15 @@
             <text align ="right" length="42">${paymentline.printTotal()}</text>
         </line>
          #end
+         #if ($paymentline.name == "bitcoin")
+        <line></line>
+        <line>
+            <text bold="true">${local.getScriptString("paid.bitcoin")}</text>
+        </line>
+        <line>
+            <text align ="right" length="42">${paymentline.printTotal()}</text>
+        </line>
+         #end         
          #if ($paymentline.name == "cheque")
         <line></line>
         <line>

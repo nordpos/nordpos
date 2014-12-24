@@ -177,6 +177,15 @@ public abstract class JPaymentSelect extends javax.swing.JDialog
         public String getLabelKey() { return "tab.cheque"; }
         public String getIconKey() { return "/com/openbravo/images/desktop.png"; }
     }  
+    
+    public class JPaymentBitcoinCreator implements JPaymentCreator {
+        public JPaymentInterface createJPayment() {
+            return new JPaymentBitcoin(JPaymentSelect.this);
+        }
+        public String getKey() { return "payment.bitcoin"; }
+        public String getLabelKey() { return "tab.bitcoin"; }
+        public String getIconKey() { return "/com/openbravo/images/bitcoin.png"; }
+    }    
         
     public class JPaymentPaperCreator implements JPaymentCreator {
         public JPaymentInterface createJPayment() {
