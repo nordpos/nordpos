@@ -36,12 +36,14 @@ public class LocationInfo implements SerializableRead, IKeyed {
     private String m_sID;
     private String m_sName;
     private String m_sAddress;
+    private boolean m_bClose;
     
     /** Creates a new instance of LocationInfo */
     public LocationInfo() {
         m_sID = null;
         m_sName = null;
         m_sAddress = null;
+        m_bClose = false;
     }
     
     public Object getKey() {
@@ -51,6 +53,7 @@ public class LocationInfo implements SerializableRead, IKeyed {
         m_sID = dr.getString(1);
         m_sName = dr.getString(2);
         m_sAddress = dr.getString(3);
+        m_bClose = dr.getBoolean(4);
     } 
     
     public void setID(String sID) {
@@ -76,6 +79,13 @@ public class LocationInfo implements SerializableRead, IKeyed {
     public void setAddress(String sAddress) {
         m_sAddress = sAddress;
     } 
+    
+    public boolean isClose() {            
+        return m_bClose;
+    }
+    public void setClose(boolean bValue){            
+        m_bClose = bValue;
+    }
     
     public String toString(){
         return m_sName;

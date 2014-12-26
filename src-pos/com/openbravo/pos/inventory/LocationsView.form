@@ -18,12 +18,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel2" min="-2" pref="80" max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" pref="80" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jLabel12" max="32767" attributes="0"/>
+                  <Component id="jLabel2" pref="80" max="32767" attributes="0"/>
+                  <Component id="jLabel3" pref="80" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="m_jClose" min="-2" pref="80" max="-2" attributes="0"/>
                   <Component id="m_jName" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
                   <Component id="m_jAddress" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
               </Group>
@@ -44,7 +46,12 @@
                   <Component id="jLabel3" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="m_jAddress" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="m_jClose" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel12" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="93" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,6 +74,15 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="m_jAddress">
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="m_jClose">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel12">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="pos_messages.properties" key="label.locationclose" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

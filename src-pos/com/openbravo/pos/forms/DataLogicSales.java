@@ -279,7 +279,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     }
     public final SentenceList getLocationsList() {
         return new StaticSentence(s
-            , "SELECT ID, NAME, ADDRESS FROM LOCATIONS ORDER BY NAME"
+            , "SELECT ID, NAME, ADDRESS, ISCLOSE FROM LOCATIONS WHERE ISCLOSE = " + s.DB.FALSE() +
+              " ORDER BY NAME"
             , null
             , new SerializerReadClass(LocationInfo.class));
     }
@@ -779,10 +780,10 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     public final TableDefinition getTableLocations() {
         return new TableDefinition(s,
             "LOCATIONS"
-            , new String[] {"ID", "NAME", "ADDRESS"}
-            , new String[] {"ID", AppLocal.getIntString("label.locationname"), AppLocal.getIntString("label.locationaddress")}
-            , new Datas[] {Datas.STRING, Datas.STRING, Datas.STRING}
-            , new Formats[] {Formats.STRING, Formats.STRING, Formats.STRING}
+            , new String[] {"ID", "NAME", "ADDRESS", "ISCLOSE"}
+            , new String[] {"ID", AppLocal.getIntString("label.locationname"), AppLocal.getIntString("label.locationaddress"), AppLocal.getIntString("label.isclose")}
+            , new Datas[] {Datas.STRING, Datas.STRING, Datas.STRING, Datas.BOOLEAN}
+            , new Formats[] {Formats.STRING, Formats.STRING, Formats.STRING, Formats.BOOLEAN}
             , "NAME"
             , new int[] {0}
         );
