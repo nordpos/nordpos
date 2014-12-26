@@ -41,6 +41,7 @@ public class JImageViewer extends javax.swing.JPanel {
         m_Img = null;
         m_maxsize = null;
         m_icon = new ZoomIcon();
+        m_icon.setZoom(1);
         m_jImage.setIcon(m_icon);
         privateSetEnabled(isEnabled());
     }
