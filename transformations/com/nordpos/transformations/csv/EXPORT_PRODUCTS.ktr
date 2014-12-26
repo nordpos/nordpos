@@ -4,8 +4,9 @@
     <name>EXPORT_PRODUCTS</name>
     <description/>
     <extended_description/>
-    <trans_version/>
+    <trans_version>1.1</trans_version>
     <trans_type>Normal</trans_type>
+    <trans_status>2</trans_status>
     <directory>&#47;</directory>
     <parameters>
     </parameters>
@@ -92,7 +93,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>DB Input PRODUCTS</from><to>Output products.csv</to><enabled>Y</enabled> </hop>  <hop> <from>DB input CATEGORIES</from><to>Output categories.csv</to><enabled>Y</enabled> </hop>  <hop> <from>Output products.csv</from><to>Saved products.csv</to><enabled>Y</enabled> </hop>  <hop> <from>Saved products.csv</from><to>DB input CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Output categories.csv</from><to>Saved categories.csv</to><enabled>Y</enabled> </hop>  <hop> <from>Saved categories.csv</from><to>DB input CATEGORIES 2</to><enabled>Y</enabled> </hop>  <hop> <from>DB input CATEGORIES 2</from><to>Output taxes.csv</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Output products.csv</from><to>Saved products.csv</to><enabled>Y</enabled> </hop>  <hop> <from>Saved products.csv</from><to>DB input CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Output categories.csv</from><to>Saved categories.csv</to><enabled>Y</enabled> </hop>  <hop> <from>Saved categories.csv</from><to>DB input TAXCATEGORIES and TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>DB Input PRODUCTS</from><to>Select PRODUCTS values</to><enabled>Y</enabled> </hop>  <hop> <from>Select PRODUCTS values</from><to>Output products.csv</to><enabled>Y</enabled> </hop>  <hop> <from>DB input CATEGORIES</from><to>Select CATEGORIES values</to><enabled>Y</enabled> </hop>  <hop> <from>Select CATEGORIES values</from><to>Output categories.csv</to><enabled>Y</enabled> </hop>  <hop> <from>DB input TAXCATEGORIES and TAXES</from><to>Select TAXCATEGORIES and TAXES values</to><enabled>Y</enabled> </hop>  <hop> <from>Select TAXCATEGORIES and TAXES values</from><to>Output taxes.csv</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>DB Input PRODUCTS</name>
     <type>TableInput</type>
@@ -105,22 +106,15 @@
            </partitioning>
     <connection>nordpos_db</connection>
     <sql>SELECT
-  ID AS PRODUCT_ID
-, REFERENCE AS PRODUCT_REFERENCE
-, CODE AS PRODUCT_CODE 
---, CODETYPE
-, NAME AS PRODUCT_NAME 
-, PRICEBUY AS PRODUCT_PRICEBUY
-, PRICESELL AS PRODUCT_PRICESELL
-, CATEGORY AS PRODUCT_CATEGORY
-, TAXCAT AS PRODUCT_TAXCAT
---, ATTRIBUTESET_ID
---, STOCKCOST
---, STOCKVOLUME
---, IMAGE
---, ISCOM
-, ISSCALE AS PRODUCT_ISSCALE
---, ATTRIBUTES
+  ID 
+, REFERENCE 
+, CODE 
+, NAME 
+, PRICEBUY 
+, PRICESELL 
+, CATEGORY 
+, TAXCAT 
+, ISSCALE 
 FROM PRODUCTS
 </sql>
     <limit>0</limit>
@@ -130,8 +124,159 @@ FROM PRODUCTS
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>87</xloc>
+      <xloc>85</xloc>
       <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>DB input CATEGORIES</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>nordpos_db</connection>
+    <sql>SELECT
+  ID AS CATEGORY_ID
+, NAME AS CATEGORY_NAME
+, CODE AS CATEGORY_CODE
+FROM CATEGORIES
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>262</xloc>
+      <yloc>236</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>DB input TAXCATEGORIES and TAXES</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>nordpos_db</connection>
+    <sql>SELECT
+  TAXCATEGORIES.ID
+, TAXCATEGORIES.NAME
+, TAXES.ID
+, TAXES.NAME
+, TAXES.VALIDFROM
+, TAXES.RATE
+FROM TAXCATEGORIES 
+LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>454</xloc>
+      <yloc>458</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Output categories.csv</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>;</separator>
+    <enclosure>&quot;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>CR</format>
+    <compression>None</compression>
+    <encoding>UTF-8</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>${user.dir}&#47;export&#47;categories</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>Y</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>CATEGORY_ID</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CATEGORY_NAME</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CATEGORY_CODE</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>262</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -289,207 +434,8 @@ FROM PRODUCTS
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>87</xloc>
-      <yloc>98</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>DB input CATEGORIES</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>nordpos_db</connection>
-    <sql>SELECT
-  ID AS CATEGORY_ID
-, NAME AS CATEGORY_NAME
---, PARENTID
---, IMAGE
-, CODE AS CATEGORY_CODE
-FROM CATEGORIES
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>219</xloc>
-      <yloc>174</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Output categories.csv</name>
-    <type>TextFileOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <separator>;</separator>
-    <enclosure>&quot;</enclosure>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>Y</header>
-    <footer>N</footer>
-    <format>CR</format>
-    <compression>None</compression>
-    <encoding>UTF-8</encoding>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>${user.dir}&#47;export&#47;categories</name>
-      <is_command>N</is_command>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>csv</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>Y</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>CATEGORY_ID</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CATEGORY_NAME</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CATEGORY_CODE</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>219</xloc>
-      <yloc>252</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Saved products.csv</name>
-    <type>BlockingStep</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <pass_all_rows>N</pass_all_rows>
-      <directory>%%java.io.tmpdir%%</directory>
-      <prefix>block</prefix>
-      <cache_size>5000</cache_size>
-      <compress>Y</compress>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>219</xloc>
-      <yloc>98</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Saved categories.csv</name>
-    <type>BlockingStep</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <pass_all_rows>N</pass_all_rows>
-      <directory>%%java.io.tmpdir%%</directory>
-      <prefix>block</prefix>
-      <cache_size>5000</cache_size>
-      <compress>Y</compress>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>348</xloc>
-      <yloc>252</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>DB input CATEGORIES 2</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>nordpos_db</connection>
-    <sql>SELECT
-  TAXCATEGORIES.ID AS TAXCATEGORIES_ID 
-, TAXCATEGORIES.NAME AS TAXCATEGORIES_NAME
-, TAXES.ID AS TAXES_ID 
-, TAXES.NAME AS TAXES_NAME
-, TAXES.VALIDFROM AS TAXES_VALIDFROM
-, TAXES.RATE AS TAXES_RATE
-FROM TAXCATEGORIES 
-LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>347</xloc>
-      <yloc>319</yloc>
+      <xloc>85</xloc>
+      <yloc>162</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -611,8 +557,183 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>347</xloc>
-      <yloc>397</yloc>
+      <xloc>452</xloc>
+      <yloc>606</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Saved categories.csv</name>
+    <type>BlockingStep</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <pass_all_rows>N</pass_all_rows>
+      <directory>%%java.io.tmpdir%%</directory>
+      <prefix>block</prefix>
+      <cache_size>5000</cache_size>
+      <compress>Y</compress>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>455</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Saved products.csv</name>
+    <type>BlockingStep</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <pass_all_rows>N</pass_all_rows>
+      <directory>%%java.io.tmpdir%%</directory>
+      <prefix>block</prefix>
+      <cache_size>5000</cache_size>
+      <compress>Y</compress>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>262</xloc>
+      <yloc>162</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select PRODUCTS values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>ID</name>
+        <rename>PRODUCT_ID</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>REFERENCE</name>
+        <rename>PRODUCT_REFERENCE</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODE</name>
+        <rename>PRODUCT_CODE</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NAME</name>
+        <rename>PRODUCT_NAME</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>PRICEBUY</name>
+        <rename>PRODUCT_PRICEBUY</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>PRICESELL</name>
+        <rename>PRODUCT_PRICESELL</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CATEGORY</name>
+        <rename>PRODUCT_CATEGORY</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>TAXCAT</name>
+        <rename>PRODUCT_TAXCAT</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>ISSCALE</name>
+        <rename>PRODUCT_ISSCALE</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>85</xloc>
+      <yloc>89</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select CATEGORIES values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>ID</name>
+        <rename>CATEGORY_ID</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NAME</name>
+        <rename>CATEGORY_NAME</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODE</name>
+        <rename>CATEGORY_CODE</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>262</xloc>
+      <yloc>310</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select TAXCATEGORIES and TAXES values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>ID</name>
+        <rename>TAXCATEGORIES_ID</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NAME</name>
+        <rename>TAXCATEGORIES_NAME</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>ID_1</name>
+        <rename>TAXES_ID</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NAME_1</name>
+        <rename>TAXES_NAME</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>VALIDFROM</name>
+        <rename>TAXES_VALIDFROM</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>RATE</name>
+        <rename>TAXES_RATE</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>456</xloc>
+      <yloc>532</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -21,7 +21,7 @@
 
 transformation = new com.nordpos.sync.panel.PanelTransformationBean();
 
-transformation.setTitleKey("Menu.SyncExportProducts");
+transformation.setTitleKey("Menu.SyncImportProducts");
 transformation.setTransformation("/com/nordpos/transformations/csv/IMPORT_PRODUCTS.ktr");
 
 transformation.addTransVariable("db.URL", this.app.getProperties().getDBURL());
