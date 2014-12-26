@@ -93,7 +93,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>taxes.csv input</from><to>Sort TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Sort TAXCATEGORIES</from><to>Unique TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Unique TAXCATEGORIES</from><to>I&#47;U TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Sort TAXES</from><to>Unique TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>Until update TAXCATEGORIES</from><to>Sort TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>taxes.csv input</from><to>Until update TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Unique TAXES</from><to>I&#47;U TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>categories.csv input</from><to>Until update TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>Until update TAXES</from><to>Sort CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Sort CATEGORIES</from><to>Unique CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Unique CATEGORIES</from><to>I&#47;U CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>products.csv input</from><to>Until update CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Until update CATEGORIES</from><to>Sort PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>Sort PRODUCTS</from><to>Unique PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>Unique PRODUCTS</from><to>I&#47;U PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>I&#47;U PRODUCTS</from><to>I&#47;U PRODUCTS_CAT</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>taxes.csv input</from><to>Sort TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Sort TAXCATEGORIES</from><to>Unique TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Unique TAXCATEGORIES</from><to>I&#47;U TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Until update TAXCATEGORIES</from><to>Sort TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>taxes.csv input</from><to>Until update TAXCATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Unique TAXES</from><to>I&#47;U TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>categories.csv input</from><to>Until update TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>Until update TAXES</from><to>Sort CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Sort CATEGORIES</from><to>Unique CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Unique CATEGORIES</from><to>I&#47;U CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>products.csv input</from><to>Until update CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Until update CATEGORIES</from><to>Sort PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>Unique PRODUCTS</from><to>I&#47;U PRODUCTS</to><enabled>Y</enabled> </hop>  <hop> <from>I&#47;U PRODUCTS</from><to>I&#47;U PRODUCTS_CAT</to><enabled>Y</enabled> </hop>  <hop> <from>Sort TAXES</from><to>Change type TAXES_RATE</to><enabled>Y</enabled> </hop>  <hop> <from>Change type TAXES_RATE</from><to>Unique TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>Sort PRODUCTS</from><to>Change type PRICEBUY and PRICESELL</to><enabled>Y</enabled> </hop>  <hop> <from>Change type PRICEBUY and PRICESELL</from><to>Unique PRODUCTS</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>I&#47;U CATEGORIES</name>
     <type>InsertUpdate</type>
@@ -205,8 +205,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>732</xloc>
-      <yloc>327</yloc>
+      <xloc>729</xloc>
+      <yloc>396</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -242,7 +242,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>729</xloc>
-      <yloc>396</yloc>
+      <yloc>474</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -339,7 +339,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>318</xloc>
-      <yloc>327</yloc>
+      <yloc>396</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -422,7 +422,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>732</xloc>
+      <xloc>729</xloc>
       <yloc>173</yloc>
       <draw>Y</draw>
       </GUI>
@@ -552,8 +552,8 @@
         <case_insensitive>N</case_insensitive>
         </field>      </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>732</xloc>
-      <yloc>253</yloc>
+      <xloc>729</xloc>
+      <yloc>327</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -605,7 +605,7 @@
         </field>      </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>318</xloc>
-      <yloc>253</yloc>
+      <yloc>327</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -628,7 +628,7 @@
       </steps>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>732</xloc>
+      <xloc>729</xloc>
       <yloc>103</yloc>
       <draw>Y</draw>
       </GUI>
@@ -818,7 +818,7 @@
       </field>
       <field>
         <name>PRODUCT_PRICEBUY</name>
-        <type>BigNumber</type>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
@@ -829,7 +829,7 @@
       </field>
       <field>
         <name>PRODUCT_PRICESELL</name>
-        <type>BigNumber</type>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
@@ -874,7 +874,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>732</xloc>
+      <xloc>729</xloc>
       <yloc>31</yloc>
       <draw>Y</draw>
       </GUI>
@@ -961,8 +961,8 @@
       </field>
       <field>
         <name>TAXES_RATE</name>
-        <type>BigNumber</type>
-        <format/>
+        <type>String</type>
+        <format>##.##</format>
         <currency/>
         <decimal/>
         <group/>
@@ -975,6 +975,80 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>111</xloc>
       <yloc>30</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Change type TAXES_RATE</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <meta>        <name>TAXES_RATE</name>
+        <rename>TAXES_RATE</rename>
+        <type>Number</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>#.##</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>318</xloc>
+      <yloc>253</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Change type PRICEBUY and PRICESELL</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <meta>        <name>PRODUCT_PRICEBUY</name>
+        <rename>PRODUCT_PRICEBUY</rename>
+        <type>Number</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>#.####</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>PRODUCT_PRICESELL</name>
+        <rename>PRODUCT_PRICESELL</rename>
+        <type>Number</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>#.####</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>729</xloc>
+      <yloc>253</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
