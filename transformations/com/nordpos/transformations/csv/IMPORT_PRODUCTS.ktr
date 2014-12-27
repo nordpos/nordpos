@@ -135,7 +135,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>525</xloc>
-      <yloc>327</yloc>
+      <yloc>396</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -283,7 +283,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>111</xloc>
-      <yloc>327</yloc>
+      <yloc>396</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -523,7 +523,7 @@
         </field>      </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>525</xloc>
-      <yloc>253</yloc>
+      <yloc>327</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -579,7 +579,7 @@
         </field>      </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>111</xloc>
-      <yloc>253</yloc>
+      <yloc>327</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

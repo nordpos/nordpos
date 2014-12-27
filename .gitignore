@@ -4,6 +4,7 @@
 *.tar.gz
 *.war
 *.ear
+*_ru.properties
 /.derby-db/
 /build/
 /dist/
