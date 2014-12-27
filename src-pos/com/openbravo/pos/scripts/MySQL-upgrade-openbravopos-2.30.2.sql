@@ -13,7 +13,7 @@
 -- NORD POS. If not, see <http://www.gnu.org/licenses/>.
 
 -- Database upgrade script for MYSQL
--- Openbravo POS v2.30.2 -> NORD POS v3.0.0CE
+-- Openbravo POS v2.30.2 -> NORD POS v3.0.1CE
 
 UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Administrator.xml} WHERE ID = '0';
 UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Manager.xml} WHERE ID = '1';
@@ -33,6 +33,7 @@ INSERT INTO RESOURCES(ID, NAME, RESTYPE, CONTENT) VALUES('90007', 'Window.Suppor
 
 ALTER TABLE TICKETLINES ADD COLUMN ID VARCHAR(255);
 ALTER TABLE CATEGORIES ADD COLUMN CODE VARCHAR(255);
+ALTER TABLE LOCATIONS ADD COLUMN ISCLOSE BIT DEFAULT b'0' NOT NULL;
 
 -- final script
 

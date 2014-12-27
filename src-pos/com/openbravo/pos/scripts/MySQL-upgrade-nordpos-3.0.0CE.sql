@@ -12,22 +12,15 @@
 -- You should have received a copy of the GNU General Public License along with
 -- NORD POS. If not, see <http://www.gnu.org/licenses/>.
 
--- Database upgrade script for DERBY
--- NORD POS v2.30.2 -> NORD POS v3.0.1CE
+-- Database upgrade script for MYSQL
+-- NORD POS v3.0.0CE -> NORD POS v3.0.1CE
 
 UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Administrator.xml} WHERE ID = '0';
 UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Manager.xml} WHERE ID = '1';
 
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Logo.png} WHERE NAME = 'Window.Logo';
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Title.txt} WHERE NAME = 'Window.Title';
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.bsh} WHERE NAME = 'Menu.Root';
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Ticket.Buttons.xml} WHERE NAME = 'Ticket.Buttons';
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Description.txt} WHERE NAME = 'Window.Description';
-UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.DescLogo.png} WHERE NAME = 'Window.DescLogo';
 
-ALTER TABLE TICKETLINES ADD COLUMN ID VARCHAR(256);
-ALTER TABLE CATEGORIES ADD COLUMN CODE VARCHAR(256);
-ALTER TABLE LOCATIONS ADD COLUMN ISCLOSE SMALLINT DEFAULT 0 NOT NULL;
+ALTER TABLE LOCATIONS ADD COLUMN ISCLOSE BIT DEFAULT b'0' NOT NULL;
 
 -- final script
 
