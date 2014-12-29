@@ -51,17 +51,21 @@ public class TaxesLogic {
         // Order the taxlist by Application Order...
         List<TaxInfo> taxlistordered = new ArrayList<TaxInfo>();
         taxlistordered.addAll(taxlist);
-        Collections.sort(taxlistordered, new Comparator<TaxInfo>() {
+        
+        Comparator<TaxInfo> comparatorTax = new Comparator<TaxInfo>() {
+            @Override
             public int compare(TaxInfo o1, TaxInfo o2) {
                 if (o1.getApplicationOrder() < o2.getApplicationOrder()) {
                     return -1;
-                } else if (o1.getApplicationOrder() == o2.getApplicationOrder()) {
-                    return 0;
-                } else {
+                } else if (o1.getApplicationOrder() > o2.getApplicationOrder()) {
                     return 1;
+                } else {
+                    return 0;
                 }
             }
-        });
+        };
+        
+        Collections.sort(taxlistordered, comparatorTax);
         
         // Generate the taxtrees
         HashMap<String, TaxesLogicElement> taxorphans = new HashMap<String, TaxesLogicElement>();

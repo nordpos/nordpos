@@ -135,13 +135,13 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         m_sentcat = dlSales.getUserList();
         m_CategoryModel = new ComboBoxValModel(); 
         
-        List catlist=null;
+        List catlist = null;
         try {
             catlist = m_sentcat.list();
+            catlist.add(0, null);
         } catch (BasicException ex) {
             ex.getMessage();
         }
-        catlist.add(0, null);
         m_CategoryModel = new ComboBoxValModel(catlist);
         jcboUser.setModel(m_CategoryModel);      
     }

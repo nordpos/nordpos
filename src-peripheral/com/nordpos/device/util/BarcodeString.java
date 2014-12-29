@@ -41,7 +41,7 @@ public class BarcodeString {
 
     public static String getBarcodeStringCode39(String message) {
         if (message.length() > 255) {
-            message.substring(0, 255);
+            message = message.substring(0, 255);
         }
         String m_sBarcode = normalizationCodeDigitAndUpperCharacter(message);
         return m_sBarcode;
