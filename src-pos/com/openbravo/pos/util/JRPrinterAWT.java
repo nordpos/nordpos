@@ -68,9 +68,9 @@ import org.apache.commons.logging.LogFactory;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  * @version $Id: JRPrinterAWT.java 3940 2010-08-20 10:35:15Z teodord $
  */
-public class JRPrinterAWT411 implements Printable
+public class JRPrinterAWT implements Printable
 {
-	private static final Log log = LogFactory.getLog(JRPrinterAWT411.class);
+	private static final Log log = LogFactory.getLog(JRPrinterAWT.class);
 
 	/**
 	 *
@@ -83,7 +83,7 @@ public class JRPrinterAWT411 implements Printable
 	/**
 	 *
 	 */
-	protected JRPrinterAWT411(JasperPrint jrPrint) throws JRException
+	protected JRPrinterAWT(JasperPrint jrPrint) throws JRException
 	{
 		this(DefaultJasperReportsContext.getInstance(), jrPrint);
 	}
@@ -92,7 +92,7 @@ public class JRPrinterAWT411 implements Printable
 	/**
 	 *
 	 */
-	public JRPrinterAWT411(JasperReportsContext jasperReportsContext, JasperPrint jasperPrint) throws JRException
+	public JRPrinterAWT(JasperReportsContext jasperReportsContext, JasperPrint jasperPrint) throws JRException
 	{
 		JRGraphEnvInitializer.initializeGraphEnv();
 		
@@ -108,14 +108,14 @@ public class JRPrinterAWT411 implements Printable
 		JasperPrint jrPrint,
 		int firstPageIndex,
 		int lastPageIndex,
-		boolean withPrintDialog
+		PrintService service
 		) throws JRException
 	{
-		JRPrinterAWT411 printer = new JRPrinterAWT411(jrPrint);
+		JRPrinterAWT printer = new JRPrinterAWT(jrPrint);
 		return printer.printPages(
 			firstPageIndex, 
 			lastPageIndex, 
-			withPrintDialog
+			service
 			);
 	}
 
@@ -129,7 +129,7 @@ public class JRPrinterAWT411 implements Printable
 		float zoom
 		) throws JRException
 	{
-		JRPrinterAWT411 printer = new JRPrinterAWT411(jrPrint);
+		JRPrinterAWT printer = new JRPrinterAWT(jrPrint);
 		return printer.printPageToImage(pageIndex, zoom);
 	}
 
@@ -140,7 +140,7 @@ public class JRPrinterAWT411 implements Printable
 	public boolean printPages(
 		int firstPageIndex,
 		int lastPageIndex,
-		boolean withPrintDialog
+		PrintService service
 		) throws JRException
 	{
 		boolean isOK = true;
@@ -207,19 +207,14 @@ public class JRPrinterAWT411 implements Printable
 		printJob.setPageable(book);
 		try
 		{
-			if (withPrintDialog)
-			{
-				if (printJob.printDialog())
-				{
+                    if (service == null) {
+                    if (printJob.printDialog()) {
 					printJob.print();
-				}
-				else
-				{
+                    } else {
 					isOK = false;
 				}
-			}
-			else
-			{
+                } else {
+                    printJob.setPrintService(service);
 				printJob.print();
 			}
 		}
@@ -237,7 +232,7 @@ public class JRPrinterAWT411 implements Printable
 	 */
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException
 	{
-		if (Thread.interrupted())
+		if (Thread.currentThread().isInterrupted())
 		{
 			throw new PrinterException("Current thread interrupted.");
 		}

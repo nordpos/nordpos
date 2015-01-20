@@ -129,9 +129,9 @@ import org.apache.commons.logging.LogFactory;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  * @version $Id: JRViewer.java 4426 2011-06-22 14:52:21Z teodord $
  */
-public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListener
+public class JRViewer extends javax.swing.JPanel implements JRHyperlinkListener
 {
-	private static final Log log = LogFactory.getLog(JRViewer411.class);
+	private static final Log log = LogFactory.getLog(JRViewer.class);
 
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
@@ -225,7 +225,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, String, boolean, Locale, ResourceBundle)
 	 */
-	public JRViewer411(String fileName, boolean isXML) throws JRException
+	public JRViewer(String fileName, boolean isXML) throws JRException
 	{
 		this(fileName, isXML, null);
 	}
@@ -234,7 +234,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, InputStream, boolean, Locale, ResourceBundle)
 	 */
-	public JRViewer411(InputStream is, boolean isXML) throws JRException
+	public JRViewer(InputStream is, boolean isXML) throws JRException
 	{
 		this(is, isXML, null);
 	}
@@ -243,7 +243,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, JasperPrint, Locale, ResourceBundle)
 	 */
-	public JRViewer411(JasperPrint jrPrint)
+	public JRViewer(JasperPrint jrPrint)
 	{
 		this(jrPrint, null);
 	}
@@ -252,7 +252,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, String, boolean, Locale, ResourceBundle)
 	 */
-	public JRViewer411(String fileName, boolean isXML, Locale locale) throws JRException
+	public JRViewer(String fileName, boolean isXML, Locale locale) throws JRException
 	{
 		this(fileName, isXML, locale, null);
 	}
@@ -261,7 +261,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, InputStream, boolean, Locale, ResourceBundle)
 	 */
-	public JRViewer411(InputStream is, boolean isXML, Locale locale) throws JRException
+	public JRViewer(InputStream is, boolean isXML, Locale locale) throws JRException
 	{
 		this(is, isXML, locale, null);
 	}
@@ -270,7 +270,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, JasperPrint, Locale, ResourceBundle)
 	 */
-	public JRViewer411(JasperPrint jrPrint, Locale locale)
+	public JRViewer(JasperPrint jrPrint, Locale locale)
 	{
 		this(jrPrint, locale, null);
 	}
@@ -279,7 +279,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, String, boolean, Locale, ResourceBundle)
 	 */
-	public JRViewer411(String fileName, boolean isXML, Locale locale, ResourceBundle resBundle) throws JRException
+	public JRViewer(String fileName, boolean isXML, Locale locale, ResourceBundle resBundle) throws JRException
 	{
 		this(
 			DefaultJasperReportsContext.getInstance(), 
@@ -294,7 +294,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, InputStream, boolean, Locale, ResourceBundle)
 	 */
-	public JRViewer411(InputStream is, boolean isXML, Locale locale, ResourceBundle resBundle) throws JRException
+	public JRViewer(InputStream is, boolean isXML, Locale locale, ResourceBundle resBundle) throws JRException
 	{
 		this(
 			DefaultJasperReportsContext.getInstance(), 
@@ -309,7 +309,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * @see #JRViewer(JasperReportsContext, JasperPrint, Locale, ResourceBundle)
 	 */
-	public JRViewer411(JasperPrint jrPrint, Locale locale, ResourceBundle resBundle)
+	public JRViewer(JasperPrint jrPrint, Locale locale, ResourceBundle resBundle)
 	{
 		this(
 			DefaultJasperReportsContext.getInstance(), 
@@ -323,7 +323,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * 
 	 */
-	public JRViewer411(
+	public JRViewer(
 		JasperReportsContext jasperReportsContext, 
 		String fileName, 
 		boolean isXML, 
@@ -354,7 +354,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 *
 	 */
-	public JRViewer411(
+	public JRViewer(
 		JasperReportsContext jasperReportsContext, 
 		InputStream is, 
 		boolean isXML, 
@@ -385,7 +385,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 *
 	 */
-	public JRViewer411(
+	public JRViewer(
 		JasperReportsContext jasperReportsContext, 
 		JasperPrint jrPrint, 
 		Locale locale, 
@@ -1229,12 +1229,12 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
                             try {
 
                                 btnPrint.setEnabled(false);
-                                JRViewer411.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                                JRViewer.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                                 JasperPrintManager.printReport(jasperPrint, true);
                             } catch (Exception ex) {
-                                JOptionPane.showMessageDialog(JRViewer411.this, getBundleString("error.printing"));
+                                JOptionPane.showMessageDialog(JRViewer.this, getBundleString("error.printing"));
                             } finally {
-                                JRViewer411.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                                JRViewer.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                                 btnPrint.setEnabled(true);
                             }
                         }
@@ -2057,7 +2057,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 			{
 				public void run()
 				{
-					JOptionPane.showMessageDialog(JRViewer411.this, getBundleString("error.displaying"));
+					JOptionPane.showMessageDialog(JRViewer.this, getBundleString("error.displaying"));
 				}
 			});
 		}
@@ -2177,9 +2177,9 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 		private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
 		private boolean renderImage;
-		JRViewer411 viewer = null;
+		JRViewer viewer = null;
 
-		public PageRenderer(JRViewer411 viewer)
+		public PageRenderer(JRViewer viewer)
 		{
 			this.viewer = viewer;
 		}

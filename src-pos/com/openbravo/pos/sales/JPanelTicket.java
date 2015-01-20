@@ -49,7 +49,7 @@ import com.openbravo.pos.ticket.ProductInfoExt;
 import com.openbravo.pos.ticket.TaxInfo;
 import com.openbravo.pos.ticket.TicketInfo;
 import com.openbravo.pos.ticket.TicketLineInfo;
-import com.openbravo.pos.util.JRPrinterAWT411;
+import com.openbravo.pos.util.JRPrinterAWT;
 import com.openbravo.pos.util.ReportUtils;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -1155,7 +1155,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
             JasperPrint jp = JasperFillManager.fillReport(jr, reportparams, new JRMapArrayDataSource(new Object[]{reportfields}));
 
-            JRPrinterAWT411.printPages(jp, 0, jp.getPages().size() - 1, true);
+            PrintService service = ReportUtils.getPrintService(m_App.getProperties().getProperty("machine.printername"));
+
+            JRPrinterAWT.printPages(jp, 0, jp.getPages().size() - 1, service);
 
         } catch (JRException | IOException | ClassNotFoundException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadreport"), e);
