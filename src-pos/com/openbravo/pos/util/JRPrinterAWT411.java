@@ -1,6 +1,6 @@
 /*
  * JasperReports - Free Java Reporting Library.
- * Copyright (C) 2001 - 2009 Jaspersoft Corporation. All rights reserved.
+ * Copyright (C) 2001 - 2011 Jaspersoft Corporation. All rights reserved.
  * http://www.jaspersoft.com
  *
  * Unless you have purchased a commercial license agreement from Jaspersoft,
@@ -17,7 +17,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,9 +33,9 @@
 //    And the redesign of the design properties of the toolbar
 //    Nothing else.
 
-/*    Update for support library jasperreports 4.1.1
+/*    Update for support library jasperreports 4.8.0 for NORD POS
  *    @author Andrey Svininykh <svininykh@gmail.com>
- *    http://code.google.com/p/openbravoposru/
+ *    http://www.nordpos.mobi
  */
 
 package com.openbravo.pos.util;
@@ -51,9 +51,11 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
 import javax.print.PrintService;
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporterParameter;
 import net.sf.jasperreports.engine.util.JRGraphEnvInitializer;
@@ -73,8 +75,9 @@ public class JRPrinterAWT411 implements Printable
 	/**
 	 *
 	 */
-	private JasperPrint jasperPrint = null;
-	private int pageOffset = 0;
+	private JasperReportsContext jasperReportsContext;
+	private JasperPrint jasperPrint;
+	private int pageOffset;
 
 
 	/**
@@ -82,33 +85,43 @@ public class JRPrinterAWT411 implements Printable
 	 */
 	protected JRPrinterAWT411(JasperPrint jrPrint) throws JRException
 	{
-		JRGraphEnvInitializer.initializeGraphEnv();
-		
-		jasperPrint = jrPrint;
+		this(DefaultJasperReportsContext.getInstance(), jrPrint);
 	}
 
 
 	/**
 	 *
 	 */
+	public JRPrinterAWT411(JasperReportsContext jasperReportsContext, JasperPrint jasperPrint) throws JRException
+	{
+		JRGraphEnvInitializer.initializeGraphEnv();
+		
+		this.jasperReportsContext = jasperReportsContext;
+		this.jasperPrint = jasperPrint;
+	}
+
+
+	/**
+	 * @see #printPages(int, int, boolean)
+	 */
 	public static boolean printPages(
 		JasperPrint jrPrint,
 		int firstPageIndex,
 		int lastPageIndex,
-		PrintService service
+		boolean withPrintDialog
 		) throws JRException
 	{
 		JRPrinterAWT411 printer = new JRPrinterAWT411(jrPrint);
 		return printer.printPages(
 			firstPageIndex, 
 			lastPageIndex, 
-			service
+			withPrintDialog
 			);
 	}
 
 
 	/**
-	 *
+	 * @see #printPageToImage(int, float)
 	 */
 	public static Image printPageToImage(
 		JasperPrint jrPrint,
@@ -124,10 +137,10 @@ public class JRPrinterAWT411 implements Printable
 	/**
 	 *
 	 */
-	private boolean printPages(
+	public boolean printPages(
 		int firstPageIndex,
 		int lastPageIndex,
-                PrintService service
+		boolean withPrintDialog
 		) throws JRException
 	{
 		boolean isOK = true;
@@ -172,7 +185,8 @@ public class JRPrinterAWT411 implements Printable
 					);
 				break;
 			}
-			case PORTRAIT :
+			case 
+			PORTRAIT :
 			default :
 			{
 				pageFormat.setOrientation(PageFormat.PORTRAIT);
@@ -192,18 +206,23 @@ public class JRPrinterAWT411 implements Printable
 		book.append(this, pageFormat, lastPageIndex - firstPageIndex + 1);
 		printJob.setPageable(book);
 		try
-            {
-                    if (service == null) {
-                    if (printJob.printDialog()) {
-                        printJob.print();
-                    } else {
-                        isOK = false;
-                    }
-                } else {
-                    printJob.setPrintService(service);
-                    printJob.print();
-                }
-            }
+		{
+			if (withPrintDialog)
+			{
+				if (printJob.printDialog())
+				{
+					printJob.print();
+				}
+				else
+				{
+					isOK = false;
+				}
+			}
+			else
+			{
+				printJob.print();
+			}
+		}
 		catch (Exception ex)
 		{
 			throw new JRException("Error printing report.", ex);
@@ -218,7 +237,7 @@ public class JRPrinterAWT411 implements Printable
 	 */
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException
 	{
-		if (Thread.currentThread().isInterrupted())
+		if (Thread.interrupted())
 		{
 			throw new PrinterException("Current thread interrupted.");
 		}
@@ -232,7 +251,7 @@ public class JRPrinterAWT411 implements Printable
 
 		try
 		{
-			JRGraphics2DExporter exporter = new JRGraphics2DExporter();
+			JRGraphics2DExporter exporter = new JRGraphics2DExporter(jasperReportsContext);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.jasperPrint);
 			exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, graphics);
 			exporter.setParameter(JRExporterParameter.PAGE_INDEX, Integer.valueOf(pageIndex));
@@ -255,7 +274,7 @@ public class JRPrinterAWT411 implements Printable
 	/**
 	 *
 	 */
-	private Image printPageToImage(int pageIndex, float zoom) throws JRException
+	public Image printPageToImage(int pageIndex, float zoom) throws JRException
 	{
 		Image pageImage = new BufferedImage(
 			(int)(jasperPrint.getPageWidth() * zoom) + 1,
@@ -263,8 +282,8 @@ public class JRPrinterAWT411 implements Printable
 			BufferedImage.TYPE_INT_RGB
 			);
 
-		JRGraphics2DExporter exporter = new JRGraphics2DExporter();
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.jasperPrint);
+		JRGraphics2DExporter exporter = new JRGraphics2DExporter(jasperReportsContext);
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 		exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, pageImage.getGraphics());
 		exporter.setParameter(JRExporterParameter.PAGE_INDEX, Integer.valueOf(pageIndex));
 		exporter.setParameter(JRGraphics2DExporterParameter.ZOOM_RATIO, new Float(zoom));

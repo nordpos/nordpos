@@ -1,6 +1,6 @@
 /*
  * JasperReports - Free Java Reporting Library.
- * Copyright (C) 2001 - 2009 Jaspersoft Corporation. All rights reserved.
+ * Copyright (C) 2001 - 2011 Jaspersoft Corporation. All rights reserved.
  * http://www.jaspersoft.com
  *
  * Unless you have purchased a commercial license agreement from Jaspersoft,
@@ -17,7 +17,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,9 +40,9 @@
 //    And the redesign of the design properties of the toolbar
 //    Nothing else.
 
-/*    Update for support library jasperreports 4.1.1
+/*    Update for support library jasperreports 4.8.0 for NORD POS
  *    @author Andrey Svininykh <svininykh@gmail.com>
- *    http://code.google.com/p/openbravoposru/
+ *    http://www.nordpos.mobi
  */
 
 package com.openbravo.pos.util;
@@ -67,7 +67,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -90,11 +89,12 @@ import javax.swing.JPanel;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
+import net.sf.jasperreports.engine.ImageMapRenderable;
 
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JRImageMapRenderer;
 import net.sf.jasperreports.engine.JRPrintAnchorIndex;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintFrame;
@@ -102,21 +102,23 @@ import net.sf.jasperreports.engine.JRPrintHyperlink;
 import net.sf.jasperreports.engine.JRPrintImage;
 import net.sf.jasperreports.engine.JRPrintImageAreaHyperlink;
 import net.sf.jasperreports.engine.JRPrintPage;
-import net.sf.jasperreports.engine.JRRenderable;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.Renderable;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporterParameter;
 import net.sf.jasperreports.engine.print.JRPrinterAWT;
 import net.sf.jasperreports.engine.type.HyperlinkTypeEnum;
-import net.sf.jasperreports.engine.util.JRClassLoader;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.util.JRProperties;
+import net.sf.jasperreports.engine.util.LocalJasperReportsContext;
 import net.sf.jasperreports.engine.util.SimpleFileResolver;
 import net.sf.jasperreports.engine.xml.JRPrintXmlLoader;
 import net.sf.jasperreports.view.JRHyperlinkListener;
 import net.sf.jasperreports.view.JRSaveContributor;
+import net.sf.jasperreports.view.SaveContributorUtils;
 import net.sf.jasperreports.view.save.JRPrintSaveContributor;
 
 import org.apache.commons.logging.Log;
@@ -144,7 +146,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	 * By default, this property is set to 0.
 	 * </p>
 	 */
-	public static final String VIEWER_RENDER_BUFFER_MAX_SIZE = JRProperties.PROPERTY_PREFIX + "viewer.render.buffer.max.size";
+	public static final String VIEWER_RENDER_BUFFER_MAX_SIZE = JRPropertiesUtil.PROPERTY_PREFIX + "viewer.render.buffer.max.size";
 
 	/**
 	 *
@@ -164,15 +166,14 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	protected int defaultZoomIndex = 2;
 
 	protected int type = TYPE_FILE_NAME;
-	protected boolean isXML = false;
-	protected String reportFileName = null;
-	protected SimpleFileResolver fileResolver;
-	JasperPrint jasperPrint= null;
-	private int pageIndex = 0;
+	protected boolean isXML;
+	protected String reportFileName;
+	JasperPrint jasperPrint;
+	private int pageIndex;
 	private boolean pageError;
-	protected float zoom = 0f;
+	protected float zoom;
 
-	private JRGraphics2DExporter exporter = null;
+	private JRGraphics2DExporter exporter;
 
 	/**
 	 * the screen resolution.
@@ -182,13 +183,15 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 * the zoom ration adjusted to the screen resolution.
 	 */
-	protected float realZoom = 0f;
+	protected float realZoom;
 
 	private DecimalFormat zoomDecimalFormat = new DecimalFormat("#.##");
-	private ResourceBundle resourceBundle = null;
+	protected JasperReportsContext jasperReportsContext;
+	protected LocalJasperReportsContext localJasperReportsContext;
+	private ResourceBundle resourceBundle;
 
-	private int downX = 0;
-	private int downY = 0;
+	private int downX;
+	private int downY;
 
 	private List<JRHyperlinkListener> hyperlinkListeners = new ArrayList<JRHyperlinkListener>();
 	private Map<JPanel,JRPrintHyperlink> linksMap = new HashMap<JPanel,JRPrintHyperlink>();
@@ -216,54 +219,120 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 		};
 
 	protected List<JRSaveContributor> saveContributors = new ArrayList<JRSaveContributor>();
-	protected File lastFolder = null;
-	protected JRSaveContributor lastSaveContributor = null;
+	protected File lastFolder;
+	protected JRSaveContributor lastSaveContributor;
 
-	/** Creates new form JRViewer */
+	/**
+	 * @see #JRViewer(JasperReportsContext, String, boolean, Locale, ResourceBundle)
+	 */
 	public JRViewer411(String fileName, boolean isXML) throws JRException
 	{
 		this(fileName, isXML, null);
 	}
 
 
-	/** Creates new form JRViewer */
+	/**
+	 * @see #JRViewer(JasperReportsContext, InputStream, boolean, Locale, ResourceBundle)
+	 */
 	public JRViewer411(InputStream is, boolean isXML) throws JRException
 	{
 		this(is, isXML, null);
 	}
 
 
-	/** Creates new form JRViewer */
+	/**
+	 * @see #JRViewer(JasperReportsContext, JasperPrint, Locale, ResourceBundle)
+	 */
 	public JRViewer411(JasperPrint jrPrint)
 	{
 		this(jrPrint, null);
 	}
 
 
-	/** Creates new form JRViewer */
+	/**
+	 * @see #JRViewer(JasperReportsContext, String, boolean, Locale, ResourceBundle)
+	 */
 	public JRViewer411(String fileName, boolean isXML, Locale locale) throws JRException
 	{
 		this(fileName, isXML, locale, null);
 	}
 
 
-	/** Creates new form JRViewer */
+	/**
+	 * @see #JRViewer(JasperReportsContext, InputStream, boolean, Locale, ResourceBundle)
+	 */
 	public JRViewer411(InputStream is, boolean isXML, Locale locale) throws JRException
 	{
 		this(is, isXML, locale, null);
 	}
 
 
-	/** Creates new form JRViewer */
+	/**
+	 * @see #JRViewer(JasperReportsContext, JasperPrint, Locale, ResourceBundle)
+	 */
 	public JRViewer411(JasperPrint jrPrint, Locale locale)
 	{
 		this(jrPrint, locale, null);
 	}
 
 
-	/** Creates new form JRViewer */
+	/**
+	 * @see #JRViewer(JasperReportsContext, String, boolean, Locale, ResourceBundle)
+	 */
 	public JRViewer411(String fileName, boolean isXML, Locale locale, ResourceBundle resBundle) throws JRException
 	{
+		this(
+			DefaultJasperReportsContext.getInstance(), 
+			fileName,
+			isXML,
+			locale, 
+			resBundle
+			);
+	}
+
+
+	/**
+	 * @see #JRViewer(JasperReportsContext, InputStream, boolean, Locale, ResourceBundle)
+	 */
+	public JRViewer411(InputStream is, boolean isXML, Locale locale, ResourceBundle resBundle) throws JRException
+	{
+		this(
+			DefaultJasperReportsContext.getInstance(), 
+			is, 
+			isXML, 
+			locale, 
+			resBundle
+			);
+	}
+
+
+	/**
+	 * @see #JRViewer(JasperReportsContext, JasperPrint, Locale, ResourceBundle)
+	 */
+	public JRViewer411(JasperPrint jrPrint, Locale locale, ResourceBundle resBundle)
+	{
+		this(
+			DefaultJasperReportsContext.getInstance(), 
+			jrPrint, 
+			locale, 
+			resBundle
+			);
+	}
+
+
+	/**
+	 * 
+	 */
+	public JRViewer411(
+		JasperReportsContext jasperReportsContext, 
+		String fileName, 
+		boolean isXML, 
+		Locale locale, 
+		ResourceBundle resBundle
+		) throws JRException
+	{
+		this.jasperReportsContext = jasperReportsContext;
+		
 		initResources(locale, resBundle);
 
 		setScreenDetails();
@@ -282,9 +351,19 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	}
 
 
-	/** Creates new form JRViewer */
-	public JRViewer411(InputStream is, boolean isXML, Locale locale, ResourceBundle resBundle) throws JRException
+	/**
+	 *
+	 */
+	public JRViewer411(
+		JasperReportsContext jasperReportsContext, 
+		InputStream is, 
+		boolean isXML, 
+		Locale locale, 
+		ResourceBundle resBundle
+		) throws JRException
 	{
+		this.jasperReportsContext = jasperReportsContext;
+		
 		initResources(locale, resBundle);
 
 		setScreenDetails();
@@ -303,9 +382,18 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	}
 
 
-	/** Creates new form JRViewer */
-	public JRViewer411(JasperPrint jrPrint, Locale locale, ResourceBundle resBundle)
+	/**
+	 *
+	 */
+	public JRViewer411(
+		JasperReportsContext jasperReportsContext, 
+		JasperPrint jrPrint, 
+		Locale locale, 
+		ResourceBundle resBundle
+		)
 	{
+		this.jasperReportsContext = jasperReportsContext;
+		
 		initResources(locale, resBundle);
 
 		setScreenDetails();
@@ -450,6 +538,15 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	/**
 	 *
 	 */
+	protected JasperReportsContext getJasperReportsContext()
+	{
+		return jasperReportsContext;
+	}
+
+
+	/**
+	 *
+	 */
 	protected String getBundleString(String key)
 	{
 		return resourceBundle.getString(key);
@@ -461,34 +558,9 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	 */
 	protected void initSaveContributors()
 	{
-		final String[] DEFAULT_CONTRIBUTORS =
-			{
-				"net.sf.jasperreports.view.save.JRPrintSaveContributor",
-				"net.sf.jasperreports.view.save.JRPdfSaveContributor",
-				"net.sf.jasperreports.view.save.JRRtfSaveContributor",
-				"net.sf.jasperreports.view.save.JROdtSaveContributor",
-				"net.sf.jasperreports.view.save.JRDocxSaveContributor",
-				"net.sf.jasperreports.view.save.JRHtmlSaveContributor",
-				"net.sf.jasperreports.view.save.JRSingleSheetXlsSaveContributor",
-				"net.sf.jasperreports.view.save.JRMultipleSheetsXlsSaveContributor",
-				"net.sf.jasperreports.view.save.JRCsvSaveContributor",
-				"net.sf.jasperreports.view.save.JRXmlSaveContributor",
-				"net.sf.jasperreports.view.save.JREmbeddedImagesXmlSaveContributor"
-			};
-
-		for(int i = 0; i < DEFAULT_CONTRIBUTORS.length; i++)
-		{
-			try
-			{
-				Class<?> saveContribClass = JRClassLoader.loadClassForName(DEFAULT_CONTRIBUTORS[i]);
-				Constructor<?> constructor = saveContribClass.getConstructor(new Class[]{Locale.class, ResourceBundle.class});
-				JRSaveContributor saveContrib = (JRSaveContributor)constructor.newInstance(new Object[]{getLocale(), resourceBundle});
-				saveContributors.add(saveContrib);
-			}
-			catch (Exception e)
-			{
-			}
-		}
+		List<JRSaveContributor> builtinContributors = SaveContributorUtils.createBuiltinContributors(
+				jasperReportsContext, getLocale(), resourceBundle);
+		saveContributors.addAll(builtinContributors);
 	}
 
 
@@ -1078,7 +1150,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 
 				if (contributor == null)
 				{
-					contributor = new JRPrintSaveContributor(getLocale(), this.resourceBundle);
+					contributor = new JRPrintSaveContributor(this.jasperReportsContext, getLocale(), this.resourceBundle);
 				}
 			}
 
@@ -1376,7 +1448,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	{
 		if (isXmlReport)
 		{
-			jasperPrint = JRPrintXmlLoader.load(fileName);
+			jasperPrint = JRPrintXmlLoader.loadFromFile(jasperReportsContext, fileName);
 		}
 		else
 		{
@@ -1386,8 +1458,16 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 		type = TYPE_FILE_NAME;
 		this.isXML = isXmlReport;
 		reportFileName = fileName;
-		fileResolver = new SimpleFileResolver(Arrays.asList(new File[]{new File(fileName).getParentFile(), new File(".")}));
+		
+		SimpleFileResolver fileResolver = new SimpleFileResolver(Arrays.asList(new File[]{new File(fileName).getParentFile(), new File(".")}));
 		fileResolver.setResolveAbsolutePath(true);
+		if (localJasperReportsContext == null)
+		{
+			localJasperReportsContext = new LocalJasperReportsContext(jasperReportsContext);
+			jasperReportsContext = localJasperReportsContext;
+		}
+		localJasperReportsContext.setFileResolver(fileResolver);
+		
 		btnReload.setEnabled(true);
 		setPageIndex(0);
 	}
@@ -1399,7 +1479,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	{
 		if (isXmlReport)
 		{
-			jasperPrint = JRPrintXmlLoader.load(is);
+			jasperPrint = JRPrintXmlLoader.load(jasperReportsContext, is);
 		}
 		else
 		{
@@ -1470,7 +1550,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 		pnlPage.setMinimumSize(dim);
 		pnlPage.setPreferredSize(dim);
 
-		long maxImageSize = JRProperties.getLongProperty(VIEWER_RENDER_BUFFER_MAX_SIZE);
+		long maxImageSize = JRPropertiesUtil.getInstance(jasperReportsContext).getLongProperty(VIEWER_RENDER_BUFFER_MAX_SIZE);
 		boolean renderImage;
 		if (maxImageSize <= 0)
 		{
@@ -1515,7 +1595,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 		{
 			try
 			{
-				image = JasperPrintManager.printPageToImage(jasperPrint, pageIndex, realZoom);
+				image = JasperPrintManager.getInstance(jasperReportsContext).printToImage(jasperPrint, pageIndex, realZoom);
 			}
 			catch (Exception e)
 			{
@@ -1566,13 +1646,13 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 			{
 				JRPrintElement element = it.next();
 
-				JRImageMapRenderer imageMap = null;
+				ImageMapRenderable imageMap = null;
 				if (element instanceof JRPrintImage)
 				{
-					JRRenderable renderer = ((JRPrintImage) element).getRenderer();
-					if (renderer instanceof JRImageMapRenderer)
+					Renderable renderer = ((JRPrintImage) element).getRenderable();
+					if (renderer instanceof ImageMapRenderable)
 					{
-						imageMap = (JRImageMapRenderer) renderer;
+						imageMap = (ImageMapRenderable) renderer;
 						if (!imageMap.hasImageAreaHyperlinks())
 						{
 							imageMap = null;
@@ -1651,7 +1731,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 
 		protected final List<JRPrintImageAreaHyperlink> imageAreaHyperlinks;
 
-		public ImageMapPanel(Rectangle renderingArea, JRImageMapRenderer imageMap)
+		public ImageMapPanel(Rectangle renderingArea, ImageMapRenderable imageMap)
 		{
 			try
 			{
@@ -1931,7 +2011,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 	 */
 	protected JRGraphics2DExporter getGraphics2DExporter() throws JRException
 	{
-		return new JRGraphics2DExporter();
+		return new JRGraphics2DExporter(jasperReportsContext);
 	}
 
 	/**
@@ -1962,10 +2042,6 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 			exporter.setParameter(JRGraphics2DExporterParameter.ZOOM_RATIO, new Float(realZoom));
 			exporter.setParameter(JRExporterParameter.OFFSET_X, Integer.valueOf(1)); //lblPage border
 			exporter.setParameter(JRExporterParameter.OFFSET_Y, Integer.valueOf(1));
-			if (type == TYPE_FILE_NAME)
-			{
-				exporter.setParameter(JRExporterParameter.FILE_RESOLVER, fileResolver);
-			}
 			exporter.exportReport();
 		}
 		catch(Exception e)
@@ -2108,6 +2184,7 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 			this.viewer = viewer;
 		}
 
+                @Override
 		public void paintComponent(Graphics g)
 		{
 			if (isRenderImage())
