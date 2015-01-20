@@ -1149,39 +1149,25 @@ public class JRViewer411 extends javax.swing.JPanel implements JRHyperlinkListen
 
 	void btnPrintActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnPrintActionPerformed
 	{//GEN-HEADEREND:event_btnPrintActionPerformed
-		// Add your handling code here:
 
-		Thread thread =
-			new Thread(
-				new Runnable()
-				{
-					public void run()
-					{
-						try
-						{
-							
-							btnPrint.setEnabled(false);
-							JRViewer411.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-							JasperPrintManager.printReport(jasperPrint, true);
-						}
-						catch (Exception ex)
-						{
-							if (log.isErrorEnabled())
-							{
-								log.error("Print error.", ex);
-							}
-							JOptionPane.showMessageDialog(JRViewer411.this, getBundleString("error.printing"));
-						}
-						finally
-						{
-							JRViewer411.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-							btnPrint.setEnabled(true);
-						}
-					}
-				}
-			);
+            SwingUtilities.invokeLater(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
 
-		thread.start();
+                                btnPrint.setEnabled(false);
+                                JRViewer411.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                                JasperPrintManager.printReport(jasperPrint, true);
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(JRViewer411.this, getBundleString("error.printing"));
+                            } finally {
+                                JRViewer411.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                                btnPrint.setEnabled(true);
+                            }
+                        }
+                    }
+            );
 
 	}//GEN-LAST:event_btnPrintActionPerformed
 
