@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.admin;
 
 import java.awt.Component;
@@ -31,25 +30,35 @@ import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.user.*;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.util.Base64Encoder;
 import com.openbravo.pos.util.StringUtils;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author adrianromero
  */
-public class PeopleView extends JPanel implements EditorRecord {
+public final class PeopleView extends JPanel implements EditorRecord {
+
+    private static final String LOCATION_ID_KEY = "user.location.id";
 
     private Object m_oId;
     private String m_sPassword;
 
-    private DirtyManager m_Dirty;
+    private final DirtyManager m_Dirty;
 
-    private SentenceList m_sentrole;
+    private final SentenceList m_sentrole;
     private ComboBoxValModel m_RoleModel;
 
-    private AppView m_App;
+    private final AppView m_App;
 
-    /** Creates new form PeopleEditor */
+    private Properties properties;
+
     public PeopleView(AppView app, DataLogicAdmin dlAdmin, DirtyManager dirty) {
         initComponents();
 
@@ -65,12 +74,15 @@ public class PeopleView extends JPanel implements EditorRecord {
         m_jVisible.addActionListener(dirty);
         m_jImage.addPropertyChangeListener("image", dirty);
 
+        properties = new Properties();
 
         writeValueEOF();
     }
 
+    @Override
     public void writeValueEOF() {
         m_oId = null;
+        properties = new Properties();
         m_jName.setText(null);
         m_sPassword = null;
         m_RoleModel.setSelectedKey(null);
@@ -87,8 +99,10 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(false);
     }
 
+    @Override
     public void writeValueInsert() {
         m_oId = null;
+        properties = new Properties();
         m_jName.setText(null);
         m_sPassword = null;
         m_RoleModel.setSelectedKey(null);
@@ -105,15 +119,26 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(true);
     }
 
+    @Override
     public void writeValueDelete(Object value) {
         Object[] people = (Object[]) value;
         m_oId = people[0];
         m_jName.setText(Formats.STRING.formatValue(people[1]));
         m_sPassword = Formats.STRING.formatValue(people[2]);
         m_RoleModel.setSelectedKey(people[3]);
-        m_jVisible.setSelected(((Boolean) people[4]).booleanValue());
+        m_jVisible.setSelected(((Boolean) people[4]));
         jcard.setText(Formats.STRING.formatValue(people[5]));
         m_jImage.setImage((BufferedImage) people[6]);
+        if (people[7] == null) {
+            properties = new Properties();
+        } else {
+            try {
+                properties.loadFromXML(new ByteArrayInputStream((byte[]) people[7]));
+            } catch (IOException ex) {
+                properties = new Properties();
+            }
+        }
+
         m_jName.setEnabled(false);
         m_jRole.setEnabled(false);
         m_jVisible.setEnabled(false);
@@ -124,15 +149,26 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(false);
     }
 
+    @Override
     public void writeValueEdit(Object value) {
         Object[] people = (Object[]) value;
         m_oId = people[0];
         m_jName.setText(Formats.STRING.formatValue(people[1]));
         m_sPassword = Formats.STRING.formatValue(people[2]);
         m_RoleModel.setSelectedKey(people[3]);
-        m_jVisible.setSelected(((Boolean) people[4]).booleanValue());
+        m_jVisible.setSelected(((Boolean) people[4]));
         jcard.setText(Formats.STRING.formatValue(people[5]));
         m_jImage.setImage((BufferedImage) people[6]);
+        if (people[7] == null) {
+            properties = new Properties();
+        } else {
+            try {
+                properties.loadFromXML(new ByteArrayInputStream((byte[]) people[7]));
+            } catch (IOException ex) {
+                properties = new Properties();
+            }
+        }
+        
         m_jName.setEnabled(true);
         m_jRole.setEnabled(true);
         m_jVisible.setEnabled(true);
@@ -143,15 +179,23 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(true);
     }
 
+    @Override
     public Object createValue() throws BasicException {
-        Object[] people = new Object[7];
+        Object[] people = new Object[8];
         people[0] = m_oId == null ? UUID.randomUUID().toString() : m_oId;
         people[1] = Formats.STRING.parseValue(m_jName.getText());
         people[2] = Formats.STRING.parseValue(m_sPassword);
         people[3] = m_RoleModel.getSelectedKey();
-        people[4] = Boolean.valueOf(m_jVisible.isSelected());
+        people[4] = m_jVisible.isSelected();
         people[5] = Formats.STRING.parseValue(jcard.getText());
         people[6] = m_jImage.getImage();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            properties.storeToXML(outputStream, "User properties", "UTF-8");
+        } catch (IOException ex) {
+            throw new BasicException(ex);
+        }
+        people[7] = outputStream.toByteArray();
         return people;
     }
 
@@ -165,13 +209,14 @@ public class PeopleView extends JPanel implements EditorRecord {
         m_jRole.setModel(m_RoleModel);
     }
 
+    @Override
     public void refresh() {
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -294,7 +339,6 @@ public class PeopleView extends JPanel implements EditorRecord {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
 
         if (JOptionPane.showConfirmDialog(this, AppLocal.getIntString("message.cardnew"), AppLocal.getIntString("title.editor"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             jcard.setText(m_App.getUserCard() + StringUtils.getCardNumber());
