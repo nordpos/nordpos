@@ -20,16 +20,17 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel5" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="jLabel6" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="m_jVisible" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="m_jRole" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jcard" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                           <Component id="m_jName" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
@@ -44,9 +45,10 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="m_jImage" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jcboWarehoseLocation" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                  <Component id="m_jImage" min="-2" pref="276" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,21 +69,26 @@
                   <Component id="jButton3" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="m_jRole" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="m_jRole" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  <Component id="m_jVisible" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="jLabel6" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jcboWarehoseLocation" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="jLabel3" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="m_jVisible" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="m_jImage" min="-2" pref="239" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="0" min="-2" pref="18" max="-2" attributes="0"/>
+                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="44" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -164,6 +171,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="pos_messages.properties" key="label.card" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jcboWarehoseLocation">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="pos_messages.properties" key="label.warehouse" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>

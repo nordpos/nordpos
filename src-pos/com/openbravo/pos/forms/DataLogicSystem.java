@@ -37,6 +37,7 @@ import javax.swing.ImageIcon;
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class DataLogicSystem extends BeanFactoryDataSingle {
 
@@ -63,10 +64,10 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
 
     private static Map<String, byte[]> resourcescache;
 
-    /** Creates a new instance of DataLogicSystem */
     public DataLogicSystem() {
     }
 
+    @Override
     public void init(Session s){
 
         m_sInitScript = "/com/openbravo/pos/scripts/" + s.DB.getName();
@@ -77,24 +78,35 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
 
         final ThumbNailBuilder tnb = new ThumbNailBuilder(32, 32, 12, "com/openbravo/images/yast_sysadmin.png");
         peopleread = new SerializerRead() {
+            @Override
             public Object readValues(DataRead dr) throws BasicException {
+                Properties properties = new Properties();
+                if (dr.getBytes(7) != null) {
+                    try {
+                        properties.loadFromXML(new ByteArrayInputStream((byte[]) dr.getBytes(7)));
+                    } catch (IOException ex) {
+                        throw new BasicException(ex);
+                    }
+                }
                 return new AppUser(
                         dr.getString(1),
                         dr.getString(2),
                         dr.getString(3),
                         dr.getString(4),
                         dr.getString(5),
-                        new ImageIcon(tnb.getThumbNail(ImageUtils.readImage(dr.getBytes(6)))));
+                        new ImageIcon(tnb.getThumbNail(ImageUtils.readImage(dr.getBytes(6)))),
+                        properties
+                );
             }
         };
 
         m_peoplevisible = new StaticSentence(s
-            , "SELECT ID, NAME, APPPASSWORD, CARD, ROLE, IMAGE FROM PEOPLE WHERE VISIBLE = " + s.DB.TRUE()
+            , "SELECT ID, NAME, APPPASSWORD, CARD, ROLE, IMAGE, PROPERTIES FROM PEOPLE WHERE VISIBLE = " + s.DB.TRUE()
             , null
             , peopleread);
 
         m_peoplebycard = new PreparedSentence(s
-            , "SELECT ID, NAME, APPPASSWORD, CARD, ROLE, IMAGE FROM PEOPLE WHERE CARD = ? AND VISIBLE = " + s.DB.TRUE()
+            , "SELECT ID, NAME, APPPASSWORD, CARD, ROLE, IMAGE, PROPERTIES FROM PEOPLE WHERE CARD = ? AND VISIBLE = " + s.DB.TRUE()
             , SerializerWriteString.INSTANCE
             , peopleread);
 
@@ -266,7 +278,7 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
 
     public final int getSequenceCash(String host) throws BasicException {
         Integer i = (Integer) m_sequencecash.find(host);
-        return (i == null) ? 1 : i.intValue();
+        return (i == null) ? 1 : i;
     }
 
     public final Object[] findActiveCash(String sActiveCashIndex) throws BasicException {

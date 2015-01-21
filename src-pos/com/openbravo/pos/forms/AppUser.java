@@ -24,6 +24,7 @@ import com.openbravo.pos.util.Hashcypher;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +40,8 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class AppUser {
 
@@ -52,10 +55,11 @@ public class AppUser {
     private String m_sPassword;
     private final String m_sRole;
     private final Icon m_Icon;
+    private final Properties properties;
 
     private Set<String> m_apermissions;
 
-    public AppUser(String id, String name, String password, String card, String role, Icon icon) {
+    public AppUser(String id, String name, String password, String card, String role, Icon icon, Properties properties) {
         m_sId = id;
         m_sName = name;
         m_sPassword = password;
@@ -63,6 +67,7 @@ public class AppUser {
         m_sRole = role;
         m_Icon = icon;
         m_apermissions = null;
+        this.properties = properties;
     }
 
     public Icon getIcon() {
@@ -91,6 +96,10 @@ public class AppUser {
 
     public String getCard() {
         return m_sCard;
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 
     public boolean authenticate() {

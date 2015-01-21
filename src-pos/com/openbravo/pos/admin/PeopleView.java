@@ -30,18 +30,18 @@ import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.user.*;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppView;
-import com.openbravo.pos.util.Base64Encoder;
+import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.util.StringUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public final class PeopleView extends JPanel implements EditorRecord {
 
@@ -55,24 +55,32 @@ public final class PeopleView extends JPanel implements EditorRecord {
     private final SentenceList m_sentrole;
     private ComboBoxValModel m_RoleModel;
 
+    private SentenceList m_warehouses;
+    private ComboBoxValModel m_WarehouseModel;
+
     private final AppView m_App;
 
     private Properties properties;
 
     public PeopleView(AppView app, DataLogicAdmin dlAdmin, DirtyManager dirty) {
         initComponents();
+        
+        DataLogicSales dlSales = (DataLogicSales) app.getBean(DataLogicSales.class.getName());
 
         m_App = app;
 
         // El modelo de roles
         m_sentrole = dlAdmin.getRolesList();
         m_RoleModel = new ComboBoxValModel();
-
+        m_warehouses = dlSales.getLocationsList();
+        m_WarehouseModel = new ComboBoxValModel();
+        
         m_Dirty = dirty;
         m_jName.getDocument().addDocumentListener(dirty);
         m_jRole.addActionListener(dirty);
         m_jVisible.addActionListener(dirty);
         m_jImage.addPropertyChangeListener("image", dirty);
+        jcboWarehoseLocation.addActionListener(dirty);
 
         properties = new Properties();
 
@@ -86,11 +94,13 @@ public final class PeopleView extends JPanel implements EditorRecord {
         m_jName.setText(null);
         m_sPassword = null;
         m_RoleModel.setSelectedKey(null);
+        m_WarehouseModel.setSelectedKey(null);
         m_jVisible.setSelected(false);
         jcard.setText(null);
         m_jImage.setImage(null);
         m_jName.setEnabled(false);
         m_jRole.setEnabled(false);
+        jcboWarehoseLocation.setEnabled(false);
         m_jVisible.setEnabled(false);
         jcard.setEnabled(false);
         m_jImage.setEnabled(false);
@@ -106,11 +116,13 @@ public final class PeopleView extends JPanel implements EditorRecord {
         m_jName.setText(null);
         m_sPassword = null;
         m_RoleModel.setSelectedKey(null);
+        m_WarehouseModel.setSelectedKey(null);
         m_jVisible.setSelected(true);
         jcard.setText(null);
         m_jImage.setImage(null);
         m_jName.setEnabled(true);
         m_jRole.setEnabled(true);
+        jcboWarehoseLocation.setEnabled(true);
         m_jVisible.setEnabled(true);
         jcard.setEnabled(true);
         m_jImage.setEnabled(true);
@@ -138,9 +150,11 @@ public final class PeopleView extends JPanel implements EditorRecord {
                 properties = new Properties();
             }
         }
+        m_WarehouseModel.setSelectedKey(properties.getProperty(LOCATION_ID_KEY));
 
         m_jName.setEnabled(false);
         m_jRole.setEnabled(false);
+        jcboWarehoseLocation.setEnabled(false);
         m_jVisible.setEnabled(false);
         jcard.setEnabled(false);
         m_jImage.setEnabled(false);
@@ -159,18 +173,19 @@ public final class PeopleView extends JPanel implements EditorRecord {
         m_jVisible.setSelected(((Boolean) people[4]));
         jcard.setText(Formats.STRING.formatValue(people[5]));
         m_jImage.setImage((BufferedImage) people[6]);
-        if (people[7] == null) {
-            properties = new Properties();
-        } else {
+        properties = new Properties();
+        if (people[7] != null) {
             try {
                 properties.loadFromXML(new ByteArrayInputStream((byte[]) people[7]));
             } catch (IOException ex) {
                 properties = new Properties();
             }
         }
-        
+        m_WarehouseModel.setSelectedKey(properties.getProperty(LOCATION_ID_KEY));
+
         m_jName.setEnabled(true);
         m_jRole.setEnabled(true);
+        jcboWarehoseLocation.setEnabled(true);
         m_jVisible.setEnabled(true);
         jcard.setEnabled(true);
         m_jImage.setEnabled(true);
@@ -189,6 +204,10 @@ public final class PeopleView extends JPanel implements EditorRecord {
         people[4] = m_jVisible.isSelected();
         people[5] = Formats.STRING.parseValue(jcard.getText());
         people[6] = m_jImage.getImage();
+        if(m_WarehouseModel.getSelectedKey() != null){
+            properties.setProperty(LOCATION_ID_KEY, (String) m_WarehouseModel.getSelectedKey());
+        }
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             properties.storeToXML(outputStream, "User properties", "UTF-8");
@@ -199,6 +218,7 @@ public final class PeopleView extends JPanel implements EditorRecord {
         return people;
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -207,6 +227,9 @@ public final class PeopleView extends JPanel implements EditorRecord {
 
         m_RoleModel = new ComboBoxValModel(m_sentrole.list());
         m_jRole.setModel(m_RoleModel);
+        
+        m_WarehouseModel = new ComboBoxValModel(m_warehouses.list());
+        jcboWarehoseLocation.setModel(m_WarehouseModel);
     }
 
     @Override
@@ -234,6 +257,8 @@ public final class PeopleView extends JPanel implements EditorRecord {
         jcard = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jcboWarehoseLocation = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/fileclose.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -268,6 +293,8 @@ public final class PeopleView extends JPanel implements EditorRecord {
 
         jLabel5.setText(AppLocal.getIntString("label.card")); // NOI18N
 
+        jLabel6.setText(AppLocal.getIntString("label.warehouse")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -276,10 +303,11 @@ public final class PeopleView extends JPanel implements EditorRecord {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(m_jVisible)
@@ -295,8 +323,9 @@ public final class PeopleView extends JPanel implements EditorRecord {
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3))))
-                    .addComponent(m_jImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcboWarehoseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jImage, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,18 +342,22 @@ public final class PeopleView extends JPanel implements EditorRecord {
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(m_jRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel6)
+                    .addComponent(jcboWarehoseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
                     .addComponent(m_jVisible))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(m_jImage, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -366,7 +399,9 @@ public final class PeopleView extends JPanel implements EditorRecord {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jcard;
+    private javax.swing.JComboBox jcboWarehoseLocation;
     private com.openbravo.data.gui.JImageEditor m_jImage;
     private javax.swing.JTextField m_jName;
     private javax.swing.JComboBox m_jRole;
