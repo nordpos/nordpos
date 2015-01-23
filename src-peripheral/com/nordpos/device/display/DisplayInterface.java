@@ -20,8 +20,6 @@
  */
 package com.nordpos.device.display;
 
-import com.nordpos.device.display.DeviceDisplay;
-
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
