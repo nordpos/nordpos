@@ -64,7 +64,7 @@
     <class name="com.openbravo.pos.inventory.AuxiliarPanel"/>
     <class name="/com/openbravo/reports/products.bsh"/>
     <class name="/com/openbravo/reports/productlabels.bsh"/>
-    <class name="/com/openbravo/reports/productscatalog.bsh"/>
+    <class name="/com/nordpos/reports/productslist.bsh"/>
     <class name="/com/openbravo/reports/inventory.bsh"/>
     <class name="/com/openbravo/reports/inventoryb.bsh"/>
     <class name="/com/openbravo/reports/inventorybroken.bsh"/>
