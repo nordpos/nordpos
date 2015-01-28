@@ -1,21 +1,23 @@
-//    Openbravo POS is a point of sales application designed for touch screens.
-//    Copyright (C) 2008-2009 Openbravo, S.L.
-//    http://www.openbravo.com/product/pos
-//
-//    This file is part of Openbravo POS.
-//
-//    Openbravo POS is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    Openbravo POS is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2015 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.nordpos.device.ticket;
 
 import com.nordpos.device.display.DeviceDisplayBase;
@@ -48,9 +50,10 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @author: Andrey Svininykh <svininykh@gmail.com>
- * @author: Gennady Kovalev <gik@bigur.ru>
- * @author: Artur Akchurin <akartkam@gmail.com>
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @author Gennady Kovalev <gik@bigur.ru>
+ * @author Artur Akchurin <akartkam@gmail.com>
+ * @version NORD POS 3
  */
 public class TicketParser extends DefaultHandler {
 
@@ -93,7 +96,6 @@ public class TicketParser extends DefaultHandler {
     private static final int OUTPUT_LABEL = 6;
 
     private DevicePrinter m_oOutputPrinter;
-    private InputStream InputStream;
 
     private DeviceFiscalPrinter m_oFiscalPrinter;
 
@@ -110,12 +112,10 @@ public class TicketParser extends DefaultHandler {
     private String sLabelBarcodeX;
     private String sLabelBarcodeY;
     private String sLabelBarcodeHeight;
+    private String sLabelBarcodesDimension;
 
     private final InputStream shemaFile;
 
-    /**
-     * Creates a new instance of TicketParser
-     */
     public TicketParser(InputStream shemaFile, DeviceTicketFactory printer) {
         this.shemaFile = shemaFile;
         this.printer = printer;
@@ -346,6 +346,7 @@ public class TicketParser extends DefaultHandler {
                     sLabelBarcodeHeight = readString(attributes.getValue("height"), "1");
                     bctype = readString(attributes.getValue("type"), "EAN13");
                     bcposition = readString(attributes.getValue("position"), "bottom");
+                    sLabelBarcodesDimension = readString(attributes.getValue("dimension"));
                 } else if ("rectangle".equals(qName)) {
                     m_oLabelPrinter.drawRectangle(
                             readString(attributes.getValue("fill"), ""),
@@ -519,7 +520,7 @@ public class TicketParser extends DefaultHandler {
                             sLabelTextFontWeight,
                             readString(text.toString(), "???"));
                     text = null;
-                } else if ("barcode".equals(qName)) {
+                } else if ("barcode".equals(qName)) {                    
                     m_oLabelPrinter.drawBarCode(
                             bctype,
                             bcposition,
@@ -527,6 +528,7 @@ public class TicketParser extends DefaultHandler {
                             sLabelBarcodeX,
                             sLabelBarcodeY,
                             sLabelBarcodeHeight,
+                            sLabelBarcodesDimension,
                             readString(text.toString(), "???"));
                     text = null;
                 }

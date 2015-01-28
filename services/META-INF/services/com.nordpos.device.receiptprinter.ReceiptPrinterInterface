@@ -1,1 +1,1 @@
-com.nordpos.device.escpos.ReceiptPrinterDriver
+com.nordpos.device.receiptprinter.ReceiptPrinterEmulator

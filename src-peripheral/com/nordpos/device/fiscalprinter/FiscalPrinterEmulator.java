@@ -2,7 +2,7 @@
  *
  * NORD POS is a fork of Openbravo POS.
  *
- * Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
+ * Copyright (C) 2009-2015 Nord Trading Ltd. <http://www.nordpos.com>
  *
  * This file is part of NORD POS.
  *
@@ -33,9 +33,6 @@ public class FiscalPrinterEmulator implements FiscalPrinterInterface {
     public DeviceFiscalPrinter getFiscalPrinter(String sProperty) throws Exception {
         StringParser sp = new StringParser(sProperty);
         String sPrinterType = sp.nextToken(':');
-        String sPrinterParam1 = sp.nextToken(',');
-        String sPrinterParam2 = sp.nextToken(',');
-        String sPrinterParam3 = sp.nextToken(',');
 
         switch (sPrinterType) {
             default:

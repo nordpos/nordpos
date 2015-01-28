@@ -2,7 +2,7 @@
 <!--
     NORD POS is a fork of Openbravo POS.
 
-    Copyright (C) 2009-2014 Nord Trading Ltd. <http://www.nordpos.com>
+    Copyright (C) 2009-2015 Nord Trading Ltd. <http://www.nordpos.com>
 
     This file is part of NORD POS.
 
@@ -19,7 +19,7 @@
     NORD POS. If not, see <http://www.gnu.org/licenses/>.
 -->
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-   xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
+        xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
     <ticket>
         <image>Printer.Ticket.Logo</image>
         <line></line>
@@ -83,17 +83,55 @@
             <text align="center" length="42">${local.getScriptString("")}</text>
         </line>   
     </ticket>
-    
+
     #foreach ($inventoryline in $inventoryrecord.getLines())
     <ticket printer="2">
-       <line/>
-       <line/>
-       <line size="1">
+        <line/>
+        <line/>
+        <line size="1">
             <text align ="right" length="5">${inventoryline.printReference()}</text>
             <text align ="center" length="25">${inventoryline.printName()}</text>
             <text align ="left" length="12">${inventoryline.printPrice()}</text>
-       </line>
-       <barcode position="bottom" type="EAN13">${inventoryline.printCode()}</barcode>
+        </line>
+        <barcode position="bottom" type="EAN13">${inventoryline.printCode()}</barcode>
     </ticket>
     #end
+    
+    #foreach ($inventoryline in $inventoryrecord.getLines())
+    #foreach ($counter in [1..$inventoryline.getMultiply()])
+    <label charset="Cp1251"
+           length="18"
+           width="28"
+           gap="2"
+           x="0"
+           y="0"
+           rotation="0"
+           resolution="8">
+
+        <text font="B"
+              orientation="0"
+              x="16"
+              y="4"
+              font-height="1"
+              font-width="1"
+              font-weight="B">${inventoryline.printName()}</text>
+              
+        <text font="D"
+              orientation="0"
+              x="120"
+              y="36"
+              font-height="1"
+              font-width="1"
+              font-weight="B">${inventoryline.printPrice()}</text>
+              
+        <barcode type="EAN13"
+                 x="8"
+                 y="80"
+                 orientation="0"
+                 position="bottom"
+                 height="40"
+                 dimension="2">${inventoryline.printCode()}</barcode>
+    </label>
+    #end
+    #end 
 </output>

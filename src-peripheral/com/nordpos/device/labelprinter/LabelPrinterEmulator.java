@@ -20,11 +20,23 @@
  */
 package com.nordpos.device.labelprinter;
 
+import com.nordpos.device.util.StringParser;
+
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
- * @version NORD POS 3.0
+ * @version NORD POS 3
  */
-public interface LabelPrinterInterface {
-    public DeviceLabelPrinter getLabelPrinter(String sProperty) throws Exception;
+public class LabelPrinterEmulator implements LabelPrinterInterface {
+
+    @Override
+    public DeviceLabelPrinter getLabelPrinter(String sProperty) throws Exception {
+        StringParser sp = new StringParser(sProperty);
+        String sPrinterType = sp.nextToken(':');
+
+        switch (sPrinterType) {
+            default:
+                return new DeviceLabelPrinterNull();
+        }
+    }
 }

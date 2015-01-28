@@ -141,7 +141,7 @@ public class BarcodeImage {
         com.google.zxing.Writer writer = new QRCodeWriter();
         try {
             matrix = writer.encode(value, com.google.zxing.BarcodeFormat.QR_CODE, 100, 100);
-            return MatrixToImageWriter.toBufferedImage(matrix);
+            return (Image) MatrixToImageWriter.toBufferedImage(matrix);
         } catch (WriterException ex) {
             return null;
         }

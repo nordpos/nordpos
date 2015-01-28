@@ -212,6 +212,7 @@
                                             <xs:attribute name="y" type="xs:unsignedInt"/>
                                             <xs:attribute name="x" type="xs:unsignedInt"/>
                                             <xs:attribute name="height" type="xs:positiveInteger"/>
+                                            <xs:attribute name="dimension" type="xs:unsignedInt" use="optional"/>
                                         </xs:extension>
                                     </xs:simpleContent>
                                 </xs:complexType>

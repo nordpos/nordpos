@@ -2,7 +2,7 @@
  *
  * NORD POS is a fork of Openbravo POS.
  *
- * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ * Copyright (C) 2009-2015 Nord Trading Ltd. <http://www.nordpos.com>
  *
  * This file is part of NORD POS.
  *
@@ -19,8 +19,6 @@
  * NORD POS. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.nordpos.device.fiscalprinter;
-
-import com.nordpos.device.fiscalprinter.DeviceFiscalPrinter;
 
 /**
  *
