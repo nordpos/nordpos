@@ -65,7 +65,7 @@
         #foreach ($inventoryline in $inventoryrecord.getLines())
         <line>
             <text align ="left" length="17">${inventoryline.printName()}</text>
-            <text align ="right" length="10">${inventoryline.printPrice()}</text>
+            <text align ="right" length="10">${inventoryline.printPriceBuy()}</text>
             <text align ="right" length="5">x${inventoryline.printMultiply()}</text>
             <text align ="right" length="10">${inventoryline.printSubValue()}</text>
         </line> 
