@@ -37,6 +37,7 @@ import com.nordpos.device.ticket.TicketParser;
 import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.sales.JProductAttEdit;
 import com.openbravo.pos.sales.PropertiesConfig;
+import com.openbravo.pos.sales.TaxesLogic;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
@@ -68,6 +69,8 @@ public class StockManagement extends JPanel implements JPanelView {
     private final DataLogicSystem m_dlSystem;
     final private DataLogicSales m_dlSales;
     private TicketParser m_TTP;
+    
+    private TaxesLogic taxeslogic;
 
     private final CatalogSelector m_cat;
     private final PropertiesConfig panelconfig;
@@ -141,6 +144,8 @@ public class StockManagement extends JPanel implements JPanelView {
     @Override
     public void activate() throws BasicException {
         m_cat.loadCatalog(m_App);
+        
+        taxeslogic = new TaxesLogic(m_dlSales.getTaxList().list());
 
         java.util.List l = m_sentlocations.list();
         m_LocationsModel = new ComboBoxValModel(l);
@@ -186,7 +191,7 @@ public class StockManagement extends JPanel implements JPanelView {
     }
 
     private void addLine(ProductInfoExt oProduct, double dpor, double dprice) {
-        m_invlines.addLine(new InventoryLine(oProduct, dpor, dprice));
+        m_invlines.addLine(new InventoryLine(oProduct, taxeslogic.getTaxInfo(oProduct.getTaxCategoryID(), new Date()), dpor, dprice));
     }
 
     private void deleteLine(int index) {
@@ -400,7 +405,7 @@ public class StockManagement extends JPanel implements JPanelView {
                 inv.getProductID(),
                 inv.getProductAttSetInstId(),
                 rec.getReason().samesignum(inv.getMultiply()),
-                inv.getPrice()
+                inv.getPriceBuy()
             });
         }
 

@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import com.openbravo.format.Formats;
+import com.openbravo.pos.sales.TaxesLogic;
 import com.openbravo.pos.util.StringUtils;
 
 /**
@@ -82,6 +83,6 @@ public class InventoryRecord {
         return StringUtils.encodeXML(m_reason.toString());
     }    
     public String printSubTotal() {
-        return Formats.CURRENCY.formatValue(new Double(getSubTotal()));
+        return Formats.CURRENCY.formatValue(getSubTotal());
     }    
 }
