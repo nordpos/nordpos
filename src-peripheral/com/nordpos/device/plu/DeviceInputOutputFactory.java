@@ -2,7 +2,7 @@
  *
  * NORD POS is a fork of Openbravo POS.
  *
- * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ * Copyright (C) 2009-2012 Nord Trading Ltd. <http://www.nordpos.com>
  *
  * This file is part of NORD POS.
  *
@@ -29,17 +29,17 @@ import java.util.logging.Logger;
  *
  * @author administrator
  */
-public class DevicePLUFactory {
+public class DeviceInputOutputFactory {
 
-    private static final Logger logger = Logger.getLogger(DevicePLUFactory.class.getName());
+    private static final Logger logger = Logger.getLogger(DeviceInputOutputFactory.class.getName());
 
-    public static DevicePLU createInstance(AppProperties props) {
+    public static DeviceInputOutput createInstance(AppProperties props) {
 
-        ServiceLoader<PLUInterface> pluLoader = ServiceLoader.load(PLUInterface.class);
+        ServiceLoader<InputOutputInterface> pluLoader = ServiceLoader.load(InputOutputInterface.class);
 
-        DevicePLU m_plu = new DevicePLUNull();
+        DeviceInputOutput m_plu = new DeviceInputOutputNull();
 
-        for (PLUInterface machineInterface : pluLoader) {
+        for (InputOutputInterface machineInterface : pluLoader) {
             try {
                 m_plu = machineInterface.getPLU(props.getProperty("machine.pludevice"));
             } catch (Exception ex) {

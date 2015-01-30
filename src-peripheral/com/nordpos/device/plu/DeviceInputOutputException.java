@@ -2,7 +2,7 @@
  *
  * NORD POS is a fork of Openbravo POS.
  *
- * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ * Copyright (C) 2009-2012 Nord Trading Ltd. <http://www.nordpos.com>
  *
  * This file is part of NORD POS.
  *
@@ -25,19 +25,19 @@ package com.nordpos.device.plu;
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3.0
  */
-public class DevicePLUException extends java.lang.Exception {
-    public DevicePLUException() {
+public class DeviceInputOutputException extends java.lang.Exception {
+    public DeviceInputOutputException() {
     }
 
-    public DevicePLUException(String msg) {
+    public DeviceInputOutputException(String msg) {
         super(msg);
     }
 
-    public DevicePLUException(String msg, Throwable cause) {
+    public DeviceInputOutputException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
-    public DevicePLUException(Throwable cause) {
+    public DeviceInputOutputException(Throwable cause) {
         super(cause);
     }
 

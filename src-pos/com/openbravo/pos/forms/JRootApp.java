@@ -26,8 +26,8 @@ import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.BatchSentence;
 import com.openbravo.data.loader.BatchSentenceResource;
 import com.openbravo.data.loader.Session;
-import com.nordpos.device.plu.DevicePLU;
-import com.nordpos.device.plu.DevicePLUFactory;
+import com.nordpos.device.plu.DeviceInputOutput;
+import com.nordpos.device.plu.DeviceInputOutputFactory;
 import com.nordpos.device.ticket.DeviceTicketFactory;
 import com.nordpos.device.ticket.TicketParser;
 import com.nordpos.device.ticket.TicketPrinterException;
@@ -88,7 +88,7 @@ public class JRootApp extends JPanel implements AppView {
     private StringBuffer inputtext;
 
     private DeviceScaleFactory m_Scale;
-    private DevicePLU m_DevicePLUs;
+    private DeviceInputOutput m_DevicePLUs;
     private DeviceTicketFactory m_TP;
     private TicketParser m_TTP;
 
@@ -279,7 +279,7 @@ public class JRootApp extends JPanel implements AppView {
         m_Scale = new DeviceScaleFactory(this, m_props);
 
         // Inicializamos la scanpal
-        m_DevicePLUs = DevicePLUFactory.createInstance(m_props);
+        m_DevicePLUs = DeviceInputOutputFactory.createInstance(m_props);
 
         // Leemos los recursos basicos
         BufferedImage imgicon = DataLogicSystem.getResourceAsImage("Window.Logo");
@@ -364,7 +364,7 @@ public class JRootApp extends JPanel implements AppView {
     }
 
     @Override
-    public DevicePLU getDevicePLUs() {
+    public DeviceInputOutput getDevicePLUs() {
         return m_DevicePLUs;
     }
 

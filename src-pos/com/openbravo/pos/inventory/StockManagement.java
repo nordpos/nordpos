@@ -30,9 +30,9 @@ import com.openbravo.format.Formats;
 import com.openbravo.pos.catalog.CatalogSelector;
 import com.openbravo.pos.catalog.JCatalog;
 import com.openbravo.pos.forms.*;
-import com.nordpos.device.plu.DevicePLU;
-import com.nordpos.device.plu.DevicePLUException;
-import com.nordpos.device.plu.ProductDownloaded;
+import com.nordpos.device.plu.DeviceInputOutput;
+import com.nordpos.device.plu.DeviceInputOutputException;
+import com.nordpos.device.plu.ProductIO;
 import com.nordpos.device.ticket.TicketParser;
 import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.sales.JProductAttEdit;
@@ -726,19 +726,19 @@ public class StockManagement extends JPanel implements JPanelView {
     private void btnDownloadProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadProductsActionPerformed
 
         // Ejecutamos la descarga...
-        DevicePLU s = m_App.getDevicePLUs();
+        DeviceInputOutput s = m_App.getDevicePLUs();
         try {
             s.connectDevice();
             s.startDownloadProduct();
 
-            ProductDownloaded p = s.recieveProduct();
+            ProductIO p = s.recieveProduct();
             while (p != null) {
                 incProductByCode(p.getCode(), p.getQuantity());
                 p = s.recieveProduct();
             }
             // MessageInf msg = new MessageInf(MessageInf.SGN_SUCCESS, "Se ha subido con exito la lista de productos al ScanPal.");
             // msg.show(this);
-        } catch (DevicePLUException e) {
+        } catch (DeviceInputOutputException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.scannerfail2"), e);
             msg.show(this);
         } finally {

@@ -2,7 +2,7 @@
  *
  * NORD POS is a fork of Openbravo POS.
  *
- * Copyright (C) 2009-2013 Nord Trading Ltd. <http://www.nordpos.com>
+ * Copyright (C) 2009-2015 Nord Trading Ltd. <http://www.nordpos.com>
  *
  * This file is part of NORD POS.
  *
@@ -20,39 +20,23 @@
  */
 package com.nordpos.device.plu;
 
+import com.nordpos.device.util.StringParser;
+
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3.0
  */
-public class DevicePLUNull implements DevicePLU {
+public class InputOutputEmulator implements InputOutputInterface {
 
     @Override
-    public void connectDevice() throws DevicePLUException {
-    }
+    public DeviceInputOutput getPLU(String sProperty) throws Exception {
+        StringParser pluProperty = new StringParser(sProperty);
+        String sDevicePLUType = pluProperty.nextToken(':');
 
-    @Override
-    public void disconnectDevice() {
-    }
-
-    @Override
-    public void startDownloadProduct() throws DevicePLUException {
-    }
-
-    @Override
-    public ProductDownloaded recieveProduct() throws DevicePLUException {
-        return null;
-    }
-
-    @Override
-    public void startUploadProduct() throws DevicePLUException {
-    }
-
-    @Override
-    public void sendProduct(String sName, String sCode, Double dPriceBuy, Double dPriceSell, int iCurrentPLU, int iTotalPLUs, String sBarcode) throws DevicePLUException {
-    }
-
-    @Override
-    public void stopUploadProduct() throws DevicePLUException {
+        switch (sDevicePLUType) {
+            default:
+                return new DeviceInputOutputNull();
+        }
     }
 }
