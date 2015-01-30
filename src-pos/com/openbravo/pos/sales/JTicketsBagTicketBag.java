@@ -94,11 +94,11 @@ public class JTicketsBagTicketBag extends javax.swing.JPanel {
 
         jPanRefund.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        m_jBtnCancel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/fileclose.png"))); // NOI18N
+        m_jBtnCancel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/process-stop.png"))); // NOI18N
         m_jBtnCancel1.setText(AppLocal.getIntString("Button.Cancel")); // NOI18N
         m_jBtnCancel1.setFocusPainted(false);
         m_jBtnCancel1.setFocusable(false);
-        m_jBtnCancel1.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jBtnCancel1.setMargin(new java.awt.Insets(0, 14, 0, 14));
         m_jBtnCancel1.setRequestFocusEnabled(false);
         m_jBtnCancel1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

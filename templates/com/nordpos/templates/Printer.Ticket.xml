@@ -338,7 +338,7 @@
             #if ($paymentline.name == "cash")
         <total type="$paymentline.name" paid="${paymentline.getPaid()}">${local.getScriptString("ticketpayment.cash")} </total>
             #elseif ($paymentline.name == "cashrefund")
-        <total type="$paymentline.name" paid="${paymentline.getTotal()}">${local.getScriptString("ticketpayment.cash")}total>
+        <total type="$paymentline.name" paid="${paymentline.getTotal()}">${local.getScriptString("ticketpayment.cash")}</total>
             #elseif ($paymentline.name == "debt")
         <total type="$paymentline.name" paid="${paymentline.getPaid()}">${local.getScriptString("ticketpayment.debt")}</total>
             #elseif ($paymentline.name == "magcard")
