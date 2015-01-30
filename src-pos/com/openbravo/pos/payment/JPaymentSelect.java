@@ -409,7 +409,7 @@ public abstract class JPaymentSelect extends javax.swing.JDialog
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.SOUTH);
 
-        setSize(new java.awt.Dimension(672, 497));
+        setSize(new java.awt.Dimension(785, 497));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
