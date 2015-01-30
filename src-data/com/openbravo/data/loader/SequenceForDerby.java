@@ -16,35 +16,42 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.data.loader;
 
 import com.openbravo.basic.BasicException;
 
-
 public class SequenceForDerby extends BaseSentence {
 
-    private BaseSentence sent1;
-    private BaseSentence sent2;
-    private BaseSentence sent3;
+    private final BaseSentence sent1;
+    private final BaseSentence sent2;
+    private final BaseSentence sent3;
+    private final BaseSentence sent4;
+    private final BaseSentence sent5;
 
-    /** Creates a new instance of SequenceForMySQL */
     public SequenceForDerby(Session s, String sSeqTable) {
-
-        sent1 = new StaticSentence(s, "DELETE FROM  " + sSeqTable);
-        sent2 = new StaticSentence(s, "INSERT INTO " + sSeqTable + " VALUES (DEFAULT)");
-        sent3 = new StaticSentence(s, "SELECT IDENTITY_VAL_LOCAL() FROM " + sSeqTable, null, SerializerReadInteger.INSTANCE);
+        sent1 = new StaticSentence(s, "SELECT MAX(ID) FROM " + sSeqTable, null, SerializerReadInteger.INSTANCE);
+        sent2 = new StaticSentence(s, "ALTER TABLE " + sSeqTable + " ALTER COLUMN ID RESTART WITH ?", SerializerWriteInteger.INSTANCE, null);
+        sent3 = new StaticSentence(s, "DELETE FROM " + sSeqTable);
+        sent4 = new StaticSentence(s, "INSERT INTO " + sSeqTable + " VALUES (DEFAULT)");
+        sent5 = new StaticSentence(s, "SELECT ID FROM " + sSeqTable, null, SerializerReadInteger.INSTANCE);
     }
 
     // Funciones de bajo nivel
+    @Override
     public DataResultSet openExec(Object params) throws BasicException {
-        sent1.exec();
-        sent2.exec();
-        return sent3.openExec(null);
+        int i = (Integer) sent1.find();
+        sent2.exec(i + 1);
+        sent3.exec();
+        sent4.exec();
+        return sent5.openExec(null);
     }
+
+    @Override
     public DataResultSet moreResults() throws BasicException {
         return sent3.moreResults();
     }
+
+    @Override
     public void closeExec() throws BasicException {
         sent3.closeExec();
     }
