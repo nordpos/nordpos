@@ -60,6 +60,7 @@ public interface AppView {
     public String getUnitBarcode();
     public String getProductPriceBarcode();
 
+    public String getDefaultInventoryLocation();
     public String getDefaultTaxCategory();
     public String getDefaultProductCategory();
 

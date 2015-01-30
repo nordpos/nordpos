@@ -91,7 +91,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private static final String PRINT_TICKET = "/com/nordpos/templates/Printer.Ticket.xml";
     private static final String PRINT_TICKET_2 = "/com/nordpos/templates/Printer.Ticket2.xml";
     private static final String PRINT_TICKET_LINE = "/com/nordpos/templates/Printer.TicketLine.xml";
-
+    
     // Variable numerica
     private final static int NUMBERZERO = 0;
     private final static int NUMBERVALID = 1;
@@ -1036,7 +1036,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
                                 // Process close ticket
                                 try {
-                                    // Save the receipt and assign a receipt number
+                                    // Save the receipt and assign a receipt number                                    
                                     dlSales.saveTicket(ticket, m_App.getInventoryLocation());
 
                                     // Execute ticket.close event

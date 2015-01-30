@@ -49,6 +49,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.Properties;
 import java.util.UUID;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -162,7 +163,7 @@ public class StockManagement extends JPanel implements JPanelView {
         m_jdate.setText(Formats.TIMESTAMP.formatValue(DateUtils.getTodayMinutes()));
         m_ReasonModel.setSelectedItem(MovementReason.IN_PURCHASE);
         m_LocationsModel.setSelectedKey(m_App.getInventoryLocation());
-        m_LocationsModelDes.setSelectedKey(m_App.getInventoryLocation());
+        m_LocationsModelDes.setSelectedKey(m_App.getDefaultInventoryLocation());
         m_invlines.clear();
         m_jcodebar.setText("");
         m_jKeyFactory.setText(null);

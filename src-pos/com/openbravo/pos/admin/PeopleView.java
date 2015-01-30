@@ -55,7 +55,7 @@ public final class PeopleView extends JPanel implements EditorRecord {
     private final SentenceList m_sentrole;
     private ComboBoxValModel m_RoleModel;
 
-    private SentenceList m_warehouses;
+    private final SentenceList m_warehouses;
     private ComboBoxValModel m_WarehouseModel;
 
     private final AppView m_App;

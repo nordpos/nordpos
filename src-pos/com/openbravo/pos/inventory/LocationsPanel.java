@@ -45,16 +45,19 @@ public class LocationsPanel extends JPanelTable {
     public LocationsPanel() {
     }
     
+    @Override
     protected void init() {   
         DataLogicSales dlSales = (DataLogicSales) app.getBean("com.openbravo.pos.forms.DataLogicSales");          
         tlocations = dlSales.getTableLocations();
         jeditor = new LocationsView(dirty);
     }
     
+    @Override
     public ListProvider getListProvider() {
         return new ListProviderCreator(tlocations);
     }
     
+    @Override
     public SaveProvider getSaveProvider() {
         return new SaveProvider(tlocations);        
     }
@@ -74,10 +77,12 @@ public class LocationsPanel extends JPanelTable {
         return new ListCellRendererBasic(tlocations.getRenderStringBasic(new int[]{1}));
     }
     
+    @Override
     public EditorRecord getEditor() {
         return jeditor;
     }
     
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.Locations");
     }      

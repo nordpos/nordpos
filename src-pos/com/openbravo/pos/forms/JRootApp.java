@@ -53,6 +53,7 @@ import javax.swing.*;
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class JRootApp extends JPanel implements AppView {
 
@@ -82,6 +83,7 @@ public class JRootApp extends JPanel implements AppView {
     private String m_sUnitBarcode;
     private String m_sProductPriceBarcode;
 
+    private String m_sDefaultInventoryLocation;
     private String m_sDefaultTaxCategory;
     private String m_sDefaultProductCategory;
 
@@ -125,7 +127,7 @@ public class JRootApp extends JPanel implements AppView {
 
         // Create or upgrade the database if database version is not the expected
         String sDBApplication = readDataBaseApplication();
-        String sDBVersion = readDataBaseVersion();        
+        String sDBVersion = readDataBaseVersion();
         if (!AppLocal.APP_ID.equals(sDBApplication) || !AppLocal.APP_VERSION.equals(sDBVersion)) {
 
             // Create or upgrade database
@@ -191,82 +193,84 @@ public class JRootApp extends JPanel implements AppView {
             return false;
         }
 
+        String sPropertySettings = m_props.getHost() + "/properties";
         // Leo la localizacion de la caja (Almacen).
-        m_sInventoryLocation = m_propsdb.getProperty("location");
-        if (m_sInventoryLocation == null) {
-            m_sInventoryLocation = "0";
-            m_propsdb.setProperty("location", m_sInventoryLocation);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+
+        m_sDefaultInventoryLocation = m_propsdb.getProperty("location");
+        if (m_sDefaultInventoryLocation == null) {
+            m_sDefaultInventoryLocation = "0";
+            m_propsdb.setProperty("location", m_sDefaultInventoryLocation);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sGenerateProductReference = m_propsdb.getProperty("genreference");
         if (m_sGenerateProductReference == null) {
             m_sGenerateProductReference = "true";
             m_propsdb.setProperty("genreference", m_sGenerateProductReference);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sGenerateProductBarcode = m_propsdb.getProperty("genbarcode");
         if (m_sGenerateProductBarcode == null) {
             m_sGenerateProductBarcode = "true";
             m_propsdb.setProperty("genbarcode", m_sGenerateProductBarcode);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sUserBarcode = m_propsdb.getProperty("userbarcode");
         if (m_sUserBarcode == null) {
             m_sUserBarcode = "200";
             m_propsdb.setProperty("userbarcode", m_sUserBarcode);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sPriceBarcode = m_propsdb.getProperty("pricebarcode");
         if (m_sPriceBarcode == null) {
             m_sPriceBarcode = "210";
             m_propsdb.setProperty("pricebarcode", m_sPriceBarcode);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sUnitBarcode = m_propsdb.getProperty("unitbarcode");
         if (m_sUnitBarcode == null) {
             m_sUnitBarcode = "220";
             m_propsdb.setProperty("unitbarcode", m_sUnitBarcode);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sProductPriceBarcode = m_propsdb.getProperty("productpricebarcode");
         if (m_sProductPriceBarcode == null) {
             m_sProductPriceBarcode = "250";
             m_propsdb.setProperty("productpricebarcode", m_sProductPriceBarcode);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sCustomerCard = m_propsdb.getProperty("customercard");
         if (m_sCustomerCard == null) {
             m_sCustomerCard = "c";
             m_propsdb.setProperty("customercard", m_sCustomerCard);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sUserCard = m_propsdb.getProperty("usercard");
         if (m_sUserCard == null) {
             m_sUserCard = "u";
             m_propsdb.setProperty("usercard", m_sUserCard);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sDefaultTaxCategory = m_propsdb.getProperty("taxcategoryid");
         if (m_sDefaultTaxCategory == null) {
             m_sDefaultTaxCategory = "000";
             m_propsdb.setProperty("taxcategoryid", m_sDefaultTaxCategory);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         m_sDefaultProductCategory = m_propsdb.getProperty("productcategoryid");
         if (m_sDefaultProductCategory == null) {
             m_sDefaultProductCategory = "000";
             m_propsdb.setProperty("productcategoryid", m_sDefaultProductCategory);
-            m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
+            m_dlSystem.setResourceAsProperties(sPropertySettings, m_propsdb);
         }
 
         // Inicializo la impresora...
@@ -300,11 +304,18 @@ public class JRootApp extends JPanel implements AppView {
         BufferedImage imgsupportby = DataLogicSystem.getResourceAsImage("Window.SupportBy");
         m_jLblSupportBy.setIcon(imgsupportby == null ? null : new ImageIcon(imgsupportby));
 
-        String sWareHouse;
+        showHostAndLocation(m_sDefaultInventoryLocation);
+        showLogin();
+
+        return true;
+    }
+
+    private void showHostAndLocation(String sWareHouseId) {
+        String sWareHouseName;
         try {
-            sWareHouse = m_dlSystem.findLocationName(m_sInventoryLocation);
+            sWareHouseName = m_dlSystem.findLocationName(sWareHouseId);
         } catch (BasicException e) {
-            sWareHouse = null; // no he encontrado el almacen principal
+            sWareHouseName = null; // no he encontrado el almacen principal
         }
 
         // Show Hostname, Warehouse and URL in taskbar
@@ -314,11 +325,7 @@ public class JRootApp extends JPanel implements AppView {
         } catch (SQLException e) {
             url = "";
         }
-        m_jHost.setText("<html>" + m_props.getHost() + " - " + sWareHouse + "<br>" + url);
-
-        showLogin();
-
-        return true;
+        m_jHost.setText("<html>" + m_props.getHost() + " - " + sWareHouseName + "<br>" + url);
     }
 
     private String readDataBaseVersion() {
@@ -376,6 +383,11 @@ public class JRootApp extends JPanel implements AppView {
     @Override
     public String getInventoryLocation() {
         return m_sInventoryLocation;
+    }
+
+    @Override
+    public String getDefaultInventoryLocation() {
+        return m_sDefaultInventoryLocation;
     }
 
     @Override
@@ -529,7 +541,7 @@ public class JRootApp extends JPanel implements AppView {
             m_TP.getDeviceDisplay().writeVisor(AppLocal.APP_NAME, AppLocal.APP_VERSION);
         } else {
             m_TTP = new TicketParser(schema, getDeviceTicket());
-            try {                
+            try {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("local", new AppLocal());
                 m_TTP.printTicket(template, script);
@@ -624,9 +636,12 @@ public class JRootApp extends JPanel implements AppView {
             jPanel3.add(m_principalapp.getNotificator());
             jPanel3.revalidate();
 
+            m_sInventoryLocation = user.getProperties().getProperty("user.location.id", m_sDefaultInventoryLocation);
+
             // The main panel
             m_jPanelContainer.add(m_principalapp, "_" + m_principalapp.getUser().getId());
             showView("_" + m_principalapp.getUser().getId());
+            showHostAndLocation(m_sInventoryLocation);
 
             m_principalapp.activate();
         }
@@ -647,6 +662,9 @@ public class JRootApp extends JPanel implements AppView {
             // remove the card
             m_jPanelContainer.remove(m_principalapp);
             m_principalapp = null;
+
+            m_sInventoryLocation = m_sDefaultInventoryLocation;
+            showHostAndLocation(m_sInventoryLocation);
 
             showLogin();
 
