@@ -231,6 +231,10 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="m_jdate">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="m_jbtndate">
               <Properties>
@@ -262,8 +266,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="m_jLocation">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="m_jLocationActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="m_jLocationDes">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="m_jLocationDesActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -28,8 +28,11 @@
         <Component class="javax.swing.JTable" name="m_tableinventory">
           <Properties>
             <Property name="autoCreateColumnsFromModel" type="boolean" value="false"/>
-            <Property name="autoResizeMode" type="int" value="0"/>
+            <Property name="autoResizeMode" type="int" value="3"/>
             <Property name="focusable" type="boolean" value="false"/>
+            <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 1]"/>
+            </Property>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
             <Property name="showVerticalLines" type="boolean" value="false"/>
           </Properties>

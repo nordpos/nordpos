@@ -52,7 +52,7 @@ public class JInventoryLines extends javax.swing.JPanel {
         DefaultTableColumnModel columns = new DefaultTableColumnModel();
         TableColumn c;
 
-        c = new TableColumn(0, 200, new DataCellRenderer(javax.swing.SwingConstants.LEFT), new DefaultCellEditor(new JTextField()));
+        c = new TableColumn(0, 260, new DataCellRenderer(javax.swing.SwingConstants.LEFT), new DefaultCellEditor(new JTextField()));
         c.setHeaderValue(AppLocal.getIntString("label.item"));
         columns.addColumn(c);
         c = new TableColumn(1, 75, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
@@ -61,14 +61,14 @@ public class JInventoryLines extends javax.swing.JPanel {
         c = new TableColumn(2, 75, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
         c.setHeaderValue(AppLocal.getIntString("label.price"));
         columns.addColumn(c);
-        c = new TableColumn(3, 100, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
+        c = new TableColumn(3, 80, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
         c.setHeaderValue(AppLocal.getIntString("label.value"));
         columns.addColumn(c);
 
         m_tableinventory.setColumnModel(columns);
 
         m_tableinventory.getTableHeader().setReorderingAllowed(false);
-        m_tableinventory.setRowHeight(40);
+        m_tableinventory.setRowHeight(46);
         m_tableinventory.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         m_tableinventory.setIntercellSpacing(new java.awt.Dimension(0, 1));
 
@@ -292,8 +292,9 @@ public class JInventoryLines extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         m_tableinventory.setAutoCreateColumnsFromModel(false);
-        m_tableinventory.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        m_tableinventory.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         m_tableinventory.setFocusable(false);
+        m_tableinventory.setIntercellSpacing(new java.awt.Dimension(0, 1));
         m_tableinventory.setRequestFocusEnabled(false);
         m_tableinventory.setShowVerticalLines(false);
         jScrollPane1.setViewportView(m_tableinventory);

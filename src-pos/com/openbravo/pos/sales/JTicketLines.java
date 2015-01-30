@@ -89,14 +89,14 @@ public class JTicketLines extends javax.swing.JPanel {
         TableColumnModel jColumns = m_jTicketTable.getColumnModel();
         for (int i = 0; i < acolumns.length; i++) {
             jColumns.getColumn(i).setPreferredWidth(acolumns[i].width);
-            jColumns.getColumn(i).setResizable(false);
+            jColumns.getColumn(i).setResizable(true);
         }       
         
         m_jScrollTableTicket.getVerticalScrollBar().setPreferredSize(new Dimension(35, 35));
        
         m_jTicketTable.getTableHeader().setReorderingAllowed(false);         
         m_jTicketTable.setDefaultRenderer(Object.class, new TicketCellRenderer(acolumns));
-        m_jTicketTable.setRowHeight(40);
+        m_jTicketTable.setRowHeight(46);
         m_jTicketTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
         
         // reseteo la tabla...

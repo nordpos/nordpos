@@ -70,7 +70,7 @@ public class StockManagement extends JPanel implements JPanelView {
     private final DataLogicSystem m_dlSystem;
     final private DataLogicSales m_dlSales;
     private TicketParser m_TTP;
-    
+
     private TaxesLogic taxeslogic;
 
     private final CatalogSelector m_cat;
@@ -145,7 +145,7 @@ public class StockManagement extends JPanel implements JPanelView {
     @Override
     public void activate() throws BasicException {
         m_cat.loadCatalog(m_App);
-        
+
         taxeslogic = new TaxesLogic(m_dlSales.getTaxList().list());
 
         java.util.List l = m_sentlocations.list();
@@ -193,6 +193,11 @@ public class StockManagement extends JPanel implements JPanelView {
 
     private void addLine(ProductInfoExt oProduct, double dpor, double dprice) {
         m_invlines.addLine(new InventoryLine(oProduct, taxeslogic.getTaxInfo(oProduct.getTaxCategoryID(), new Date()), dpor, dprice));
+
+        if ("true".equals(panelconfig.getProperty("attributesautoset")) == true) {
+            openAttributesEditor(m_invlines.getSelectedRow());
+        }
+
     }
 
     private void deleteLine(int index) {
@@ -438,6 +443,7 @@ public class StockManagement extends JPanel implements JPanelView {
 
     private class CatalogListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             if (!m_jcodebar.getText().isEmpty()) {
                 String sQty = m_jcodebar.getText();
@@ -446,6 +452,27 @@ public class StockManagement extends JPanel implements JPanelView {
                 m_jcodebar.setText("");
             } else {
                 incProduct((ProductInfoExt) e.getSource(), 1.0);
+            }
+        }
+    }
+
+    private void openAttributesEditor(int index) {
+        InventoryLine line = m_invlines.getLine(index);
+        if (line.getProductAttSetId() != null) {
+            try {
+
+                JProductAttEdit attedit = JProductAttEdit.getAttributesEditor(this, m_App.getSession());
+                attedit.editAttributes(line.getProductAttSetId(), line.getProductAttSetInstId());
+                attedit.setVisible(true);
+                if (attedit.isOK()) {
+                    // The user pressed OK
+                    line.setProductAttSetInstId(attedit.getAttributeSetInst());
+                    line.setProductAttSetInstDesc(attedit.getAttributeSetInstDescription());
+                    m_invlines.setLine(index, line);
+                }
+            } catch (BasicException ex) {
+                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindattributes"), ex);
+                msg.show(this);
             }
         }
     }
@@ -569,6 +596,9 @@ public class StockManagement extends JPanel implements JPanelView {
 
         jLabel1.setText(AppLocal.getIntString("label.stockdate")); // NOI18N
 
+        m_jdate.setEditable(false);
+        m_jdate.setEnabled(false);
+
         m_jbtndate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
         m_jbtndate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -585,6 +615,18 @@ public class StockManagement extends JPanel implements JPanelView {
         });
 
         jLabel8.setText(AppLocal.getIntString("label.warehouse")); // NOI18N
+
+        m_jLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jLocationActionPerformed(evt);
+            }
+        });
+
+        m_jLocationDes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jLocationDesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -752,6 +794,12 @@ public class StockManagement extends JPanel implements JPanelView {
 
         m_jLocationDes.setEnabled(m_ReasonModel.getSelectedItem() == MovementReason.OUT_CROSSING);
 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                m_jKeyFactory.requestFocus();
+            }
+        });
     }//GEN-LAST:event_m_jreasonActionPerformed
 
     private void m_jDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jDownActionPerformed
@@ -791,6 +839,12 @@ public class StockManagement extends JPanel implements JPanelView {
         if (date != null) {
             m_jdate.setText(Formats.TIMESTAMP.formatValue(date));
         }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                m_jKeyFactory.requestFocus();
+            }
+        });
     }//GEN-LAST:event_m_jbtndateActionPerformed
 
     private void jNumberKeysKeyPerformed(com.openbravo.beans.JNumberEvent evt) {//GEN-FIRST:event_jNumberKeysKeyPerformed
@@ -813,21 +867,7 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
     if (i < 0) {
         Toolkit.getDefaultToolkit().beep(); // no line selected
     } else {
-        try {
-            InventoryLine line = m_invlines.getLine(i);
-            JProductAttEdit attedit = JProductAttEdit.getAttributesEditor(this, m_App.getSession());
-            attedit.editAttributes(line.getProductAttSetId(), line.getProductAttSetInstId());
-            attedit.setVisible(true);
-            if (attedit.isOK()) {
-                // The user pressed OK
-                line.setProductAttSetInstId(attedit.getAttributeSetInst());
-                line.setProductAttSetInstDesc(attedit.getAttributeSetInstDescription());
-                m_invlines.setLine(i, line);
-            }
-        } catch (BasicException ex) {
-            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindattributes"), ex);
-            msg.show(this);
-        }
+        openAttributesEditor(i);
     }
 }//GEN-LAST:event_jEditAttributesActionPerformed
 
@@ -835,6 +875,24 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
         m_jKeyFactory.setText(null);
         stateTransition(evt.getKeyChar());
     }//GEN-LAST:event_m_jKeyFactoryKeyTyped
+
+    private void m_jLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jLocationActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                m_jKeyFactory.requestFocus();
+            }
+        });
+    }//GEN-LAST:event_m_jLocationActionPerformed
+
+    private void m_jLocationDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jLocationDesActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                m_jKeyFactory.requestFocus();
+            }
+        });
+    }//GEN-LAST:event_m_jLocationDesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDownloadProducts;
