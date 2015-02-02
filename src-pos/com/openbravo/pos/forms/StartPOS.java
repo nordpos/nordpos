@@ -23,6 +23,8 @@ import com.nordpos.server.jetty.AppContextBuilder;
 import com.nordpos.server.jetty.ServerApp;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.instance.InstanceQuery;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -32,6 +34,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.LookAndFeel;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.eclipse.jetty.server.Handler;
@@ -63,6 +66,17 @@ public class StartPOS {
             return false;
         } catch (RemoteException | NotBoundException e) {
             return true;
+        }
+    }
+
+    public static void setUIFont(javax.swing.plaf.FontUIResource f) {
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value != null && value instanceof javax.swing.plaf.FontUIResource) {
+                UIManager.put(key, f);
+            }
         }
     }
 
@@ -99,15 +113,20 @@ public class StartPOS {
                 // Set the look and feel.
                 try {
                     Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();
-                        if (laf instanceof LookAndFeel) {
-                            UIManager.setLookAndFeel((LookAndFeel) laf);
-                        } else if (laf instanceof SubstanceSkin) {
-                            SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);
-                        }
+                    if (laf instanceof LookAndFeel) {
+                        UIManager.setLookAndFeel((LookAndFeel) laf);
+                    } else if (laf instanceof SubstanceSkin) {
+                        SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);
+                    }
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     logger.log(Level.WARNING, "Cannot set look and feel", e);
                 }
 
+                String font = config.getProperty("swing.font.name");
+                if(font != null && !font.isEmpty()) {
+                    setUIFont(new javax.swing.plaf.FontUIResource(font, Font.PLAIN, Integer.parseInt(config.getProperty("swing.font.size"))));
+                }
+                
                 if (config.getProperty("server.webapp.startup") != null ? config.getProperty("server.webapp.startup").equals("enable") : false) {
                     StartUpWebAppServer(
                             config.getProperty("server.webapp.port") != null ? Integer.parseInt(config.getProperty("server.webapp.port")) : DEFAULT_WEBAPPSEVER_PORT,

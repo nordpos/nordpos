@@ -149,7 +149,7 @@ public abstract class JEditorAbstract extends javax.swing.JPanel implements Edit
 
         add(panBackground, java.awt.BorderLayout.CENTER);
 
-        m_jMode.setFont(new java.awt.Font("Dialog", 0, 9)); // NOI18N
+        m_jMode.setFont(m_jMode.getFont().deriveFont(m_jMode.getFont().getSize()-9f));
         m_jMode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jMode.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         m_jMode.setPreferredSize(new java.awt.Dimension(32, 0));

@@ -301,7 +301,7 @@ public class JInventoryLines extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        m_jTotal.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        m_jTotal.setFont(m_jTotal.getFont().deriveFont(m_jTotal.getFont().getStyle() | java.awt.Font.BOLD));
         m_jTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         m_jTotal.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jTotal.setOpaque(true);

@@ -327,7 +327,7 @@ public class JCalendarPanel extends javax.swing.JPanel {
 
         jPanel1.add(m_jMonth, java.awt.BorderLayout.CENTER);
 
-        m_jLblMonth.setFont(new java.awt.Font("Dialog", 1, 14));
+        m_jLblMonth.setFont(m_jLblMonth.getFont().deriveFont(m_jLblMonth.getFont().getStyle() | java.awt.Font.BOLD, m_jLblMonth.getFont().getSize()-4));
         jPanel2.add(m_jLblMonth);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
