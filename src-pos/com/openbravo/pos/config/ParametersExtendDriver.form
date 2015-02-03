@@ -21,8 +21,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jTextDriverName" min="-2" pref="120" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTextDriverSettings" min="-2" pref="300" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jTextDriverSettings" min="-2" pref="380" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -18,50 +18,30 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,126,0,0,4,21"/>
   </AuxValues>
 
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" pref="850" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+    <Property name="alignment" type="int" value="3"/>
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanel1">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[800, 600]"/>
-        </Property>
-      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel15" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel7" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel18" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel25" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel29" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel26" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel50" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel19" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel26" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel25" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel50" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel29" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel19" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel18" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel15" alignment="0" pref="150" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -77,21 +57,23 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="m_jPrinterParams2" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
-                      <Component id="m_jDisplayParams" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
-                      <Component id="m_jPrinterParams1" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
-                      <Component id="m_jPrinterParams3" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
-                      <Component id="m_jLabelPrinterParams" min="-2" pref="500" max="-2" attributes="0"/>
-                      <Component id="m_jFiscalPrinterParams" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
+                      <Component id="m_jPrinterParams2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jDisplayParams" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jPrinterParams1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jPrinterParams3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jLabelPrinterParams" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jFiscalPrinterParams" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jScaleParams" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jPLUParams" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="1048" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel15" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jcboMachineDisplay" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -115,7 +97,7 @@
                       <Component id="jcboMachinePrinter3" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="m_jPrinterParams3" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel29" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jcboMachineFiscalPrinter" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -131,18 +113,20 @@
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel25" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jcboMachineScale" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jScaleParams" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jcboMachinePLUDevice" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel26" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="m_jPLUParams" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cboPrinters" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="246" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -200,7 +184,6 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jcboMachinePrinter">
           <Properties>
-            <Property name="maximumRowCount" type="int" value="10"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new javax.swing.DefaultComboBoxModel(modelPrinterName)" type="code"/>
             </Property>
@@ -244,7 +227,6 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jcboMachinePrinter2">
           <Properties>
-            <Property name="maximumRowCount" type="int" value="10"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new javax.swing.DefaultComboBoxModel(modelPrinterName)" type="code"/>
             </Property>
@@ -288,7 +270,6 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jcboMachinePrinter3">
           <Properties>
-            <Property name="maximumRowCount" type="int" value="10"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new javax.swing.DefaultComboBoxModel(modelPrinterName)" type="code"/>
             </Property>
@@ -381,7 +362,6 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jcboMachineLabelPrinter">
           <Properties>
-            <Property name="maximumRowCount" type="int" value="10"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new javax.swing.DefaultComboBoxModel(modelLabelPrinterName)" type="code"/>
             </Property>
@@ -424,7 +404,41 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jcboMachineScale">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(modelScaleName)" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcboMachineScaleActionPerformed"/>
+          </Events>
         </Component>
+        <Container class="javax.swing.JPanel" name="m_jScaleParams">
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jEmptyLabelPrinter1">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="empty"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="500" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
+          </SubComponents>
+        </Container>
         <Component class="javax.swing.JLabel" name="jLabel26">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -433,7 +447,41 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jcboMachinePLUDevice">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(modelPLUName)" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcboMachinePLUDeviceActionPerformed"/>
+          </Events>
         </Component>
+        <Container class="javax.swing.JPanel" name="m_jPLUParams">
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jEmptyLabelPrinter2">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="empty"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="500" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
+          </SubComponents>
+        </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
