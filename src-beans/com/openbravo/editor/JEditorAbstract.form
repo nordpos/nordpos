@@ -61,7 +61,7 @@
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
           <FontInfo relative="true">
-            <Font component="m_jMode" property="font" relativeSize="true" size="-4"/>
+            <Font component="m_jMode" property="font" relativeSize="true" size="-6"/>
           </FontInfo>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
