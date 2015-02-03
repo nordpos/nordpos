@@ -137,7 +137,7 @@ public class ProductsWarehouseEditor extends javax.swing.JPanel implements Edito
         jLabel5 = new javax.swing.JLabel();
         m_jMaximum = new javax.swing.JTextField();
 
-        m_jTitle.setFont(new java.awt.Font("SansSerif", 3, 18)); // NOI18N
+        m_jTitle.setFont(m_jTitle.getFont().deriveFont((m_jTitle.getFont().getStyle() | java.awt.Font.ITALIC) | java.awt.Font.BOLD, m_jTitle.getFont().getSize()+2));
 
         jLabel3.setText(AppLocal.getIntString("label.units")); // NOI18N
 

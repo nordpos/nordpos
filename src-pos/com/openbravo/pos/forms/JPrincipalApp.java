@@ -468,7 +468,7 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
 
         m_jPanelTitle.setLayout(new java.awt.BorderLayout());
 
-        m_jTitle.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        m_jTitle.setFont(m_jTitle.getFont().deriveFont(m_jTitle.getFont().getStyle() | java.awt.Font.BOLD, m_jTitle.getFont().getSize()+2));
         m_jTitle.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.darkGray), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         m_jPanelTitle.add(m_jTitle, java.awt.BorderLayout.NORTH);
 
