@@ -26,7 +26,6 @@ import com.openbravo.data.user.ListProviderCreator;
 import com.openbravo.data.user.SaveProvider;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
-import com.openbravo.pos.forms.DataLogicSystem;
 import com.openbravo.pos.panels.JPanelTable2;
 import com.openbravo.pos.ticket.ProductFilter;
 import java.awt.Component;
@@ -37,6 +36,7 @@ import javax.swing.JButton;
  * @author adrianromero
  * Created on 1 de marzo de 2007, 22:15
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class ProductsPanel extends JPanelTable2 implements EditorListener {
 
@@ -44,14 +44,12 @@ public class ProductsPanel extends JPanelTable2 implements EditorListener {
     private ProductFilter jproductfilter;
 
     private DataLogicSales m_dlSales = null;
-    private DataLogicSystem m_dlSystem = null;
 
-    /** Creates a new instance of ProductsPanel2 */
     public ProductsPanel() {
     }
 
+    @Override
     protected void init() {
-        m_dlSystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
         m_dlSales = (DataLogicSales) app.getBean(DataLogicSales.class.getName());
 
         jproductfilter = new ProductFilter();
@@ -67,9 +65,10 @@ public class ProductsPanel extends JPanelTable2 implements EditorListener {
             m_dlSales.getProductCatDelete());
 
         // el panel del editor
-        jeditor = new ProductsEditor(app, m_dlSystem, m_dlSales, dirty);
+        jeditor = new ProductsEditor(app, m_dlSales, dirty);
     }
 
+    @Override
     public EditorRecord getEditor() {
         return jeditor;
     }
@@ -80,13 +79,14 @@ public class ProductsPanel extends JPanelTable2 implements EditorListener {
     }
 
 
+    @Override
     public Component getToolbarExtrasDevicePLUs() {
 
         JButton btnDevicePLUs = new JButton();
         btnDevicePLUs.setText(AppLocal.getIntString("button.uploadplu"));
         btnDevicePLUs.setVisible(app.getDevicePLUs() != null);
         btnDevicePLUs.addActionListener(new java.awt.event.ActionListener() {
-
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExtrasDevicePLUsActionPerformed(evt);
             }
@@ -96,9 +96,10 @@ public class ProductsPanel extends JPanelTable2 implements EditorListener {
     }
 
     private void btnExtrasDevicePLUsActionPerformed(java.awt.event.ActionEvent evt) {
-        JDlgUploadProducts.showMessage(this, app.getDevicePLUs(), bd);
+        JDlgUploadProducts.showMessage(this, this.app, bd, m_dlSales);
     }
 
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.Products");
     }
@@ -112,6 +113,7 @@ public class ProductsPanel extends JPanelTable2 implements EditorListener {
         super.activate();
     }
 
+    @Override
     public void updateValue(Object value) {
     }
 }

@@ -30,7 +30,7 @@ import com.nordpos.device.util.StringParser;
 public class InputOutputEmulator implements InputOutputInterface {
 
     @Override
-    public DeviceInputOutput getPLU(String sProperty) throws Exception {
+    public DeviceInputOutput getDeviceIO(String sProperty) throws Exception {
         StringParser pluProperty = new StringParser(sProperty);
         String sDevicePLUType = pluProperty.nextToken(':');
 

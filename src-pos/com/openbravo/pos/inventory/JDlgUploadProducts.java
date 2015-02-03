@@ -27,46 +27,44 @@ import com.openbravo.pos.forms.AppLocal;
 import com.nordpos.device.plu.DeviceInputOutput;
 import com.nordpos.device.plu.DeviceInputOutputException;
 import com.nordpos.device.plu.ProductIO;
+import com.openbravo.basic.BasicException;
+import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.sales.TaxesLogic;
+import com.openbravo.pos.util.RoundUtils;
+import java.util.Date;
 import java.util.Properties;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh
+ * @version NORD POS 3
  */
 public class JDlgUploadProducts extends javax.swing.JDialog {
 
-    // private AppView m_App;
     private DeviceInputOutput m_deviceplu;
     private BrowsableEditableData m_bd;
+    private DataLogicSales dataLogicSales;
+    private TaxesLogic taxesLogic;
+    private String locationId;
 
-//    private static String m_sUserBarcode;
-    /**
-     * Creates new form JDlgUploadProducts
-     */
     private JDlgUploadProducts(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
     }
 
-    /**
-     * Creates new form JDlgUploadProducts
-     */
     private JDlgUploadProducts(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
     }
 
-    private void init(DeviceInputOutput deviceplu, BrowsableEditableData bd) {
-
+    private void init(DeviceInputOutput deviceplu, BrowsableEditableData bd, DataLogicSales dataLogicSales, String locationId) {
         initComponents();
-
         getRootPane().setDefaultButton(jcmdOK);
-
-        m_deviceplu = deviceplu;
+        m_deviceplu = deviceplu;        
         m_bd = bd;
-
-        //show();
+        this.dataLogicSales = dataLogicSales;
+        this.locationId = locationId;
         setVisible(true);
-
-        // return;
     }
 
     private static Window getWindow(Component parent) {
@@ -79,8 +77,7 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
         }
     }
 
-    public static void showMessage(Component parent, DeviceInputOutput deviceplu, BrowsableEditableData bd) {
-
+    public static void showMessage(Component parent, AppView appView, BrowsableEditableData bd, DataLogicSales dataLogicSales) {
         Window window = getWindow(parent);
 
         JDlgUploadProducts myMsg;
@@ -90,7 +87,7 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
             myMsg = new JDlgUploadProducts((Dialog) window, true);
         }
 
-        myMsg.init(deviceplu, bd);
+        myMsg.init(appView.getDevicePLUs(), bd, dataLogicSales, appView.getAppUserView().getUser().getProperties().getProperty("user.location.id", appView.getDefaultInventoryLocation()));
     }
 
     /**
@@ -158,11 +155,9 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
         jcmdOK.setEnabled(false);
         jcmdCancel.setEnabled(false);
 
-//        jLabelScaleVPM.doLayout();
-//        jLabelScaleVPM.setEnabled(true);
-//        jLabelScaleVPM.setVisible(true);
         // Ejecutamos la descarga...
         try {
+            taxesLogic = new TaxesLogic(dataLogicSales.getTaxList().list());
             m_deviceplu.connectDevice();
             m_deviceplu.startUploadProduct();
 
@@ -174,17 +169,20 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
                 product.setName((String) myprod[3]);
                 product.setCode((String) myprod[2]);
                 product.setPriceBuy((Double) myprod[6]);
-                product.setPriceSell((Double) myprod[7]);
+                double price = RoundUtils.round(((Double) myprod[7]) * (1 + taxesLogic.getTaxRate((String) myprod[9], new Date())));
+                product.setPriceSell(price);
                 Properties properties = new Properties();
                 properties.setProperty("plu.currrent", Integer.toString(i + 1));
                 properties.setProperty("plu.size", Integer.toString(size));
                 product.setProperties(properties);
+                double qty = dataLogicSales.findProductStock(locationId, (String) myprod[0], null);
+                product.setQuantity(qty);
                 m_deviceplu.sendProduct(product);
             }
             m_deviceplu.stopUploadProduct();
             MessageInf msg = new MessageInf(MessageInf.SGN_SUCCESS, AppLocal.getIntString("message.scannerok"));
             msg.show(this);
-        } catch (DeviceInputOutputException e) {
+        } catch (DeviceInputOutputException | BasicException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.scannerfail"), e);
             msg.show(this);
         } finally {

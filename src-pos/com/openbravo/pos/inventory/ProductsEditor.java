@@ -58,6 +58,7 @@ import org.krysalis.barcode4j.impl.upcean.*;
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class ProductsEditor extends JPanel implements EditorRecord {
 
@@ -95,18 +96,16 @@ public class ProductsEditor extends JPanel implements EditorRecord {
     private boolean reportlock = false;
 
     private final DataLogicSales m_dSales;
-    private final DataLogicSystem m_dSystem;
     private TicketParser m_TTP;
 
     private ProductInfoEdit m_oCurrentProductEdit;
 
     private final AppView m_App;
 
-    public ProductsEditor(AppView app, DataLogicSystem dlSystem, DataLogicSales dlSales, DirtyManager dirty) {
+    public ProductsEditor(AppView app, DataLogicSales dlSales, DirtyManager dirty) {
         initComponents();
         m_App = app;
         m_dSales = dlSales;
-        m_dSystem = dlSystem;
 
         loadimage = dlSales.getProductImage();
 

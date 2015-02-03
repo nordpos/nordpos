@@ -27,5 +27,5 @@ package com.nordpos.device.plu;
  */
 public interface InputOutputInterface {
 
-    public DeviceInputOutput getPLU(String sProperty) throws Exception;
+    public DeviceInputOutput getDeviceIO(String sProperty) throws Exception;
 }

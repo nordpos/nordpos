@@ -41,7 +41,7 @@ public class DeviceInputOutputFactory {
 
         for (InputOutputInterface machineInterface : pluLoader) {
             try {
-                m_plu = machineInterface.getPLU(props.getProperty("machine.pludevice"));
+                m_plu = machineInterface.getDeviceIO(props.getProperty("machine.pludevice"));
             } catch (Exception ex) {
                 logger.log(Level.WARNING, ex.getMessage(), ex);
             }
