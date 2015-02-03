@@ -251,17 +251,17 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
                     .addComponent(txtCurdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel5.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jlblMessage.setBackground(javax.swing.UIManager.getDefaults().getColor("Label.background"));
         jlblMessage.setEditable(false);
+        jlblMessage.setBackground(javax.swing.UIManager.getDefaults().getColor("Label.background"));
         jlblMessage.setLineWrap(true);
         jlblMessage.setWrapStyleWord(true);
         jlblMessage.setFocusable(false);
-        jlblMessage.setPreferredSize(new java.awt.Dimension(300, 72));
+        jlblMessage.setPreferredSize(new java.awt.Dimension(300, 64));
         jlblMessage.setRequestFocusEnabled(false);
         jPanel6.add(jlblMessage);
 
