@@ -49,7 +49,7 @@ public class ParametersExtendDriver extends javax.swing.JPanel implements Parame
     @Override
     public void setParameters(StringParser p) {
         jTextDriverName.setText(p.nextToken(':'));
-        jTextDriverSettings.setText(p.nextToken(':'));
+        jTextDriverSettings.setText(p.nextToken('\n'));
     }
 
     @Override

@@ -233,6 +233,7 @@ public class JPanelConfigHardware extends javax.swing.JPanel implements PanelCon
         p = new StringParser(config.getProperty("machine.scale"));
         String sParamScale = p.nextToken(':');
         switch (sParamScale) {
+            case "screen":
             case "Not defined":
                 jcboMachineScale.setSelectedItem(sParamScale);
                 break;
