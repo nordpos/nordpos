@@ -110,7 +110,7 @@ public class JPanelSettingsDefault extends JPanel implements JPanelView, BeanFac
     @Override
     public boolean deactivate() {
         if (dirty.isDirty()) {
-            int res = JOptionPane.showConfirmDialog(this, AppLocal.getIntString("message.syncwannasave"), AppLocal.getIntString("title.sync"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int res = JOptionPane.showConfirmDialog(this, AppLocal.getIntString("message.syncwannasave"), AppLocal.getIntString("title.defaultparam"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (res == JOptionPane.YES_OPTION) {
                 saveProperties();
                 return true;
@@ -148,7 +148,7 @@ public class JPanelSettingsDefault extends JPanel implements JPanelView, BeanFac
 
         dlSystem.setResourceAsProperties(appProp.getHost() + "/properties", hostProp);
 
-        JOptionPane.showMessageDialog(this, AppLocal.getIntString("message.syncchanges"), AppLocal.getIntString("title.sync"), JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, AppLocal.getIntString("message.defaultparam.save"), AppLocal.getIntString("title.defaultparam"), JOptionPane.INFORMATION_MESSAGE);
 
         dirty.setDirty(false);
     }
