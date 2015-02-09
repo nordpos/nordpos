@@ -1570,10 +1570,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jPanContainer.add(m_jOptions, java.awt.BorderLayout.NORTH);
 
-        m_jPanTicket.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        m_jPanTicket.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 5, 0));
         m_jPanTicket.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 2));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         m_jUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow22.png"))); // NOI18N
@@ -1684,7 +1684,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel2.add(jEditAttributes, gridBagConstraints);
 
-        m_jDiscountRatePanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        m_jDiscountRatePanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 2));
 
         m_jbtnDiscountRate.setFocusPainted(false);
         m_jbtnDiscountRate.setFocusable(false);
@@ -1787,7 +1787,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 .addComponent(m_jKeypadDiscountRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        m_jDiscountMoneyPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        m_jDiscountMoneyPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 2));
 
         m_jbtnDiscountMoney.setText("ROW");
         m_jbtnDiscountMoney.setFocusPainted(false);
@@ -1914,7 +1914,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                     .addComponent(m_jDiscountRatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(m_jDiscountMoneyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 127, Short.MAX_VALUE))
+                .addGap(0, 129, Short.MAX_VALUE))
         );
 
         m_jPanTicket.add(jPanel5, java.awt.BorderLayout.EAST);
@@ -1995,8 +1995,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jPanContainer.add(m_jPanTicket, java.awt.BorderLayout.CENTER);
 
-        m_jContEntries.setMinimumSize(new java.awt.Dimension(100, 347));
-        m_jContEntries.setPreferredSize(new java.awt.Dimension(250, 347));
+        m_jContEntries.setMinimumSize(new java.awt.Dimension(250, 400));
+        m_jContEntries.setPreferredSize(new java.awt.Dimension(250, 400));
         m_jContEntries.setLayout(new java.awt.BorderLayout());
 
         m_jPanEntries.setLayout(new javax.swing.BoxLayout(m_jPanEntries, javax.swing.BoxLayout.Y_AXIS));

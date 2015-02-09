@@ -229,9 +229,6 @@
                                 </Property>
                                 <Property name="focusPainted" type="boolean" value="false"/>
                                 <Property name="focusable" type="boolean" value="false"/>
-                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[115, 35]"/>
-                                </Property>
                                 <Property name="requestFocusEnabled" type="boolean" value="false"/>
                               </Properties>
                               <Events>

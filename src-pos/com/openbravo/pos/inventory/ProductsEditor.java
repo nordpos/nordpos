@@ -29,7 +29,6 @@ import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
-import com.openbravo.pos.forms.DataLogicSystem;
 import com.nordpos.device.ticket.TicketParser;
 import com.nordpos.device.ticket.TicketPrinterException;
 import com.openbravo.pos.sales.TaxesLogic;
@@ -199,6 +198,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
     public void writeValueEOF() {
 
         reportlock = true;
+        pricesell = null;
         // Los valores
         m_jTitle.setText(AppLocal.getIntString("label.recordeof"));
         m_id = null;
@@ -247,7 +247,8 @@ public class ProductsEditor extends JPanel implements EditorRecord {
     @Override
     public void writeValueInsert() {
 
-        reportlock = true;
+        reportlock = false;
+        pricesell = null;
         // Los valores
         m_jTitle.setText(AppLocal.getIntString("label.recordnew"));
         m_id = UUID.randomUUID().toString();
@@ -309,7 +310,11 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         if (s_GenBarcode.equals("true")) {
             try {
                 CategoryInfo mCurrentCategory = (CategoryInfo) m_CategoryModel.getSelectedItem();
-                m_jCode.setText(generateBarCode(m_dSales.countPonductsByCategory(mCurrentCategory.getID()), mCurrentCategory.getCode()));
+                if (mCurrentCategory != null) {
+                    m_jCode.setText(generateBarCode(m_dSales.countPonductsByCategory(mCurrentCategory.getID()), mCurrentCategory.getCode()));
+                } else {
+                    m_jCode.setText(null);
+                }
             } catch (BasicException ex) {
                 m_jCode.setText(null);
             }
@@ -535,7 +540,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
                 setPriceSell(null);
             } else {
                 double dTaxRate = taxeslogic.getTaxRate((TaxCategoryInfo) taxcatmodel.getSelectedItem(), new Date());
-                setPriceSell(new Double(dPriceSellTax / (1.0 + dTaxRate)));
+                setPriceSell(dPriceSellTax / (1.0 + dTaxRate));
             }
 
             reportlock = false;
@@ -748,23 +753,11 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         m_jPrintLabel = new javax.swing.JButton();
         m_jVirtualKeyboard = new javax.swing.JButton();
 
-        setLayout(null);
-
         jLabel1.setText(AppLocal.getIntString("label.prodref")); // NOI18N
-        add(jLabel1);
-        jLabel1.setBounds(10, 50, 80, 30);
 
         jLabel2.setText(AppLocal.getIntString("label.prodname")); // NOI18N
-        add(jLabel2);
-        jLabel2.setBounds(180, 50, 70, 30);
-        add(m_jRef);
-        m_jRef.setBounds(90, 50, 70, 30);
-        add(m_jName);
-        m_jName.setBounds(250, 50, 260, 30);
 
         m_jTitle.setFont(m_jTitle.getFont().deriveFont((m_jTitle.getFont().getStyle() | java.awt.Font.ITALIC) | java.awt.Font.BOLD, m_jTitle.getFont().getSize()+2));
-        add(m_jTitle);
-        m_jTitle.setBounds(10, 10, 500, 30);
 
         jLabel6.setText(AppLocal.getIntString("label.prodbarcode")); // NOI18N
 
@@ -783,11 +776,6 @@ public class ProductsEditor extends JPanel implements EditorRecord {
         jLabel7.setText(AppLocal.getIntString("label.taxcategory")); // NOI18N
 
         m_jmargin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        m_jmargin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                m_jmarginActionPerformed(evt);
-            }
-        });
 
         m_jPriceSellTax.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
@@ -837,8 +825,7 @@ public class ProductsEditor extends JPanel implements EditorRecord {
                                 .addGap(4, 4, 4))
                             .addComponent(m_jmargin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(m_jImage, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(m_jImage, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -868,16 +855,17 @@ public class ProductsEditor extends JPanel implements EditorRecord {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel7)
                             .addComponent(m_jTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel5)
                             .addComponent(m_jCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel13)
-                            .addComponent(m_jAtt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(m_jImage, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(m_jAtt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 16, Short.MAX_VALUE))
+                    .addComponent(m_jImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.prodgeneral"), jPanel1); // NOI18N
@@ -886,19 +874,19 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel9.setText(AppLocal.getIntString("label.prodstockcost")); // NOI18N
         jPanel2.add(jLabel9);
-        jLabel9.setBounds(10, 20, 150, 22);
+        jLabel9.setBounds(10, 20, 150, 18);
 
         m_jstockcost.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jstockcost);
-        m_jstockcost.setBounds(160, 20, 80, 32);
+        m_jstockcost.setBounds(160, 20, 80, 28);
 
         jLabel10.setText(AppLocal.getIntString("label.prodstockvol")); // NOI18N
         jPanel2.add(jLabel10);
-        jLabel10.setBounds(10, 50, 150, 22);
+        jLabel10.setBounds(10, 50, 150, 18);
 
         m_jstockvolume.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jstockvolume);
-        m_jstockvolume.setBounds(160, 50, 80, 32);
+        m_jstockvolume.setBounds(160, 50, 80, 28);
         jPanel2.add(m_jScale);
         m_jScale.setBounds(160, 140, 80, 24);
         jPanel2.add(m_jComment);
@@ -906,11 +894,11 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel18.setText(AppLocal.getIntString("label.prodorder")); // NOI18N
         jPanel2.add(jLabel18);
-        jLabel18.setBounds(250, 80, 60, 22);
+        jLabel18.setBounds(250, 80, 60, 18);
 
         m_jCatalogOrder.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel2.add(m_jCatalogOrder);
-        m_jCatalogOrder.setBounds(310, 80, 80, 32);
+        m_jCatalogOrder.setBounds(310, 80, 80, 28);
 
         m_jInCatalog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -922,15 +910,15 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel8.setText(AppLocal.getIntString("label.prodincatalog")); // NOI18N
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(10, 80, 150, 22);
+        jLabel8.setBounds(10, 80, 150, 18);
 
         jLabel11.setText(AppLocal.getIntString("label.prodaux")); // NOI18N
         jPanel2.add(jLabel11);
-        jLabel11.setBounds(10, 110, 150, 22);
+        jLabel11.setBounds(10, 110, 150, 18);
 
         jLabel12.setText(AppLocal.getIntString("label.prodscale")); // NOI18N
         jPanel2.add(jLabel12);
-        jLabel12.setBounds(10, 140, 150, 22);
+        jLabel12.setBounds(10, 140, 150, 18);
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.prodstock"), jPanel2); // NOI18N
 
@@ -944,9 +932,6 @@ public class ProductsEditor extends JPanel implements EditorRecord {
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.properties"), jPanel3); // NOI18N
 
-        add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 90, 580, 310);
-
         m_jPrintLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/printer.png"))); // NOI18N
         m_jPrintLabel.setFocusPainted(false);
         m_jPrintLabel.setFocusable(false);
@@ -957,8 +942,6 @@ public class ProductsEditor extends JPanel implements EditorRecord {
                 m_jPrintLabelActionPerformed(evt);
             }
         });
-        add(m_jPrintLabel);
-        m_jPrintLabel.setBounds(520, 10, 60, 30);
 
         m_jVirtualKeyboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/input-keyboard.png"))); // NOI18N
         m_jVirtualKeyboard.setFocusPainted(false);
@@ -970,8 +953,52 @@ public class ProductsEditor extends JPanel implements EditorRecord {
                 m_jVirtualKeyboardActionPerformed(evt);
             }
         });
-        add(m_jVirtualKeyboard);
-        m_jVirtualKeyboard.setBounds(520, 50, 60, 30);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(m_jTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(m_jRef, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(m_jName, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(m_jPrintLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(m_jVirtualKeyboard)))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(m_jTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jRef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(m_jPrintLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(m_jVirtualKeyboard, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jInCatalogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jInCatalogActionPerformed
@@ -1068,10 +1095,6 @@ public class ProductsEditor extends JPanel implements EditorRecord {
             }
         }
     }//GEN-LAST:event_jButtonGenBarcodeActionPerformed
-
-    private void m_jmarginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jmarginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_m_jmarginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -186,6 +186,8 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         setLayout(new java.awt.BorderLayout());
 
         container.setLayout(new java.awt.BorderLayout());
+
+        toolbar.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         container.add(toolbar, java.awt.BorderLayout.NORTH);
 
         add(container, java.awt.BorderLayout.CENTER);

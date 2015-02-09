@@ -379,17 +379,16 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        m_jCategories.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
         m_jCategories.setMinimumSize(new java.awt.Dimension(72, 275));
-        m_jCategories.setPreferredSize(new java.awt.Dimension(72, 275));
+        m_jCategories.setPreferredSize(new java.awt.Dimension(82, 275));
         m_jCategories.setLayout(new java.awt.BorderLayout());
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jPanel5.setLayout(new java.awt.GridLayout(0, 1, 0, 2));
 
         m_btnBackRoot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/3uparrow2.png"))); // NOI18N
         m_btnBackRoot.setFocusPainted(false);
         m_btnBackRoot.setFocusable(false);
-        m_btnBackRoot.setMargin(new java.awt.Insets(8, 14, 8, 14));
         m_btnBackRoot.setRequestFocusEnabled(false);
         m_btnBackRoot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,7 +400,6 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
         m_btnBackSub.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/3uparrow.png"))); // NOI18N
         m_btnBackSub.setFocusPainted(false);
         m_btnBackSub.setFocusable(false);
-        m_btnBackSub.setMargin(new java.awt.Insets(8, 14, 8, 14));
         m_btnBackSub.setRequestFocusEnabled(false);
         m_btnBackSub.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,10 +413,10 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
         jPanel1.add(m_jCategories, java.awt.BorderLayout.LINE_START);
 
         m_jPanelImageViewer.setBorder(null);
-        m_jPanelImageViewer.setPreferredSize(new java.awt.Dimension(236, 275));
+        m_jPanelImageViewer.setPreferredSize(new java.awt.Dimension(240, 275));
         m_jPanelImageViewer.setLayout(new java.awt.BorderLayout());
 
-        m_jImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        m_jImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         m_jPanelImageViewer.add(m_jImage, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(m_jPanelImageViewer, java.awt.BorderLayout.EAST);
