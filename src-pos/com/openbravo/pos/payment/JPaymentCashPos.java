@@ -127,7 +127,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
         
         public ScriptPaymentCash(DataLogicSystem dlSystem) {
             this.dlSystem = dlSystem;
-            tnbbutton = new ThumbNailBuilder(64, 54, 12, "com/openbravo/images/cash.png");
+            tnbbutton = new ThumbNailBuilder(72,72, 12, "com/openbravo/images/cash.png");
         }
         
         public void addButton(String image, double amount) {
