@@ -29,7 +29,7 @@ import com.openbravo.data.model.Table;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.panels.JPanelTable2;
+import com.openbravo.pos.panels.JPanelTableExt;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +38,7 @@ import java.awt.event.ActionListener;
  *
  * @author adrianromero
  */
-public class AttributeValuesPanel extends JPanelTable2 {
+public class AttributeValuesPanel extends JPanelTableExt {
 
     private AttributeValuesEditor editor;
     private AttributeFilter filter;

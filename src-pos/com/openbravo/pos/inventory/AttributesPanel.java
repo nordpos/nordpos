@@ -28,13 +28,13 @@ import com.openbravo.data.model.Table;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.panels.JPanelTable2;
+import com.openbravo.pos.panels.JPanelTableExt;
 
 /**
  *
  * @author adrian
  */
-public class AttributesPanel extends JPanelTable2 {
+public class AttributesPanel extends JPanelTableExt {
     
     private EditorRecord editor;
 

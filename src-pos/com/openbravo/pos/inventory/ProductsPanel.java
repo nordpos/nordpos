@@ -26,7 +26,7 @@ import com.openbravo.data.user.ListProviderCreator;
 import com.openbravo.data.user.SaveProvider;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
-import com.openbravo.pos.panels.JPanelTable2;
+import com.openbravo.pos.panels.JPanelTableExt;
 import com.openbravo.pos.ticket.ProductFilter;
 import java.awt.Component;
 import javax.swing.JButton;
@@ -38,7 +38,7 @@ import javax.swing.JButton;
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3
  */
-public class ProductsPanel extends JPanelTable2 implements EditorListener {
+public class ProductsPanel extends JPanelTableExt implements EditorListener {
 
     private ProductsEditor jeditor;
     private ProductFilter jproductfilter;
@@ -78,7 +78,6 @@ public class ProductsPanel extends JPanelTable2 implements EditorListener {
         return jproductfilter.getComponent();
     }
 
-
     @Override
     public Component getToolbarExtrasDevicePLUs() {
 
@@ -94,7 +93,7 @@ public class ProductsPanel extends JPanelTable2 implements EditorListener {
 
         return btnDevicePLUs;
     }
-
+    
     private void btnExtrasDevicePLUsActionPerformed(java.awt.event.ActionEvent evt) {
         JDlgUploadProducts.showMessage(this, this.app, bd, m_dlSales);
     }

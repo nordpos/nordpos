@@ -37,7 +37,7 @@ import com.openbravo.data.user.ListProviderCreator;
 import com.openbravo.data.user.SaveProvider;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.panels.JPanelTable2;
+import com.openbravo.pos.panels.JPanelTableExt;
 import com.openbravo.pos.reports.JParamsLocation;
 import java.util.UUID;
 
@@ -45,7 +45,7 @@ import java.util.UUID;
  *
  * @author adrianromero
  */
-public class ProductsWarehousePanel extends JPanelTable2 {
+public class ProductsWarehousePanel extends JPanelTableExt {
 
     private JParamsLocation m_paramslocation;    
     private ProductsWarehouseEditor jeditor;

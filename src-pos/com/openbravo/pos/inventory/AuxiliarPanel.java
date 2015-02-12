@@ -30,7 +30,7 @@ import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.panels.AuxiliarFilter;
-import com.openbravo.pos.panels.JPanelTable2;
+import com.openbravo.pos.panels.JPanelTableExt;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -41,7 +41,7 @@ import java.awt.event.ActionListener;
  * @author jaroslawwozniak
  * @author adrianromero
  */
-public class AuxiliarPanel extends JPanelTable2 {
+public class AuxiliarPanel extends JPanelTableExt {
 
     private AuxiliarEditor editor;
     private AuxiliarFilter filter;

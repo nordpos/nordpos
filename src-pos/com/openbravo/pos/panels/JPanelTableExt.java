@@ -29,8 +29,10 @@ import javax.swing.ListCellRenderer;
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh
+ * @version NORD POS 3
  */
-public abstract class JPanelTable2 extends JPanelTable {
+public abstract class JPanelTableExt extends JPanelTable {
    
     protected Row row;
     protected ListProvider lpr;
