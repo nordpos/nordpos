@@ -23,21 +23,21 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import com.openbravo.format.Formats;
-import com.openbravo.pos.sales.TaxesLogic;
 import com.openbravo.pos.util.StringUtils;
 
 /**
  *
  * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class InventoryRecord {
     
-    private Date m_dDate;
-    private MovementReason m_reason;
-    private LocationInfo m_locationOri;   
-    private List<InventoryLine> m_invlines;
+    private final Date m_dDate;
+    private final MovementReason m_reason;
+    private final LocationInfo m_locationOri;   
+    private final List<InventoryLine> m_invlines;
     
-    /** Creates a new instance of InventoryRecord */
     public InventoryRecord(Date d, MovementReason reason, LocationInfo location, List<InventoryLine> invlines) {
         m_dDate = d;
         m_reason = reason;

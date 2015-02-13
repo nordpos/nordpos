@@ -49,8 +49,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.util.Date;
-import java.util.Properties;
+import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -58,6 +60,7 @@ import javax.swing.JPanel;
 /**
  *
  * @author adrianromero
+ * @author jldy0717
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3
  */
@@ -65,6 +68,7 @@ public class StockManagement extends JPanel implements JPanelView {
 
     private static final String PRINTER_SHEMA = "/com/nordpos/templates/Schema.Printer.xsd";
     private static final String PRINT_INVENTORY = "/com/nordpos/templates/Printer.Inventory.xml";
+    private static final String PRINT_STOCK_PREVIEW = "/com/nordpos/templates/Printer.StockPreview.xml";
 
     private final AppView m_App;
     private final DataLogicSystem m_dlSystem;
@@ -191,8 +195,9 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }
 
-    private void addLine(ProductInfoExt oProduct, double dpor, double dprice) {
-        m_invlines.addLine(new InventoryLine(oProduct, taxeslogic.getTaxInfo(oProduct.getTaxCategoryID(), new Date()), dpor, dprice));
+    private void addLine(ProductInfoExt oProduct, double dpor, double dprice) throws BasicException {
+        double dqty = m_dlSales.findProductStock(((LocationInfo) m_LocationsModel.getSelectedItem()).getID(), oProduct.getID(), null);
+        m_invlines.addLine(new InventoryLine(oProduct, taxeslogic.getTaxInfo(oProduct.getTaxCategoryID(), new Date()), dpor, dprice, dqty));
 
         if ("true".equals(panelconfig.getProperty("attributesautoset")) == true) {
             openAttributesEditor(m_invlines.getSelectedRow());
@@ -208,7 +213,7 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }
 
-    private void incProduct(ProductInfoExt product, double units) {
+    private void incProduct(ProductInfoExt product, double units) throws BasicException {
         // precondicion: prod != null
 
         MovementReason reason = (MovementReason) m_ReasonModel.getSelectedItem();
@@ -263,14 +268,6 @@ public class StockManagement extends JPanel implements JPanelView {
 
     private void stateTransition(char cTrans) {
 
-        // 19 November 2009
-        // Begin Add Local Variable jldy0717
-        InventoryLine current_stockmgtline;
-        InventoryLine loop_stockmgtline;
-        double loop_unitsm;
-        double current_unitsm;
-        // End Add Local Variable jldy0717
-
         if (cTrans == '\u007f') {
             m_jcodebar.setText("");
             NUMBER_STATE = DEFAULT;
@@ -311,41 +308,12 @@ public class StockManagement extends JPanel implements JPanelView {
                 // No podemos grabar, no hay ningun registro.
                 Toolkit.getDefaultToolkit().beep();
             } else {
-
-// 19 November 2009
-// Begin Add Code jldy0717
-                int numlinessm = m_invlines.getCount();
-                for (int icounter = 0; icounter < numlinessm; icounter++) {
-
-                    current_stockmgtline = m_invlines.getLine(icounter);
-                    current_unitsm = current_stockmgtline.getMultiply();
-
-                    if (current_unitsm != 0) {
-                        for (int jcounter = icounter + 1; jcounter < numlinessm; jcounter++) {
-                            loop_stockmgtline = m_invlines.getLine(jcounter);
-                            loop_unitsm = loop_stockmgtline.getMultiply();
-                            String current_productidsm = current_stockmgtline.getProductID();
-                            String current_productatt = current_stockmgtline.getProductAttSetInstId();
-                            String loop_productidsm = loop_stockmgtline.getProductID();
-                            String loop_productatt = loop_stockmgtline.getProductAttSetInstId();
-                            if (loop_productidsm.equals(current_productidsm) && (loop_unitsm != 0) && ((loop_productatt != null && loop_productatt.equals(current_productatt)) || (loop_productatt == null) && (current_productatt == null))) {
-                                current_unitsm = current_unitsm + loop_unitsm;
-                                loop_stockmgtline.setMultiply(0);
-                            }
-                        }
-                        current_stockmgtline.setMultiply(current_unitsm);
-                    }
+                int res = JOptionPane.showConfirmDialog(this, LocalRes.getIntString("message.wannapost"), LocalRes.getIntString("title.editor"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (res == JOptionPane.YES_OPTION) {
+                    saveData();
+                } else {
+                    Toolkit.getDefaultToolkit().beep();
                 }
-                for (int icounter = numlinessm - 1; icounter > 0; icounter--) {
-                    loop_stockmgtline = m_invlines.getLine(icounter);
-                    loop_unitsm = loop_stockmgtline.getMultiply();
-                    if (loop_unitsm == 0) {
-                        m_invlines.deleteLine(icounter);
-                    }
-                }
-// End Add Code jldy0717
-
-                saveData();
             }
         } else if (Character.isDigit(cTrans)) {
             m_jcodebar.setText(m_jcodebar.getText() + cTrans);
@@ -400,9 +368,7 @@ public class StockManagement extends JPanel implements JPanelView {
         // A grabar.
         SentenceExec sent = m_dlSales.getStockDiaryInsert();
 
-        for (int i = 0; i < m_invlines.getCount(); i++) {
-            InventoryLine inv = rec.getLines().get(i);
-
+        for (InventoryLine inv : mergeInventoryLine(rec.getLines())) {
             sent.exec(new Object[]{
                 UUID.randomUUID().toString(),
                 rec.getDate(),
@@ -441,17 +407,85 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }
 
+    private void printStockPreview(InventoryRecord invrec) throws TicketPrinterException, ScriptException {
+        InputStream schema = getClass().getResourceAsStream(PRINTER_SHEMA);
+        InputStream template = getClass().getResourceAsStream(PRINT_STOCK_PREVIEW);
+        if (schema == null || template == null) {
+            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"));
+            msg.show(this);
+        } else {
+            m_TTP = new TicketParser(schema, m_App.getDeviceTicket());
+            try {
+                ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
+                script.put("inventoryrecord", invrec);
+                invrec.getLocation().getName();
+                script.put("local", new AppLocal());
+                m_TTP.printTicket(template, script);
+            } catch (ScriptException e) {
+                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
+                msg.show(this);
+            } catch (TicketPrinterException e) {
+                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
+                msg.show(this);
+                throw e;
+            }
+        }
+    }
+
+    private List<InventoryLine> mergeInventoryLine(List<InventoryLine> lines) {
+        InventoryLine current_stockmgtline;
+        InventoryLine loop_stockmgtline;
+        double loop_unitsm;
+        double current_unitsm;
+        int numlinessm = lines.size();
+        for (int icounter = 0; icounter < numlinessm; icounter++) {
+
+            current_stockmgtline = lines.get(icounter);
+            current_unitsm = current_stockmgtline.getMultiply();
+
+            if (current_unitsm != 0) {
+                for (int jcounter = icounter + 1; jcounter < numlinessm; jcounter++) {
+                    loop_stockmgtline = lines.get(jcounter);
+                    loop_unitsm = loop_stockmgtline.getMultiply();
+                    String current_productidsm = current_stockmgtline.getProductID();
+                    String current_productatt = current_stockmgtline.getProductAttSetInstId();
+                    String loop_productidsm = loop_stockmgtline.getProductID();
+                    String loop_productatt = loop_stockmgtline.getProductAttSetInstId();
+                    if (loop_productidsm.equals(current_productidsm) && (loop_unitsm != 0) && ((loop_productatt != null && loop_productatt.equals(current_productatt)) || (loop_productatt == null) && (current_productatt == null))) {
+                        current_unitsm = current_unitsm + loop_unitsm;
+                        loop_stockmgtline.setMultiply(0);
+                    }
+                }
+                current_stockmgtline.setMultiply(current_unitsm);
+            }
+        }
+        for (int icounter = numlinessm - 1; icounter > 0; icounter--) {
+            loop_stockmgtline = lines.get(icounter);
+            loop_unitsm = loop_stockmgtline.getMultiply();
+            if (loop_unitsm == 0) {
+                lines.remove(icounter);
+            }
+        }
+        return lines;
+    }
+
     private class CatalogListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (!m_jcodebar.getText().isEmpty()) {
-                String sQty = m_jcodebar.getText();
-                Double dQty = (Double.valueOf(sQty) == 0) ? 1.0 : Double.valueOf(sQty);
-                incProduct((ProductInfoExt) e.getSource(), dQty);
-                m_jcodebar.setText("");
-            } else {
-                incProduct((ProductInfoExt) e.getSource(), 1.0);
+            try {
+                if (!m_jcodebar.getText().isEmpty()) {
+
+                    String sQty = m_jcodebar.getText();
+                    Double dQty = (Double.valueOf(sQty) == 0) ? 1.0 : Double.valueOf(sQty);
+                    incProduct((ProductInfoExt) e.getSource(), dQty);
+                    m_jcodebar.setText("");
+
+                } else {
+                    incProduct((ProductInfoExt) e.getSource(), 1.0);
+                }
+            } catch (BasicException ex) {
+                Logger.getLogger(StockManagement.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -468,6 +502,8 @@ public class StockManagement extends JPanel implements JPanelView {
                     // The user pressed OK
                     line.setProductAttSetInstId(attedit.getAttributeSetInst());
                     line.setProductAttSetInstDesc(attedit.getAttributeSetInstDescription());
+                    double dqty = m_dlSales.findProductStock(((LocationInfo) m_LocationsModel.getSelectedItem()).getID(), line.getProductID(), line.getProductAttSetInstId());
+                    line.setStockQty(dqty);
                     m_invlines.setLine(index, line);
                 }
             } catch (BasicException ex) {
@@ -488,6 +524,8 @@ public class StockManagement extends JPanel implements JPanelView {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        m_jbtnStockPreview = new javax.swing.JButton();
         jNumberKeys = new com.openbravo.beans.JNumberKeys();
         jPanel4 = new javax.swing.JPanel();
         m_jEnter = new javax.swing.JButton();
@@ -519,6 +557,23 @@ public class StockManagement extends JPanel implements JPanelView {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        m_jbtnStockPreview.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/greenled.png"))); // NOI18N
+        m_jbtnStockPreview.setText(AppLocal.getIntString("button.stockpreview")); // NOI18N
+        m_jbtnStockPreview.setFocusPainted(false);
+        m_jbtnStockPreview.setFocusable(false);
+        m_jbtnStockPreview.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jbtnStockPreview.setRequestFocusEnabled(false);
+        m_jbtnStockPreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jbtnStockPreviewActionPerformed(evt);
+            }
+        });
+        jPanel10.add(m_jbtnStockPreview);
+
+        jPanel2.add(jPanel10);
 
         jNumberKeys.addJNumberEventListener(new com.openbravo.beans.JNumberEventListener() {
             public void keyPerformed(com.openbravo.beans.JNumberEvent evt) {
@@ -588,7 +643,7 @@ public class StockManagement extends JPanel implements JPanelView {
 
         jPanel2.add(jPanel6);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
+        jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         add(jPanel1, java.awt.BorderLayout.EAST);
 
@@ -751,7 +806,7 @@ public class StockManagement extends JPanel implements JPanelView {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -894,6 +949,20 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
         });
     }//GEN-LAST:event_m_jLocationDesActionPerformed
 
+    private void m_jbtnStockPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnStockPreviewActionPerformed
+
+        try {
+            MovementReason reason = (MovementReason) m_ReasonModel.getSelectedItem();
+
+            printStockPreview(new InventoryRecord(
+                    new Date(), reason == MovementReason.OUT_CROSSING ? MovementReason.OUT_MOVEMENT : reason,
+                    (LocationInfo) m_LocationsModel.getSelectedItem(),
+                    mergeInventoryLine(m_invlines.getLines())));
+        } catch (TicketPrinterException | ScriptException ex) {
+            Logger.getLogger(StockManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_m_jbtnStockPreviewActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDownloadProducts;
     private javax.swing.JPanel catcontainer;
@@ -903,6 +972,7 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JLabel jLabel8;
     private com.openbravo.beans.JNumberKeys jNumberKeys;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -918,6 +988,7 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JComboBox m_jLocation;
     private javax.swing.JComboBox m_jLocationDes;
     private javax.swing.JButton m_jUp;
+    private javax.swing.JButton m_jbtnStockPreview;
     private javax.swing.JButton m_jbtndate;
     private javax.swing.JLabel m_jcodebar;
     private javax.swing.JTextField m_jdate;

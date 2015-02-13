@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    NORD POS is a fork of Openbravo POS.
+
+    Copyright (C) 2009-2015 Nord Trading Ltd. <http://www.nordpos.com>
+
+    This file is part of NORD POS.
+
+    NORD POS is free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option) any later
+    version.
+
+    NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with
+    NORD POS. If not, see <http://www.gnu.org/licenses/>.
+-->
+<output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
+    <ticket>
+        <image>Printer.Ticket.Logo</image>
+        <line></line>
+        <line>
+            <text align="center" length="42">NORD POS</text>
+        </line>
+        <line>
+            <text align="center" length="42">${local.getScriptString("sale.header.2")}</text>
+        </line>
+        <line>
+            <text align="center" length="42">${local.getScriptString("sale.header.3")}</text>
+        </line>
+        <line></line>
+        <line>
+            <text align="left" length="15">${local.getScriptString("inventory.date")}</text>
+            <text>${inventoryrecord.printDate()}</text>
+        </line>
+        <line>
+            <text align="left" length="15">${local.getScriptString("inventory.location")}</text>
+            <text>${inventoryrecord.printLocation()}</text>
+        </line>
+        <line>
+            <text align="left" length="15">${local.getScriptString("inventory.reason")}</text>
+            <text>${inventoryrecord.printReason()}</text>
+        </line>
+        <line></line>    
+        <line>
+            <text align ="left" length="17">${local.getScriptString("product.name")}</text>
+            <text align ="right" length="25">${local.getScriptString("inventory.stockdiff")}</text>
+        </line>     
+        <line>
+            <text>------------------------------------------</text>
+        </line>   
+        #foreach ($inventoryline in $inventoryrecord.getLines())
+        <line>
+            <text align ="left" length="12">${inventoryline.printName()}</text>
+            <text align ="right" length="10">${inventoryline.getStockQty()}</text>            
+            #if ($inventoryrecord.getReason().isInput())
+            #set ($diff = ${inventoryline.getStockQty()} + ${inventoryline.getMultiply()})
+            <text align ="right" length="10">+${inventoryline.getMultiply()}</text>
+            <text align ="right" length="10">$diff</text>
+            #else
+            #set ($diff = ${inventoryline.getStockQty()} - ${inventoryline.getMultiply()})
+            <text align ="right" length="10">-${inventoryline.getMultiply()}</text>
+            <text align ="right" length="10">$diff</text>
+            #end
+        </line> 
+        #if ($inventoryline.productAttSetInstId)
+        <line>
+	        <text align ="left" length="42">    ${inventoryline.productAttSetInstDesc}</text>
+        </line>
+        #end
+        #end
+        <line>
+            <text>------------------------------------------</text>
+        </line>   
+    </ticket>
+</output>

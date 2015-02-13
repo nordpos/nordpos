@@ -52,16 +52,19 @@ public class JInventoryLines extends javax.swing.JPanel {
         DefaultTableColumnModel columns = new DefaultTableColumnModel();
         TableColumn c;
 
-        c = new TableColumn(0, 260, new DataCellRenderer(javax.swing.SwingConstants.LEFT), new DefaultCellEditor(new JTextField()));
+        c = new TableColumn(0, 200, new DataCellRenderer(javax.swing.SwingConstants.LEFT), new DefaultCellEditor(new JTextField()));
         c.setHeaderValue(AppLocal.getIntString("label.item"));
         columns.addColumn(c);
-        c = new TableColumn(1, 75, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
-        c.setHeaderValue(AppLocal.getIntString("label.units"));
+        c = new TableColumn(1, 50, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
+        c.setHeaderValue(AppLocal.getIntString("label.stockqty"));
         columns.addColumn(c);
-        c = new TableColumn(2, 75, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
+        c = new TableColumn(2, 100, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
         c.setHeaderValue(AppLocal.getIntString("label.price"));
         columns.addColumn(c);
-        c = new TableColumn(3, 80, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
+        c = new TableColumn(3, 50, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
+        c.setHeaderValue(AppLocal.getIntString("label.units"));
+        columns.addColumn(c);
+        c = new TableColumn(4, 100, new DataCellRenderer(javax.swing.SwingConstants.RIGHT), new DefaultCellEditor(new JTextField()));
         c.setHeaderValue(AppLocal.getIntString("label.value"));
         columns.addColumn(c);
 
@@ -181,7 +184,7 @@ public class JInventoryLines extends javax.swing.JPanel {
 
         @Override
         public int getColumnCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -199,10 +202,12 @@ public class JInventoryLines extends javax.swing.JPanel {
                             ? ""
                             : "<br>" + i.getProductAttSetInstDesc());
                 case 1:
-                    return "x" + Formats.DOUBLE.formatValue(i.getMultiply());
+                    return Formats.DOUBLE.formatValue(i.getStockQty());
                 case 2:
                     return Formats.CURRENCY.formatValue(i.getPriceBuy());
                 case 3:
+                    return "x" + Formats.DOUBLE.formatValue(i.getMultiply());
+                case 4:
                     return Formats.CURRENCY.formatValue(i.getSubValue());
                 default:
                     return null;

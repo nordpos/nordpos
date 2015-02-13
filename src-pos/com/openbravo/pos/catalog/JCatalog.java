@@ -212,12 +212,6 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
         String sProductText = "<p align=\"center\">";
         Double dProductStock = 0.0;
 
-        try {
-            dProductStock = m_dlSales.findProductStock(s_DefLocation, product.getID(), null);
-        } catch (BasicException ex) {
-            Logger.getLogger(JCatalog.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         if (namevisible) {
             sProductText = sProductText.concat(product.getName());
         }
@@ -236,7 +230,12 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
         }
 
         if (stockvisible) {
-            sProductText = sProductText.concat("<br>[" + Formats.DOUBLE.formatValue(new Double(dProductStock)) + "]");
+            try {
+                dProductStock = m_dlSales.findProductStock(s_DefLocation, product.getID(), null);
+            } catch (BasicException ex) {
+                Logger.getLogger(JCatalog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            sProductText = sProductText.concat("<br>[" + Formats.DOUBLE.formatValue(dProductStock) + "]");
         }
 
         return sProductText.concat("</p>");
