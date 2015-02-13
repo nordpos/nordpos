@@ -290,7 +290,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
         });
         jPanel6.add(jButton1);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/launch.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/system-search.png"))); // NOI18N
         jButton3.setText(AppLocal.getIntString("button.executefilter")); // NOI18N
         jButton3.setFocusPainted(false);
         jButton3.setFocusable(false);
@@ -362,8 +362,8 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-613)/2, (screenSize.height-610)/2, 613, 610);
+        setSize(new java.awt.Dimension(613, 610));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void jcmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmdOKActionPerformed
 

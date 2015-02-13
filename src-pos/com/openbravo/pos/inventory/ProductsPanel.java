@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.inventory;
 
 import com.openbravo.basic.BasicException;
@@ -57,12 +56,12 @@ public class ProductsPanel extends JPanelTableExt implements EditorListener {
 
         row = m_dlSales.getProductsRow();
 
-        lpr =  new ListProviderCreator(m_dlSales.getProductCatQBF(), jproductfilter);
+        lpr = new ListProviderCreator(m_dlSales.getProductCatQBF(), jproductfilter);
 
         spr = new SaveProvider(
-            m_dlSales.getProductCatUpdate(),
-            m_dlSales.getProductCatInsert(),
-            m_dlSales.getProductCatDelete());
+                m_dlSales.getProductCatUpdate(),
+                m_dlSales.getProductCatInsert(),
+                m_dlSales.getProductCatDelete());
 
         // el panel del editor
         jeditor = new ProductsEditor(app, m_dlSales, dirty);
@@ -93,7 +92,7 @@ public class ProductsPanel extends JPanelTableExt implements EditorListener {
 
         return btnDevicePLUs;
     }
-    
+
     private void btnExtrasDevicePLUsActionPerformed(java.awt.event.ActionEvent evt) {
         JDlgUploadProducts.showMessage(this, this.app, bd, m_dlSales);
     }

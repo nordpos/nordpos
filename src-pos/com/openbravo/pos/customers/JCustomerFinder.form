@@ -92,7 +92,7 @@
                                   <Component id="m_jtxtSearchKey" min="-2" pref="220" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="29" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -171,7 +171,7 @@
                 <Component class="javax.swing.JButton" name="jButton3">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/com/openbravo/images/launch.png"/>
+                      <Image iconType="3" name="/com/openbravo/images/system-search.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="pos_messages.properties" key="button.executefilter" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>

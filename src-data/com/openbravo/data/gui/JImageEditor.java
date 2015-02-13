@@ -132,7 +132,7 @@ public class JImageEditor extends javax.swing.JPanel {
 
     public void decZoom() {
         double zoom = m_icon.getZoom();
-        setZoom(zoom < 0.5 ? 0.25 : zoom / 2.0);
+        setZoom(zoom < 1.0 ? 0.25 : zoom / 2.0);
     }
 
     public void doLoad() {
@@ -182,7 +182,7 @@ public class JImageEditor extends javax.swing.JPanel {
 
         public ZoomIcon() {
             this.ico = null;
-            this.zoom = 0.5;
+            this.zoom = 1.0;
         }
 
         @Override

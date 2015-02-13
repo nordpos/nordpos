@@ -64,6 +64,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         init();
     }
 
+    @Override
     public Object getBean() {
         return this;
     }
@@ -128,6 +129,10 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
     public Component getFilter() {
         return null;
     }
+    
+    public boolean isToggleFilter() {
+        return jToggleFilter.isSelected();
+    }
 
     protected abstract void init();
 
@@ -149,15 +154,21 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         return null;
     }
 
+    @Override
     public JComponent getComponent() {
         return this;
     }
 
+    @Override
     public void activate() throws BasicException {
+        if(getFilter() == null){
+            jToggleFilter.setVisible(false);
+        }
         startNavigation();
         bd.actionLoad();
     }
 
+    @Override
     public boolean deactivate() {
 
         try {
@@ -179,6 +190,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
 
         container = new javax.swing.JPanel();
         toolbar = new javax.swing.JPanel();
+        jToggleFilter = new javax.swing.JToggleButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
@@ -186,14 +198,30 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         container.setLayout(new java.awt.BorderLayout());
 
         toolbar.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jToggleFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/preferences-filter.png"))); // NOI18N
+        jToggleFilter.setSelected(true);
+        jToggleFilter.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/preferences-filter.png"))); // NOI18N
+        jToggleFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleFilterActionPerformed(evt);
+            }
+        });
+        toolbar.add(jToggleFilter);
+
         container.add(toolbar, java.awt.BorderLayout.NORTH);
 
         add(container, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jToggleFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleFilterActionPerformed
+        getFilter().setVisible(jToggleFilter.isSelected());
+    }//GEN-LAST:event_jToggleFilterActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel container;
+    private javax.swing.JToggleButton jToggleFilter;
     private javax.swing.JPanel toolbar;
     // End of variables declaration//GEN-END:variables
 

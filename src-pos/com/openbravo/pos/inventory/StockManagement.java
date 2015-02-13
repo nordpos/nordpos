@@ -32,6 +32,7 @@ import com.openbravo.pos.catalog.JCatalog;
 import com.openbravo.pos.forms.*;
 import com.nordpos.device.plu.DeviceInputOutput;
 import com.nordpos.device.plu.DeviceInputOutputException;
+import com.nordpos.device.plu.DeviceInputOutputNull;
 import com.nordpos.device.plu.ProductIO;
 import com.nordpos.device.ticket.TicketParser;
 import com.nordpos.device.ticket.TicketPrinterException;

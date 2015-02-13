@@ -202,9 +202,9 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jToggleFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1downarrow.png"))); // NOI18N
+        jToggleFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/preferences-filter.png"))); // NOI18N
         jToggleFilter.setSelected(true);
-        jToggleFilter.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow.png"))); // NOI18N
+        jToggleFilter.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/preferences-filter.png"))); // NOI18N
         jToggleFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleFilterActionPerformed(evt);
@@ -212,7 +212,7 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
         });
         jPanel1.add(jToggleFilter);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/launch.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/applications-office.png"))); // NOI18N
         jButton1.setText(AppLocal.getIntString("Button.ExecuteReport")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

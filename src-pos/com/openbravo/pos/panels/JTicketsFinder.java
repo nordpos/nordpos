@@ -453,7 +453,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         });
         jPanel6.add(jButton1);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/launch.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/system-search.png"))); // NOI18N
         jButton3.setText(AppLocal.getIntString("button.executefilter")); // NOI18N
         jButton3.setFocusPainted(false);
         jButton3.setFocusable(false);
@@ -531,8 +531,8 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_END);
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-695)/2, (screenSize.height-684)/2, 695, 684);
+        setSize(new java.awt.Dimension(695, 684));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void jcmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmdOKActionPerformed
         selectedTicket = (FindTicketsInfo) jListTickets.getSelectedValue();

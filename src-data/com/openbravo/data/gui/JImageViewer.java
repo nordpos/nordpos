@@ -32,25 +32,16 @@ import javax.swing.ImageIcon;
  */
 public class JImageViewer extends javax.swing.JPanel {
     
-    private Dimension m_maxsize;
     private final ZoomIcon m_icon;
     private BufferedImage m_Img = null;
     
     public JImageViewer() {
         initComponents();        
         m_Img = null;
-        m_maxsize = null;
         m_icon = new ZoomIcon();
-        m_icon.setZoom(1);
+        m_icon.setZoom(0.75);
         m_jImage.setIcon(m_icon);
         privateSetEnabled(isEnabled());
-    }
-    
-    public void setMaxDimensions(Dimension size) {
-        m_maxsize = size;
-    }
-    public Dimension getMaxDimensions() {
-        return m_maxsize;
     }
     
     @Override
@@ -79,32 +70,7 @@ public class JImageViewer extends javax.swing.JPanel {
     
     public BufferedImage getImage() {
         return m_Img;
-    }    
-    
-    public double getZoom() {
-        return m_icon.getZoom();
-    }
- 
-    public void setZoom(double zoom) {
-        double oldzoom = m_icon.getZoom();
-        m_icon.setZoom(zoom);
-        
-        m_jImage.revalidate();
-        m_jScr.revalidate();
-        m_jScr.repaint();
-        
-        firePropertyChange("zoom", oldzoom, zoom);
-    }
-    
-    public void incZoom() {        
-        double zoom = m_icon.getZoom();
-        setZoom(zoom > 4.0 ? 8.0 : zoom * 2.0);
-    }
-    
-    public void decZoom() {        
-        double zoom = m_icon.getZoom();
-        setZoom(zoom < 0.5 ? 0.25 : zoom / 2.0);
-    }
+    }        
     
     /** This method is called from within the constructor to
      * initialize the form.

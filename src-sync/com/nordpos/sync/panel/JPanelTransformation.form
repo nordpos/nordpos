@@ -46,7 +46,7 @@
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/openbravo/images/launch.png"/>
+                  <Image iconType="3" name="/com/openbravo/images/applications-accessories.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="sync_messages.properties" key="label.RunTransformation" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>

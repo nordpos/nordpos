@@ -32,6 +32,7 @@ import com.nordpos.device.ticket.DeviceTicketFactory;
 import com.nordpos.device.ticket.TicketParser;
 import com.nordpos.device.ticket.TicketPrinterException;
 import com.nordpos.device.scale.DeviceScaleFactory;
+import com.nordpos.device.util.StringParser;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
@@ -283,8 +284,12 @@ public class JRootApp extends JPanel implements AppView {
         m_Scale = new DeviceScaleFactory(this, m_props);
 
         // Inicializamos la scanpal
-        m_DevicePLUs = DeviceInputOutputFactory.createInstance(m_props);
-
+        if (new StringParser(m_props.getProperty("machine.pludevice")).nextToken(':').equals("Not defined")) {
+            m_DevicePLUs = null;
+        } else {
+            m_DevicePLUs = DeviceInputOutputFactory.createInstance(m_props);
+        }
+        
         // Leemos los recursos basicos
         BufferedImage imgicon = DataLogicSystem.getResourceAsImage("Window.Logo");
         m_jLblTitle.setIcon(imgicon == null ? null : new ImageIcon(imgicon));
