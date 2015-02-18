@@ -933,6 +933,19 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
     }//GEN-LAST:event_m_jKeyFactoryKeyTyped
 
     private void m_jLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jLocationActionPerformed
+        try {
+            int i = 0;
+            String locationId = ((LocationInfo) m_LocationsModel.getSelectedItem()).getID();
+            for (InventoryLine line : m_invlines.getLines()) {
+                line.setStockQty(m_dlSales.findProductStock(locationId, line.getProductID(), line.getProductAttSetInstId()));
+                m_invlines.setLine(i, line);
+                i++;
+            }
+        } catch (BasicException ex) {
+            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindattributes"), ex);
+            msg.show(this);
+        }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
