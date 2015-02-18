@@ -550,6 +550,7 @@ public class StockManagement extends JPanel implements JPanelView {
         m_jDelete = new javax.swing.JButton();
         m_jUp = new javax.swing.JButton();
         m_jDown = new javax.swing.JButton();
+        m_jEditLine = new javax.swing.JButton();
         jEditAttributes = new javax.swing.JButton();
         catcontainer = new javax.swing.JPanel();
 
@@ -776,6 +777,20 @@ public class StockManagement extends JPanel implements JPanelView {
         });
         jPanel7.add(m_jDown);
 
+        m_jEditLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/color_line.png"))); // NOI18N
+        m_jEditLine.setFocusPainted(false);
+        m_jEditLine.setFocusable(false);
+        m_jEditLine.setMaximumSize(new java.awt.Dimension(54, 44));
+        m_jEditLine.setMinimumSize(new java.awt.Dimension(54, 44));
+        m_jEditLine.setPreferredSize(new java.awt.Dimension(54, 44));
+        m_jEditLine.setRequestFocusEnabled(false);
+        m_jEditLine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jEditLineActionPerformed(evt);
+            }
+        });
+        jPanel7.add(m_jEditLine);
+
         jEditAttributes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/colorize.png"))); // NOI18N
         jEditAttributes.setFocusPainted(false);
         jEditAttributes.setFocusable(false);
@@ -977,6 +992,24 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
         }
     }//GEN-LAST:event_m_jbtnStockPreviewActionPerformed
 
+    private void m_jEditLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jEditLineActionPerformed
+
+        int i = m_invlines.getSelectedRow();
+        if (i < 0) {
+            Toolkit.getDefaultToolkit().beep(); // no line selected
+        } else {
+            try {
+                InventoryLine newline = JInventoryLineEdit.showMessage(this, m_App, m_invlines.getLine(i));
+                if (newline != null) {
+                    // line has been modified
+                    m_invlines.setLine(i, newline);
+                }
+            } catch (BasicException e) {
+                new MessageInf(e).show(this);
+            }
+        }
+    }//GEN-LAST:event_m_jEditLineActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDownloadProducts;
     private javax.swing.JPanel catcontainer;
@@ -997,6 +1030,7 @@ private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JPanel jPanel9;
     private javax.swing.JButton m_jDelete;
     private javax.swing.JButton m_jDown;
+    private javax.swing.JButton m_jEditLine;
     private javax.swing.JButton m_jEnter;
     private javax.swing.JTextField m_jKeyFactory;
     private javax.swing.JComboBox m_jLocation;
