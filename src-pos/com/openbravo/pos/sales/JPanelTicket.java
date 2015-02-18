@@ -1457,9 +1457,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jPanTicket = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        m_jDelete = new javax.swing.JButton();
         m_jUp = new javax.swing.JButton();
         m_jDown = new javax.swing.JButton();
-        m_jDelete = new javax.swing.JButton();
         m_jList = new javax.swing.JButton();
         m_jEditLine = new javax.swing.JButton();
         jEditAttributes = new javax.swing.JButton();
@@ -1576,6 +1576,24 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 2));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
+        m_jDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/locationbar_erase.png"))); // NOI18N
+        m_jDelete.setFocusPainted(false);
+        m_jDelete.setFocusable(false);
+        m_jDelete.setMaximumSize(new java.awt.Dimension(54, 44));
+        m_jDelete.setMinimumSize(new java.awt.Dimension(54, 44));
+        m_jDelete.setPreferredSize(new java.awt.Dimension(54, 44));
+        m_jDelete.setRequestFocusEnabled(false);
+        m_jDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jDeleteActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPanel2.add(m_jDelete, gridBagConstraints);
+
         m_jUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow22.png"))); // NOI18N
         m_jUp.setFocusPainted(false);
         m_jUp.setFocusable(false);
@@ -1611,24 +1629,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel2.add(m_jDown, gridBagConstraints);
-
-        m_jDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/locationbar_erase.png"))); // NOI18N
-        m_jDelete.setFocusPainted(false);
-        m_jDelete.setFocusable(false);
-        m_jDelete.setMaximumSize(new java.awt.Dimension(54, 44));
-        m_jDelete.setMinimumSize(new java.awt.Dimension(54, 44));
-        m_jDelete.setPreferredSize(new java.awt.Dimension(54, 44));
-        m_jDelete.setRequestFocusEnabled(false);
-        m_jDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                m_jDeleteActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel2.add(m_jDelete, gridBagConstraints);
 
         m_jList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/search22.png"))); // NOI18N
         m_jList.setFocusPainted(false);
