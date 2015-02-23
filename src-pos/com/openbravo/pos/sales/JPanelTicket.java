@@ -1455,6 +1455,16 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jbtnScale = new javax.swing.JButton();
         m_jPanelBag = new javax.swing.JPanel();
         m_jPanTicket = new javax.swing.JPanel();
+        m_jPanelCentral = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        m_jPanTotals = new javax.swing.JPanel();
+        m_jTotalEuros = new javax.swing.JLabel();
+        m_jLblTotalEuros1 = new javax.swing.JLabel();
+        m_jSubtotalEuros = new javax.swing.JLabel();
+        m_jTaxesEuros = new javax.swing.JLabel();
+        m_jLblTotalEuros2 = new javax.swing.JLabel();
+        m_jLblTotalEuros3 = new javax.swing.JLabel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(1, 0), new java.awt.Dimension(1, 0), new java.awt.Dimension(1, 32767));
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         m_jDelete = new javax.swing.JButton();
@@ -1477,16 +1487,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jDiscount5 = new javax.swing.JButton();
         m_jDiscount6 = new javax.swing.JButton();
         m_jKeypadDiscountMoney = new javax.swing.JButton();
-        m_jPanelCentral = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        m_jPanTotals = new javax.swing.JPanel();
-        m_jTotalEuros = new javax.swing.JLabel();
-        m_jLblTotalEuros1 = new javax.swing.JLabel();
-        m_jSubtotalEuros = new javax.swing.JLabel();
-        m_jTaxesEuros = new javax.swing.JLabel();
-        m_jLblTotalEuros2 = new javax.swing.JLabel();
-        m_jLblTotalEuros3 = new javax.swing.JLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(1, 0), new java.awt.Dimension(1, 0), new java.awt.Dimension(1, 32767));
         m_jContEntries = new javax.swing.JPanel();
         m_jPanEntries = new javax.swing.JPanel();
         m_jNumberKeys = new com.openbravo.beans.JNumberKeys();
@@ -1572,6 +1572,80 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jPanTicket.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 5, 0));
         m_jPanTicket.setLayout(new java.awt.BorderLayout());
+
+        m_jPanelCentral.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        m_jTotalEuros.setFont(m_jTotalEuros.getFont().deriveFont(m_jTotalEuros.getFont().getStyle() | java.awt.Font.BOLD));
+        m_jTotalEuros.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        m_jTotalEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
+        m_jTotalEuros.setOpaque(true);
+        m_jTotalEuros.setPreferredSize(new java.awt.Dimension(150, 25));
+        m_jTotalEuros.setRequestFocusEnabled(false);
+
+        m_jLblTotalEuros1.setText(AppLocal.getIntString("label.totalcash")); // NOI18N
+
+        m_jSubtotalEuros.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        m_jSubtotalEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
+        m_jSubtotalEuros.setOpaque(true);
+        m_jSubtotalEuros.setPreferredSize(new java.awt.Dimension(150, 25));
+        m_jSubtotalEuros.setRequestFocusEnabled(false);
+
+        m_jTaxesEuros.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        m_jTaxesEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
+        m_jTaxesEuros.setOpaque(true);
+        m_jTaxesEuros.setPreferredSize(new java.awt.Dimension(150, 25));
+        m_jTaxesEuros.setRequestFocusEnabled(false);
+
+        m_jLblTotalEuros2.setText(AppLocal.getIntString("label.taxcash")); // NOI18N
+
+        m_jLblTotalEuros3.setText(AppLocal.getIntString("label.subtotalcash")); // NOI18N
+
+        javax.swing.GroupLayout m_jPanTotalsLayout = new javax.swing.GroupLayout(m_jPanTotals);
+        m_jPanTotals.setLayout(m_jPanTotalsLayout);
+        m_jPanTotalsLayout.setHorizontalGroup(
+            m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, m_jPanTotalsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(m_jLblTotalEuros2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(m_jTaxesEuros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filler2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(m_jLblTotalEuros1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(m_jLblTotalEuros3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(m_jSubtotalEuros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jTotalEuros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
+        );
+        m_jPanTotalsLayout.setVerticalGroup(
+            m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(m_jPanTotalsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(m_jLblTotalEuros3)
+                        .addComponent(m_jSubtotalEuros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(m_jTaxesEuros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jLblTotalEuros2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jLblTotalEuros1)
+                    .addComponent(m_jTotalEuros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(m_jPanTotals, java.awt.BorderLayout.LINE_END);
+
+        m_jPanelCentral.add(jPanel4, java.awt.BorderLayout.SOUTH);
+
+        m_jPanTicket.add(m_jPanelCentral, java.awt.BorderLayout.CENTER);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 2));
         jPanel2.setLayout(new java.awt.GridBagLayout());
@@ -1684,6 +1758,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel2.add(jEditAttributes, gridBagConstraints);
 
+        jPanel5.add(jPanel2);
+
         m_jDiscountRatePanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 2));
 
         m_jbtnDiscountRate.setFocusPainted(false);
@@ -1786,6 +1862,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 .addGap(4, 4, 4)
                 .addComponent(m_jKeypadDiscountRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        jPanel5.add(m_jDiscountRatePanel);
 
         m_jDiscountMoneyPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 2));
 
@@ -1896,102 +1974,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 .addComponent(m_jKeypadDiscountMoney, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(m_jDiscountRatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(m_jDiscountMoneyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(m_jDiscountRatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(m_jDiscountMoneyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 129, Short.MAX_VALUE))
-        );
+        jPanel5.add(m_jDiscountMoneyPanel);
 
-        m_jPanTicket.add(jPanel5, java.awt.BorderLayout.EAST);
-
-        m_jPanelCentral.setLayout(new java.awt.BorderLayout());
-
-        jPanel4.setLayout(new java.awt.BorderLayout());
-
-        m_jTotalEuros.setFont(m_jTotalEuros.getFont().deriveFont(m_jTotalEuros.getFont().getStyle() | java.awt.Font.BOLD));
-        m_jTotalEuros.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        m_jTotalEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
-        m_jTotalEuros.setOpaque(true);
-        m_jTotalEuros.setPreferredSize(new java.awt.Dimension(150, 25));
-        m_jTotalEuros.setRequestFocusEnabled(false);
-
-        m_jLblTotalEuros1.setText(AppLocal.getIntString("label.totalcash")); // NOI18N
-
-        m_jSubtotalEuros.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        m_jSubtotalEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
-        m_jSubtotalEuros.setOpaque(true);
-        m_jSubtotalEuros.setPreferredSize(new java.awt.Dimension(150, 25));
-        m_jSubtotalEuros.setRequestFocusEnabled(false);
-
-        m_jTaxesEuros.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        m_jTaxesEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
-        m_jTaxesEuros.setOpaque(true);
-        m_jTaxesEuros.setPreferredSize(new java.awt.Dimension(150, 25));
-        m_jTaxesEuros.setRequestFocusEnabled(false);
-
-        m_jLblTotalEuros2.setText(AppLocal.getIntString("label.taxcash")); // NOI18N
-
-        m_jLblTotalEuros3.setText(AppLocal.getIntString("label.subtotalcash")); // NOI18N
-
-        javax.swing.GroupLayout m_jPanTotalsLayout = new javax.swing.GroupLayout(m_jPanTotals);
-        m_jPanTotals.setLayout(m_jPanTotalsLayout);
-        m_jPanTotalsLayout.setHorizontalGroup(
-            m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, m_jPanTotalsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(m_jLblTotalEuros2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(m_jTaxesEuros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filler2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(m_jLblTotalEuros1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(m_jLblTotalEuros3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(m_jSubtotalEuros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(m_jTotalEuros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
-        );
-        m_jPanTotalsLayout.setVerticalGroup(
-            m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(m_jPanTotalsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(m_jLblTotalEuros3)
-                        .addComponent(m_jSubtotalEuros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(m_jTaxesEuros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(m_jLblTotalEuros2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(m_jPanTotalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(m_jLblTotalEuros1)
-                    .addComponent(m_jTotalEuros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(m_jPanTotals, java.awt.BorderLayout.LINE_END);
-
-        m_jPanelCentral.add(jPanel4, java.awt.BorderLayout.SOUTH);
-
-        m_jPanTicket.add(m_jPanelCentral, java.awt.BorderLayout.CENTER);
+        m_jPanTicket.add(jPanel5, java.awt.BorderLayout.LINE_END);
 
         m_jPanContainer.add(m_jPanTicket, java.awt.BorderLayout.CENTER);
 
