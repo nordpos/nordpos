@@ -28,7 +28,7 @@ import java.awt.Component;
  */
 public interface JPaymentInterface {
     
-    public void activate(CustomerInfoExt customerext, double dTotal, String transactionID);    
+    public void activate(PaymentInfoList paymentInfoList, CustomerInfoExt customerext, double dTotal, String transactionID);    
     public PaymentInfo executePayment();
     public Component getComponent();
 }

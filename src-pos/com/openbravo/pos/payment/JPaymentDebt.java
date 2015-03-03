@@ -16,105 +16,142 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.pos.payment;
 
+import com.openbravo.basic.BasicException;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.customers.CustomerInfoExt;
+import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.util.RoundUtils;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author  adrianromero
+ * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterface {
-    
-    private JPaymentNotifier notifier;
+
+    private final JPaymentNotifier notifier;
+    private final DataLogicSales dlSales;
     private CustomerInfoExt customerext;
-    
+
     private double m_dPaid;
     private double m_dTotal;
 
-    /** Creates new form JPaymentDebt */
-    public JPaymentDebt(JPaymentNotifier notifier) {
-        
+    public JPaymentDebt(JPaymentNotifier notifier, DataLogicSales dlSales) {
+
         this.notifier = notifier;
-        
-        initComponents();  
-        
+        this.dlSales = dlSales;
+
+        initComponents();
+
         m_jTendered.addPropertyChangeListener("Edition", new RecalculateState());
         m_jTendered.addEditorKeys(m_jKeys);
-        
+
     }
-    
-    public void activate(CustomerInfoExt customerext, double dTotal, String transID) {
-        
-        this.customerext = customerext;
+
+    @Override
+    public void activate(PaymentInfoList paymentInfoList, CustomerInfoExt customerext, double dTotal, String transID) {
+
+        if (customerext != null) {
+            try {
+                customerext = dlSales.loadCustomerExt(customerext.getId());
+                double debt = customerext.getCurdebt() == null ? 0.0 : customerext.getCurdebt();
+                for (PaymentInfo payment : paymentInfoList.getPayments()) {
+                    if (payment.getName().equals("debt")) {
+                        debt = debt + payment.getTotal();
+                    }
+                }
+                customerext.setCurdebt(debt);
+            } catch (BasicException ex) {
+                customerext = null;
+            }
+        }
+
         m_dTotal = dTotal;
-        
+
         m_jTendered.reset();
-        
-        // 
+
         if (customerext == null) {
             m_jName.setText(null);
-            m_jNotes.setText(null);
-            txtMaxdebt.setText(null);
-            txtCurdate.setText(null);        
-            txtCurdebt.setText(null);
-            
+
             m_jKeys.setEnabled(false);
             m_jTendered.setEnabled(false);
-            
-            
-        } else {            
+
+        } else {
             m_jName.setText(customerext.getName());
-            m_jNotes.setText(customerext.getNotes());
-            txtMaxdebt.setText(Formats.CURRENCY.formatValue(RoundUtils.getValue(customerext.getMaxdebt())));
-            txtCurdate.setText(Formats.DATE.formatValue(customerext.getCurdate()));        
-            txtCurdebt.setText(Formats.CURRENCY.formatValue(RoundUtils.getValue(customerext.getCurdebt())));   
-                
-            if (RoundUtils.compare(RoundUtils.getValue(customerext.getCurdebt()), RoundUtils.getValue(customerext.getMaxdebt())) >= 0)  {
+
+            if (RoundUtils.compare(RoundUtils.getValue(customerext.getCurdebt()), RoundUtils.getValue(customerext.getMaxdebt())) >= 0) {
                 m_jKeys.setEnabled(false);
-                m_jTendered.setEnabled(false);                
-            } else {    
+                m_jTendered.setEnabled(false);
+            } else {
                 m_jKeys.setEnabled(true);
                 m_jTendered.setEnabled(true);
-                m_jTendered.activate();  
+                m_jTendered.activate();
             }
-        }        
-        
+        }
+
+        this.customerext = customerext;
         printState();
-        
+
     }
+
+    @Override
     public PaymentInfo executePayment() {
-        return new PaymentInfoTicket(m_dPaid, "debt");      
+        try {
+            customerext = dlSales.loadCustomerExt(customerext.getId());
+        } catch (BasicException ex) {
+            return null;
+        }
+
+        if (RoundUtils.compare(RoundUtils.getValue(customerext.getCurdebt()) + m_dPaid, RoundUtils.getValue(customerext.getMaxdebt())) >= 0) {
+            printState();
+            return null;
+        } else {
+            return new PaymentInfoTicket(m_dPaid, "debt");
+        }
+
     }
+
+    @Override
     public Component getComponent() {
         return this;
     }
 
     private void printState() {
-        
+
         if (customerext == null) {
+            m_jNotes.setText(null);
+            txtMaxdebt.setText(null);
+            txtCurdate.setText(null);
+            txtCurdebt.setText(null);
+
             m_jMoneyEuros.setText(null);
             jlblMessage.setText(AppLocal.getIntString("message.nocustomernodebt"));
             notifier.setStatus(false, false);
         } else {
+            m_jNotes.setText(customerext.getNotes());
+            txtMaxdebt.setText(Formats.CURRENCY.formatValue(RoundUtils.getValue(customerext.getMaxdebt())));
+            txtCurdate.setText(Formats.DATE.formatValue(customerext.getCurdate()));
+            txtCurdebt.setText(Formats.CURRENCY.formatValue(RoundUtils.getValue(customerext.getCurdebt())));
+
             Double value = m_jTendered.getDoubleValue();
             if (value == null || value == 0.0) {
                 m_dPaid = m_dTotal;
             } else {
                 m_dPaid = value;
-            } 
+            }
 
-            m_jMoneyEuros.setText(Formats.CURRENCY.formatValue(new Double(m_dPaid)));
-            
-            
-            if (RoundUtils.compare(RoundUtils.getValue(customerext.getCurdebt()) + m_dPaid, RoundUtils.getValue(customerext.getMaxdebt())) >= 0)  { 
+            m_jMoneyEuros.setText(Formats.CURRENCY.formatValue(m_dPaid));
+
+            if (RoundUtils.compare(RoundUtils.getValue(customerext.getCurdebt()) + m_dPaid, RoundUtils.getValue(customerext.getMaxdebt())) >= 0) {
                 // maximum debt exceded
                 jlblMessage.setText(AppLocal.getIntString("message.customerdebtexceded"));
                 notifier.setStatus(false, false);
@@ -124,19 +161,22 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
                 // if iCompare > 0 then the payment is not valid
                 notifier.setStatus(m_dPaid > 0.0 && iCompare <= 0, iCompare == 0);
             }
-        }        
+
+        }
     }
-    
+
     private class RecalculateState implements PropertyChangeListener {
+
+        @Override
         public void propertyChange(PropertyChangeEvent evt) {
             printState();
         }
-    }     
-    
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -284,8 +324,8 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
 
         add(jPanel2, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
@@ -310,5 +350,5 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
     private javax.swing.JTextField txtCurdebt;
     private javax.swing.JTextField txtMaxdebt;
     // End of variables declaration//GEN-END:variables
-    
+
 }
