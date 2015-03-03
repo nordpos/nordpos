@@ -979,15 +979,12 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                     }
                 }
             }
-        } catch (BasicException eData) {
+        } catch (NumberFormatException | BasicException eData) {
             new MessageInf(eData).show(this);
-        } catch (NumberFormatException ex) {
-            Logger.getLogger(JPanelTicket.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-    private boolean closeTicket(TicketInfo ticket, Object ticketext) {
+    private boolean closeTicket(TicketInfo ticket, Object ticketext) throws BasicException {
 
         boolean resultok = false;
 
@@ -1016,7 +1013,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
                     paymentdialog.setTransactionID(ticket.getTransactionID());
 
-                    if (paymentdialog.showDialog(ticket.getTotal(), ticket.getCustomer())) {
+                    if (paymentdialog.showDialog(ticket.getTotal(), dlSales.loadCustomerExt(ticket.getCustomer().getId()))) {
 
                         // assign the payments selected and calculate taxes.
                         ticket.setPayments(paymentdialog.getSelectedPayments());
@@ -2195,21 +2192,23 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 }//GEN-LAST:event_btnCustomerActionPerformed
 
     private void btnSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSplitActionPerformed
+        try {
+            if (m_oTicket.getLinesCount() > 0) {
+                ReceiptSplit splitdialog = ReceiptSplit.getDialog(this, dlSystem.getResourceAsXML("Ticket.Line"), dlSales, dlCustomers, taxeslogic);
 
-        if (m_oTicket.getLinesCount() > 0) {
-            ReceiptSplit splitdialog = ReceiptSplit.getDialog(this, dlSystem.getResourceAsXML("Ticket.Line"), dlSales, dlCustomers, taxeslogic);
+                TicketInfo ticket1 = m_oTicket.copyTicket();
+                TicketInfo ticket2 = new TicketInfo();
+                ticket2.setCustomer(m_oTicket.getCustomer());
 
-            TicketInfo ticket1 = m_oTicket.copyTicket();
-            TicketInfo ticket2 = new TicketInfo();
-            ticket2.setCustomer(m_oTicket.getCustomer());
-
-            if (splitdialog.showDialog(ticket1, ticket2, m_oTicketExt)) {
-                if (closeTicket(ticket2, m_oTicketExt)) { // already checked  that number of lines > 0
-                    setActiveTicket(ticket1, m_oTicketExt);// set result ticket
+                if (splitdialog.showDialog(ticket1, ticket2, m_oTicketExt)) {
+                    if (closeTicket(ticket2, m_oTicketExt)) { // already checked  that number of lines > 0
+                        setActiveTicket(ticket1, m_oTicketExt);// set result ticket
+                    }
                 }
             }
+        } catch (BasicException ex) {
+            new MessageInf(ex).show(this);
         }
-
 }//GEN-LAST:event_btnSplitActionPerformed
 
     private void jEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditAttributesActionPerformed
