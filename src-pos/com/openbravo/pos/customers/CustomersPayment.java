@@ -43,7 +43,6 @@ import com.openbravo.pos.ticket.TicketInfo;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
-import java.util.jar.JarInputStream;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
@@ -51,6 +50,7 @@ import javax.swing.JOptionPane;
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class CustomersPayment extends javax.swing.JPanel implements JPanelView, BeanFactoryApp {
 
@@ -61,7 +61,6 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
     private AppView app;
     private DataLogicCustomers dlcustomers;
     private DataLogicSales dlsales;
-    private DataLogicSystem dlsystem;
     private TicketParser ttp;
     private JPaymentSelect paymentdialog;
 
@@ -85,7 +84,6 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         this.app = app;
         dlcustomers = (DataLogicCustomers) app.getBean(DataLogicCustomers.class.getName());
         dlsales = (DataLogicSales) app.getBean(DataLogicSales.class.getName());
-        dlsystem = (DataLogicSystem) app.getBean(DataLogicSystem.class.getName());
         ttp = new TicketParser(getClass().getResourceAsStream(PRINTER_SHEMA), app.getDeviceTicket());
     }
 
@@ -149,6 +147,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         dirty.setDirty(false);
 
         btnSave.setEnabled(true);
+        btnReload.setEnabled(true);
         btnPay.setEnabled(customer.getCurdebt() != null && customer.getCurdebt() > 0.0);
     }
 
@@ -169,28 +168,33 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         dirty.setDirty(false);
 
         btnSave.setEnabled(false);
+        btnReload.setEnabled(false);
         btnPay.setEnabled(false);
 
     }
 
-    private void readCustomer() {
-
+    private CustomerInfoExt readCustomer(String id, String card) {
+        CustomerInfoExt customer;
         try {
-            CustomerInfoExt customer = dlsales.findCustomerExt(editorcard.getText());
+            if (id != null) {
+                customer = dlsales.loadCustomerExt(id);
+            } else if (card != null) {
+                customer = dlsales.findCustomerExt(card);
+            } else {
+                customer = null;
+            }
             if (customer == null) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"));
                 msg.show(this);
+                return customer;
             } else {
-                editCustomer(customer);
+                return customer;
             }
-
         } catch (BasicException ex) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"), ex);
             msg.show(this);
+            return null;
         }
-
-        editorcard.reset();
-        editorcard.activate();
     }
 
     private void save() {
@@ -240,6 +244,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         btnCustomer = new javax.swing.JButton();
+        btnReload = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnPay = new javax.swing.JButton();
@@ -280,6 +285,18 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
             }
         });
         jPanel6.add(btnCustomer);
+
+        btnReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/reload.png"))); // NOI18N
+        btnReload.setFocusPainted(false);
+        btnReload.setFocusable(false);
+        btnReload.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        btnReload.setRequestFocusEnabled(false);
+        btnReload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReloadActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnReload);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/filesave.png"))); // NOI18N
         btnSave.setFocusPainted(false);
@@ -466,15 +483,15 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        readCustomer();
-
+        editCustomer(readCustomer(null, editorcard.getText()));
+        editorcard.reset();
+        editorcard.activate();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void m_jKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jKeysActionPerformed
-
-        readCustomer();
-
+        editCustomer(readCustomer(null, editorcard.getText()));
+        editorcard.reset();
+        editorcard.activate();
     }//GEN-LAST:event_m_jKeysActionPerformed
 
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
@@ -482,21 +499,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         JCustomerFinder finder = JCustomerFinder.getCustomerFinder(this, dlcustomers);
         finder.search(null);
         finder.setVisible(true);
-        CustomerInfo customer = finder.getSelectedCustomer();
-        if (customer != null) {
-            try {
-                CustomerInfoExt c = dlsales.loadCustomerExt(customer.getId());
-                if (c == null) {
-                    MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"));
-                    msg.show(this);
-                } else {
-                    editCustomer(c);
-                }
-            } catch (BasicException ex) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"), ex);
-                msg.show(this);
-            }
-        }
+        editCustomer(readCustomer(finder.getSelectedCustomer().getId(), null));
         editorcard.reset();
         editorcard.activate();
 
@@ -535,26 +538,12 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
                 msg.show(this);
             }
 
-            // reload customer
-            CustomerInfoExt c;
-            try {
-                c = dlsales.loadCustomerExt(customerext.getId());
-                if (c == null) {
-                    MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"));
-                    msg.show(this);
-                } else {
-                    editCustomer(c);
-                }
-            } catch (BasicException ex) {
-                c = null;
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"), ex);
-                msg.show(this);
-            }
+            editCustomer(readCustomer(customerext.getId(), null));
 
             printTicket(paymentdialog.isPrintSelected()
                     ? PRINT_CUSTOMER_PAID
                     : PRINT_CUSTOMER_PAID_2,
-                    ticket, c);
+                    ticket, customerext);
         }
 
         editorcard.reset();
@@ -572,9 +561,17 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         }
 
 }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
+        editCustomer(readCustomer(customerext.getId(), null));
+        editorcard.reset();
+        editorcard.activate();
+    }//GEN-LAST:event_btnReloadActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomer;
     private javax.swing.JButton btnPay;
+    private javax.swing.JButton btnReload;
     private javax.swing.JButton btnSave;
     private com.openbravo.editor.JEditorString editorcard;
     private javax.swing.JButton jButton1;
