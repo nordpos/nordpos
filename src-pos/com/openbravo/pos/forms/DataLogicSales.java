@@ -50,6 +50,7 @@ import java.util.UUID;
  *
  * @author adrianromero
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3
  */
 public class DataLogicSales extends BeanFactoryDataSingle {
 
@@ -438,6 +439,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
                     if ("debt".equals(p.getName()) || "debtpaid".equals(p.getName())) {
 
+                        ticket.setCustomer(loadCustomerExt(ticket.getCustomer().getId()));
                         // udate customer fields...
                         ticket.getCustomer().updateCurDebt(p.getTotal(), ticket.getDate());
 
@@ -499,7 +501,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 // update customer debts
                 for (PaymentInfo p : ticket.getPayments()) {
                     if ("debt".equals(p.getName()) || "debtpaid".equals(p.getName())) {
-
+                        
+                        ticket.setCustomer(loadCustomerExt(ticket.getCustomer().getId()));
                         // udate customer fields...
                         ticket.getCustomer().updateCurDebt(-p.getTotal(), ticket.getDate());
 
