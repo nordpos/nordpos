@@ -20,7 +20,6 @@
  */
 package com.nordpos.device.util;
 
-import com.openbravo.pos.util.StringUtils;
 import java.io.UnsupportedEncodingException;
 
 /**

@@ -19,12 +19,12 @@
 
 package com.nordpos.device.display;
 
+import com.nordpos.device.util.StringUtils;
+
 /**
  *
  * @author adrianromero
  */
-
-import com.openbravo.pos.util.StringUtils;
 
 public class ScrollAnimator extends BaseAnimator {
 
