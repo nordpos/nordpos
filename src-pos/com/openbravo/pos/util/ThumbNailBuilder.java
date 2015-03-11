@@ -83,7 +83,7 @@ public class ThumbNailBuilder {
         label.setOpaque(false);
         label.setFont(label.getFont().deriveFont((float)m_font_size));
         //label.setText(text);
-        label.setText("<html><p>" + text + "</p></html>");
+        label.setText("<html>" + text + "</html>");
         label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         Dimension d = label.getPreferredSize();
