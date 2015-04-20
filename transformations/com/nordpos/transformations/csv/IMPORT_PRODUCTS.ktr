@@ -766,7 +766,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>${export.dir}&#47;categories.csv</filename>
+    <filename>${import.dir}&#47;categories.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -832,7 +832,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>${export.dir}&#47;products.csv</filename>
+    <filename>${import.dir}&#47;products.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -964,7 +964,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>${export.dir}&#47;taxes.csv</filename>
+    <filename>${import.dir}&#47;taxes.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
