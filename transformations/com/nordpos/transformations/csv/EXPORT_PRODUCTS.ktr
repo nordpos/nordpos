@@ -218,7 +218,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${user.dir}&#47;export&#47;categories</name>
+      <name>${export.dir}&#47;categories</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
@@ -305,7 +305,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${user.dir}&#47;export&#47;products</name>
+      <name>${export.dir}&#47;products</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
@@ -464,7 +464,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${user.dir}&#47;export&#47;taxes</name>
+      <name>${export.dir}&#47;taxes</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
