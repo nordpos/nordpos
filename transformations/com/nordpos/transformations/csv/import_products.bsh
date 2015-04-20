@@ -28,6 +28,6 @@ transformation.addTransVariable("db.URL", this.app.getProperties().getDBURL());
 transformation.addTransVariable("db.driver", this.app.getProperties().getDBDriver());
 transformation.addTransVariable("db.user", this.app.getProperties().getDBUser());
 transformation.addTransVariable("db.password", this.app.getProperties().getDBPassword());
-transformation.addTransVariable("export.dir", "${user.dir}/export");
+transformation.addTransVariable("export.dir", "${user.dir}/import");
 
 transformation;
