@@ -1,6 +1,6 @@
 /*
  * JasperReports - Free Java Reporting Library.
- * Copyright (C) 2001 - 2011 Jaspersoft Corporation. All rights reserved.
+ * Copyright (C) 2001 - 2014 TIBCO Software Inc. All rights reserved.
  * http://www.jaspersoft.com
  *
  * Unless you have purchased a commercial license agreement from Jaspersoft,
@@ -33,7 +33,7 @@
 //    And the redesign of the design properties of the toolbar
 //    Nothing else.
 
-/*    Update for support library jasperreports 4.8.0 for NORD POS
+/*    Update for support library jasperreports 6.2.0 for NORD POS
  *    @author Andrey Svininykh <svininykh@gmail.com>
  *    http://www.nordpos.mobi
  */
@@ -41,6 +41,7 @@
 package com.openbravo.pos.util;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.print.Book;
@@ -49,16 +50,18 @@ import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-
 import javax.print.PrintService;
+
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
-import net.sf.jasperreports.engine.export.JRGraphics2DExporterParameter;
 import net.sf.jasperreports.engine.util.JRGraphEnvInitializer;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleGraphics2DExporterOutput;
+import net.sf.jasperreports.export.SimpleGraphics2DReportConfiguration;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -66,11 +69,13 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
- * @version $Id: JRPrinterAWT.java 3940 2010-08-20 10:35:15Z teodord $
  */
 public class JRPrinterAWT implements Printable
 {
 	private static final Log log = LogFactory.getLog(JRPrinterAWT.class);
+
+	public static final String EXCEPTION_MESSAGE_KEY_INVALID_PAGE_RANGE = "print.invalid.page.range";
+	public static final String EXCEPTION_MESSAGE_KEY_ERROR_PRINTING_REPORT = "print.error.printing.report";
 
 	/**
 	 *
@@ -151,12 +156,11 @@ public class JRPrinterAWT implements Printable
 			lastPageIndex >= jasperPrint.getPages().size()
 			)
 		{
-			throw new JRException(
-				"Invalid page index range : " +
-				firstPageIndex + " - " +
-				lastPageIndex + " of " +
-				jasperPrint.getPages().size()
-				);
+			throw 
+				new JRException(
+					EXCEPTION_MESSAGE_KEY_INVALID_PAGE_RANGE,  
+					new Object[]{firstPageIndex, lastPageIndex, jasperPrint.getPages().size()}
+					);
 		}
 
 		pageOffset = firstPageIndex;
@@ -220,7 +224,11 @@ public class JRPrinterAWT implements Printable
 		}
 		catch (Exception ex)
 		{
-			throw new JRException("Error printing report.", ex);
+			throw 
+				new JRException(
+					EXCEPTION_MESSAGE_KEY_ERROR_PRINTING_REPORT,
+					null, 
+					ex);
 		}
 
 		return isOK;
@@ -232,7 +240,7 @@ public class JRPrinterAWT implements Printable
 	 */
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException
 	{
-		if (Thread.currentThread().isInterrupted())
+		if (Thread.interrupted())
 		{
 			throw new PrinterException("Current thread interrupted.");
 		}
@@ -247,9 +255,13 @@ public class JRPrinterAWT implements Printable
 		try
 		{
 			JRGraphics2DExporter exporter = new JRGraphics2DExporter(jasperReportsContext);
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.jasperPrint);
-			exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, graphics);
-			exporter.setParameter(JRExporterParameter.PAGE_INDEX, Integer.valueOf(pageIndex));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			SimpleGraphics2DExporterOutput output = new SimpleGraphics2DExporterOutput();
+			output.setGraphics2D((Graphics2D)graphics);
+			exporter.setExporterOutput(output);
+			SimpleGraphics2DReportConfiguration configuration = new SimpleGraphics2DReportConfiguration();
+			configuration.setPageIndex(pageIndex);
+			exporter.setConfiguration(configuration);
 			exporter.exportReport();
 		}
 		catch (JRException e)
@@ -271,19 +283,25 @@ public class JRPrinterAWT implements Printable
 	 */
 	public Image printPageToImage(int pageIndex, float zoom) throws JRException
 	{
+		PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
+		
 		Image pageImage = new BufferedImage(
-			(int)(jasperPrint.getPageWidth() * zoom) + 1,
-			(int)(jasperPrint.getPageHeight() * zoom) + 1,
+			(int)(pageFormat.getPageWidth() * zoom) + 1,
+			(int)(pageFormat.getPageHeight() * zoom) + 1,
 			BufferedImage.TYPE_INT_RGB
 			);
 
 		JRGraphics2DExporter exporter = new JRGraphics2DExporter(jasperReportsContext);
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, pageImage.getGraphics());
-		exporter.setParameter(JRExporterParameter.PAGE_INDEX, Integer.valueOf(pageIndex));
-		exporter.setParameter(JRGraphics2DExporterParameter.ZOOM_RATIO, new Float(zoom));
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		SimpleGraphics2DExporterOutput output = new SimpleGraphics2DExporterOutput();
+		output.setGraphics2D((Graphics2D)pageImage.getGraphics());
+		exporter.setExporterOutput(output);
+		SimpleGraphics2DReportConfiguration configuration = new SimpleGraphics2DReportConfiguration();
+		configuration.setPageIndex(pageIndex);
+		configuration.setZoomRatio(zoom);
+		exporter.setConfiguration(configuration);
 		exporter.exportReport();
-
+		
 		return pageImage;
 	}
 
@@ -304,6 +322,9 @@ public class JRPrinterAWT implements Printable
 	}
 	
 	
+	/**
+	 * @deprecated To be removed.
+	 */
 	public static long getImageSize(JasperPrint jasperPrint, float zoom)
 	{
 		int width = (int) (jasperPrint.getPageWidth() * zoom) + 1;

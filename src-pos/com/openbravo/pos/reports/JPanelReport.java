@@ -122,7 +122,7 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
 
     public boolean deactivate() {
 
-        reportviewer.loadJasperPrint(null);
+        reportviewer.clear();
         return true;
     }
 
