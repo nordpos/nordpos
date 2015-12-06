@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2015-12-06T02:00:36 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="customers" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="b6bcc29d-416f-4043-bed7-c565704a5468">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -31,13 +33,13 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 	<pageHeader>
 		<band height="57">
 			<rectangle radius="5">
-				<reportElement uuid="765e97be-283b-4c80-b44d-3d8e26b946d2" key="rectangle-2" mode="Opaque" x="0" y="0" width="530" height="36" forecolor="#000000" backcolor="#003278"/>
+				<reportElement key="rectangle-2" mode="Opaque" x="0" y="0" width="530" height="36" forecolor="#000000" backcolor="#003278" uuid="765e97be-283b-4c80-b44d-3d8e26b946d2"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<image scaleImage="Clip">
-				<reportElement uuid="766df97e-bcbb-4045-a857-4bccad866801" key="image-1" x="390" y="1" width="132" height="34"/>
+				<reportElement key="image-1" x="390" y="1" width="132" height="34" uuid="766df97e-bcbb-4045-a857-4bccad866801"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -47,7 +49,10 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 				<imageExpression><![CDATA[com.openbravo.pos.forms.DataLogicSystem.getResourceAsImage("Window.SupportBy")]]></imageExpression>
 			</image>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement uuid="cc242a91-f7e5-4dcc-b611-32d367f99d34" key="textField-15" mode="Transparent" x="13" y="7" width="375" height="28" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<reportElement key="textField-15" mode="Transparent" x="14" y="8" width="375" height="28" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="cc242a91-f7e5-4dcc-b611-32d367f99d34">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -55,7 +60,7 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{label.title}]]></textFieldExpression>
@@ -68,10 +73,10 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 	<detail>
 		<band height="157">
 			<rectangle radius="8">
-				<reportElement uuid="26ccc6bd-c5d8-441a-ae45-c53cb512d153" key="rectangle-1" mode="Opaque" x="0" y="0" width="236" height="151"/>
+				<reportElement key="rectangle-1" mode="Opaque" x="0" y="0" width="236" height="151" uuid="26ccc6bd-c5d8-441a-ae45-c53cb512d153"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="278190de-c839-4060-ae9e-9e45ea17de63" key="textField" x="21" y="45" width="195" height="20"/>
+				<reportElement key="textField" x="21" y="45" width="195" height="20" uuid="278190de-c839-4060-ae9e-9e45ea17de63"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -79,146 +84,136 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement uuid="d7af9f30-8ff9-4cd9-83f0-6823ae6a048d" key="textField-6" x="270" y="13" width="103" height="18"/>
+				<reportElement key="textField-6" x="270" y="13" width="103" height="18" uuid="d7af9f30-8ff9-4cd9-83f0-6823ae6a048d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[$R{label.maxdebt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement uuid="a69c381e-33e4-47cd-bc07-23ed4f6ecb5b" key="textField-7" x="270" y="33" width="103" height="16"/>
+				<reportElement key="textField-7" x="270" y="33" width="103" height="16" uuid="a69c381e-33e4-47cd-bc07-23ed4f6ecb5b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($F{MAXDEBT})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement uuid="8ef52472-919b-4261-a2e8-1aea1586fc24" key="textField-8" x="270" y="53" width="103" height="18"/>
+				<reportElement key="textField-8" x="270" y="53" width="103" height="18" uuid="8ef52472-919b-4261-a2e8-1aea1586fc24"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[$R{label.curdebt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8b278518-87aa-4002-ab56-5286562aba86" key="textField-9" x="270" y="75" width="103" height="17"/>
+				<reportElement key="textField-9" x="270" y="75" width="103" height="17" uuid="8b278518-87aa-4002-ab56-5286562aba86"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($F{CURDEBT})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement uuid="4cb2d8b5-0d38-49f4-bc25-53b47374b2d8" key="textField-10" x="380" y="53" width="103" height="18"/>
+				<reportElement key="textField-10" x="380" y="53" width="103" height="18" uuid="4cb2d8b5-0d38-49f4-bc25-53b47374b2d8"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[$R{label.curdate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="9655338d-34a3-47e0-9af8-9b8633a6bf97" key="textField-11" x="380" y="75" width="103" height="17"/>
+				<reportElement key="textField-11" x="380" y="75" width="103" height="17" uuid="9655338d-34a3-47e0-9af8-9b8633a6bf97"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[com.openbravo.format.Formats.DATE.formatValue($F{CURDATE})]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="1e8d3f14-7e6a-4be2-96c3-102f6a5871aa" key="line-2" x="270" y="29" width="238" height="1"/>
+				<reportElement key="line-2" x="270" y="29" width="238" height="1" uuid="1e8d3f14-7e6a-4be2-96c3-102f6a5871aa"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="4999a6cf-5069-45a5-9bae-3dd6183afe93" key="line-3" x="270" y="71" width="238" height="1"/>
+				<reportElement key="line-3" x="270" y="71" width="238" height="1" uuid="4999a6cf-5069-45a5-9bae-3dd6183afe93"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="540dcee0-44f3-426e-8082-a5fdba0f1f6f" key="textField-12" x="21" y="80" width="195" height="15"/>
+				<reportElement key="textField-12" x="21" y="80" width="195" height="15" uuid="540dcee0-44f3-426e-8082-a5fdba0f1f6f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement uuid="660ce1b5-6693-42c9-9185-ee07d72ddc1e" key="textField-13" x="270" y="95" width="103" height="18"/>
+				<reportElement key="textField-13" x="270" y="95" width="103" height="18" uuid="660ce1b5-6693-42c9-9185-ee07d72ddc1e"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[$R{label.notes}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="ed534b1c-dfca-4767-867f-273c05a56602" key="textField-14" x="270" y="115" width="238" height="36"/>
+				<reportElement key="textField-14" x="270" y="115" width="238" height="36" uuid="ed534b1c-dfca-4767-867f-273c05a56602"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[$F{NOTES}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="bf02b2f6-94ba-46f0-a050-e8328ae82f25" key="line-4" x="270" y="111" width="238" height="1"/>
+				<reportElement key="line-4" x="270" y="111" width="238" height="1" uuid="bf02b2f6-94ba-46f0-a050-e8328ae82f25"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="14f25011-d549-4afd-b4bc-ff82a07378c3" key="textField-16" x="21" y="65" width="195" height="15"/>
+				<reportElement key="textField-16" x="21" y="65" width="195" height="15" uuid="14f25011-d549-4afd-b4bc-ff82a07378c3"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<textFieldExpression><![CDATA[$F{TAXID}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement uuid="b74f791e-bd52-4b7f-b88e-49103db2b65a" x="21" y="95" width="195" height="50"/>
+				<reportElement x="21" y="95" width="195" height="50" uuid="b74f791e-bd52-4b7f-b88e-49103db2b65a"/>
 				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" moduleWidth="1.4" textPosition="none" quietZone="10.0">
 					<jr:codeExpression><![CDATA[$F{CARD}]]></jr:codeExpression>
 				</jr:Code128>
 			</componentElement>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ae96561a-0eca-411e-b452-e094fda3e54d" key="textField" x="21" y="12" width="195" height="33"/>
+				<reportElement key="textField" x="21" y="12" width="195" height="33" uuid="ae96561a-0eca-411e-b452-e094fda3e54d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -226,7 +221,7 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
-					<font fontName="Dialog" size="10" isBold="true"/>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[com.openbravo.pos.forms.DataLogicSystem.getResourceAsText("Window.Title")]]></textFieldExpression>
 			</textField>
@@ -238,7 +233,7 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 	<pageFooter>
 		<band height="50">
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement uuid="06b42e71-775a-42b9-9af0-18876b7abdc6" key="textField-4" mode="Opaque" x="422" y="12" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-4" mode="Opaque" x="422" y="12" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="06b42e71-775a-42b9-9af0-18876b7abdc6"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -246,13 +241,13 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
-				<reportElement uuid="d926ebd4-f835-4cf8-b265-dd9261f46b04" key="textField-5" mode="Opaque" x="482" y="12" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-5" mode="Opaque" x="482" y="12" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d926ebd4-f835-4cf8-b265-dd9261f46b04"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -260,13 +255,13 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="64c7a9a4-f597-47a5-b197-c11ce52d9863" key="staticText-2" mode="Opaque" x="462" y="12" width="20" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="staticText-2" mode="Opaque" x="462" y="12" width="20" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="64c7a9a4-f597-47a5-b197-c11ce52d9863"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -274,13 +269,13 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="67bbddb2-bfee-4cc7-b729-c2bc6ad2dcd6" key="line-1" mode="Opaque" x="3" y="3" width="532" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="line-1" mode="Opaque" x="3" y="3" width="532" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="67bbddb2-bfee-4cc7-b729-c2bc6ad2dcd6"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>

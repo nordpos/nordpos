@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2015-12-06T02:01:56 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inventorylistdetail" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="f775c494-ec59-4dab-92d2-fc8a16c8b5af">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -49,7 +51,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 		<groupHeader>
 			<band height="71">
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="8b19bccf-6064-4143-9ee2-965d807cfc6c" key="textField-12" mode="Opaque" x="370" y="50" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-12" mode="Opaque" x="370" y="50" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8b19bccf-6064-4143-9ee2-965d807cfc6c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -57,13 +59,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{label.max}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement uuid="c4d5ef64-94f2-43e8-afc6-2ba1b47e735f" key="textField-4" mode="Transparent" x="19" y="15" width="301" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-4" mode="Transparent" x="19" y="15" width="301" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c4d5ef64-94f2-43e8-afc6-2ba1b47e735f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -71,19 +73,19 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{CATEGORYNAME}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement uuid="750a13ab-b719-4428-91e5-65513fc06cec" key="line-4" mode="Opaque" x="10" y="34" width="320" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="line-4" mode="Opaque" x="10" y="34" width="320" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="750a13ab-b719-4428-91e5-65513fc06cec"/>
 					<graphicElement fill="Solid">
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="0e1f9900-f56d-4043-b8bd-3264840f210d" key="textField-11" mode="Opaque" x="290" y="50" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-11" mode="Opaque" x="290" y="50" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0e1f9900-f56d-4043-b8bd-3264840f210d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -91,13 +93,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{label.sec}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="be3e4f4e-cbd8-4a23-8291-f0e7f75fe196" key="textField-11" mode="Opaque" x="450" y="50" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-11" mode="Opaque" x="450" y="50" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="be3e4f4e-cbd8-4a23-8291-f0e7f75fe196"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -105,13 +107,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{label.units}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="f39ea62a-2d4d-40cf-b517-9be11f5d76b9" key="textField-10" mode="Opaque" x="80" y="50" width="200" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-10" mode="Opaque" x="80" y="50" width="200" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f39ea62a-2d4d-40cf-b517-9be11f5d76b9"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -119,13 +121,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{label.name}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="fc43f910-a41e-4b93-bfe8-e3ee90112152" key="textField-9" mode="Opaque" x="0" y="50" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-9" mode="Opaque" x="0" y="50" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="fc43f910-a41e-4b93-bfe8-e3ee90112152"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -133,13 +135,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{label.ref}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement uuid="12ead811-b017-4321-9ad4-ec275b22b569" key="line-1" mode="Opaque" x="0" y="65" width="530" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="line-1" mode="Opaque" x="0" y="65" width="530" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="12ead811-b017-4321-9ad4-ec275b22b569"/>
 					<graphicElement fill="Solid">
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
@@ -155,7 +157,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 		<groupHeader>
 			<band height="20">
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="89812a6b-0acb-4236-99f6-f23bd411736c" key="textField-1" mode="Opaque" x="0" y="0" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-1" mode="Opaque" x="0" y="0" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="89812a6b-0acb-4236-99f6-f23bd411736c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -163,13 +165,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{REFERENCE}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="43fb22ab-451c-471c-9960-80012dea3249" key="textField-3" mode="Opaque" x="80" y="0" width="200" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-3" mode="Opaque" x="80" y="0" width="200" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="43fb22ab-451c-471c-9960-80012dea3249"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -177,13 +179,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="PRODUCTGROUP" pattern="" isBlankWhenNull="false">
-					<reportElement uuid="952f249a-7c78-4743-bf72-cc77f82d5ffb" key="textField-4" mode="Opaque" x="450" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-4" mode="Opaque" x="450" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="952f249a-7c78-4743-bf72-cc77f82d5ffb"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -191,7 +193,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.DOUBLE.formatValue($V{UNITSTOTAL})]]></textFieldExpression>
@@ -201,7 +203,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 		<groupFooter>
 			<band height="3">
 				<line>
-					<reportElement uuid="18e5e219-161b-4bf5-bc4f-19eb13bd2d19" key="line-5" mode="Opaque" x="0" y="0" width="530" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="line-5" mode="Opaque" x="0" y="0" width="530" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="18e5e219-161b-4bf5-bc4f-19eb13bd2d19"/>
 					<graphicElement fill="Solid">
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
@@ -214,7 +216,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 		<groupHeader>
 			<band height="20">
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement uuid="50e952af-e675-43ac-b72b-9c6a2a5b0b40" key="textField-4" mode="Transparent" x="0" y="0" width="290" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-4" mode="Transparent" x="0" y="0" width="290" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="50e952af-e675-43ac-b72b-9c6a2a5b0b40"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -222,13 +224,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{LOCATIONNAME}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="ca882a29-c577-4a1a-88cd-9abaaa190ba4" key="textField-4" mode="Opaque" x="370" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-4" mode="Opaque" x="370" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ca882a29-c577-4a1a-88cd-9abaaa190ba4"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -236,13 +238,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.DOUBLE.formatValue($F{STOCKMAXIMUM})]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement uuid="87ca1b75-8eb5-442e-8f02-734722575256" key="textField-4" mode="Opaque" x="290" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-4" mode="Opaque" x="290" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="87ca1b75-8eb5-442e-8f02-734722575256"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -250,13 +252,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.DOUBLE.formatValue($F{STOCKSECURITY})]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LOCATIONGROUP" pattern="" isBlankWhenNull="false">
-					<reportElement uuid="0a765b84-f447-476c-8c0d-6097f197b463" key="textField-16" mode="Transparent" x="450" y="0" width="80" height="20" forecolor="#FF0000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-16" mode="Transparent" x="450" y="0" width="80" height="20" forecolor="#FF0000" backcolor="#FFFFFF" uuid="0a765b84-f447-476c-8c0d-6097f197b463"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -264,7 +266,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{UNITSTOTALWAREHOUSE}.doubleValue()< $F{STOCKSECURITY}.doubleValue()
@@ -272,7 +274,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 : ""]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LOCATIONGROUP" pattern="" isBlankWhenNull="false">
-					<reportElement uuid="3399148a-da37-4014-b890-d1a60f977509" key="textField-17" mode="Transparent" x="450" y="0" width="80" height="20" forecolor="#3300CC" backcolor="#FFFFFF"/>
+					<reportElement key="textField-17" mode="Transparent" x="450" y="0" width="80" height="20" forecolor="#3300CC" backcolor="#FFFFFF" uuid="3399148a-da37-4014-b890-d1a60f977509"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -280,7 +282,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{UNITSTOTALWAREHOUSE}.doubleValue()> $F{STOCKMAXIMUM}.doubleValue()
@@ -288,7 +290,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 : ""]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="LOCATIONGROUP" pattern="" isBlankWhenNull="false">
-					<reportElement uuid="8c8582c4-847b-4a67-9e55-ddd580a6d907" key="textField-18" mode="Transparent" x="450" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<reportElement key="textField-18" mode="Transparent" x="450" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8c8582c4-847b-4a67-9e55-ddd580a6d907"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -296,7 +298,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="Dialog" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{UNITSTOTALWAREHOUSE}.doubleValue()>= $F{STOCKSECURITY}.doubleValue()
@@ -316,13 +318,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 	<title>
 		<band height="62">
 			<rectangle radius="5">
-				<reportElement uuid="479ce75f-99fb-44ae-85ef-4492ca8c692e" key="rectangle-1" mode="Opaque" x="0" y="0" width="530" height="36" forecolor="#000000" backcolor="#003278"/>
+				<reportElement key="rectangle-1" mode="Opaque" x="0" y="0" width="530" height="36" forecolor="#000000" backcolor="#003278" uuid="479ce75f-99fb-44ae-85ef-4492ca8c692e"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<image scaleImage="Clip">
-				<reportElement uuid="6ef102b7-588a-4813-8a36-15677b9cfacb" key="image-1" x="390" y="1" width="132" height="34"/>
+				<reportElement key="image-1" x="390" y="1" width="132" height="34" uuid="6ef102b7-588a-4813-8a36-15677b9cfacb"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -332,7 +334,10 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 				<imageExpression><![CDATA[com.openbravo.pos.forms.DataLogicSystem.getResourceAsImage("Window.SupportBy")]]></imageExpression>
 			</image>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement uuid="06bee1fd-5310-4c72-ba3e-5cb9eb84b9b5" key="textField-13" mode="Transparent" x="13" y="7" width="375" height="28" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<reportElement key="textField-13" mode="Transparent" x="14" y="8" width="375" height="28" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="06bee1fd-5310-4c72-ba3e-5cb9eb84b9b5">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -340,7 +345,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{label.title}]]></textFieldExpression>
@@ -356,7 +361,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 	<detail>
 		<band height="20">
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement uuid="d5fa0ad9-31f9-4c33-a262-d208649cb5ef" key="textField-4" mode="Opaque" x="450" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-4" mode="Opaque" x="450" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d5fa0ad9-31f9-4c33-a262-d208649cb5ef"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -364,15 +369,15 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[com.openbravo.format.Formats.DOUBLE.formatValue($F{UNITS})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="c9850772-7c9d-40d2-827f-5a7624f9fa89" key="textField-14" x="31" y="0" width="249" height="20"/>
+				<reportElement key="textField-14" x="31" y="0" width="249" height="20" uuid="c9850772-7c9d-40d2-827f-5a7624f9fa89"/>
 				<textElement>
-					<font fontName="Dialog" size="12"/>
+					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ATTINSTANCEDESC}]]></textFieldExpression>
 			</textField>
@@ -384,7 +389,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 	<pageFooter>
 		<band height="44">
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement uuid="9ba426ff-c186-49e1-a537-49b38388abed" key="textField-6" mode="Opaque" x="422" y="17" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-6" mode="Opaque" x="422" y="17" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9ba426ff-c186-49e1-a537-49b38388abed"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -392,13 +397,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
-				<reportElement uuid="c0dc3e5b-93d3-41e9-9ee6-95801da868c9" key="textField-7" mode="Opaque" x="482" y="17" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-7" mode="Opaque" x="482" y="17" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c0dc3e5b-93d3-41e9-9ee6-95801da868c9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -406,13 +411,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="4b17d7e1-9089-4227-8355-5f18ca39e2a1" key="staticText-5" mode="Opaque" x="462" y="17" width="20" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="staticText-5" mode="Opaque" x="462" y="17" width="20" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4b17d7e1-9089-4227-8355-5f18ca39e2a1"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -420,13 +425,13 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
-					<font fontName="Dialog" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="56943bf6-555e-46c1-b9f9-b7a1086a122e" key="line-3" mode="Opaque" x="3" y="7" width="532" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="line-3" mode="Opaque" x="3" y="7" width="532" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="56943bf6-555e-46c1-b9f9-b7a1086a122e"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
