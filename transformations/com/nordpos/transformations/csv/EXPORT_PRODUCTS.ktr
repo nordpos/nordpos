@@ -2,12 +2,12 @@
 <transformation>
   <info>
     <name>EXPORT_PRODUCTS</name>
-    <description/>
+    <description>NORD POS Transformation</description>
     <extended_description/>
-    <trans_version>1.1</trans_version>
+    <trans_version>1.1.0</trans_version>
     <trans_type>Normal</trans_type>
     <trans_status>2</trans_status>
-    <directory>&#47;</directory>
+    <directory>&#x2f;</directory>
     <parameters>
     </parameters>
     <log>
@@ -17,7 +17,7 @@
 <size_limit_lines/>
 <interval/>
 <timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field><field><id>EXECUTING_SERVER</id><enabled>N</enabled><name>EXECUTING_SERVER</name></field><field><id>EXECUTING_USER</id><enabled>N</enabled><name>EXECUTING_USER</name></field><field><id>CLIENT</id><enabled>N</enabled><name>CLIENT</name></field></trans-log-table>
 <perf-log-table><connection/>
 <schema/>
 <table/>
@@ -34,6 +34,11 @@
 <table/>
 <timeout_days/>
 <field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></step-log-table>
+<metrics-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>METRICS_DATE</id><enabled>Y</enabled><name>METRICS_DATE</name></field><field><id>METRICS_CODE</id><enabled>Y</enabled><name>METRICS_CODE</name></field><field><id>METRICS_DESCRIPTION</id><enabled>Y</enabled><name>METRICS_DESCRIPTION</name></field><field><id>METRICS_SUBJECT</id><enabled>Y</enabled><name>METRICS_SUBJECT</name></field><field><id>METRICS_TYPE</id><enabled>Y</enabled><name>METRICS_TYPE</name></field><field><id>METRICS_VALUE</id><enabled>Y</enabled><name>METRICS_VALUE</name></field></metrics-log-table>
     </log>
     <maxdate>
       <connection/>
@@ -62,9 +67,11 @@
     <clusterschemas>
     </clusterschemas>
   <created_user>-</created_user>
-  <created_date>2014&#47;12&#47;21 12:38:40.428</created_date>
+  <created_date>2014&#x2f;12&#x2f;21 12&#x3a;38&#x3a;40.428</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2014&#47;12&#47;21 12:38:40.428</modified_date>
+  <modified_date>2014&#x2f;12&#x2f;21 12&#x3a;38&#x3a;40.428</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
+    <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
@@ -75,14 +82,14 @@
     <access>Native</access>
     <database/>
     <port>1521</port>
-    <username>${db.user}</username>
-    <password>${db.password}</password>
+    <username>&#x24;&#x7b;db.user&#x7d;</username>
+    <password>&#x24;&#x7b;db.password&#x7d;</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
     <attributes>
-      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>${db.driver}</attribute></attribute>
-      <attribute><code>CUSTOM_URL</code><attribute>${db.URL}</attribute></attribute>
+      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>&#x24;&#x7b;db.driver&#x7d;</attribute></attribute>
+      <attribute><code>CUSTOM_URL</code><attribute>&#x24;&#x7b;db.URL&#x7d;</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
@@ -93,30 +100,30 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Output products.csv</from><to>Saved products.csv</to><enabled>Y</enabled> </hop>  <hop> <from>Saved products.csv</from><to>DB input CATEGORIES</to><enabled>Y</enabled> </hop>  <hop> <from>Output categories.csv</from><to>Saved categories.csv</to><enabled>Y</enabled> </hop>  <hop> <from>Saved categories.csv</from><to>DB input TAXCATEGORIES and TAXES</to><enabled>Y</enabled> </hop>  <hop> <from>DB Input PRODUCTS</from><to>Select PRODUCTS values</to><enabled>Y</enabled> </hop>  <hop> <from>Select PRODUCTS values</from><to>Output products.csv</to><enabled>Y</enabled> </hop>  <hop> <from>DB input CATEGORIES</from><to>Select CATEGORIES values</to><enabled>Y</enabled> </hop>  <hop> <from>Select CATEGORIES values</from><to>Output categories.csv</to><enabled>Y</enabled> </hop>  <hop> <from>DB input TAXCATEGORIES and TAXES</from><to>Select TAXCATEGORIES and TAXES values</to><enabled>Y</enabled> </hop>  <hop> <from>Select TAXCATEGORIES and TAXES values</from><to>Output taxes.csv</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Output products.csv</from><to>Saved products.csv</to><enabled>Y</enabled> </hop>
+  <hop> <from>Saved products.csv</from><to>DB input CATEGORIES</to><enabled>Y</enabled> </hop>
+  <hop> <from>Output categories.csv</from><to>Saved categories.csv</to><enabled>Y</enabled> </hop>
+  <hop> <from>Saved categories.csv</from><to>DB input TAXCATEGORIES and TAXES</to><enabled>Y</enabled> </hop>
+  <hop> <from>DB Input PRODUCTS</from><to>Select PRODUCTS values</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select PRODUCTS values</from><to>Output products.csv</to><enabled>Y</enabled> </hop>
+  <hop> <from>DB input CATEGORIES</from><to>Select CATEGORIES values</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select CATEGORIES values</from><to>Output categories.csv</to><enabled>Y</enabled> </hop>
+  <hop> <from>DB input TAXCATEGORIES and TAXES</from><to>Select TAXCATEGORIES and TAXES values</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select TAXCATEGORIES and TAXES values</from><to>Output taxes.csv</to><enabled>Y</enabled> </hop>
+  </order>
   <step>
     <name>DB Input PRODUCTS</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
     <connection>nordpos_db</connection>
-    <sql>SELECT
-  ID 
-, REFERENCE 
-, CODE 
-, NAME 
-, PRICEBUY 
-, PRICESELL 
-, CATEGORY 
-, TAXCAT 
-, ISSCALE 
-FROM PRODUCTS
-</sql>
+    <sql>SELECT&#xa;  ID &#xa;, REFERENCE &#xa;, CODE &#xa;, NAME &#xa;, PRICEBUY &#xa;, PRICESELL &#xa;, CATEGORY &#xa;, TAXCAT &#xa;, ISSCALE &#xa;FROM PRODUCTS&#xa;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -135,18 +142,14 @@ FROM PRODUCTS
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
     <connection>nordpos_db</connection>
-    <sql>SELECT
-  ID
-, NAME
-, CODE
-FROM CATEGORIES
-</sql>
+    <sql>SELECT&#xa;  ID&#xa;, NAME&#xa;, CODE&#xa;FROM CATEGORIES&#xa;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -165,22 +168,14 @@ FROM CATEGORIES
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
     <connection>nordpos_db</connection>
-    <sql>SELECT
-  TAXCATEGORIES.ID
-, TAXCATEGORIES.NAME
-, TAXES.ID
-, TAXES.NAME
-, TAXES.VALIDFROM
-, TAXES.RATE
-FROM TAXCATEGORIES 
-LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
-</sql>
+    <sql>SELECT&#xa;  TAXCATEGORIES.ID&#xa;, TAXCATEGORIES.NAME&#xa;, TAXES.ID&#xa;, TAXES.NAME&#xa;, TAXES.VALIDFROM&#xa;, TAXES.RATE&#xa;FROM TAXCATEGORIES &#xa;LEFT JOIN TAXES ON TAXCATEGORIES.ID &#x3d; TAXES.CATEGORY&#xa;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -188,7 +183,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>470</xloc>
+      <xloc>472</xloc>
       <yloc>459</yloc>
       <draw>Y</draw>
       </GUI>
@@ -199,13 +194,14 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <separator>;</separator>
-    <enclosure>&quot;</enclosure>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
     <enclosure_forced>N</enclosure_forced>
     <enclosure_fix_disabled>N</enclosure_fix_disabled>
     <header>Y</header>
@@ -218,7 +214,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${export.dir}&#47;categories</name>
+      <name>&#x24;&#x7b;export.dir&#x7d;&#x2f;categories</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
@@ -286,13 +282,14 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <separator>;</separator>
-    <enclosure>&quot;</enclosure>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
     <enclosure_forced>N</enclosure_forced>
     <enclosure_fix_disabled>N</enclosure_fix_disabled>
     <header>Y</header>
@@ -305,7 +302,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${export.dir}&#47;products</name>
+      <name>&#x24;&#x7b;export.dir&#x7d;&#x2f;products</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
@@ -374,7 +371,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
       <field>
         <name>PRODUCT_PRICEBUY</name>
         <type>Number</type>
-        <format>#.#</format>
+        <format>&#x23;.&#x23;</format>
         <currency/>
         <decimal/>
         <group/>
@@ -386,7 +383,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
       <field>
         <name>PRODUCT_PRICESELL</name>
         <type>Number</type>
-        <format>#.#</format>
+        <format>&#x23;.&#x23;</format>
         <currency/>
         <decimal/>
         <group/>
@@ -445,13 +442,14 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <separator>;</separator>
-    <enclosure>&quot;</enclosure>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
     <enclosure_forced>N</enclosure_forced>
     <enclosure_fix_disabled>N</enclosure_fix_disabled>
     <header>Y</header>
@@ -464,7 +462,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${export.dir}&#47;taxes</name>
+      <name>&#x24;&#x7b;export.dir&#x7d;&#x2f;taxes</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
@@ -557,7 +555,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>468</xloc>
+      <xloc>472</xloc>
       <yloc>607</yloc>
       <draw>Y</draw>
       </GUI>
@@ -568,19 +566,20 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>BlockingStep</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
       <pass_all_rows>N</pass_all_rows>
-      <directory>%%java.io.tmpdir%%</directory>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
       <prefix>block</prefix>
       <cache_size>5000</cache_size>
       <compress>Y</compress>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>471</xloc>
+      <xloc>472</xloc>
       <yloc>385</yloc>
       <draw>Y</draw>
       </GUI>
@@ -591,13 +590,14 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>BlockingStep</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
       <pass_all_rows>N</pass_all_rows>
-      <directory>%%java.io.tmpdir%%</directory>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
       <prefix>block</prefix>
       <cache_size>5000</cache_size>
       <compress>Y</compress>
@@ -614,6 +614,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -645,6 +646,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -700,6 +702,7 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -743,4 +746,5 @@ LEFT JOIN TAXES ON TAXCATEGORIES.ID = TAXES.CATEGORY
    <slave-step-copy-partition-distribution>
 </slave-step-copy-partition-distribution>
    <slave_transformation>N</slave_transformation>
+
 </transformation>

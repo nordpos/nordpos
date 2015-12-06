@@ -2,12 +2,12 @@
 <transformation>
   <info>
     <name>DUMMY_RANDOM</name>
-    <description/>
+    <description>NORD POS Transformation</description>
     <extended_description/>
-    <trans_version/>
+    <trans_version>1.0.0</trans_version>
     <trans_type>Normal</trans_type>
-    <trans_status>0</trans_status>
-    <directory>&#47;</directory>
+    <trans_status>2</trans_status>
+    <directory>&#x2f;</directory>
     <parameters>
     </parameters>
     <log>
@@ -17,7 +17,7 @@
 <size_limit_lines/>
 <interval/>
 <timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field><field><id>EXECUTING_SERVER</id><enabled>N</enabled><name>EXECUTING_SERVER</name></field><field><id>EXECUTING_USER</id><enabled>N</enabled><name>EXECUTING_USER</name></field><field><id>CLIENT</id><enabled>N</enabled><name>CLIENT</name></field></trans-log-table>
 <perf-log-table><connection/>
 <schema/>
 <table/>
@@ -34,6 +34,11 @@
 <table/>
 <timeout_days/>
 <field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></step-log-table>
+<metrics-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>METRICS_DATE</id><enabled>Y</enabled><name>METRICS_DATE</name></field><field><id>METRICS_CODE</id><enabled>Y</enabled><name>METRICS_CODE</name></field><field><id>METRICS_DESCRIPTION</id><enabled>Y</enabled><name>METRICS_DESCRIPTION</name></field><field><id>METRICS_SUBJECT</id><enabled>Y</enabled><name>METRICS_SUBJECT</name></field><field><id>METRICS_TYPE</id><enabled>Y</enabled><name>METRICS_TYPE</name></field><field><id>METRICS_VALUE</id><enabled>Y</enabled><name>METRICS_VALUE</name></field></metrics-log-table>
     </log>
     <maxdate>
       <connection/>
@@ -62,52 +67,74 @@
     <clusterschemas>
     </clusterschemas>
   <created_user>-</created_user>
-  <created_date>2014&#47;12&#47;19 14:27:44.010</created_date>
+  <created_date>2014&#x2f;12&#x2f;19 14&#x3a;27&#x3a;44.010</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2014&#47;12&#47;19 14:27:44.010</modified_date>
+  <modified_date>2014&#x2f;12&#x2f;19 14&#x3a;27&#x3a;44.010</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
+    <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <order>
-  <hop> <from>Random number</from><to>Number</to><enabled>Y</enabled> </hop>  <hop> <from>Random integer </from><to>Integer</to><enabled>Y</enabled> </hop>  <hop> <from>Get Variables</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Random number</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Random integer </to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Switch &#47; Case</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Abort</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Random string</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Random UUID</to><enabled>Y</enabled> </hop>  <hop> <from>Random string</from><to>String</to><enabled>Y</enabled> </hop>  <hop> <from>Random UUID</from><to>UUID</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Random number</from><to>Number</to><enabled>N</enabled> </hop>
+  <hop> <from>Random integer </from><to>Integer</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get Variables</from><to>Filter rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Switch &#x2f; Case</from><to>Random number</to><enabled>Y</enabled> </hop>
+  <hop> <from>Switch &#x2f; Case</from><to>Random integer </to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Switch &#x2f; Case</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Abort</to><enabled>Y</enabled> </hop>
+  <hop> <from>Switch &#x2f; Case</from><to>Random string</to><enabled>Y</enabled> </hop>
+  <hop> <from>Switch &#x2f; Case</from><to>Random UUID</to><enabled>Y</enabled> </hop>
+  <hop> <from>Random string</from><to>String</to><enabled>Y</enabled> </hop>
+  <hop> <from>Random UUID</from><to>UUID</to><enabled>Y</enabled> </hop>
+  </order>
   <step>
-    <name>Number</name>
-    <type>Dummy</type>
+    <name>Abort</name>
+    <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
+      <row_threshold>0</row_threshold>
+      <message>RANDOM_TYPE is NULL</message>
+      <always_log_rows>Y</always_log_rows>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>640</xloc>
-      <yloc>30</yloc>
+      <xloc>352</xloc>
+      <yloc>230</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Random number</name>
-    <type>RandomValue</type>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>
-      <field>
-        <name>RND_NUMBER</name>
-        <type>random number</type>
-      </field>
-    </fields>
+<send_true_to>Switch &#x2f; Case</send_true_to>
+<send_false_to>Abort</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>RANDOM_TYPE</leftvalue>
+ <function>IS NOT NULL</function>
+ <rightvalue/>
+ </condition>
+    </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>496</xloc>
-      <yloc>30</yloc>
+      <xloc>208</xloc>
+      <yloc>130</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -117,6 +144,7 @@
     <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -125,7 +153,7 @@
     <fields>
       <field>
         <name>RANDOM_TYPE</name>
-        <variable>${dummy.random.type}</variable>
+        <variable>&#x24;&#x7b;dummy.random.type&#x7d;</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -149,6 +177,7 @@
     <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -163,10 +192,55 @@
     </step>
 
   <step>
+    <name>Number</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>640</xloc>
+      <yloc>30</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Random UUID</name>
+    <type>RandomValue</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>UUID</name>
+        <type>random uuid</type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>500</xloc>
+      <yloc>330</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Random integer </name>
     <type>RandomValue</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -187,38 +261,80 @@
     </step>
 
   <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
+    <name>Random number</name>
+    <type>RandomValue</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Switch &#47; Case</send_true_to>
-<send_false_to>Abort</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>RANDOM_TYPE</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- </condition>
-    </compare>
+    <fields>
+      <field>
+        <name>RND_NUMBER</name>
+        <type>random number</type>
+      </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>208</xloc>
-      <yloc>130</yloc>
+      <xloc>496</xloc>
+      <yloc>30</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Switch &#47; Case</name>
+    <name>Random string</name>
+    <type>RandomValue</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>RND_STRING</name>
+        <type>random string</type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>498</xloc>
+      <yloc>230</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>String</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>642</xloc>
+      <yloc>230</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Switch &#x2f; Case</name>
     <type>SwitchCase</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -246,73 +362,11 @@
     </step>
 
   <step>
-    <name>Abort</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <row_threshold>0</row_threshold>
-      <message>RANDOM_TYPE is NULL</message>
-      <always_log_rows>Y</always_log_rows>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>352</xloc>
-      <yloc>230</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>String</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>642</xloc>
-      <yloc>230</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Random string</name>
-    <type>RandomValue</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>RND_STRING</name>
-        <type>random string</type>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>498</xloc>
-      <yloc>230</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>UUID</name>
     <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -326,33 +380,10 @@
       </GUI>
     </step>
 
-  <step>
-    <name>Random UUID</name>
-    <type>RandomValue</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>UUID</name>
-        <type>random uuid</type>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>500</xloc>
-      <yloc>330</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
   <step_error_handling>
   </step_error_handling>
    <slave-step-copy-partition-distribution>
 </slave-step-copy-partition-distribution>
    <slave_transformation>N</slave_transformation>
+
 </transformation>
