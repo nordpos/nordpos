@@ -12,7 +12,7 @@
 -- NORD POS. If not, see <http://www.gnu.org/licenses/>.
 
 -- Database initial script for MYSQL
--- NORD POS v3.0.4CE
+-- NORD POS v3.0.5CE
 
 CREATE TABLE APPLICATIONS (
     ID VARCHAR(255) NOT NULL,
