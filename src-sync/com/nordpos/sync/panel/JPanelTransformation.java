@@ -38,8 +38,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.pentaho.di.core.KettleEnvironment;
 import org.pentaho.di.core.exception.KettleException;
-import org.pentaho.di.core.logging.CentralLogStore;
-import org.pentaho.di.core.logging.Log4jBufferAppender;
+import org.pentaho.di.core.logging.KettleLogStore;
+import org.pentaho.di.core.logging.LoggingBuffer;
 import org.pentaho.di.core.logging.LogLevel;
 import org.pentaho.di.core.util.EnvUtil;
 import org.pentaho.di.trans.Trans;
@@ -170,8 +170,8 @@ public abstract class JPanelTransformation extends JPanel implements JPanelView,
         this.app.waitCursorBegin();
         jPanelRows.setVisible(true);
         Trans t = runTransformationFromResource(getTransformation(), getTransVaribles());
-        // retrieve logging appender
-        Log4jBufferAppender appender = CentralLogStore.getAppender();
+        // retrieve logging appender        
+        LoggingBuffer appender = KettleLogStore.getAppender();        
         // retrieve logging lines for job
         String logText = appender.getBuffer(t.getLogChannelId(), true).toString();
 
