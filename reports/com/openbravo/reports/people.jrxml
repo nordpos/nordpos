@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2015-12-06T12:40:43 -->
+<!-- 2015-12-06T19:34:53 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="people" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="267" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="fedaaed0-22ee-4a4b-9c03-4330adcd2c02">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -78,7 +78,7 @@ FROM PEOPLE, ROLES WHERE PEOPLE.ROLE = ROLES.ID AND PEOPLE.VISIBLE = TRUE AND PE
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
@@ -103,13 +103,18 @@ FROM PEOPLE, ROLES WHERE PEOPLE.ROLE = ROLES.ID AND PEOPLE.VISIBLE = TRUE AND PE
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ROLE}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="16" y="93" width="203" height="50" uuid="2256a3a3-1f76-4641-9403-f1d552d705bc"/>
-				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" moduleWidth="1.4" textPosition="none" quietZone="10.0">
+				<reportElement x="20" y="90" width="196" height="50" uuid="e2e1d764-3a77-4ee5-a242-af189a72bd23">
+					<printWhenExpression><![CDATA[$F{CARD} != null]]></printWhenExpression>
+				</reportElement>
+				<jr:EAN128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<jr:codeExpression><![CDATA[$F{CARD}]]></jr:codeExpression>
-				</jr:Code128>
+				</jr:EAN128>
 			</componentElement>
 		</band>
 	</detail>

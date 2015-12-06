@@ -130,7 +130,7 @@ ORDER BY LOCATIONS.ID, CATEGORIES.NAME, PRODUCTS.NAME]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<font size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{SUMIN})]]></textFieldExpression>
@@ -172,7 +172,7 @@ ORDER BY LOCATIONS.ID, CATEGORIES.NAME, PRODUCTS.NAME]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<font size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue(
@@ -187,10 +187,10 @@ new Double(-1.0 * ((Double)$V{SUMOUT}).doubleValue()))]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<font size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{SUMDIFF})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[com.openbravo.format.Formats.     .formatValue($V{SUMDIFF})]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement key="line-3" mode="Opaque" x="141" y="2" width="390" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="4dae7b02-4d1c-448d-a5eb-3eebd2876f20"/>
@@ -314,7 +314,7 @@ new Double(-1.0 * ((Double)$V{SUMOUT}).doubleValue()))]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<font size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{PARTIALDIFF})]]></textFieldExpression>
@@ -334,7 +334,7 @@ new Double(-1.0 * ((Double)$V{SUMOUT}).doubleValue()))]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<font size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{PARTIALIN})]]></textFieldExpression>
@@ -348,7 +348,7 @@ new Double(-1.0 * ((Double)$V{SUMOUT}).doubleValue()))]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
-						<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<font size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue(

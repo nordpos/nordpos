@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2015-12-06T12:40:28 -->
+<!-- 2015-12-06T19:31:06 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productlabels" columnCount="3" pageWidth="595" pageHeight="842" columnWidth="178" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="07f0638e-c37c-4b0e-9eb9-fd9befb97083">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -85,6 +85,9 @@ FROM PRODUCTS LEFT OUTER JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID LE
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{CATEGORYNAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
@@ -96,7 +99,7 @@ FROM PRODUCTS LEFT OUTER JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID LE
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
@@ -108,6 +111,9 @@ FROM PRODUCTS LEFT OUTER JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID LE
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{TAXCATNAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
@@ -160,7 +166,9 @@ FROM PRODUCTS LEFT OUTER JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID LE
 				<textFieldExpression><![CDATA[com.openbravo.pos.forms.DataLogicSystem.getResourceAsText("Window.Title")]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="14" y="167" width="149" height="50" uuid="6449da02-4ebc-48fa-9ec0-101ad670d706"/>
+				<reportElement x="14" y="167" width="149" height="50" uuid="6449da02-4ebc-48fa-9ec0-101ad670d706">
+					<printWhenExpression><![CDATA[$F{CODE} != null]]></printWhenExpression>
+				</reportElement>
 				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" moduleWidth="1.4" textPosition="bottom" quietZone="10.0" verticalQuietZone="0.0">
 					<jr:codeExpression><![CDATA[$F{CODE}]]></jr:codeExpression>
 				</jr:EAN13>

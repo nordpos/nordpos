@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2015-12-06T01:54:54 -->
+<!-- 2015-12-06T18:29:21 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" pageWidth="595" pageHeight="842" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="32" bottomMargin="32" uuid="fd614d3e-f49f-4d37-848f-ffffd7b3d536">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="74"/>
@@ -48,7 +48,7 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME]]>
 				<textField>
 					<reportElement style="base" x="40" y="6" width="148" height="20" uuid="8bcbd93c-b2e7-4abd-a377-a8658c3ef27a"/>
 					<textElement>
-						<font size="14" isBold="true"/>
+						<font fontName="DejaVu Sans" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{CATEGORY_NAME}]]></textFieldExpression>
 				</textField>
@@ -77,6 +77,9 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME]]>
 				<reportElement style="title" x="2" y="2" width="289" height="32" uuid="3e0b74e0-47d6-4519-80c0-cfe9342e8398">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$R{label.title}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="Clip">
@@ -101,26 +104,44 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME]]>
 			</line>
 			<textField>
 				<reportElement style="header" x="10" y="0" width="25" height="20" uuid="c45f3783-ffcb-4db1-bd08-83f15300e50f"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$R{label.line.number}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="header" x="40" y="0" width="148" height="20" uuid="04488053-d370-4b94-8813-97692d1cf627"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$R{label.product.reference}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="header" x="193" y="0" width="98" height="20" uuid="a540237a-b8a6-45ea-a83f-a444d866a6f1"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$R{label.product.name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="header" x="296" y="0" width="84" height="20" uuid="2b2eae21-ecb4-4b5b-8a31-ca1c8dcb595a"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$R{label.product.price}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="header" x="384" y="0" width="35" height="20" uuid="9145b184-427a-43c0-bc75-0d3fd5245818"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$R{label.product.vat}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="header" x="425" y="0" width="84" height="20" uuid="797cc837-dcc5-4049-93df-aab98e66d549"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$R{label.product.TaxPrice}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -134,7 +155,9 @@ ORDER BY CATEGORIES.NAME, PRODUCTS.NAME]]>
 			</textField>
 			<textField>
 				<reportElement x="193" y="2" width="98" height="32" uuid="aacdbf49-b841-46b4-b7bf-12fe12c7fb96"/>
-				<textElement verticalAlignment="Top"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PRODUCT_NAME}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">

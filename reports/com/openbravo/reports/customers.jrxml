@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2015-12-06T02:00:36 -->
+<!-- 2015-12-06T18:56:09 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="customers" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="b6bcc29d-416f-4043-bed7-c565704a5468">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -84,7 +84,7 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
@@ -207,7 +207,9 @@ WHERE VISIBLE = TRUE AND CARD IS NOT NULL AND CARD <> '']]>
 				<textFieldExpression><![CDATA[$F{TAXID}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="21" y="95" width="195" height="50" uuid="b74f791e-bd52-4b7f-b88e-49103db2b65a"/>
+				<reportElement x="21" y="95" width="195" height="50" uuid="b74f791e-bd52-4b7f-b88e-49103db2b65a">
+					<printWhenExpression><![CDATA[$F{CARD} != null]]></printWhenExpression>
+				</reportElement>
 				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" moduleWidth="1.4" textPosition="none" quietZone="10.0">
 					<jr:codeExpression><![CDATA[$F{CARD}]]></jr:codeExpression>
 				</jr:Code128>
