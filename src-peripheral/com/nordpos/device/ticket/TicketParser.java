@@ -243,9 +243,9 @@ public class TicketParser extends DefaultHandler {
                     case "text":
                         text = new StringBuffer();
                         integerCharacterSize = parseInteger(attributes.getValue("size"));
-                        sUnderline = readString(attributes.getValue("underline"));
+                        sUnderline = readString(attributes.getValue("underline"), "none");
                         bBold = attributes.getValue("bold").equals("true");
-                        String sAlign = readString(attributes.getValue("align"));
+                        String sAlign = readString(attributes.getValue("align"), "left");
                         switch (sAlign) {
                             case "right":
                                 m_iTextAlign = DevicePrinter.ALIGN_RIGHT;
@@ -558,7 +558,7 @@ public class TicketParser extends DefaultHandler {
         try {
             return Integer.parseInt(sValue);
         } catch (NumberFormatException eNF) {
-            return null;
+            return 12;
         }
     }
 
