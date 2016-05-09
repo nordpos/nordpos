@@ -1,85 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    NORD POS is a fork of Openbravo POS.
-
-    Copyright (C) 2009-2015 Nord Trading Ltd. <http://www.nordpos.com>
-
-    This file is part of NORD POS.
-
-    NORD POS is free software: you can redistribute it and/or modify it under the
-    terms of the GNU General Public License as published by the Free Software
-    Foundation, either version 3 of the License, or (at your option) any later
-    version.
-
-    NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
-    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-    A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along with
-    NORD POS. If not, see <http://www.gnu.org/licenses/>.
--->
 
 <output xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
         xsi:noNamespaceSchemaLocation="Schema.Printer.xsd">
-    <label charset="Cp866"
-           length="200"
-           width="384"
-           gap="24"
-           x="0"
-           y="0"
+        <label charset="Cp1251"
+               length="18"
+               width="28"
+               gap="2"
+               x="1"
+               y="1"
+               rotation="0"
+               resolution="8">
+        <text font="B"
+              orientation="0"
+              x="16"
+              y="4"
+              font-height="1"
+              font-width="1"
+              font-weight="B">${product.getReference().substring(5)}</text>
+        
+        <text font="B"
+              orientation="0"
+              x="16"
+              y="28"
+              font-height="1"
+              font-width="1"
+              font-weight="B">NORD OnlineKZ</text>
+              
+        <barcode type="CODE128"
+                 x="0"
+                 y="60"
+                 orientation="0"
+                 position="bottom"
+                 height="40"
+                 dimension="2">${product.getCode()}</barcode>
+    </label>
+    <label charset="Cp1251"
+               length="18"
+               width="28"
+               gap="2"
+               x="1"
+               y="1"
+               rotation="0"
+               resolution="8">
+        <text font="B"
+              orientation="0"
+              x="16"
+              y="4"
+              font-height="1"
+              font-width="1"
+              font-weight="B">PAX S80</text>
+        
+        <text font="B"
+              orientation="0"
+              x="16"
+              y="28"
+              font-height="1"
+              font-width="1"
+              font-weight="B">NORD OnlineKZ</text>
+              
+        <barcode type="EAN13"
+                 x="0"
+                 y="60"
+                 orientation="0"
+                 position="bottom"
+                 height="40"
+                 dimension="2">${product.getCode()}</barcode>
+    </label>
+    <label charset="Cp1251"
+           length="18"
+           width="28"
+           gap="2"
+           x="1"
+           y="1"
            rotation="0"
            resolution="8">
-
-        <rectangle x-begin="0" y-begin="0" x-end="26" y-end="80" />
-
-        <line x-begin="30" y-begin="0" x-end="220" y-end="0" thickness="8" />
-
-        <line x-begin="30" y-begin="72" x-end="220" y-end="72" thickness="8" />
-
-        <frame x-begin="0" y-begin="0" x-end="384" y-end="200" thickness="4" />
-
-        <text font="3"
+        <text font="B"
               orientation="0"
-              x="52"
-              y="32"
+              x="16"
+              y="4"
               font-height="1"
               font-width="1"
-              font-weight="B">${product.getName()}</text>
-              
-        <text font="5"
-              orientation="0"
-              x="228"
-              y="16"
-              font-height="1"
-              font-width="1"
-              font-weight="B">${product.getPriceSell()}</text>
-
-        #set ($barcode = $product.getCode())
-        #if ($barcode.matches("[0-9]{12,13}"))
-        <barcode type="EAN13"
-                 x="160"
-                 y="80"
-                 orientation="0"
-                 position="bottom"
-                 height="70"
-                 dimension="2">${barcode}</barcode>
-        #elseif ($barcode.matches("[0-9]{7,8}"))
-        <barcode type="EAN8"
-                 x="160"
-                 y="80"
-                 orientation="0"
-                 position="bottom"
-                 height="70"
-                 dimension="2">${barcode}</barcode>
-       #else
-       <barcode type="CODE128"
-                 x="160"
-                 y="80"
-                 orientation="0"
-                 position="bottom"
-                 height="70"
-                 dimension="2">${barcode}</barcode>
-        #end
+              font-weight="B">PAX S80</text>
         
+        <text font="B"
+              orientation="0"
+              x="16"
+              y="28"
+              font-height="1"
+              font-width="1"
+              font-weight="B">NORD OnlineKZ</text>
+              
+        <barcode type="EAN13"
+                 x="0"
+                 y="60"
+                 orientation="0"
+                 position="bottom"
+                 height="40"
+                 dimension="2">${product.getCode()}</barcode>
     </label>
 </output>

@@ -5,10 +5,15 @@
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>nordpos</name>
             <source-roots>
-                <root id="src.src-beans.dir"/>
-                <root id="src.src-data.dir"/>
-                <root id="src.src-peripheral.dir"/>
-                <root id="src.src-pos.dir"/>
+                <root id="src.locales.dir"/>
+                <root id="src.reports.dir"/>
+                <root id="src.services.dir"/>
+                <root id="src.templates.dir"/>
+                <root id="src.transformations.dir"/>
+                <root id="src.src-beans.dir" name="Source Packages"/>
+                <root id="src.src-data.dir" name="Source Packages"/>
+                <root id="src.src-peripheral.dir" name="Source Packages"/>
+                <root id="src.src-pos.dir" name="Source Packages"/>
                 <root id="src.src-server.dir"/>
                 <root id="src.src-sync.dir"/>
             </source-roots>
