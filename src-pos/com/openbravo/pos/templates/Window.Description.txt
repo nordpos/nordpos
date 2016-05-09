@@ -1,5 +1,5 @@
 <html><center><b>NORD POS is a fork of Openbravo POS.</b><br>
-Copyright © 2009-2015 Nord Trading Ltd. <a href="http://sourceforge.net/p/nordpos/">http://sourceforge.net/p/nordpos/</a><br>
+Copyright © 2009-2016 Nord Trading Ltd. <a href="http://sourceforge.net/p/nordpos/">http://sourceforge.net/p/nordpos/</a><br>
 <br>
 <b>Openbravo POS application designed for touch screens.</b><br>
 Copyright © 2007-2009 Openbravo, S.L. <a href="http://sourceforge.net/p/openbravopos/">http://sourceforge.net/p/openbravopos/</a><br>
