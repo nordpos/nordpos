@@ -13,9 +13,11 @@
 -- NORD POS. If not, see <http://www.gnu.org/licenses/>.
 
 -- Database upgrade script for MYSQL
--- NORD POS v3.0.4CE -> NORD POS v3.0.5CE  
+-- NORD POS v3.0.5CE -> NORD POS v3.0.6CE  
 
 -- final script
+
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Description.txt} WHERE NAME = 'Window.Description';
 
 DELETE FROM SHAREDTICKETS;
 

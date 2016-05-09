@@ -13,12 +13,13 @@
 -- NORD POS. If not, see <http://www.gnu.org/licenses/>.
 
 -- Database upgrade script for DERBY
--- NORD POS v3.0.2CE -> NORD POS v3.0.4CE
+-- NORD POS v3.0.2CE -> NORD POS v3.0.6CE
 
 UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Administrator.xml} WHERE ID = '0';
 UPDATE ROLES SET PERMISSIONS = $FILE{/com/openbravo/pos/templates/Role.Manager.xml} WHERE ID = '1';
 
 UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Menu.Root.bsh} WHERE NAME = 'Menu.Root';
+UPDATE RESOURCES SET CONTENT = $FILE{/com/openbravo/pos/templates/Window.Description.txt} WHERE NAME = 'Window.Description';
 
 -- final script
 

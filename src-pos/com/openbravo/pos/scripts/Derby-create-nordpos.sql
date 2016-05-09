@@ -13,7 +13,7 @@
 -- NORD POS. If not, see <http://www.gnu.org/licenses/>.
 
 -- Database initial script for DERBY
--- NORD POS v3.0.5CE
+-- NORD POS v3.0.6CE
 
 CREATE TABLE APPLICATIONS (
     ID VARCHAR(256) NOT NULL,
