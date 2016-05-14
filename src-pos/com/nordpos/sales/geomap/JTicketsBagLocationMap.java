@@ -24,19 +24,45 @@ import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.sales.JTicketsBag;
 import com.openbravo.pos.sales.TicketsEditor;
+import com.openbravo.pos.sales.restaurant.Floor;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Insets;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
+import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
+import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
 
-public class JTicketsBagLocationMap extends JTicketsBag {
+public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEventListener {
 
+    private final JMapViewerTree treeMap;
     private final JTicketsBagLocation m_location;
 
     public JTicketsBagLocationMap(AppView app, TicketsEditor panelticket) {
 
         super(app, panelticket);
-        m_location = new JTicketsBagLocation(app, this);
 
+        treeMap = new JMapViewerTree("Ticket");
+        m_location = new JTicketsBagLocation(app, this);
+        //add(, BorderLayout.CENTER);
         initComponents();
+        m_jPanelMap.add(treeMap, BorderLayout.CENTER);
+        map().addJMVListener(this);
+        map().setScrollWrapEnabled(true);
+
+        JPanel jPlaces = new JPanel();
+        jPlaces.applyComponentOrientation(getComponentOrientation());
+        jPlaces.setLayout(new BorderLayout());
+        jPlaces.setBorder(new javax.swing.border.CompoundBorder(
+                new javax.swing.border.EmptyBorder(new Insets(5, 5, 5, 5)),
+                new javax.swing.border.TitledBorder(treeMap.getName())));
+        JPanel jPanCont = new JPanel();
+        jPanCont.applyComponentOrientation(getComponentOrientation());
+
+        m_jPanelMap.add(jPlaces, BorderLayout.CENTER);
+        jPlaces.add(treeMap, BorderLayout.CENTER);
     }
 
     @Override
@@ -71,6 +97,10 @@ public class JTicketsBagLocationMap extends JTicketsBag {
         cl.show(this, view);
     }
 
+    private JMapViewer map() {
+        return treeMap.getViewer();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,6 +112,7 @@ public class JTicketsBagLocationMap extends JTicketsBag {
         m_jPanelMap = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        m_jbtnReservations = new javax.swing.JButton();
         m_jbtnRefresh = new javax.swing.JButton();
         m_jText = new javax.swing.JLabel();
 
@@ -92,6 +123,19 @@ public class JTicketsBagLocationMap extends JTicketsBag {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        m_jbtnReservations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
+        m_jbtnReservations.setText(AppLocal.getIntString("button.reservations")); // NOI18N
+        m_jbtnReservations.setFocusPainted(false);
+        m_jbtnReservations.setFocusable(false);
+        m_jbtnReservations.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jbtnReservations.setRequestFocusEnabled(false);
+        m_jbtnReservations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jbtnReservationsActionPerformed(evt);
+            }
+        });
+        jPanel2.add(m_jbtnReservations);
 
         m_jbtnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/reload.png"))); // NOI18N
         m_jbtnRefresh.setText(AppLocal.getIntString("button.reloadticket")); // NOI18N
@@ -119,6 +163,13 @@ public class JTicketsBagLocationMap extends JTicketsBag {
 
     }//GEN-LAST:event_m_jbtnRefreshActionPerformed
 
+    private void m_jbtnReservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnReservationsActionPerformed
+
+        showView("res");
+//        m_jreservations.activate();
+
+    }//GEN-LAST:event_m_jbtnReservationsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -126,6 +177,19 @@ public class JTicketsBagLocationMap extends JTicketsBag {
     private javax.swing.JPanel m_jPanelMap;
     private javax.swing.JLabel m_jText;
     private javax.swing.JButton m_jbtnRefresh;
+    private javax.swing.JButton m_jbtnReservations;
     // End of variables declaration//GEN-END:variables
+
+    private void updateZoomParameters() {
+
+    }
+
+    @Override
+    public void processCommand(JMVCommandEvent command) {
+        if (command.getCommand().equals(JMVCommandEvent.COMMAND.ZOOM)
+                || command.getCommand().equals(JMVCommandEvent.COMMAND.MOVE)) {
+            updateZoomParameters();
+        }
+    }
 
 }
