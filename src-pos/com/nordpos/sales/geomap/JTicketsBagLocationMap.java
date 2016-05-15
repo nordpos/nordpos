@@ -24,17 +24,25 @@ import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.sales.JTicketsBag;
 import com.openbravo.pos.sales.TicketsEditor;
-import com.openbravo.pos.sales.restaurant.Floor;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
+import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
 
+/**
+ *
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3.1
+ */
 public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEventListener {
 
     private final JMapViewerTree treeMap;
@@ -44,25 +52,49 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
 
         super(app, panelticket);
 
-        treeMap = new JMapViewerTree("Ticket");
+        treeMap = new JMapViewerTree("Tickets");
         m_location = new JTicketsBagLocation(app, this);
-        //add(, BorderLayout.CENTER);
         initComponents();
         m_jPanelMap.add(treeMap, BorderLayout.CENTER);
         map().addJMVListener(this);
         map().setScrollWrapEnabled(true);
 
-        JPanel jPlaces = new JPanel();
-        jPlaces.applyComponentOrientation(getComponentOrientation());
-        jPlaces.setLayout(new BorderLayout());
-        jPlaces.setBorder(new javax.swing.border.CompoundBorder(
+        JPanel jLocations = new JPanel();
+        jLocations.applyComponentOrientation(getComponentOrientation());
+        jLocations.setLayout(new BorderLayout());
+        jLocations.setBorder(new javax.swing.border.CompoundBorder(
                 new javax.swing.border.EmptyBorder(new Insets(5, 5, 5, 5)),
                 new javax.swing.border.TitledBorder(treeMap.getName())));
         JPanel jPanCont = new JPanel();
         jPanCont.applyComponentOrientation(getComponentOrientation());
 
-        m_jPanelMap.add(jPlaces, BorderLayout.CENTER);
-        jPlaces.add(treeMap, BorderLayout.CENTER);
+        m_jPanelMap.add(jLocations, BorderLayout.CENTER);
+        jLocations.add(treeMap, BorderLayout.CENTER);
+
+        map().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                saySomething("Mouse clicked (# of clicks: "
+                        + e.getClickCount() + ")", e);
+                JMapViewerMouseClicked(e);
+            }
+        });
+
+    }
+
+    void saySomething(String eventDescription, MouseEvent e) {
+        m_jText.setText(eventDescription + " detected on "
+                + e.getComponent().getClass().getName()
+                + ".");
+    }
+
+    private void JMapViewerMouseClicked(java.awt.event.MouseEvent evt) {
+        ICoordinate icoord = map().getPosition(evt.getPoint());
+        if (SwingUtilities.isRightMouseButton(evt) && evt.getClickCount() == 1) {
+            map().removeAllMapMarkers();
+            map().addMapMarker(new MapMarkerDot(icoord.getLat(), icoord.getLon()));
+        }
+
     }
 
     @Override
@@ -99,6 +131,18 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
 
     private JMapViewer map() {
         return treeMap.getViewer();
+    }
+
+    private void updateZoomParameters() {
+
+    }
+
+    @Override
+    public void processCommand(JMVCommandEvent command) {
+        if (command.getCommand().equals(JMVCommandEvent.COMMAND.ZOOM)
+                || command.getCommand().equals(JMVCommandEvent.COMMAND.MOVE)) {
+            updateZoomParameters();
+        }
     }
 
     /**
@@ -160,6 +204,7 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
 
     private void m_jbtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnRefreshActionPerformed
 
+        map().removeAllMapMarkers();
 
     }//GEN-LAST:event_m_jbtnRefreshActionPerformed
 
@@ -179,17 +224,5 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
     private javax.swing.JButton m_jbtnRefresh;
     private javax.swing.JButton m_jbtnReservations;
     // End of variables declaration//GEN-END:variables
-
-    private void updateZoomParameters() {
-
-    }
-
-    @Override
-    public void processCommand(JMVCommandEvent command) {
-        if (command.getCommand().equals(JMVCommandEvent.COMMAND.ZOOM)
-                || command.getCommand().equals(JMVCommandEvent.COMMAND.MOVE)) {
-            updateZoomParameters();
-        }
-    }
 
 }
