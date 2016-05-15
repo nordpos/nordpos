@@ -28,7 +28,6 @@ import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.sales.JTicketsBag;
 import com.openbravo.pos.sales.TicketsEditor;
-import com.openbravo.pos.sales.restaurant.Place;
 import com.openbravo.pos.util.RoundUtils;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -36,6 +35,8 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -43,7 +44,6 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
 import org.openstreetmap.gui.jmapviewer.Layer;
-import org.openstreetmap.gui.jmapviewer.LayerGroup;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.Style;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
@@ -58,7 +58,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
  */
 public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEventListener {
 
-    private java.util.List<Place> m_aplaces;    
+    private java.util.List<Marker> m_amarkers;
 
     private final JMapViewerTree treeMap;
     private final JTicketsBagLocation m_location;
@@ -72,12 +72,13 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         try {
             SentenceList sent = new StaticSentence(
                     app.getSession(),
-                    "SELECT ID, NAME, X, Y, FLOOR FROM PLACES ORDER BY FLOOR",
+                    "SELECT ID, NAME, LATITUDE, LONGITUDE, VISIBLE, GEOLAYER FROM GEOMARKERS ORDER BY GEOLAYER",
                     null,
-                    new SerializerReadClass(Place.class));
-            m_aplaces = sent.list();
-        } catch (BasicException eD) {
-            m_aplaces = new ArrayList<>();
+                    new SerializerReadClass(Marker.class));
+            m_amarkers = sent.list();
+        } catch (BasicException ex) {
+            Logger.getLogger(JTicketsBagLocationMap.class.getName()).log(Level.SEVERE, null, ex);
+            m_amarkers = new ArrayList<>();
         }
 
         treeMap = new JMapViewerTree("Tickets");
@@ -108,18 +109,19 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
 
         currentLayer = new Layer("Current");
         currentMarker = new MapMarkerDot(currentLayer, new Coordinate(0, 0));
-        
-        Layer places = new Layer("Places");
-        places.setVisibleTexts(Boolean.TRUE);
+
+        Layer cities = new Layer("Cities");
+        cities.setVisibleTexts(Boolean.TRUE);
         Style style = new Style();
         style.setColor(Color.BLACK);
         style.setBackColor(Color.BLUE);
-        for (Place pl : m_aplaces) {
-            MapMarkerDot markerPlace = new MapMarkerDot(places, pl.getName(), new Coordinate(pl.getX(), pl.getY()), style);
-            map().addMapMarker(markerPlace);
+        for (Marker city : m_amarkers) {
+            if (city.isVisible()) {
+                MapMarkerDot markerCity = new MapMarkerDot(cities, city.getName(), new Coordinate(city.getLatitude(), city.getLongtitude()), style);
+                map().addMapMarker(markerCity);
+            }
         }
 
-        
         //map().addMapMarker(new IconMarker(new Coordinate(icoord.getLat(), icoord.getLon()),
         //        new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/favicon.png")).getImage()));
     }
