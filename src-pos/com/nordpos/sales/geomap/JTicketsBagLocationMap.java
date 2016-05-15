@@ -20,27 +20,36 @@
  */
 package com.nordpos.sales.geomap;
 
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.SentenceList;
+import com.openbravo.data.loader.SerializerReadClass;
+import com.openbravo.data.loader.StaticSentence;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.sales.JTicketsBag;
 import com.openbravo.pos.sales.TicketsEditor;
+import com.openbravo.pos.sales.restaurant.Place;
 import com.openbravo.pos.util.RoundUtils;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
+import org.openstreetmap.gui.jmapviewer.Layer;
+import org.openstreetmap.gui.jmapviewer.LayerGroup;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.Style;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 /**
  *
@@ -49,12 +58,27 @@ import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
  */
 public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEventListener {
 
+    private java.util.List<Place> m_aplaces;    
+
     private final JMapViewerTree treeMap;
     private final JTicketsBagLocation m_location;
+    private final Layer currentLayer;
+    private final MapMarker currentMarker;
 
     public JTicketsBagLocationMap(AppView app, TicketsEditor panelticket) {
 
         super(app, panelticket);
+
+        try {
+            SentenceList sent = new StaticSentence(
+                    app.getSession(),
+                    "SELECT ID, NAME, X, Y, FLOOR FROM PLACES ORDER BY FLOOR",
+                    null,
+                    new SerializerReadClass(Place.class));
+            m_aplaces = sent.list();
+        } catch (BasicException eD) {
+            m_aplaces = new ArrayList<>();
+        }
 
         treeMap = new JMapViewerTree("Tickets");
         m_location = new JTicketsBagLocation(app, this);
@@ -82,19 +106,37 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
             }
         });
 
+        currentLayer = new Layer("Current");
+        currentMarker = new MapMarkerDot(currentLayer, new Coordinate(0, 0));
+        
+        Layer places = new Layer("Places");
+        places.setVisibleTexts(Boolean.TRUE);
+        Style style = new Style();
+        style.setColor(Color.BLACK);
+        style.setBackColor(Color.BLUE);
+        for (Place pl : m_aplaces) {
+            MapMarkerDot markerPlace = new MapMarkerDot(places, pl.getName(), new Coordinate(pl.getX(), pl.getY()), style);
+            map().addMapMarker(markerPlace);
+        }
+
+        
+        //map().addMapMarker(new IconMarker(new Coordinate(icoord.getLat(), icoord.getLon()),
+        //        new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/favicon.png")).getImage()));
     }
 
     private void JMapViewerMouseClicked(java.awt.event.MouseEvent evt) {
         ICoordinate icoord = map().getPosition(evt.getPoint());
         if (SwingUtilities.isRightMouseButton(evt) && evt.getClickCount() == 1) {
-            map().removeAllMapMarkers();
+            map().removeMapMarker(currentMarker);
             m_jLat.setText(AppLocal.getIntString("label.Latitude").concat(":"));
             m_jTextFieldLat.setVisible(true);
-            m_jTextFieldLat.setText(Double.toString(icoord.getLat()));
+            m_jTextFieldLat.setText(Double.toString(RoundUtils.round(icoord.getLat())));
             m_jLon.setText(AppLocal.getIntString("label.Longitude").concat(":"));
             m_jTextFieldLon.setVisible(true);
-            m_jTextFieldLon.setText(Double.toString(icoord.getLon()));
-            map().addMapMarker(new MapMarkerDot(Color.ORANGE, icoord.getLat(), icoord.getLon()));
+            m_jTextFieldLon.setText(Double.toString(RoundUtils.round(icoord.getLon())));
+            currentMarker.setLat(icoord.getLat());
+            currentMarker.setLon(icoord.getLon());
+            map().addMapMarker(currentMarker);
 
         }
 
@@ -221,7 +263,7 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
 
     private void m_jbtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnRefreshActionPerformed
 
-        map().removeAllMapMarkers();
+        map().removeMapMarker(currentMarker);
         m_jLat.setText(null);
         m_jLon.setText(null);
         m_jTextFieldLat.setText(null);
