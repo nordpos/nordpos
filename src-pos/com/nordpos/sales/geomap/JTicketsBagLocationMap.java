@@ -58,7 +58,8 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
  */
 public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEventListener {
 
-    private java.util.List<Marker> m_amarkers;
+    private java.util.List<com.nordpos.sales.geomap.Geomarker> m_amarkers;
+    private java.util.List<com.nordpos.sales.geomap.Geolayer> m_alayers;
 
     private final JMapViewerTree treeMap;
     private final JTicketsBagLocation m_location;
@@ -69,17 +70,7 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
 
         super(app, panelticket);
 
-        try {
-            SentenceList sent = new StaticSentence(
-                    app.getSession(),
-                    "SELECT ID, NAME, LATITUDE, LONGITUDE, VISIBLE, GEOLAYER FROM GEOMARKERS ORDER BY GEOLAYER",
-                    null,
-                    new SerializerReadClass(Marker.class));
-            m_amarkers = sent.list();
-        } catch (BasicException ex) {
-            Logger.getLogger(JTicketsBagLocationMap.class.getName()).log(Level.SEVERE, null, ex);
-            m_amarkers = new ArrayList<>();
-        }
+        DataLogicGeomap dlGeomap = (DataLogicGeomap) app.getBean(DataLogicGeomap.class.getName());
 
         treeMap = new JMapViewerTree("Tickets");
         m_location = new JTicketsBagLocation(app, this);
@@ -110,20 +101,33 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         currentLayer = new Layer("Current");
         currentMarker = new MapMarkerDot(currentLayer, new Coordinate(0, 0));
 
-        Layer cities = new Layer("Cities");
-        cities.setVisibleTexts(Boolean.TRUE);
-        Style style = new Style();
-        style.setColor(Color.BLACK);
-        style.setBackColor(Color.BLUE);
-        for (Marker city : m_amarkers) {
-            if (city.isVisible()) {
-                MapMarkerDot markerCity = new MapMarkerDot(cities, city.getName(), new Coordinate(city.getLatitude(), city.getLongtitude()), style);
-                map().addMapMarker(markerCity);
+        try {
+            m_alayers = dlGeomap.getLayersList().list();
+            for (Geolayer geolayer : m_alayers) {
+                if (geolayer.isVisible()) {
+                    Layer layer = new Layer(geolayer.getName());
+                    layer.setVisibleTexts(Boolean.TRUE);
+                    Style style = new Style();
+                    style.setColor(Color.GRAY);
+                    style.setBackColor(geolayer.getColor());
+                    for (Geomarker geomarker : dlGeomap.getMarkers(geolayer.getId())) {
+                        if (geomarker.isVisible()) {
+                            if (geolayer.getIcon() != null) {
+                                map().addMapMarker(new IconMarker(new Coordinate(geomarker.getLatitude(), geomarker.getLongtitude()),
+                                        geolayer.getIcon()));
+                            } else {
+                                MapMarkerDot markerDot = new MapMarkerDot(layer, geomarker.getName(), new Coordinate(geomarker.getLatitude(), geomarker.getLongtitude()), style);
+                                map().addMapMarker(markerDot);
+                            }
+
+                        }
+                    }
+                }
             }
+        } catch (BasicException ex) {
+            Logger.getLogger(JTicketsBagLocationMap.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //map().addMapMarker(new IconMarker(new Coordinate(icoord.getLat(), icoord.getLon()),
-        //        new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/favicon.png")).getImage()));
     }
 
     private void JMapViewerMouseClicked(java.awt.event.MouseEvent evt) {

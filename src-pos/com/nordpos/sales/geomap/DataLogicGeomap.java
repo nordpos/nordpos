@@ -20,15 +20,19 @@
  */
 package com.nordpos.sales.geomap;
 
+import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.Datas;
+import com.openbravo.data.loader.PreparedSentence;
 import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.loader.SerializerReadClass;
+import com.openbravo.data.loader.SerializerWriteString;
 import com.openbravo.data.loader.Session;
 import com.openbravo.data.loader.StaticSentence;
 import com.openbravo.data.loader.TableDefinition;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.BeanFactoryDataSingle;
+import java.util.List;
 
 /**
  *
@@ -46,9 +50,9 @@ public class DataLogicGeomap extends BeanFactoryDataSingle {
 
     public final SentenceList getLayersList() {
         return new StaticSentence(s,
-                "SELECT ID, NAME, VISIBLE FROM GEOLAYERS ORDER BY NAME",
+                "SELECT ID, NAME, VISIBLE, ICON, COLOUR FROM GEOLAYERS ORDER BY NAME",
                 null,
-                new SerializerReadClass(Layer.class));
+                new SerializerReadClass(Geolayer.class));
     }
 
     public final TableDefinition getTableLayers() {
@@ -61,6 +65,13 @@ public class DataLogicGeomap extends BeanFactoryDataSingle {
                 "NAME",
                 new int[]{0}
         );
+    }
+    
+        public final List<Geomarker> getMarkers(String layerId) throws BasicException  {
+        return new PreparedSentence(s
+            , "SELECT ID, NAME, LATITUDE, LONGITUDE, VISIBLE, GEOLAYER FROM GEOMARKERS WHERE GEOLAYER = ? ORDER BY NAME"
+            , SerializerWriteString.INSTANCE
+            , new SerializerReadClass(Geomarker.class)).list(layerId);
     }
 
 }

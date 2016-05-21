@@ -22,7 +22,10 @@ package com.nordpos.sales.geomap;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.DataRead;
+import com.openbravo.data.loader.ImageUtils;
 import com.openbravo.data.loader.SerializableRead;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 /**
@@ -30,16 +33,15 @@ import java.io.Serializable;
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3.1
  */
-public class Marker implements SerializableRead, Serializable {
+public class Geolayer implements SerializableRead, Serializable {
 
-    private static final long serialVersionUID = 2665445253475073013L;
+    private static final long serialVersionUID = -1347816332754251261L;
 
     private String id;
     private String name;
-    private Double latitude;
-    private Double longtitude;
     private Boolean visible;
-    private String layer;
+    private BufferedImage icon;
+    private String colourCode;
 
     public String getId() {
         return id;
@@ -57,22 +59,6 @@ public class Marker implements SerializableRead, Serializable {
         this.name = name;
     }
 
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongtitude() {
-        return longtitude;
-    }
-
-    public void setLongtitude(Double longtitude) {
-        this.longtitude = longtitude;
-    }
-
     public Boolean isVisible() {
         return visible;
     }
@@ -81,22 +67,38 @@ public class Marker implements SerializableRead, Serializable {
         this.visible = visible;
     }
 
-    public String getLayer() {
-        return layer;
+    public BufferedImage getIcon() {
+        return icon;
     }
 
-    public void setLayer(String layer) {
-        this.layer = layer;
+    public void setIcon(BufferedImage icon) {
+        this.icon = icon;
+    }
+    
+    public Color getColor() {
+        return new Color((int) Integer.decode(colourCode));
     }
 
+    public String getColourCode() {
+        return colourCode;
+    }
+
+    public void setColourCode(String colourCode) {
+        this.colourCode = colourCode;
+    }    
+    
+    
     @Override
     public void readValues(DataRead dr) throws BasicException {
         id = dr.getString(1);
         name = dr.getString(2);
-        latitude = dr.getDouble(3);
-        longtitude = dr.getDouble(4);
-        visible = dr.getBoolean(5);
-        layer = dr.getString(6);
+        visible = dr.getBoolean(3);
+        icon = ImageUtils.readImage(dr.getBytes(4));
+        colourCode = dr.getString(5);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }
