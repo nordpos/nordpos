@@ -77,8 +77,6 @@
 <!--    <class name="/com/openbravo/reports/salecatalog.bsh"/> -->
     <class name="/com/openbravo/reports/chartsales.bsh"/>
     <class name="/com/nordpos/reports/piesalescat.bsh"/>
-    <class name="com.openbravo.sync.process.ProductsSyncCreate"/>
-    <class name="com.openbravo.sync.process.OrdersSyncCreate"/>
     <class name="Menu.ChangePassword"/>
     <class name="button.print"/>
     <class name="button.opendrawer"/>

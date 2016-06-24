@@ -18,7 +18,7 @@
     <Container class="javax.swing.JPanel" name="m_jPanelMap">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="map"/>
+          <CardConstraints cardName="geomap"/>
         </Constraint>
       </Constraints>
 
@@ -81,20 +81,6 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="m_jbtnRefreshActionPerformed"/>
                   </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="m_jLat">
-                </Component>
-                <Component class="javax.swing.JTextField" name="m_jTextFieldLat">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="m_jLon">
-                </Component>
-                <Component class="javax.swing.JTextField" name="m_jTextFieldLon">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="m_jText">
                 </Component>

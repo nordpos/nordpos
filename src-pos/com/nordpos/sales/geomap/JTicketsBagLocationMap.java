@@ -58,8 +58,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
  */
 public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEventListener {
 
-    private java.util.List<com.nordpos.sales.geomap.Geomarker> m_amarkers;
-    private java.util.List<com.nordpos.sales.geomap.Geolayer> m_alayers;
+    private java.util.List<Geolayer> m_alayers;
 
     private final JMapViewerTree treeMap;
     private final JTicketsBagLocation m_location;
@@ -75,7 +74,6 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         treeMap = new JMapViewerTree("Tickets");
         m_location = new JTicketsBagLocation(app, this);
         initComponents();
-        m_jPanelMap.add(treeMap, BorderLayout.CENTER);
         map().addJMVListener(this);
         map().setScrollWrapEnabled(true);
 
@@ -127,34 +125,24 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         } catch (BasicException ex) {
             Logger.getLogger(JTicketsBagLocationMap.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void JMapViewerMouseClicked(java.awt.event.MouseEvent evt) {
         ICoordinate icoord = map().getPosition(evt.getPoint());
         if (SwingUtilities.isRightMouseButton(evt) && evt.getClickCount() == 1) {
             map().removeMapMarker(currentMarker);
-            m_jLat.setText(AppLocal.getIntString("label.Latitude").concat(":"));
-            m_jTextFieldLat.setVisible(true);
-            m_jTextFieldLat.setText(Double.toString(RoundUtils.round(icoord.getLat())));
-            m_jLon.setText(AppLocal.getIntString("label.Longitude").concat(":"));
-            m_jTextFieldLon.setVisible(true);
-            m_jTextFieldLon.setText(Double.toString(RoundUtils.round(icoord.getLon())));
             currentMarker.setLat(icoord.getLat());
             currentMarker.setLon(icoord.getLon());
             map().addMapMarker(currentMarker);
-
         }
 
     }
 
     @Override
     public void activate() {
-        m_jTextFieldLat.setVisible(false);
-        m_jTextFieldLon.setVisible(false);
         m_panelticket.setActiveTicket(null, null);
         m_location.activate();
-        showView("map");
+        showView("geomap");
     }
 
     @Override
@@ -211,10 +199,6 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         jPanel2 = new javax.swing.JPanel();
         m_jbtnReservations = new javax.swing.JButton();
         m_jbtnRefresh = new javax.swing.JButton();
-        m_jLat = new javax.swing.JLabel();
-        m_jTextFieldLat = new javax.swing.JTextField();
-        m_jLon = new javax.swing.JLabel();
-        m_jTextFieldLon = new javax.swing.JTextField();
         m_jText = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
@@ -250,32 +234,18 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
             }
         });
         jPanel2.add(m_jbtnRefresh);
-        jPanel2.add(m_jLat);
-
-        m_jTextFieldLat.setEditable(false);
-        jPanel2.add(m_jTextFieldLat);
-        jPanel2.add(m_jLon);
-
-        m_jTextFieldLon.setEditable(false);
-        jPanel2.add(m_jTextFieldLon);
         jPanel2.add(m_jText);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.LINE_START);
 
         m_jPanelMap.add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        add(m_jPanelMap, "map");
+        add(m_jPanelMap, "geomap");
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jbtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnRefreshActionPerformed
 
         map().removeMapMarker(currentMarker);
-        m_jLat.setText(null);
-        m_jLon.setText(null);
-        m_jTextFieldLat.setText(null);
-        m_jTextFieldLat.setVisible(false);
-        m_jTextFieldLon.setText(null);
-        m_jTextFieldLon.setVisible(false);
 
     }//GEN-LAST:event_m_jbtnRefreshActionPerformed
 
@@ -290,12 +260,8 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel m_jLat;
-    private javax.swing.JLabel m_jLon;
     private javax.swing.JPanel m_jPanelMap;
     private javax.swing.JLabel m_jText;
-    private javax.swing.JTextField m_jTextFieldLat;
-    private javax.swing.JTextField m_jTextFieldLon;
     private javax.swing.JButton m_jbtnRefresh;
     private javax.swing.JButton m_jbtnReservations;
     // End of variables declaration//GEN-END:variables

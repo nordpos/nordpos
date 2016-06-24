@@ -86,11 +86,11 @@
     <class name="com.openbravo.pos.inventory.LocationsPanel"/>
     <class name="com.openbravo.pos.mant.JPanelFloors"/>
     <class name="com.openbravo.pos.mant.JPanelPlaces"/>
+    <class name="com.nordpos.sales.geomap.JPanelLayers"/>
+    <class name="com.nordpos.sales.geomap.JPanelMarkers"/>
     <class name="com.openbravo.pos.config.JPanelSettingsDefault"/>
     <class name="/com/openbravo/reports/people.bsh"/>
     <class name="/com/openbravo/reports/chartsales.bsh"/>
-<!--     <class name="com.nordpos.sync.process.ProductsSyncCreate"/>
-    <class name="com.nordpos.sync.panel.JPanelConfigSync"/> -->
     <class name="/com/nordpos/transformations/dummy/dummy_random.bsh"/>
     <class name="/com/nordpos/transformations/csv/import_products.bsh"/>    
     <class name="/com/nordpos/transformations/csv/export_products.bsh"/>

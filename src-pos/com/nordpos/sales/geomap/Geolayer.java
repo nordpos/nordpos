@@ -22,18 +22,18 @@ package com.nordpos.sales.geomap;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.DataRead;
+import com.openbravo.data.loader.IKeyed;
 import com.openbravo.data.loader.ImageUtils;
 import com.openbravo.data.loader.SerializableRead;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3.1
  */
-public class Geolayer implements SerializableRead, Serializable {
+public class Geolayer implements SerializableRead, IKeyed {
 
     private static final long serialVersionUID = -1347816332754251261L;
 
@@ -100,5 +100,10 @@ public class Geolayer implements SerializableRead, Serializable {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public Object getKey() {
+        return id;
     }
 }

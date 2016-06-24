@@ -66,12 +66,21 @@ public class DataLogicGeomap extends BeanFactoryDataSingle {
                 new int[]{0}
         );
     }
-    
-        public final List<Geomarker> getMarkers(String layerId) throws BasicException  {
-        return new PreparedSentence(s
-            , "SELECT ID, NAME, LATITUDE, LONGITUDE, VISIBLE, GEOLAYER FROM GEOMARKERS WHERE GEOLAYER = ? ORDER BY NAME"
-            , SerializerWriteString.INSTANCE
-            , new SerializerReadClass(Geomarker.class)).list(layerId);
+
+    TableDefinition getTableMarkers() {
+        return new TableDefinition(s,
+                "GEOMARKERS",
+                new String[]{"ID", "NAME", "LATITUDE", "LONGITUDE", "VISIBLE", "GEOLAYER"},
+                new String[]{"ID", AppLocal.getIntString("Label.Name"), "", "", "", ""},
+                new Datas[]{Datas.STRING, Datas.STRING, Datas.DOUBLE, Datas.DOUBLE, Datas.BOOLEAN, Datas.STRING},
+                new Formats[]{Formats.NULL, Formats.STRING, Formats.DOUBLE, Formats.DOUBLE, Formats.BOOLEAN, Formats.STRING},
+                "NAME",
+                new int[]{0}
+        );
+    }
+
+    public final List<Geomarker> getMarkers(String layerId) throws BasicException {
+        return new PreparedSentence(s, "SELECT ID, NAME, LATITUDE, LONGITUDE, VISIBLE, GEOLAYER FROM GEOMARKERS WHERE GEOLAYER = ? ORDER BY NAME", SerializerWriteString.INSTANCE, new SerializerReadClass(Geomarker.class)).list(layerId);
     }
 
 }
