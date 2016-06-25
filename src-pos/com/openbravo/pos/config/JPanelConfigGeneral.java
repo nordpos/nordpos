@@ -92,6 +92,7 @@ public class JPanelConfigGeneral extends javax.swing.JPanel implements PanelConf
         jcboTicketsBag.addItem("simple");
         jcboTicketsBag.addItem("standard");
         jcboTicketsBag.addItem("restaurant");
+        jcboTicketsBag.addItem("geomap");
 
     }
 
