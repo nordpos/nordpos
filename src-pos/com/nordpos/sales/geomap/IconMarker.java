@@ -24,6 +24,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.Layer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
@@ -35,12 +36,12 @@ public class IconMarker extends MapMarkerCircle implements MapMarker {
 
     private Image image;
 
-    public IconMarker(Coordinate coord, Image image) {
-        this(coord, 1, image);
+    public IconMarker(Layer layer, Coordinate coord, Image image) {
+        this(layer, coord, 1, image);
     }
 
-    public IconMarker(Coordinate coord, double radius, Image image) {
-        super(coord, radius);
+    public IconMarker(Layer layer, Coordinate coord, double radius, Image image) {
+        super(layer, coord, radius);
         this.image = image;
     }
 

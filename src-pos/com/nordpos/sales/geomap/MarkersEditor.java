@@ -30,7 +30,12 @@ import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.data.user.DirtyManager;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 /**
  *
@@ -90,7 +95,7 @@ public class MarkersEditor extends JPanel implements EditorRecord {
 
         m_sID = UUID.randomUUID().toString();
         m_jName.setText(null);
-        m_LayerModel.setSelectedKey(null);
+        m_LayerModel.setSelectedFirst();
         m_jLatitude.setText(null);
         m_jLongitude.setText(null);
         m_jVisible.setSelected(true);
@@ -143,8 +148,8 @@ public class MarkersEditor extends JPanel implements EditorRecord {
         Object[] marker = new Object[6];
         marker[0] = m_sID;
         marker[1] = m_jName.getText();
-        marker[2] = Formats.DOUBLE.parseValue(m_jLatitude.getText());
-        marker[3] = Formats.DOUBLE.parseValue(m_jLongitude.getText());
+        marker[2] = (Double) Formats.DOUBLE.parseValue(m_jLatitude.getText());
+        marker[3] = (Double) Formats.DOUBLE.parseValue(m_jLongitude.getText());
         marker[4] = m_jVisible.isSelected();
         marker[5] = m_LayerModel.getSelectedKey();
 
@@ -244,8 +249,25 @@ public class MarkersEditor extends JPanel implements EditorRecord {
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jPositionActionPerformed
-        JMarkerEdit editor = JMarkerEdit.getMarkerLocation(this);
-        editor.setVisible(true);
+        try {
+            JMarkerEdit editor = JMarkerEdit.getMarkerLocation(this);
+            Geomarker marker = new Geomarker();
+            Geolayer layer = (Geolayer) m_LayerModel.getSelectedItem();
+            marker.setLayerId(layer.getId());
+            marker.setLatitude((Double) (m_jLatitude.getText().isEmpty() ? 0.0 : Formats.DOUBLE.parseValue(m_jLatitude.getText())));
+            marker.setLongtitude((Double) (m_jLongitude.getText().isEmpty() ? 0.0 : Formats.DOUBLE.parseValue(m_jLongitude.getText())));
+            editor.editMarker(layer, marker);
+            editor.setVisible(true);
+            if (editor.isOK()) {
+                MathContext mc = new MathContext(6);
+                marker.setLatitude(BigDecimal.valueOf(editor.getMapMarker().getLat()).round(mc).doubleValue());
+                marker.setLongtitude(BigDecimal.valueOf(editor.getMapMarker().getLon()).round(mc).doubleValue());
+                m_jLatitude.setText(Formats.DOUBLE.formatValue(marker.getLatitude()));
+                m_jLongitude.setText(Formats.DOUBLE.formatValue(marker.getLongtitude()));
+            }
+        } catch (BasicException ex) {
+            Logger.getLogger(MarkersEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_m_jPositionActionPerformed
 
 

@@ -64,12 +64,13 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
     private final JTicketsBagLocation m_location;
     private final Layer currentLayer;
     private final MapMarker currentMarker;
+    private final DataLogicGeomap dlGeomap;
 
     public JTicketsBagLocationMap(AppView app, TicketsEditor panelticket) {
 
         super(app, panelticket);
 
-        DataLogicGeomap dlGeomap = (DataLogicGeomap) app.getBean(DataLogicGeomap.class.getName());
+        dlGeomap = (DataLogicGeomap) app.getBean(DataLogicGeomap.class.getName());
 
         treeMap = new JMapViewerTree("Tickets");
         m_location = new JTicketsBagLocation(app, this);
@@ -100,28 +101,7 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         currentMarker = new MapMarkerDot(currentLayer, new Coordinate(0, 0));
 
         try {
-            m_alayers = dlGeomap.getLayersList().list();
-            for (Geolayer geolayer : m_alayers) {
-                if (geolayer.isVisible()) {
-                    Layer layer = new Layer(geolayer.getName());
-                    layer.setVisibleTexts(Boolean.TRUE);
-                    Style style = new Style();
-                    style.setColor(Color.GRAY);
-                    style.setBackColor(geolayer.getColor());
-                    for (Geomarker geomarker : dlGeomap.getMarkers(geolayer.getId())) {
-                        if (geomarker.isVisible()) {
-                            if (geolayer.getIcon() != null) {
-                                map().addMapMarker(new IconMarker(new Coordinate(geomarker.getLatitude(), geomarker.getLongtitude()),
-                                        geolayer.getIcon()));
-                            } else {
-                                MapMarkerDot markerDot = new MapMarkerDot(layer, geomarker.getName(), new Coordinate(geomarker.getLatitude(), geomarker.getLongtitude()), style);
-                                map().addMapMarker(markerDot);
-                            }
-
-                        }
-                    }
-                }
-            }
+            reload();
         } catch (BasicException ex) {
             Logger.getLogger(JTicketsBagLocationMap.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -135,7 +115,6 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
             currentMarker.setLon(icoord.getLon());
             map().addMapMarker(currentMarker);
         }
-
     }
 
     @Override
@@ -170,6 +149,31 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         cl.show(this, view);
     }
 
+    private void reload() throws BasicException {
+        map().removeAllMapMarkers();
+        m_alayers = dlGeomap.getLayersList().list();
+        for (Geolayer geolayer : m_alayers) {
+            if (geolayer.isVisible()) {
+                Layer visibleLayer = new Layer(geolayer.getName());
+                visibleLayer.setVisibleTexts(Boolean.TRUE);
+                Style style = new Style();
+                style.setColor(Color.GRAY);
+                style.setBackColor(geolayer.getColor());
+                for (Geomarker geomarker : dlGeomap.getMarkers(geolayer.getId())) {
+                    if (geomarker.isVisible()) {
+                        if (geolayer.getIcon() != null) {
+                            map().addMapMarker(new IconMarker(visibleLayer, new Coordinate(geomarker.getLatitude(), geomarker.getLongtitude()),
+                                    geolayer.getIcon()));
+                        } else {
+                            MapMarkerDot markerDot = new MapMarkerDot(visibleLayer, geomarker.getName(), new Coordinate(geomarker.getLatitude(), geomarker.getLongtitude()), style);
+                            map().addMapMarker(markerDot);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private JMapViewer map() {
         return treeMap.getViewer();
     }
@@ -197,7 +201,6 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         m_jPanelMap = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        m_jbtnReservations = new javax.swing.JButton();
         m_jbtnRefresh = new javax.swing.JButton();
         m_jText = new javax.swing.JLabel();
 
@@ -208,19 +211,6 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        m_jbtnReservations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
-        m_jbtnReservations.setText(AppLocal.getIntString("button.reservations")); // NOI18N
-        m_jbtnReservations.setFocusPainted(false);
-        m_jbtnReservations.setFocusable(false);
-        m_jbtnReservations.setMargin(new java.awt.Insets(8, 14, 8, 14));
-        m_jbtnReservations.setRequestFocusEnabled(false);
-        m_jbtnReservations.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                m_jbtnReservationsActionPerformed(evt);
-            }
-        });
-        jPanel2.add(m_jbtnReservations);
 
         m_jbtnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/reload.png"))); // NOI18N
         m_jbtnRefresh.setText(AppLocal.getIntString("button.reloadticket")); // NOI18N
@@ -244,17 +234,12 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jbtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnRefreshActionPerformed
-
-        map().removeMapMarker(currentMarker);
-
+        try {
+            reload();
+        } catch (BasicException ex) {
+            Logger.getLogger(JTicketsBagLocationMap.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_m_jbtnRefreshActionPerformed
-
-    private void m_jbtnReservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnReservationsActionPerformed
-
-        showView("res");
-//        m_jreservations.activate();
-
-    }//GEN-LAST:event_m_jbtnReservationsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -263,7 +248,6 @@ public class JTicketsBagLocationMap extends JTicketsBag implements JMapViewerEve
     private javax.swing.JPanel m_jPanelMap;
     private javax.swing.JLabel m_jText;
     private javax.swing.JButton m_jbtnRefresh;
-    private javax.swing.JButton m_jbtnReservations;
     // End of variables declaration//GEN-END:variables
 
 }

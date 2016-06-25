@@ -39,7 +39,7 @@ public class Geomarker implements SerializableRead, Serializable {
     private Double latitude;
     private Double longtitude;
     private Boolean visible;
-    private String layer;
+    private String layerId;
 
     public String getId() {
         return id;
@@ -81,12 +81,12 @@ public class Geomarker implements SerializableRead, Serializable {
         this.visible = visible;
     }
 
-    public String getLayer() {
-        return layer;
+    public String getLayerId() {
+        return layerId;
     }
 
-    public void setLayer(String layer) {
-        this.layer = layer;
+    public void setLayerId(String layerId) {
+        this.layerId = layerId;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class Geomarker implements SerializableRead, Serializable {
         latitude = dr.getDouble(3);
         longtitude = dr.getDouble(4);
         visible = dr.getBoolean(5);
-        layer = dr.getString(6);
+        layerId = dr.getString(6);
     }
 
 }

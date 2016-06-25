@@ -44,25 +44,6 @@
                 <Property name="alignment" type="int" value="0"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="m_jbtnReservations">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/com/openbravo/images/date.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="pos_messages.properties" key="button.reservations" replaceFormat="AppLocal.getIntString(&quot;{key}&quot;)"/>
-                    </Property>
-                    <Property name="focusPainted" type="boolean" value="false"/>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                      <Insets value="[8, 14, 8, 14]"/>
-                    </Property>
-                    <Property name="requestFocusEnabled" type="boolean" value="false"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="m_jbtnReservationsActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JButton" name="m_jbtnRefresh">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">

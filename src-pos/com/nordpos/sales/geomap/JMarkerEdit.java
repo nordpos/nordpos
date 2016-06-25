@@ -1,61 +1,62 @@
-//    Openbravo POS is a point of sales application designed for touch screens.
-//    Copyright (C) 2008-2009 Openbravo, S.L.
-//    http://www.openbravo.com/product/pos
-//
-//    This file is part of Openbravo POS.
-//
-//    Openbravo POS is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    Openbravo POS is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2016 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.nordpos.sales.geomap;
 
 import com.openbravo.pos.forms.AppLocal;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
+import org.openstreetmap.gui.jmapviewer.Layer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import org.openstreetmap.gui.jmapviewer.Style;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 /**
  *
- * @author adrianromero
+ * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3.1
  */
 public class JMarkerEdit extends javax.swing.JDialog implements JMapViewerEventListener {
 
     private boolean ok;
     private JMapViewerTree treeMap;
+    private MapMarker mapMarker;
 
-    /**
-     * Creates new form JProductAttEdit
-     */
     private JMarkerEdit(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
     }
 
-    /**
-     * Creates new form JProductAttEdit
-     */
     private JMarkerEdit(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
     }
@@ -104,12 +105,38 @@ public class JMarkerEdit extends javax.swing.JDialog implements JMapViewerEventL
         return myMsg;
     }
 
+    public void editMarker(Geolayer layer, Geomarker marker) {
+        Coordinate coordinate = new Coordinate(marker.getLatitude(), marker.getLongtitude());
+        Layer mapLayer = new Layer(layer.getName());
+        mapLayer.setVisibleTexts(Boolean.TRUE);
+        Style markerStyle = new Style();
+        markerStyle.setColor(Color.GRAY);
+        markerStyle.setBackColor(layer.getColor());        
+        mapMarker = new MapMarkerDot(mapLayer, marker.getName(), coordinate, markerStyle);
+        if (layer.getIcon() != null) {
+            map().addMapMarker(new IconMarker(mapMarker.getLayer(), mapMarker.getCoordinate(), layer.getIcon()));
+        } else {            
+            map().addMapMarker(mapMarker);
+        }        
+        map().setDisplayPosition(coordinate, JMapViewer.MAX_ZOOM / 2);
+    }
+    
+        public MapMarker getMapMarker() {
+        return mapMarker;
+    }
+
     public boolean isOK() {
         return ok;
     }
 
     private void JMapViewerMouseClicked(java.awt.event.MouseEvent evt) {
-
+        ICoordinate icoord = map().getPosition(evt.getPoint());
+        if (SwingUtilities.isRightMouseButton(evt) && evt.getClickCount() == 1) {
+            map().removeMapMarker(mapMarker);
+            mapMarker.setLat(icoord.getLat());
+            mapMarker.setLon(icoord.getLon());
+            map().addMapMarker(mapMarker);
+        }
     }
 
     private JMapViewer map() {
@@ -145,8 +172,11 @@ public class JMarkerEdit extends javax.swing.JDialog implements JMapViewerEventL
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
         m_jPanelMap.setPreferredSize(new java.awt.Dimension(600, 300));
         m_jPanelMap.setLayout(new java.awt.BorderLayout());
+        jPanel5.add(m_jPanelMap, java.awt.BorderLayout.CENTER);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -176,21 +206,7 @@ public class JMarkerEdit extends javax.swing.JDialog implements JMapViewerEventL
         });
         jPanel1.add(m_jButtonCancel);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(m_jPanelMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(m_jPanelMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel5.add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
