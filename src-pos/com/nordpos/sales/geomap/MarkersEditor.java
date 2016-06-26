@@ -113,8 +113,8 @@ public class MarkersEditor extends JPanel implements EditorRecord {
         Object[] marker = (Object[]) value;
         m_sID = Formats.STRING.formatValue(marker[0]);
         m_jName.setText(Formats.STRING.formatValue(marker[1]));
-        m_jLatitude.setText(Formats.DOUBLE.formatValue(marker[2]));
-        m_jLongitude.setText(Formats.DOUBLE.formatValue(marker[3]));
+        m_jLatitude.setText(Formats.COORDINATE.formatValue(marker[2]));
+        m_jLongitude.setText(Formats.COORDINATE.formatValue(marker[3]));
         m_jVisible.setSelected(((Boolean) marker[4]));
         m_LayerModel.setSelectedKey(marker[5]);
 
@@ -131,8 +131,8 @@ public class MarkersEditor extends JPanel implements EditorRecord {
         Object[] marker = (Object[]) value;
         m_sID = Formats.STRING.formatValue(marker[0]);
         m_jName.setText(Formats.STRING.formatValue(marker[1]));
-        m_jLatitude.setText(Formats.DOUBLE.formatValue(marker[2]));
-        m_jLongitude.setText(Formats.DOUBLE.formatValue(marker[3]));
+        m_jLatitude.setText(Formats.COORDINATE.formatValue(marker[2]));
+        m_jLongitude.setText(Formats.COORDINATE.formatValue(marker[3]));
         m_jVisible.setSelected(((Boolean) marker[4]));
         m_LayerModel.setSelectedKey(marker[5]);
 
@@ -148,8 +148,8 @@ public class MarkersEditor extends JPanel implements EditorRecord {
         Object[] marker = new Object[6];
         marker[0] = m_sID;
         marker[1] = m_jName.getText();
-        marker[2] = (Double) Formats.DOUBLE.parseValue(m_jLatitude.getText());
-        marker[3] = (Double) Formats.DOUBLE.parseValue(m_jLongitude.getText());
+        marker[2] = (Double) Formats.COORDINATE.parseValue(m_jLatitude.getText());
+        marker[3] = (Double) Formats.COORDINATE.parseValue(m_jLongitude.getText());
         marker[4] = m_jVisible.isSelected();
         marker[5] = m_LayerModel.getSelectedKey();
 
@@ -254,16 +254,15 @@ public class MarkersEditor extends JPanel implements EditorRecord {
             Geomarker marker = new Geomarker();
             Geolayer layer = (Geolayer) m_LayerModel.getSelectedItem();
             marker.setLayerId(layer.getId());
-            marker.setLatitude((Double) (m_jLatitude.getText().isEmpty() ? 0.0 : Formats.DOUBLE.parseValue(m_jLatitude.getText())));
-            marker.setLongtitude((Double) (m_jLongitude.getText().isEmpty() ? 0.0 : Formats.DOUBLE.parseValue(m_jLongitude.getText())));
+            marker.setLatitude((Double) (m_jLatitude.getText().isEmpty() ? 0.0 : Formats.COORDINATE.parseValue(m_jLatitude.getText())));
+            marker.setLongtitude((Double) (m_jLongitude.getText().isEmpty() ? 0.0 : Formats.COORDINATE.parseValue(m_jLongitude.getText())));
             editor.editMarker(layer, marker);
             editor.setVisible(true);
-            if (editor.isOK()) {
-                MathContext mc = new MathContext(6);
-                marker.setLatitude(BigDecimal.valueOf(editor.getMapMarker().getLat()).round(mc).doubleValue());
-                marker.setLongtitude(BigDecimal.valueOf(editor.getMapMarker().getLon()).round(mc).doubleValue());
-                m_jLatitude.setText(Formats.DOUBLE.formatValue(marker.getLatitude()));
-                m_jLongitude.setText(Formats.DOUBLE.formatValue(marker.getLongtitude()));
+            if (editor.isOK()) {                
+                marker.setLatitude(BigDecimal.valueOf(editor.getMapMarker().getLat()).setScale(4,  BigDecimal.ROUND_HALF_UP).doubleValue());
+                marker.setLongtitude(BigDecimal.valueOf(editor.getMapMarker().getLon()).setScale(4,  BigDecimal.ROUND_HALF_UP).doubleValue());
+                m_jLatitude.setText(Formats.COORDINATE.formatValue(marker.getLatitude()));
+                m_jLongitude.setText(Formats.COORDINATE.formatValue(marker.getLongtitude()));
             }
         } catch (BasicException ex) {
             Logger.getLogger(MarkersEditor.class.getName()).log(Level.SEVERE, null, ex);
