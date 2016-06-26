@@ -77,6 +77,7 @@ public class ResourcesView extends JPanel implements EditorRecord {
     public void writeValueInsert() {
         m_oId = null;
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_ResourceModel.setSelectedItem(ResourceType.TEXT);
         m_jText.setText(null);
         m_jText.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);         
@@ -122,6 +123,7 @@ public class ResourcesView extends JPanel implements EditorRecord {
         m_oId = resource[0];
         String sResourceName = (String) resource[1];
         m_jName.setText(sResourceName);
+        m_jName.setBackground(null);
         m_ResourceModel.setSelectedKey(resource[2]);
 
         ResourceType restype = (ResourceType) m_ResourceModel.getSelectedItem();

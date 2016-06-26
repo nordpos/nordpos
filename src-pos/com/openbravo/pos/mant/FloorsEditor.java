@@ -62,6 +62,7 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         
         m_sID = UUID.randomUUID().toString(); 
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_jImage.setImage(null);
 
         m_jName.setEnabled(true);
@@ -82,6 +83,7 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         Object[] floor = (Object[]) value;
         m_sID = Formats.STRING.formatValue(floor[0]);
         m_jName.setText(Formats.STRING.formatValue(floor[1]));
+        m_jName.setBackground(null);
         m_jImage.setImage((BufferedImage) floor[2]);
 
         m_jName.setEnabled(true);

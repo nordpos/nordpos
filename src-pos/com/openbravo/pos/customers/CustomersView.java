@@ -29,6 +29,7 @@ import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.util.StringUtils;
+import java.awt.Color;
 import java.awt.Component;
 import java.util.List;
 import java.util.UUID;
@@ -157,8 +158,11 @@ public class CustomersView extends javax.swing.JPanel implements EditorRecord {
     public void writeValueInsert() {
         m_oId = null;
         m_jTaxID.setText(null);
+        m_jTaxID.setBackground(COLOR_MANDATORY_FIELD);
         m_jSearchkey.setText(null);
+        m_jSearchkey.setBackground(COLOR_MANDATORY_FIELD);
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_CategoryModel.setSelectedKey(null);
         m_jNotes.setText(null);
         txtMaxdebt.setText(null);
@@ -273,8 +277,11 @@ public class CustomersView extends javax.swing.JPanel implements EditorRecord {
         Object[] customer = (Object[]) value;
         m_oId = customer[0];
         m_jTaxID.setText((String) customer[1]);
+        m_jTaxID.setBackground(null);
         m_jSearchkey.setText((String) customer[2]);
+        m_jSearchkey.setBackground(null);
         m_jName.setText((String) customer[3]);
+        m_jName.setBackground(null);
         m_jNotes.setText((String) customer[4]);
         m_jVisible.setSelected(((Boolean) customer[5]).booleanValue());
         jcard.setText((String) customer[6]);
@@ -495,7 +502,7 @@ public class CustomersView extends javax.swing.JPanel implements EditorRecord {
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFax, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(243, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -572,7 +579,7 @@ public class CustomersView extends javax.swing.JPanel implements EditorRecord {
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(243, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -614,7 +621,7 @@ public class CustomersView extends javax.swing.JPanel implements EditorRecord {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -672,8 +679,7 @@ public class CustomersView extends javax.swing.JPanel implements EditorRecord {
                         .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jTabbedPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

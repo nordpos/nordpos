@@ -60,6 +60,7 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
     public void writeValueInsert() {
         m_oId = null;
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_jText.setText(null);
         m_jName.setEnabled(true);
         m_jText.setEnabled(true);
@@ -81,6 +82,7 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         Object[] role = (Object[]) value;
         m_oId = role[0];
         m_jName.setText(Formats.STRING.formatValue(role[1]));
+        m_jName.setBackground(null);
         m_jText.setText(Formats.BYTEA.formatValue(role[2]));
         m_jText.setCaretPosition(0);
         m_jName.setEnabled(true);

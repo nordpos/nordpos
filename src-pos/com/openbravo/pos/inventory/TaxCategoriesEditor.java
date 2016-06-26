@@ -49,6 +49,7 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
     public void writeValueInsert() {
         m_oId = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_jName.setEnabled(true);
     }
     public void writeValueDelete(Object value) {
@@ -63,6 +64,7 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
         Object[] taxcustcat = (Object[]) value;
         m_oId = taxcustcat[0];
         m_jName.setText(Formats.STRING.formatValue(taxcustcat[1]));
+        m_jName.setBackground(null);
         m_jName.setEnabled(true);
     }
 

@@ -68,6 +68,7 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         id = UUID.randomUUID().toString();
         attid = insertid;
         jValue.setText(null);
+        jValue.setBackground(COLOR_MANDATORY_FIELD);
 
         jValue.setEnabled(true);
     }
@@ -79,6 +80,7 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         id = obj[0];
         attid = obj[1];
         jValue.setText(Formats.STRING.formatValue(obj[2]));
+        jValue.setBackground(null);
 
         jValue.setEnabled(true);
     }

@@ -51,6 +51,7 @@ public class AttributeSetsEditor extends javax.swing.JPanel implements EditorRec
     public void writeValueInsert() {
         id = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_jName.setEnabled(true);
     }
     public void writeValueDelete(Object value) {
@@ -65,6 +66,7 @@ public class AttributeSetsEditor extends javax.swing.JPanel implements EditorRec
         Object[] attrset = (Object[]) value;
         id = attrset[0];
         m_jName.setText(Formats.STRING.formatValue(attrset[1]));
+        m_jName.setBackground(null);        
         m_jName.setEnabled(true);
     }
 

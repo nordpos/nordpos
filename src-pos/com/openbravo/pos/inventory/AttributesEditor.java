@@ -51,6 +51,7 @@ public class AttributesEditor extends javax.swing.JPanel implements EditorRecord
     public void writeValueInsert() {
         id = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_jName.setEnabled(true);
     }
     public void writeValueDelete(Object value) {
@@ -65,6 +66,7 @@ public class AttributesEditor extends javax.swing.JPanel implements EditorRecord
         Object[] attr = (Object[]) value;
         id = attr[0];
         m_jName.setText(Formats.STRING.formatValue(attr[1]));
+        m_jName.setBackground(null);
         m_jName.setEnabled(true);
     }
 

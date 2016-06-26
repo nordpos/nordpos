@@ -84,9 +84,12 @@ public class PlacesEditor extends JPanel implements EditorRecord {
 
         m_sID = UUID.randomUUID().toString(); 
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_FloorModel.setSelectedKey(null);
         m_jX.setText(null);
+        m_jX.setBackground(COLOR_MANDATORY_FIELD);
         m_jY.setText(null);
+        m_jY.setBackground(COLOR_MANDATORY_FIELD);
         
         m_jName.setEnabled(true);
         m_jFloor.setEnabled(true);
@@ -98,8 +101,11 @@ public class PlacesEditor extends JPanel implements EditorRecord {
         Object[] place = (Object[]) value;
         m_sID = Formats.STRING.formatValue(place[0]);
         m_jName.setText(Formats.STRING.formatValue(place[1]));
+        m_jName.setBackground(null);
         m_jX.setText(Formats.INT.formatValue(place[2]));
+        m_jX.setBackground(null);
         m_jY.setText(Formats.INT.formatValue(place[3]));
+        m_jY.setBackground(null);
         m_FloorModel.setSelectedKey(place[4]);
 
         m_jName.setEnabled(false);

@@ -134,11 +134,14 @@ public class TaxEditor extends JPanel implements EditorRecord {
     public void writeValueInsert() {
         m_oId = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         taxcatmodel.setSelectedKey(null);
         txtValidFrom.setText(null);
+        txtValidFrom.setBackground(COLOR_MANDATORY_FIELD);
         taxcustcatmodel.setSelectedKey(null);
         taxparentmodel.setSelectedKey(null);
         m_jRate.setText(null);
+        m_jRate.setBackground(COLOR_MANDATORY_FIELD);
         jCascade.setSelected(false);
         jOrder.setText(null);
         
@@ -157,11 +160,14 @@ public class TaxEditor extends JPanel implements EditorRecord {
         Object[] tax = (Object[]) value;
         m_oId = tax[0];
         m_jName.setText(Formats.STRING.formatValue(tax[1]));
+        m_jName.setBackground(null);
         taxcatmodel.setSelectedKey(tax[2]);
         txtValidFrom.setText(Formats.TIMESTAMP.formatValue(tax[3]));
+        txtValidFrom.setBackground(null);
         taxcustcatmodel.setSelectedKey(tax[4]);
         taxparentmodel.setSelectedKey(tax[5]);
         m_jRate.setText(Formats.PERCENT.formatValue(tax[6]));
+        m_jRate.setBackground(null);
         jCascade.setSelected((Boolean) tax[7]);
         jOrder.setText(Formats.INT.formatValue(tax[8]));
         

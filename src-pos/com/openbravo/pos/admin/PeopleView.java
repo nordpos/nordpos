@@ -114,6 +114,7 @@ public final class PeopleView extends JPanel implements EditorRecord {
         m_oId = null;
         properties = new Properties();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_sPassword = null;
         m_RoleModel.setSelectedKey(null);
         m_WarehouseModel.setSelectedKey(null);
@@ -168,6 +169,7 @@ public final class PeopleView extends JPanel implements EditorRecord {
         Object[] people = (Object[]) value;
         m_oId = people[0];
         m_jName.setText(Formats.STRING.formatValue(people[1]));
+        m_jName.setBackground(null);
         m_sPassword = Formats.STRING.formatValue(people[2]);
         m_RoleModel.setSelectedKey(people[3]);
         m_jVisible.setSelected(((Boolean) people[4]));

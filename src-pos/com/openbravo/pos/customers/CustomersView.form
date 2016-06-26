@@ -50,8 +50,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" pref="694" max="32767" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -254,7 +253,7 @@
                               <Component id="txtFax" min="-2" pref="270" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="252" max="32767" attributes="0"/>
+                      <EmptySpace pref="243" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -401,7 +400,7 @@
                               <Component id="txtCountry" min="-2" pref="270" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="252" max="32767" attributes="0"/>
+                      <EmptySpace pref="243" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -516,7 +515,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="662" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="653" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

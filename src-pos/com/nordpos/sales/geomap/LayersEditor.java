@@ -74,9 +74,12 @@ public class LayersEditor extends JPanel implements EditorRecord {
 
         m_sID = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_jVisible.setSelected(true);
         m_jIcon.setImage(null);
-        m_jColor.setText(null);
+        m_jColor.setText("0x" + Integer.toHexString(0x100 | Color.WHITE.getRed()).substring(1).toUpperCase()
+                + Integer.toHexString(0x100 | Color.WHITE.getGreen()).substring(1).toUpperCase()
+                + Integer.toHexString(0x100 | Color.WHITE.getBlue()).substring(1).toUpperCase());
         m_jColor.setBackground(Color.WHITE);
 
         m_jName.setEnabled(true);
@@ -110,6 +113,7 @@ public class LayersEditor extends JPanel implements EditorRecord {
         Object[] layer = (Object[]) value;
         m_sID = Formats.STRING.formatValue(layer[0]);
         m_jName.setText(Formats.STRING.formatValue(layer[1]));
+        m_jName.setBackground(null);
         m_jVisible.setSelected(((Boolean) layer[2]));
         m_jIcon.setImage((BufferedImage) layer[3]);
         m_jColor.setText(Formats.STRING.formatValue(layer[4]));
@@ -167,8 +171,6 @@ public class LayersEditor extends JPanel implements EditorRecord {
 
         jLabel3.setText(AppLocal.getIntString("Label.Name")); // NOI18N
 
-        m_jName.setBackground(new java.awt.Color(255, 255, 204));
-
         jLabel8.setText(AppLocal.getIntString("label.visible")); // NOI18N
 
         jLabel4.setText(AppLocal.getIntString("label.icon")); // NOI18N
@@ -199,14 +201,14 @@ public class LayersEditor extends JPanel implements EditorRecord {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(m_jIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(m_jIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(m_jVisible)
-                    .addComponent(m_jName)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(m_jColor, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jColorChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(m_jColor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jColorChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(m_jName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -246,7 +248,6 @@ public class LayersEditor extends JPanel implements EditorRecord {
 
         m_jColor.setBackground(new Color((int) Integer.decode(sColor)));
     }//GEN-LAST:event_jColorChooserActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jColorChooser;

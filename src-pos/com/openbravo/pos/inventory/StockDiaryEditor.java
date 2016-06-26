@@ -181,6 +181,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         jattributes.setText(null);
         m_jcodebar.setText(null);
         m_junits.setText(null);
+        m_junits.setBackground(COLOR_MANDATORY_FIELD);
         m_jprice.setText(null);
         m_jdate.setEnabled(true);
         m_jbtndate.setEnabled(true);
@@ -253,6 +254,7 @@ public class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord
         attsetinstdesc = (String) diary[12];
         jattributes.setText(attsetinstdesc);
         m_junits.setText(Formats.DOUBLE.formatValue(signum((Double) diary[6], (Integer) diary[2])));
+        m_junits.setBackground(null);
         m_jprice.setText(Formats.CURRENCY.formatValue(diary[7]));
         m_jdate.setEnabled(false);
         m_jbtndate.setEnabled(false);

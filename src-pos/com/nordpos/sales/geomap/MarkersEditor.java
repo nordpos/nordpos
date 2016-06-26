@@ -30,12 +30,11 @@ import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.data.user.DirtyManager;
+import java.awt.Color;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 /**
  *
@@ -95,9 +94,12 @@ public class MarkersEditor extends JPanel implements EditorRecord {
 
         m_sID = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_LayerModel.setSelectedFirst();
         m_jLatitude.setText(null);
+        m_jLatitude.setBackground(COLOR_MANDATORY_FIELD);
         m_jLongitude.setText(null);
+        m_jLongitude.setBackground(COLOR_MANDATORY_FIELD);
         m_jVisible.setSelected(true);
 
         m_jName.setEnabled(true);
@@ -131,8 +133,11 @@ public class MarkersEditor extends JPanel implements EditorRecord {
         Object[] marker = (Object[]) value;
         m_sID = Formats.STRING.formatValue(marker[0]);
         m_jName.setText(Formats.STRING.formatValue(marker[1]));
+        m_jName.setBackground(null);
         m_jLatitude.setText(Formats.COORDINATE.formatValue(marker[2]));
+        m_jLatitude.setBackground(null);
         m_jLongitude.setText(Formats.COORDINATE.formatValue(marker[3]));
+        m_jLongitude.setBackground(null);
         m_jVisible.setSelected(((Boolean) marker[4]));
         m_LayerModel.setSelectedKey(marker[5]);
 
@@ -258,9 +263,9 @@ public class MarkersEditor extends JPanel implements EditorRecord {
             marker.setLongtitude((Double) (m_jLongitude.getText().isEmpty() ? 0.0 : Formats.COORDINATE.parseValue(m_jLongitude.getText())));
             editor.editMarker(layer, marker);
             editor.setVisible(true);
-            if (editor.isOK()) {                
-                marker.setLatitude(BigDecimal.valueOf(editor.getMapMarker().getLat()).setScale(4,  BigDecimal.ROUND_HALF_UP).doubleValue());
-                marker.setLongtitude(BigDecimal.valueOf(editor.getMapMarker().getLon()).setScale(4,  BigDecimal.ROUND_HALF_UP).doubleValue());
+            if (editor.isOK()) {
+                marker.setLatitude(BigDecimal.valueOf(editor.getMapMarker().getLat()).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
+                marker.setLongtitude(BigDecimal.valueOf(editor.getMapMarker().getLon()).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
                 m_jLatitude.setText(Formats.COORDINATE.formatValue(marker.getLatitude()));
                 m_jLongitude.setText(Formats.COORDINATE.formatValue(marker.getLongtitude()));
             }

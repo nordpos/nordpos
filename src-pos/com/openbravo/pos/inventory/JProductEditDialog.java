@@ -1,10 +1,28 @@
-
+/**
+ *
+ * NORD POS is a fork of Openbravo POS.
+ *
+ * Copyright (C) 2009-2016 Nord Trading Ltd. <http://www.nordpos.com>
+ *
+ * This file is part of NORD POS.
+ *
+ * NORD POS is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * NORD POS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * NORD POS. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.openbravo.pos.inventory;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.user.EditorCreator;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
@@ -19,8 +37,9 @@ import javax.swing.JFrame;
 /**
  *
  * @author Andrey Svininykh <svininykh@gmail.com>
+ * @version NORD POS 3.1
  */
-public class JProductEditDialog extends javax.swing.JDialog implements EditorCreator {
+public class JProductEditDialog extends javax.swing.JDialog {
 
     private ProductInfoEdit m_oEditProduct;
 
@@ -38,7 +57,6 @@ public class JProductEditDialog extends javax.swing.JDialog implements EditorCre
 
 //    private AppView m_App;
 //    private DataLogicSales m_dlSales;
-
     private JProductEditDialog(Frame parent, boolean modal) {
         super(parent, modal);
     }
@@ -76,7 +94,6 @@ public class JProductEditDialog extends javax.swing.JDialog implements EditorCre
         m_jSellPrice.setEnabled(true);
 
 //        m_jSellPriceTax.setEnabled(false);
-
         m_jName.addEditorKeys(m_jKeyboardKeys);
         m_jReference.addEditorKeys(m_jKeyboardKeys);
         m_jBarcode.addEditorKeys(m_jKeyboardKeys);
@@ -100,7 +117,6 @@ public class JProductEditDialog extends javax.swing.JDialog implements EditorCre
         m_CategoryModel = new ComboBoxValModel(m_sentcat.list());
         m_jCategory.setModel(m_CategoryModel);
 
-
         m_taxcatsent = dlSales.getTaxCategoriesList();
         m_TaxCategoryModel = new ComboBoxValModel(m_taxcatsent.list());
         m_jTax.setModel(m_TaxCategoryModel);
@@ -123,18 +139,12 @@ public class JProductEditDialog extends javax.swing.JDialog implements EditorCre
         m_jBuyPrice.setDoubleValue(oProductCurrentEdit.getPriceBuy());
         m_jSellPrice.setDoubleValue(oProductCurrentEdit.getPriceSell());
 
-
         m_CategoryModel.setSelectedKey(oProductCurrentEdit.getCategoryID());
         m_TaxCategoryModel.setSelectedKey(oProductCurrentEdit.getTaxID());
         m_AttributeModel.setSelectedKey(oProductCurrentEdit.getAttributeUseID());
     }
 
-    @Override
-    public Object createValue() throws BasicException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-        private static Window getWindow(Component parent) {
+    private static Window getWindow(Component parent) {
         if (parent == null) {
             return new JFrame();
         } else if (parent instanceof Frame || parent instanceof Dialog) {
@@ -149,10 +159,10 @@ public class JProductEditDialog extends javax.swing.JDialog implements EditorCre
     }
 
     private class CalcSellPriceTax {
+
         Double dPriceSellTax = readCurrency(m_jSellPrice.getText());
 
         //m_jSellPrice.setDoubleValue(0.0);
-
 //         double dTaxRate = taxeslogic.getTaxRate((TaxCategoryInfo) taxcatmodel.getSelectedItem(), new Date());
 //         .setDoubleValue(dPriceSell.doubleValue() * (1.0 + dTaxRate));
     }
@@ -372,13 +382,21 @@ public class JProductEditDialog extends javax.swing.JDialog implements EditorCre
 
         m_oEditProduct = new ProductInfoEdit();
 
-        if (m_jName.getText() != null) m_oEditProduct.setName(m_jName.getText());
-        if (m_jReference.getText() != null) m_oEditProduct.setReference(m_jReference.getText());
-        if (m_jBarcode.getText() != null) m_oEditProduct.setCode(m_jBarcode.getText());
+        if (m_jName.getText() != null) {
+            m_oEditProduct.setName(m_jName.getText());
+        }
+        if (m_jReference.getText() != null) {
+            m_oEditProduct.setReference(m_jReference.getText());
+        }
+        if (m_jBarcode.getText() != null) {
+            m_oEditProduct.setCode(m_jBarcode.getText());
+        }
 
         m_oEditProduct.setCategoryID(m_CategoryModel.getSelectedKey().toString());
         m_oEditProduct.setTaxID(m_TaxCategoryModel.getSelectedKey().toString());
-        if (m_AttributeModel.getSelectedKey() != null) m_oEditProduct.setAttributeUseID(m_AttributeModel.getSelectedKey().toString());
+        if (m_AttributeModel.getSelectedKey() != null) {
+            m_oEditProduct.setAttributeUseID(m_AttributeModel.getSelectedKey().toString());
+        }
 
         m_oEditProduct.setPriceBuy(readCurrency(m_jBuyPrice.getText()));
         m_oEditProduct.setPriceSell(readCurrency(m_jSellPrice.getText()));

@@ -115,6 +115,7 @@ public final class CategoriesEditor extends JPanel implements EditorRecord {
     public void writeValueInsert() {
         m_id = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
 
         int code = 1;
 
@@ -168,6 +169,7 @@ public final class CategoriesEditor extends JPanel implements EditorRecord {
         m_CategoryModel.setSelectedKey(cat[3]);
         m_jImage.setImage((BufferedImage) cat[4]);
         m_jName.setEnabled(true);
+        m_jName.setBackground(null);
         m_jCode.setEnabled(true);
         m_jCategory.setEnabled(true);
         m_jImage.setEnabled(true);

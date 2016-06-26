@@ -16,19 +16,24 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.openbravo.data.user;
 
+import java.awt.Color;
 import java.awt.Component;
 
 public interface EditorRecord extends EditorCreator {
-       
+
+    public final static Color COLOR_MANDATORY_FIELD = new java.awt.Color(255, 255, 0);
+
     public void writeValueEOF();
-    public void writeValueInsert(); 
+
+    public void writeValueInsert();
+
     public void writeValueEdit(Object value); // not null por definicion.
+
     public void writeValueDelete(Object value); // not null por definicion.
-    
+
     public void refresh();
-    
-    public Component getComponent(); 
+
+    public Component getComponent();
 }

@@ -28,15 +28,15 @@
                   <Component id="jLabel5" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="m_jIcon" alignment="0" pref="240" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="m_jIcon" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
                   <Component id="m_jVisible" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="m_jName" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="m_jColor" min="-2" pref="186" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="m_jColor" min="-2" pref="180" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jColorChooser" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="m_jName" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -80,11 +80,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="m_jName">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="ff" red="ff" type="rgb"/>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>

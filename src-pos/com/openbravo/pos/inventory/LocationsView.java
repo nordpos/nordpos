@@ -64,6 +64,7 @@ public class LocationsView extends javax.swing.JPanel implements EditorRecord {
 
         m_sID = UUID.randomUUID().toString();
         m_jName.setText(null);
+        m_jName.setBackground(COLOR_MANDATORY_FIELD);
         m_jAddress.setText(null);
         m_jClose.setSelected(false);
 
@@ -92,6 +93,7 @@ public class LocationsView extends javax.swing.JPanel implements EditorRecord {
         Object[] location = (Object[]) value;
         m_sID = Formats.STRING.formatValue(location[0]);
         m_jName.setText(Formats.STRING.formatValue(location[1]));
+        m_jName.setBackground(null);
         m_jAddress.setText(Formats.STRING.formatValue(location[2]));
         m_jClose.setSelected(((Boolean) location[3]));
 
