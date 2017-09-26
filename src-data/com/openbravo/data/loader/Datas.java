@@ -247,8 +247,11 @@ public abstract class Datas {
         @Override
         public Object getValue(DataRead dr, int i) throws BasicException {
             Properties properties = new Properties();
+            byte[] b = dr.getBytes(i);
             try {
-                properties.loadFromXML(new ByteArrayInputStream(dr.getBytes(i)));
+                if (b != null) {
+                    properties.loadFromXML(new ByteArrayInputStream(dr.getBytes(i)));
+                }
                 return properties;
             } catch (IOException ex) {
                 throw new BasicException(ex);
